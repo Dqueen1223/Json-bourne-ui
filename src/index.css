@@ -26,6 +26,19 @@ code {
   
 }
 
+.header {
+  align-items: center;
+  background-color: #1D2228; 
+  color: #E1E2E2;
+  display: inline-table;
+  text-align: center;
+  flex-direction: column;
+  height:7vh;
+  justify-content:center;
+  margin-bottom:10vh;
+  width: 100%; 
+}
+
 #root{
   display:flex;
   flex-direction: column;

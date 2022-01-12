@@ -56,7 +56,7 @@ const Header = () => {
   };
 
   return (
-    <div>
+    <div className="header">
       <NavLink to="/home">Home</NavLink>
       <NavLink to="/checkout">Cart</NavLink>
       {user && <span>{user.firstName}</span>}
