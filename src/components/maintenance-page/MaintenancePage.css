@@ -1,0 +1,12 @@
+.Product {
+    border-width: 1px;
+    border-color: #1d2228;
+    border-style:inset;
+}
+
+th{
+background-color: #fb8122;
+border-width: 2px;
+border-color: #1d2228;
+border-style: solid;
+}

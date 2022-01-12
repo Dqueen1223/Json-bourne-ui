@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { useTable } from 'react-table';
 import fetchProducts from '../product-page/ProductPageService';
-import styles from '../../index.css';
+import styles from './MaintenancePage.css';
 import Constants from '../../utils/constants';
 
 const MaintenancePage = () => {
@@ -14,16 +15,21 @@ const MaintenancePage = () => {
   return (
     <div className="Maintenance">
       {apiError && <p className={styles.errMsg} data-testid="errMsg">{Constants.API_ERROR}</p>}
-      {products.map((product) => (
-        <table className="ProductTable">
-          <tr key={product.id}>
-            {Object.values(product).map((val) => (
-              <td>{val}</td>
-            ))}
-          </tr>
-        </table>
-      ))}
+     <table className="Product">
+        {products.map((product) => (
+          <>
+            <th>product</th>
+            <tr key={product.id} className="Product">
+              {Object.values(product).map((val) => (
+                <td className="Product">{val}</td>
+             ))}
+            </tr>
+
+          </>
+        ))}
+      </table>
     </div>
   );
+
 };
 export default MaintenancePage;
