@@ -30,7 +30,7 @@ code {
   align-items: center;
   background-color: #1D2228; 
   color: #E1E2E2;
-  display: inline-table;
+  display: flex;
   text-align: center;
   flex-direction: column;
   height:70px;
