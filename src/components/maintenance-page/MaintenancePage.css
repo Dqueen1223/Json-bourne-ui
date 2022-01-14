@@ -12,7 +12,7 @@ table {
 thead, th {
 background-color: #fb8122;
 max-width: 80vw;
-max-height: 40vw;
+max-height: 40vh;
 position: sticky;
 top: 0;
 
