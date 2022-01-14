@@ -11,6 +11,11 @@ table {
 
 thead, th {
 background-color: #fb8122;
+max-width: 80vw;
+max-height: 40vw;
+position: sticky;
+top: 0;
+
 }
 
 th, td {
@@ -19,7 +24,6 @@ th, td {
     min-width: 120px;
     max-height: 60px;
     overflow-wrap: break-word;
-    border-style: solid;
 }
 
 td {
