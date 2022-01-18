@@ -59,26 +59,30 @@ const Header = () => {
     <div className="header">
       <NavLink to="/home">Home</NavLink>
       <NavLink to="/checkout">Cart</NavLink>
+      <div className="googlebutton">
       {user && <span>{user.firstName}</span>}
       {user && <span>{user.lastName}</span>}
       {googleError && <span>{googleError}</span>}
       {apiError && <span>Api Error</span>}
       {!user ? (
         <GoogleLogin
-          clientId={constants.GOOGLE_CLIENT_ID}
-          buttonText="Login"
-          onSuccess={handleGoogleLoginSuccess}
-          onFailure={handleGoogleLoginFailure}
-          cookiePolicy="single_host_origin"
+        clientId={constants.GOOGLE_CLIENT_ID}
+        buttonText="Login"
+        onSuccess={handleGoogleLoginSuccess}
+        onFailure={handleGoogleLoginFailure}
+        cookiePolicy="single_host_origin"
         />
-      ) : (
-        <GoogleLogout
+        ) : (
+          <GoogleLogout
           clientId={constants.GOOGLE_CLIENT_ID}
           buttonText="Logout"
           onLogoutSuccess={handleGoogleLogoutSuccess}
           onFailure={handleGoogleLogoutFailure}
-        />
-      )}
+          />
+          )}
+        </div>
+      <img className="carticon" src="https://www.freeiconspng.com/thumbs/cart-icon/basket-cart-icon-27.png" alt="cartimage" />
+      <img className="applogo" src="https://icon-library.com/images/sports-app-icon/sports-app-icon-14.jpg" alt="applogo" />
     </div>
   );
 };

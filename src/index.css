@@ -40,6 +40,29 @@ code {
   width: 100%; 
 }
 
+.googlebutton{
+  /* margin-left: 500%; */
+  max-width: 100%;
+  position: relative;
+  left: 600%;
+  bottom: 70%;
+}
+
+.carticon{
+  height: 60px;
+position: relative;
+left: 745%;
+bottom: 135%;
+}
+
+.applogo{
+  height: 60px;
+  position: relative;
+  right: 745%;
+  bottom: 235%;
+  padding-left: 30px;
+}
+
 #root{
   display:flex;
   flex-direction: column;
