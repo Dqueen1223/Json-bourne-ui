@@ -56,7 +56,7 @@ const MaintenancePage = () => {
                 <td className="Product">{product.secondaryColorCode}</td>
                 <td className="Product">{product.styleNumber}</td>
                 <td className="Product">{product.globalProductCode}</td>
-                <td className="Product">{product.active}</td>
+                <td className="Product">{String(product.active)}</td>
                 <td className="Product">{product.brand}</td>
                 <td className="Product">{product.imageSrc}</td>
                 <td className="Product">{product.material}</td>
