@@ -48,8 +48,7 @@ code {
   bottom: 0%;
   top: 20%; */
   position: relative;
-  padding-right: 20px;
-  left: 40%;
+  left: 43%;
   top: 20%;
 }
 
@@ -60,7 +59,7 @@ left: 695%; */
 /* bottom: 70%; */
 position: relative;
 left: 50%;
-bottom: 60%;
+bottom: 55%;
 padding-left: 20px;
 filter:invert(13%) opacity(90%) 
 }
