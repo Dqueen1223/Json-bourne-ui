@@ -26,10 +26,63 @@ code {
   
 }
 
+.header {
+  align-items: center;
+  background-color: #1D2228; 
+  color: #E1E2E2;
+  display: grid;
+  grid-row: 50px;
+  text-align: center;
+  flex-direction: column;
+  height:70px;
+  justify-content:center;
+  margin-bottom:10vh;
+  width: 100%; 
+}
+
+.googlebutton{
+  /* margin-left: 500%; */
+  max-width: 100%;
+  position: relative;
+  left: 550%;
+  bottom: 70%;
+}
+
+.carticon{
+  height: 60px;
+position: relative;
+left: 745%;
+bottom: 135%;
+filter:invert(13%) opacity(90%) 
+}
+
+.applogo{
+  height: 60px;
+  position: relative;
+  right: 745%;
+  bottom: 235%;
+  padding-left: 2px;
+  padding-right: 50px;
+  
+}
+.profileIcon{
+height: 60px;
+position: relative;
+left: 745%;
+bottom: 2;
+}
 #root{
   display:flex;
   flex-direction: column;
   justify-content: space-between;
   justify-items: center;
   min-height: 100vh;
+}
+
+@media screen and (max-width: 500px) {
+  .header a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
 }

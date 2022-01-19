@@ -35,7 +35,9 @@ const Header = () => {
    * @description Function to run if google login was unsuccessful
    */
   const handleGoogleLoginFailure = () => {
-    setGoogleError('There was a problem logging in with Google. Please wait and try again later.');
+    setGoogleError(
+      'There was a problem logging in with Google. Please wait and try again later.'
+    );
   };
 
   /**
@@ -52,34 +54,49 @@ const Header = () => {
    * @description Function to run if google logout was unsuccessful
    */
   const handleGoogleLogoutFailure = () => {
-    setGoogleError('There was a problem logging out with Google. Please wait and try again later.');
+    setGoogleError(
+      'There was a problem logging out with Google. Please wait and try again later.'
+    );
   };
 
   return (
-    <div>
+    <div className="header">
       <NavLink to="/home">Home</NavLink>
       <NavLink to="/checkout">Cart</NavLink>
-      {user && <span>{user.firstName}</span>}
-      {user && <span>{' '}</span>}
-      {user && <span>{user.lastName}</span>}
-      {googleError && <span>{googleError}</span>}
-      {apiError && <span>Api Error</span>}
-      {!user ? (
-        <GoogleLogin
-          clientId={constants.GOOGLE_CLIENT_ID}
-          buttonText="Login"
-          onSuccess={handleGoogleLoginSuccess}
-          onFailure={handleGoogleLoginFailure}
-          cookiePolicy="single_host_origin"
-        />
-      ) : (
-        <GoogleLogout
-          clientId={constants.GOOGLE_CLIENT_ID}
-          buttonText="Logout"
-          onLogoutSuccess={handleGoogleLogoutSuccess}
-          onFailure={handleGoogleLogoutFailure}
-        />
-      )}
+      <div className="googlebutton">
+        {user && <span>{user.firstName}</span>}
+        {user && <span> </span>}
+        {user && <span>{user.lastName}</span>}
+        {googleError && <span>{googleError}</span>}
+        {apiError && <span>Api Error</span>}
+        {!user ? (
+          <GoogleLogin
+            clientId={constants.GOOGLE_CLIENT_ID}
+            buttonText="Login"
+            onSuccess={handleGoogleLoginSuccess}
+            onFailure={handleGoogleLoginFailure}
+            cookiePolicy="single_host_origin"
+          />
+        ) : (
+          <GoogleLogout
+            clientId={constants.GOOGLE_CLIENT_ID}
+            buttonText="Logout"
+            onLogoutSuccess={handleGoogleLogoutSuccess}
+            onFailure={handleGoogleLogoutFailure}
+          />
+        )}
+      </div>
+      <img
+        className="carticon"
+        src="https://icon-library.com/images/white-shopping-cart-icon/white-shopping-cart-icon-1.jpg"
+        alt="cartimage"
+      />
+      <img
+        className="applogo"
+        src="https://icon-library.com/images/sports-app-icon/sports-app-icon-14.jpg"
+        alt="applogo"
+      />
+      <img className="profileIcon" src="https://www.citypng.com/public/uploads/preview/download-profile-user-round-orange-icon-symbol-png-11639594360ksf6tlhukf.png" alt="profileIcon" />
     </div>
   );
 };
