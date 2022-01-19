@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
-//import { useTable } from 'react-table';
 import fetchProducts from './MaintenancePageService';
-//import { TableColumns } from './MaintenanceTableHelper';
 import './MaintenancePage.css';
 import styles from '../product-page/ProductPage.module.css'
 import Constants from '../../utils/constants';
 
+/**
+ * @name MaintenancePage
+ * @description  basic maintenance page with table of products from database
+ * @returns component
+ */
 const MaintenancePage = () => {
   const [apiError, setApiError] = useState(false);
   const [products, setProducts] = useState([]);
@@ -70,41 +73,6 @@ const MaintenancePage = () => {
      
     </div>
   );
-  
-//const columns = useMemo(() => TableColumns, [])
-//const data = useMemo(() => products, [])
-//const table = useTable({ columns, data })
-//const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = table
-//return (
-//    <div>
-//       {apiError && <p className={styles.errMsg} data-testid="errMsg">{Constants.API_ERROR}</p>}
-//      <table {...getTableProps()}>
-//        <thead>
-//          {
-//            headerGroups.map((headerGroup) => (
-//              <tr {...headerGroup.getHeaderGroupProps()}>
-//                {
-//                  headerGroup.headers.map(column => (
-//                    <th {...column.getHeaderProps}>{column.render('Header')}</th>
-//                  ))
-//                }            
-//          </tr>
-//            ))}
-//        </thead>
-//        <tbody {...getTableBodyProps()}>
-//          {rows.map((row) => {
-//              prepareRow(row)
-//              return (
-//                <tr {...row.getRowProps()}>
-//                  {row.cells.map((cell) => {
-//                    return  <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-//                    })}
-//                </tr>
-//              )
-//            })}
-//        </tbody>
-//      </table>
-//    </div>
-//  )
+
 };
 export default MaintenancePage;

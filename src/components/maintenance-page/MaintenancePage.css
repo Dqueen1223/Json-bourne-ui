@@ -19,13 +19,6 @@ text-align: center;
 white-space: nowrap;
 }
 
-/* th, td {
-    width: 4.4vw;
-    height: 5vw;
-    min-width: 120px;
-    max-height: 60px;
-} */
-
 td {
     border-style: solid;
     border-width: 1px;
