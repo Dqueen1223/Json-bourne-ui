@@ -1,38 +1,54 @@
-.App {
-  text-align: center;
+.btnToast{
+  border:1px solid white;
+  font-size:1em;
+  width:80px;
+  height:25px;
+  color:whitesmoke;
+  background-color:gray;
+  margin:10px 0;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.btnToast:hover{
+  opacity: 0.75;;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.success{
+  background-color: #07bc0c;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.info{
+  background-color: #3498db;
 }
 
-.App-link {
-  color: #61dafb;
+.warning{
+  background-color: #f1c40f;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.error{
+  background-color: #e74c3c;
+}
+
+.Toastify__toast--default {
+  --toastify-color-progress-light:linear-gradient(to right,rgb(65, 64, 64),rgb(235, 233, 233))!important;
+  width:300px;
+}
+
+.Toastify__toast--info {
+  --toastify-color-progress-info:linear-gradient(to right,#005994,lightblue)!important;
+  width:300px;
+}
+
+.Toastify__toast--warning {
+  --toastify-color-progress-warning:linear-gradient(to right,rgb(219, 219, 0),rgb(255, 255, 164))!important;
+  width:300px;
+}
+
+.Toastify__toast--success {
+  --toastify-color-progress-success:linear-gradient(to right,#026b06,rgb(199, 255, 199))!important;
+  width:300px;
+}
+
+.Toastify__toast--error {
+  --toastify-color-progress-error:linear-gradient(to right,#b11201,#ff9393)!important;
+  width:300px
 }
