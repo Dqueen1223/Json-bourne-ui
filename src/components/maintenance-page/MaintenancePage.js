@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import fetchProducts from './MaintenancePageService';
 import './MaintenancePage.css';
-import styles from '../product-page/ProductPage.module.css'
+import styles from '../product-page/ProductPage.module.css';
 import Constants from '../../utils/constants';
 
 /**
@@ -20,30 +20,29 @@ const MaintenancePage = () => {
   return (
     <div className="Maintenance">
       {apiError && <p className={styles.errMsg} data-testid="errMsg">{Constants.API_ERROR}</p>}
-      
-        
-          <div className="ProductTable">
-            <table className="Product">
-                <thead>
-                  <th>Id</th>
-                  <th>Name</th>
-                  <th>SKU</th>
-                  <th>Description</th>
-                  <th>Demographic</th>
-                  <th>Category</th>
-                  <th>Type</th>
-                  <th>Release Date</th>
-                  <th>Primary Color</th>
-                  <th>Secondary Color</th>
-                  <th>Style Number</th>
-                  <th>Global Product Code</th>
-                  <th>Active</th>
-                  <th>Brand</th>
-                  <th>Image Source</th>
-                  <th>Material</th>
-                  <th>Price</th>
-                  <th>Quantity</th>                  
-              </thead>
+
+      <div className="ProductTable">
+        <table className="Product">
+          <thead>
+            <th>Id</th>
+            <th>Name</th>
+            <th>SKU</th>
+            <th>Description</th>
+            <th>Demographic</th>
+            <th>Category</th>
+            <th>Type</th>
+            <th>Release Date</th>
+            <th>Primary Color</th>
+            <th>Secondary Color</th>
+            <th>Style Number</th>
+            <th>Global Product Code</th>
+            <th>Active</th>
+            <th>Brand</th>
+            <th>Image Source</th>
+            <th>Material</th>
+            <th>Price</th>
+            <th>Quantity</th>
+          </thead>
           <tbody>
             {products.map((product) => (
               <tr key={product.id} className="Product">
@@ -64,15 +63,14 @@ const MaintenancePage = () => {
                 <td className="Product">{product.imageSrc}</td>
                 <td className="Product">{product.material}</td>
                 <td className="Product">{product.price.toFixed(2)}</td>
-                <td className="Product">{product.quantity}</td>   
+                <td className="Product">{product.quantity}</td>
               </tr>
             ))}
           </tbody>
-            </table>
-        </div>
-     
+        </table>
+      </div>
+
     </div>
   );
-
 };
 export default MaintenancePage;
