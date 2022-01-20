@@ -13,6 +13,7 @@ code {
     monospace;
 }
 
+<<<<<<< HEAD
 .footer {
   align-items: center;
   background-color: #1D2228; 
@@ -81,6 +82,8 @@ filter:invert(13%) opacity(90%)
   filter: invert(56%) sepia(85%) saturate(1849%) hue-rotate(345deg) brightness(102%) contrast();
 }
 
+=======
+>>>>>>> c7aee88140b0abf647f13ae2cb87b2e1b09c3f96
 #root{
   display:flex;
   flex-direction: column;
@@ -89,3 +92,7 @@ filter:invert(13%) opacity(90%)
   min-height: 100vh;
 }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> c7aee88140b0abf647f13ae2cb87b2e1b09c3f96
