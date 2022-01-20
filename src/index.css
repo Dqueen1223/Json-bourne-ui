@@ -27,6 +27,9 @@ code {
 }
 
 .header {
+  position: sticky;
+  z-index: 100;
+  top: 0;
   align-items: center;
   background-color: #1D2228; 
   color: #E1E2E2;
