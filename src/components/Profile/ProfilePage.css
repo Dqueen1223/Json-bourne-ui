@@ -1,6 +1,51 @@
-.shipping{
-    display:inline-block;
-    text-align: center;
+.userInfo{
+    margin-bottom: 4em;
     font-size: large;
-    color: blue;
+    flex: 1 1 90%;
+    color: #1d2228;
+    height: 6em;
+    text-align: left;
+}
+.tabs{
+    background-color: #1d2228;
+    border: 1px solid;
+    color: #FB8122;
+    display: block;
+    font-size: 1em;
+    height: 2.5em;
+    width: 8em;
+}
+.profile{
+    display: flex;
+    flex: 1 1 10%;
+    flex-direction: column;
+    height: 100%;
+}
+.ui {
+    flex: 1 1 10%;
+}
+.userInfodiv{
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    top: 10.5em;
+    left: 45%;
+    padding: 1px;
+    width: 15%;
+    height: 8em;
+}
+.headerShipping{
+position: relative;
+text-align: justify;
+border-radius: 5px;
+border-bottom: 5px solid #FB8122;
+width: 75%;
+}
+
+.headerName{
+    position: relative;
+    text-align: justify;
+    border-radius: 5px;
+    border-bottom: 5px solid #FB8122;
+    width: 50%;
 }

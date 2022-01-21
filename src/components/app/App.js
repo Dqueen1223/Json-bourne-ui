@@ -12,24 +12,6 @@ import Footer from '../footer/Footer';
 import ProfilePage from '../Profile/Profilepage';
 
 toast.configure();
-/**
- * @name App
- * @returns component
- */
-<<<<<<< HEAD
-const App = () => (
-  <BrowserRouter>
-    <Header />
-    <Switch>
-      <Route exact path="/" render={() => <ProductPage />} />
-      <Route exact path="/profilepage" render={() => <ProfilePage />} />
-      <Route exact path="/checkout" render={() => <CheckoutPage />} />
-      <Route exact path="/confirmation" render={() => <ConfirmationPage />} />
-    </Switch>
-    <Footer />
-  </BrowserRouter>
-);
-=======
 const App = () => {
 /**
  * @name displayToast
@@ -71,14 +53,40 @@ const App = () => {
 
         <Header />
         <div className="toastBar">
-          <button className="btnToast success" type="button" onClick={() => displayToast('success message', 'success')}>Success</button>
-          <button className="btnToast info" type="button" onClick={() => displayToast('info message', 'info')}>Info</button>
-          <button className="btnToast warning" type="button" onClick={() => displayToast('warning message', 'warning')}>Warn</button>
-          <button className="btnToast error" type="button" onClick={() => displayToast('error message', 'error')}>Error</button>
+          <button
+            className="btnToast success"
+            type="button"
+            onClick={() => displayToast('success message', 'success')}
+          >
+            Success
+          </button>
+          <button
+            className="btnToast info"
+            type="button"
+            onClick={() => displayToast('info message', 'info')}
+          >
+            Info
+          </button>
+          <button
+            className="btnToast warning"
+            type="button"
+            onClick={() => displayToast('warning message', 'warning')}
+          >
+            Warn
+          </button>
+          <button
+            className="btnToast error"
+            type="button"
+            onClick={() => displayToast('error message', 'error')}
+          >
+            Error
+          </button>
           <button
             className="btnToast"
             type="button"
-            onClick={() => displayToast('Default toast provided with extra text to demo that the toast component will expand vertically up to 800px.')}
+            onClick={() => displayToast(
+              'Default toast provided with extra text to demo that the toast component will expand vertically up to 800px.'
+            )}
           >
             Default
           </button>
@@ -87,6 +95,7 @@ const App = () => {
       <Switch>
         <Route exact path="/" render={() => <ProductPage />} />
         <Route exact path="/home" render={() => <HomePage />} />
+        <Route exact path="/profilepage" render={() => <ProfilePage />} />
         <Route exact path="/checkout" render={() => <CheckoutPage />} />
         <Route exact path="/confirmation" render={() => <ConfirmationPage />} />
       </Switch>
@@ -94,6 +103,5 @@ const App = () => {
     </BrowserRouter>
   );
 };
->>>>>>> c7aee88140b0abf647f13ae2cb87b2e1b09c3f96
 
 export default App;

@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import styles from './ProfilePage.css';
+import './ProfilePage.css';
 
 const ProfilePage = () => {
   const shipping = {
     Shipping: '',
-    street: 'Street: 123 main',
-    city: 'City: Baltimore',
-    state: 'State MD',
+    street: '123 main',
+    city: 'Baltimore',
+    state: 'MD',
     zip: '23104'
   };
   const name = {
@@ -19,23 +19,52 @@ const ProfilePage = () => {
   const renderName = () => {
     const { firstname, lastname } = name;
     return (
-      <div>
-        <li>{firstname}</li>
-        <li>{lastname}</li>
+      <div className="userInfo">
+        {// eslint-disable-next-line react/jsx-indent
+          <ul className="headerName">
+          Name
+          </ul>
+        }
+        <li>
+          First Name:
+          {' '}
+          {firstname}
+        </li>
+        <li>
+          Last Name:
+          {' '}
+          {lastname}
+        </li>
       </div>
     );
   };
   const renderShipping = () => {
     const {
-      Shipping, street, city, state, zip
+      street, city, state, zip
     } = shipping;
     return (
-      <div>
-        <ul className={styles.shipping}>{Shipping}</ul>
-        <li className={styles.shipping}>{street}</li>
-        <li>{city}</li>
-        <li>{state}</li>
-        <li>{zip}</li>
+      <div className="userInfo">
+        <ul className="headerShipping">Shipping Address</ul>
+        <li>
+          Street:
+          {' '}
+          {street}
+        </li>
+        <li>
+          City:
+          {' '}
+          {city}
+        </li>
+        <li>
+          State:
+          {' '}
+          {state}
+        </li>
+        <li>
+          Zip:
+          {' '}
+          {zip}
+        </li>
       </div>
     );
   };
@@ -48,11 +77,19 @@ const ProfilePage = () => {
     setDisplayName(true);
   };
   return (
-    <div className="ProfilePage">
-      {displayName ? renderName() : <></>}
-      <button type="button" onClick={clickName}>Name</button>
-      {displayShipping ? renderShipping() : <></>}
-      <button type="button" onClick={clickShipping}>Shipping</button>
+    <div className="profile">
+      <div className="ui">
+        <button className="tabs" type="button" onClick={clickName}>
+          Name
+        </button>
+        <button className="tabs" type="button" onClick={clickShipping}>
+          Shipping Address
+        </button>
+        <div className="userInfodiv">
+          {displayName ? renderName() : <></>}
+          {displayShipping ? renderShipping() : <></>}
+        </div>
+      </div>
     </div>
   );
 };
