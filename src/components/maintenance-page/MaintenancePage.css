@@ -41,6 +41,20 @@ tbody {
     align-items: center;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 3vw;
+    margin-top: .70vw;
     
+}
+.Buttons{
+    margin-left: 2vw;
+}
+.createButton{
+    background: #666666;
+    border-radius: 20px;
+    color: #EEEEEE;
+    cursor: pointer;
+    font-weight: 600px;
+    height: 3em;
+    justify-self: center;
+    width: 20%;
+    position: static;
 }
