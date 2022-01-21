@@ -13,7 +13,6 @@ code {
     monospace;
 }
 
-<<<<<<< HEAD
 .footer {
   align-items: center;
   background-color: #1D2228; 
@@ -28,7 +27,7 @@ code {
 }
 
 .header {
-  position: sticky;
+  position: fixed;
   z-index: 100;
   top: 0;
   align-items: center;
@@ -45,22 +44,13 @@ code {
 }
 
 .googlebutton{
-  /* margin-left: 500%; */
-  /* max-width: 100%;
   position: relative;
-  left: 580%;
-  bottom: 0%;
-  top: 20%; */
-  position: relative;
-  left: 43%;
+  left: 40%;
   top: 20%;
 }
 
 .carticon{
 height: 60px;
-/* position: relative;
-left: 695%; */
-/* bottom: 70%; */
 position: relative;
 left: 50%;
 bottom: 55%;
@@ -70,11 +60,6 @@ filter:invert(13%) opacity(90%)
 
 .applogo{
   height: 50px;
-  /* position: relative;
-  right: 600%;
-  bottom: 190%;
-  padding-left: 2px;
-  padding-right: 50px; */
   position: relative;
   right: 50%;
   padding-left: 50px;
@@ -82,8 +67,6 @@ filter:invert(13%) opacity(90%)
   filter: invert(56%) sepia(85%) saturate(1849%) hue-rotate(345deg) brightness(102%) contrast();
 }
 
-=======
->>>>>>> c7aee88140b0abf647f13ae2cb87b2e1b09c3f96
 #root{
   display:flex;
   flex-direction: column;
@@ -92,7 +75,3 @@ filter:invert(13%) opacity(90%)
   min-height: 100vh;
 }
 
-<<<<<<< HEAD
-=======
-
->>>>>>> c7aee88140b0abf647f13ae2cb87b2e1b09c3f96
