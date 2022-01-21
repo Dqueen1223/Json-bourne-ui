@@ -1,84 +1,6 @@
-// import { StylesContext } from '@material-ui/styles';
 import React, { useState } from 'react';
-// import { readConfigFile } from 'typescript';
+import styles from './ProfilePage.css';
 
-// import { TouchableOpacity, Text, View } from 'react-native';
-// const ShippingInfo = () => (
-//   <>
-//     <div>
-//       <ul>Shipping</ul>
-//       <li>Street: 123 main</li>
-//       <li>City: Baltimore</li>
-//       <li>State: MD</li>
-//       <li>Zip: 13913</li>
-//     </div>
-//     <div>
-//       <p>Street: 123 mainS</p>
-//     </div>
-//     <div>
-//       <p>City: Baltimore</p>
-//     </div>
-//   </>
-// );
-// const UserName = () => (
-//   <>
-//     <div>
-//       <ul>FirstName : FirstName</ul>
-//       <ul>LastName : LastName</ul>
-//     </div>
-//   </>
-// );
-// const Shipping = (props) => (
-//   <div>
-//     <button type="button" onClick={props}>
-//       Shipping
-//     </button>
-//   </div>
-// );
-// class ProfilePage extends React.Component {
-//   constructor(props) {
-//     super(props);
-//     this.ShippingButton = this.ShippingButton.bind(this);
-//     this.setState = { displayShipping: false };
-//   }
-
-//   ShippingButton() {
-//     this.setState({ displayShipping: true });
-//   }
-
-//   render() {
-//     const { displayShipping } = this.state;
-//     let button;
-//     if (displayShipping) {
-//       button = <ShippingInfo onClick={this.ShippingButton} />;
-//     }
-//     return (
-//       <div>
-//         <Shipping />
-//         {button}
-//         <UserName />
-//       </div>
-//     );
-//   }
-// }
-// const ShippingButton = () => {
-//   (
-//     <div>
-//       <ul>Shipping</ul>
-//       <li>Street: 123 main</li>
-//       <li>City: Baltimore</li>
-//       <li>State: MD</li>
-//       <li>Zip: 13913</li>
-//     </div>
-//   );
-// };
-// const [shipping, setShipping] = useState([{
-//   Shipping: 'shipping',
-//   street: 'Street: 123 main',
-//   city: 'City: Baltimore',
-//   state: 'State MD',
-//   zip: '23104'
-// }]);
 const ProfilePage = () => {
   const shipping = {
     Shipping: '',
@@ -87,16 +9,30 @@ const ProfilePage = () => {
     state: 'State MD',
     zip: '23104'
   };
-  const [display, setDisplay] = useState(false);
+  const name = {
+    firstname: 'JSON',
+    lastname: 'Bourne'
+  };
+  const [displayName, setDisplayName] = useState(false);
+  const [displayShipping, setDisplayShipping] = useState(false);
 
+  const renderName = () => {
+    const { firstname, lastname } = name;
+    return (
+      <div>
+        <li>{firstname}</li>
+        <li>{lastname}</li>
+      </div>
+    );
+  };
   const renderShipping = () => {
     const {
       Shipping, street, city, state, zip
     } = shipping;
     return (
       <div>
-        <ul>{Shipping}</ul>
-        <li>{street}</li>
+        <ul className={styles.shipping}>{Shipping}</ul>
+        <li className={styles.shipping}>{street}</li>
         <li>{city}</li>
         <li>{state}</li>
         <li>{zip}</li>
@@ -104,11 +40,18 @@ const ProfilePage = () => {
     );
   };
   const clickShipping = () => {
-    setDisplay(true);
+    setDisplayName(false);
+    setDisplayShipping(true);
+  };
+  const clickName = () => {
+    setDisplayShipping(false);
+    setDisplayName(true);
   };
   return (
     <div className="ProfilePage">
-      {display ? renderShipping() : <></>}
+      {displayName ? renderName() : <></>}
+      <button type="button" onClick={clickName}>Name</button>
+      {displayShipping ? renderShipping() : <></>}
       <button type="button" onClick={clickShipping}>Shipping</button>
     </div>
   );

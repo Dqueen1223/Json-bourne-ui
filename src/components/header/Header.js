@@ -31,7 +31,7 @@ const Header = () => {
   };
 
   /**
-   * @name handleGoogleLoginSuccess
+   * @name handleGoogleLoginFailure
    * @description Function to run if google login was unsuccessful
    */
   const handleGoogleLoginFailure = () => {
