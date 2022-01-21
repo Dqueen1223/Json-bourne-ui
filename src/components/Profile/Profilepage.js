@@ -13,7 +13,7 @@ const ProfilePage = () => {
     firstname: 'JSON',
     lastname: 'Bourne'
   };
-  const [displayName, setDisplayName] = useState(false);
+  const [displayName, setDisplayName] = useState(true);
   const [displayShipping, setDisplayShipping] = useState(false);
 
   const renderName = () => {
