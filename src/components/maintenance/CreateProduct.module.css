@@ -1,0 +1,38 @@
+/* */
+.productForm {
+    margin: auto;
+    width: auto;
+    display: inherit;
+}
+
+.createProductDetails {
+    margin-right: 10px;
+    max-width: 200px;
+}
+.createProductTypes {
+    width: auto;
+}
+.createProductControl {
+    margin-left: 10px;
+    width: auto;
+}
+/* .react-datetime-picker >  {
+    height: inherit;
+    width: 100%;
+    margin-top: 0px;
+    box-sizing: border-box;
+} */
+.react-datetime-picker__inputGroup  {
+    height: 32px;
+    width: inherit;
+} 
+
+.submitButton {
+    margin: 25px;
+    width: 150px;
+    height: 75px;
+    box-shadow: #FB8122;
+    border-radius: 5px;
+    background-color: #FB8122;
+}
+
