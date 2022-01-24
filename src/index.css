@@ -1,5 +1,6 @@
 body {
   margin: 0;
+  margin-top: 90px;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
@@ -27,9 +28,10 @@ code {
 }
 
 .header {
-  position: sticky;
-  z-index: 100;
+  position: fixed;
   top: 0;
+  z-index: 100;
+  margin-bottom: 10px;
   align-items: center;
   background-color: #1D2228; 
   color: #E1E2E2;
@@ -39,8 +41,8 @@ code {
   flex-direction: column;
   height: 70px;
   justify-content:center;
-  margin-bottom:10vh;
-  width: 100%; 
+  /* margin-bottom:10vh; */
+  width: 100%; ;
 }
 
 .googlebutton{
