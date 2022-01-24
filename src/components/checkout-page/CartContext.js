@@ -7,7 +7,7 @@ function cartReducer(state, action) {
     case 'delete': {
       return {
         ...state,
-        products: state.products.filter((product) => product.title !== action.product.title)
+        products: state.products.filter((product) => product.name !== action.product.name)
       };
     }
     case 'add': {
