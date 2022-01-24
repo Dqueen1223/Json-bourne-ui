@@ -82,8 +82,9 @@ const Header = () => {
           />
           )}
       </div>
-     <a href="/checkout"> <img className="carticon" src="https://icon-library.com/images/white-shopping-cart-icon/white-shopping-cart-icon-1.jpg" alt="cartimage" /></a>
+      <a href="/checkout"> <img className="carticon" src="https://icon-library.com/images/white-shopping-cart-icon/white-shopping-cart-icon-1.jpg" alt="cartimage" /></a>
       <a href="/home"><img className="applogo" src="https://icon-library.com/images/sports-app-icon/sports-app-icon-14.jpg" alt="applogo" /> </a>
+      
     </div>
   );
 };

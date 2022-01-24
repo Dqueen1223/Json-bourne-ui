@@ -1,4 +1,4 @@
-body {
+ body {
   margin: 0;
   margin-top: 90px;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -36,6 +36,7 @@ code {
   background-color: #1D2228; 
   color: #E1E2E2;
   display: flexbox;
+  flex-wrap: wrap;
   grid-row: 50px;
   text-align: center;
   flex-direction: column;
@@ -47,26 +48,32 @@ code {
 
 .googlebutton{
   position: relative;
-  left: 40%;
+  left: 39vw;
   top: 20%;
+  padding-right: 10px;
 }
 
 .carticon{
 height: 60px;
 position: relative;
-left: 50%;
+/* left: 50%; */
 bottom: 55%;
-padding-left: 20px;
-filter:invert(13%) opacity(90%) 
+padding-right: 35px;
+filter:invert(13%) opacity(90%); 
+float: right;
 }
 
 .applogo{
   height: 50px;
   position: relative;
-  right: 50%;
-  padding-left: 50px;
-  bottom: 60%;
-  filter: invert(70%) sepia(85%) saturate(1849%) hue-rotate(345deg) brightness(102%) contrast();
+  /* right: 50%; */
+  padding-left: 30px;
+  bottom: 50%;
+  /* filter: invert(69%) sepia(56%) saturate(4559%) hue-rotate(345deg) brightness(101%) contrast(97); */
+  filter: invert(51%) sepia(1100%) saturate(700%) hue-rotate(345deg) brightness(100%) contrast(100%);
+   filter: invert(20%) sepia(56%) saturate(303%) hue-rotate(1deg) brightness(170%) contrast(90%);
+  /* filter: invert(67%) sepia(37%) saturate(5565%) hue-rotate(345deg) brightness(101%) contrast(97%); */
+  float: left;
 }
 
 #root{
