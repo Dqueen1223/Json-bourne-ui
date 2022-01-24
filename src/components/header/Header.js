@@ -86,7 +86,7 @@ const Header = () => {
           />
         )}
       </div>
-      {/* <img
+      <img
         className="carticon"
         src="https://icon-library.com/images/white-shopping-cart-icon/white-shopping-cart-icon-1.jpg"
         alt="cartimage"
@@ -96,7 +96,7 @@ const Header = () => {
         src="https://icon-library.com/images/sports-app-icon/sports-app-icon-14.jpg"
         alt="applogo"
       />
-      <img className="profileIcon" src="https://www.citypng.com/public/uploads/preview/download-profile-user-round-orange-icon-symbol-png-11639594360ksf6tlhukf.png" alt="profileIcon" /> */}
+      <img className="profileIcon" src="https://www.citypng.com/public/uploads/preview/download-profile-user-round-orange-icon-symbol-png-11639594360ksf6tlhukf.png" alt="profileIcon" />
     </div>
   );
 };
