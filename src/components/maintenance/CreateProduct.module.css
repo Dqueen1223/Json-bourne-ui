@@ -1,4 +1,9 @@
 /* */
+.productFormContainer {
+    margin: auto;
+    width: auto;
+    display: inherit;
+}
 .productForm {
     margin: auto;
     width: auto;
@@ -7,14 +12,14 @@
 
 .createProductDetails {
     margin-right: 10px;
-    max-width: 200px;
+    width: 250px;
 }
 .createProductTypes {
-    width: auto;
+    width: 250px;
 }
 .createProductControl {
     margin-left: 10px;
-    width: auto;
+    width: 250px;
 }
 /* .react-datetime-picker >  {
     height: inherit;
@@ -24,15 +29,18 @@
 } */
 .react-datetime-picker__inputGroup  {
     height: 32px;
-    width: inherit;
+    width: 250px;
 } 
 
 .submitButton {
-    margin: 25px;
-    width: 150px;
-    height: 75px;
-    box-shadow: #FB8122;
-    border-radius: 5px;
-    background-color: #FB8122;
+    margin: auto;
+    background: #666666;
+    border-radius: 20px;
+    color: #EEEEEE;
+    cursor: pointer;
+    font-weight: 600px;
+    height: 3em;
+    justify-self: center;
+    width: 750px;
 }
 

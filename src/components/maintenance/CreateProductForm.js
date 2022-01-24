@@ -89,7 +89,7 @@ const ProductForm = ({
           id="secondaryColorCode"
           label="SecondaryColorCode"
           onChange={onProductChange}
-          value={product.primaryColorCode}
+          value={product.secondaryColorCode}
         />
       </div>
       <div className={styles.createProductControl}>

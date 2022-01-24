@@ -8,67 +8,57 @@ const CreateProduct = () => {
   const [product, setProductData] = useState({});
   const [date, onChange] = useState(new Date());
   const onProductChange = (e) => {
-    product.releaseDate = date.toString();
+    product.releaseDate = date.toDateString();
     setProductData({ ...product, [e.target.id]: e.target.value });
   };
   const handleCreate = () => {
     if (product.isActive === 'Active') {
-      product.isActive = true;
+      product.active = true;
     } else {
-      product.isActive = false;
+      product.active = false;
     }
     const newProduct = {
-      Name: product.name,
-      Sku: product.sku,
-      Description: product.description,
-      Demographic: product.demographic,
-      Category: product.category,
-      Type: product.type,
-      ReleaseDate: product.releaseDate,
-      PrimaryColorCode: product.primaryColorCode,
-      SecondaryColorCode: product.secondaryColorCode,
-      StyleNumber: product.styleNumber,
-      GlobalProductCode: product.globalProductCode,
-      Active: product.isActive,
-      Brand: product.brand,
-      ImageSrc: product.imageSrc,
-      Material: product.material,
-      Price: 99.02,
-      Quantity: Number(product.quantity)
+      name: product.name,
+      sku: product.sku,
+      description: product.description,
+      demographic: product.demographic,
+      category: product.category,
+      type: product.type,
+      releaseDate: product.releaseDate,
+      primaryColorCode: product.primaryColorCode,
+      secondaryColorCode: product.secondaryColorCode,
+      styleNumber: product.styleNumber,
+      globalProductCode: product.globalProductCode,
+      active: product.isActive,
+      brand: product.brand,
+      imageSrc: product.imageSrc,
+      material: product.material,
+      price: product.price,
+      quantity: product.quantity
     };
-    // const newProduct = {
-    //   Name: 'Yeezy socks',
-    //   Sku: 'Ye-ye-321',
-    //   Description: 'These junts bussin',
-    //   Demographic: 'Men',
-    //   Category: 'Socks',
-    //   Type: 'sock',
-    //   ReleaseDate: '2022-02-04',
-    //   PrimaryColorCode: '#EDDA74',
-    //   SecondaryColorCode: '#EDDA74',
-    //   StyleNumber: '234',
-    //   GlobalProductCode: '111111',
-    //   Active: false,
-    //   Brand: 'Yeezy',
-    //   ImageSrc: 'yahoo',
-    //   Material: 'Plastic, Kroger sack',
-    //   Price: 100.99,
-    //   Quantity: 50
-    // };
-    console.log(newProduct);
+
     makeProduct(newProduct);
   };
   return (
-    <div className={styles.productForm}>
-      <ProductForm
-        product={product}
-        setProductData={setProductData}
-        date={date}
-        onChange={onChange}
-        onProductChange={onProductChange}
-      />
-      <button className={styles.submitButton} onClick={handleCreate} type="button">Submit</button>
-    </div>
+    <>
+      <div className={styles.productFormContainer}>
+        <ProductForm
+          className={styles.productForm}
+          product={product}
+          setProductData={setProductData}
+          date={date}
+          onChange={onChange}
+          onProductChange={onProductChange}
+        />
+      </div>
+      <button
+        className={styles.submitButton}
+        onClick={handleCreate}
+        type="button"
+      >
+        Submit
+      </button>
+    </>
   );
 };
 
