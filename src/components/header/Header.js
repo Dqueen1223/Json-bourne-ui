@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 // import { NavLink } from 'react-router-dom';
 import GoogleLogin, { GoogleLogout } from 'react-google-login';
 // import { render } from 'react-dom';
+// import { formatDiagnosticsWithColorAndContext } from 'typescript';
 import loginUser from './HeaderService';
 import constants from '../../utils/constants';
+import { useProfile } from '../Profile/ProfileContext';
 
 /**
  * @name Header
@@ -14,8 +16,8 @@ const Header = () => {
   const [user, setUser] = useState('');
   const [googleError, setGoogleError] = useState('');
   const [apiError, setApiError] = useState(false);
-  const [profileIcon, setProfileIcon] = useState(false);
-
+  const [isLoggedIn, setisLoggedIn] = useState(false);
+  const { dispatch } = useProfile();
   /**
    * @name handleGoogleLoginSuccess
    * @description Function to run if google login was successful
@@ -28,8 +30,8 @@ const Header = () => {
       firstName: response.profileObj.givenName,
       lastName: response.profileObj.familyName
     };
-    loginUser(googleUser, setUser, setApiError);
-    if (googleUser !== null) { setProfileIcon(true); }
+    loginUser(googleUser, setUser, setApiError, dispatch);
+    if (googleUser !== null) { setisLoggedIn(true); }
     setGoogleError('');
   };
 
@@ -66,7 +68,7 @@ const Header = () => {
     <a href="/profilepage">
       <img
         className="profileicon"
-        src="https://www.citypng.com/public/uploads/preview/download-profile-user-round-orange-icon-symbol-png-11639594360ksf6tlhukf.png"
+        src="file:///C:/Users/dqueen/Desktop/PBL/json-bourne-ui/src/components/header/ProfileIcon.png"
         alt="profileIcon"
       />
     </a>
@@ -116,7 +118,7 @@ const Header = () => {
         {' '}
       </a>
       {' '}
-      {profileIcon ? renderProfileicon() : <></>}
+      {isLoggedIn ? renderProfileicon() : <></>}
       {/* If a user is logged in then direct them towards the profile page
       if a user is not logged in don't direct them to profile page and display a warning message */}
       {/* </div> */}

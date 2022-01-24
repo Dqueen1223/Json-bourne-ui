@@ -6,13 +6,24 @@ import HttpHelper from '../../utils/HttpHelper';
  * @param {String} email Target Email
  * @param {Function} setUser Sets the user state
  */
-const getUserByEmail = async (email, setUser) => {
+const getUserByEmail = async (email, setUser, dispatch) => {
   let userByEmailExists;
 
   await HttpHelper(`/users/${email}`, 'GET')
     .then((response) => {
       if (response.status === 200) {
         userByEmailExists = true;
+        dispatch({
+          type: 'login',
+          Profile: {
+            firstName: response.firstName,
+            lastName: response.lastName,
+            Street: response.street,
+            City: response.city,
+            State: response.state,
+            Zip: response.zip
+          }
+        });
         return response.json();
       }
       if (response.status === 404) {
@@ -25,7 +36,6 @@ const getUserByEmail = async (email, setUser) => {
       document.cookie = `user=${JSON.stringify(body)}`;
     })
     .catch(() => {});
-
   return userByEmailExists;
 };
 
@@ -60,8 +70,8 @@ const createUser = async (user, setUser, setApiError) => {
  * @param {Function} setUser Sets the user
  * @param {Function} setApiError Sets the Api Error
  */
-const loginUser = async (googleUser, setUser, setApiError) => {
-  const userByEmailExists = await getUserByEmail(googleUser.email, setUser);
+const loginUser = async (googleUser, setUser, setApiError, dispatch) => {
+  const userByEmailExists = await getUserByEmail(googleUser.email, setUser, dispatch);
   if (!userByEmailExists) {
     createUser(googleUser, setUser, setApiError);
   }

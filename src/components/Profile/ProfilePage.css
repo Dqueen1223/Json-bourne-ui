@@ -3,15 +3,38 @@ li{
     margin: 1.5em 0;
     width: 220px;
 }
+.headerShipping{
+position: relative;
+text-align: justify;
+padding:2px 1.25em 0px;
+border-bottom: 5px solid #FB8122;
+border-radius: 5%;
+width: 150px;
+}
+
+.headerName{
+    display: block;
+    text-align: center;
+    padding:2px 1.25em 0px;
+    position: relative;
+    border-radius: 5%;
+    border-bottom: 5px solid #FB8122;
+    width: 150px;
+}
 .userInfo{
     margin-bottom: 4em;
     font-size: large;
     flex: 1 1 90%;
     color: #1d2228;
-    height: 10em;
+    height: 6em;
     text-align: left;
 }
-
+.profile{
+    display: relative;
+    flex: 1 1 5%;
+    flex-direction: column;
+    height: 80%;
+}
 .tabs{
     background-color: #1d2228;
     border: 1px solid;
@@ -21,40 +44,16 @@ li{
     height: 2.5em;
     width: 8em;
 }
-.profile{
+.ui {
     display: flex;
     flex: 1 1 10%;
-    flex-direction: column;
     height: 100%;
 }
-.ui {
-    flex: 1 1 10%;
-}
+
 .userInfodiv{
     position: absolute;
-    margin-left: auto;
-    margin-right: auto;
     top: 10.5em;
     left: 44.5%;
     width: 15%;
     height: 8em;
-}
-.headerShipping{
-position: relative;
-text-align: justify;
-border-radius: 5px;
-border-bottom: 5px solid #FB8122;
-width: 75%;
-}
-
-.headerName{
-    display: block;
-    text-align: center;
-    padding:2px 1.25em 0px;
-    padding-right: 33%;
-    padding-left: 30%;
-    position: relative;
-    border-radius: 5px;
-    border-bottom: 5px solid #FB8122;
-    width: 30%;
 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './ProfilePage.css';
 
 const ProfilePage = () => {
@@ -13,8 +13,8 @@ const ProfilePage = () => {
     firstname: 'JSON',
     lastname: 'Bourne'
   };
-  const [displayName, setDisplayName] = useState(true);
-  const [displayShipping, setDisplayShipping] = useState(false);
+  // const [displayName, setDisplayName] = useState(true);
+  // const [displayShipping, setDisplayShipping] = useState(true);
 
   const renderName = () => {
     const { firstname, lastname } = name;
@@ -68,26 +68,28 @@ const ProfilePage = () => {
       </div>
     );
   };
-  const clickShipping = () => {
-    setDisplayName(false);
-    setDisplayShipping(true);
-  };
-  const clickName = () => {
-    setDisplayShipping(false);
-    setDisplayName(true);
-  };
+  // const clickShipping = () => {
+  //   setDisplayName(false);
+  //   setDisplayShipping(true);
+  // };
+  // const clickName = () => {
+  //   setDisplayShipping(false);
+  //   setDisplayName(true);
+  // };
   return (
     <div className="profile">
       <div className="ui">
-        <button className="tabs" type="button" onClick={clickName}>
+        {/* <button className="tabs" type="button" onClick={clickName}>
           Name
         </button>
         <button className="tabs" type="button" onClick={clickShipping}>
           Shipping Address
-        </button>
+        </button> */}
         <div className="userInfodiv">
-          {displayName ? renderName() : <></>}
-          {displayShipping ? renderShipping() : <></>}
+          {renderName()}
+          {renderShipping()}
+          {/* {displayName ? renderName() : <></>}
+          {displayShipping ? renderShipping() : <></>} */}
         </div>
       </div>
     </div>
