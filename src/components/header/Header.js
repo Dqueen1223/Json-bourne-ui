@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+// import { NavLink } from 'react-router-dom';
 import GoogleLogin, { GoogleLogout } from 'react-google-login';
+// import { render } from 'react-dom';
 import loginUser from './HeaderService';
 import constants from '../../utils/constants';
 
@@ -13,6 +14,7 @@ const Header = () => {
   const [user, setUser] = useState('');
   const [googleError, setGoogleError] = useState('');
   const [apiError, setApiError] = useState(false);
+  const [profileIcon, setProfileIcon] = useState(false);
 
   /**
    * @name handleGoogleLoginSuccess
@@ -27,6 +29,7 @@ const Header = () => {
       lastName: response.profileObj.familyName
     };
     loginUser(googleUser, setUser, setApiError);
+    if (googleUser !== null) { setProfileIcon(true); }
     setGoogleError('');
   };
 
@@ -59,10 +62,19 @@ const Header = () => {
     );
   };
 
+  const renderProfileicon = () => (
+    <a href="/profilepage">
+      <img
+        className="profileicon"
+        src="https://www.citypng.com/public/uploads/preview/download-profile-user-round-orange-icon-symbol-png-11639594360ksf6tlhukf.png"
+        alt="profileIcon"
+      />
+    </a>
+  );
   return (
     <div className="header">
-      <NavLink to="/home">Home</NavLink>
-      <NavLink to="/checkout">Cart</NavLink>
+      {/* <NavLink to="/home">Home</NavLink> */}
+      {/* <NavLink to="/checkout">Cart</NavLink> */}
       <div className="googlebutton">
         {user && <span>{user.firstName}</span>}
         {user && <span> </span>}
@@ -86,24 +98,29 @@ const Header = () => {
           />
         )}
       </div>
-      <img
-        className="carticon"
-        src="https://icon-library.com/images/white-shopping-cart-icon/white-shopping-cart-icon-1.jpg"
-        alt="cartimage"
-      />
-      <img
-        className="applogo"
-        src="https://icon-library.com/images/sports-app-icon/sports-app-icon-14.jpg"
-        alt="applogo"
-      />
-      <img
-        href="/profilepage"
-        className="profileIcon"
-        src="https://www.citypng.com/public/uploads/preview/download-profile-user-round-orange-icon-symbol-png-11639594360ksf6tlhukf.png"
-        alt="profileIcon"
-      />
+      {/* <div className="box"> */}
+      <a href="/checkout">
+        {' '}
+        <img
+          className="carticon"
+          src="https://icon-library.com/images/white-shopping-cart-icon/white-shopping-cart-icon-1.jpg"
+          alt="cartimage"
+        />
+      </a>
+      <a href="/home">
+        <img
+          className="applogo"
+          src="https://icon-library.com/images/sports-app-icon/sports-app-icon-14.jpg"
+          alt="applogo"
+        />
+        {' '}
+      </a>
+      {' '}
+      {profileIcon ? renderProfileicon() : <></>}
+      {/* If a user is logged in then direct them towards the profile page
+      if a user is not logged in don't direct them to profile page and display a warning message */}
+      {/* </div> */}
     </div>
   );
 };
-
 export default Header;
