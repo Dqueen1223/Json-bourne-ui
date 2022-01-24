@@ -8,9 +8,14 @@ import styles from './DeliveryAddress.module.css';
  * @description Allows entry of Billing Details
  * @return component
  */
-const BillingDetails = ({ onChange, billingData, useShippingForBilling }) => {
+const BillingDetails = ({
+  onChange, billingData, useShippingForBilling, errors
+}) => {
   const usStates = ['Alabama', 'Alaska', 'American Samoa', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'District of Columbia', 'Federated States of Micronesia', 'Florida', 'Georgia', 'Guam', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Marshall Islands', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Northern Mariana Islands', 'Ohio', 'Oklahoma', 'Oregon', 'Palau', 'Pennsylvania', 'Puerto Rico', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virgin Island', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
-
+  let error = errors;
+  if (error === undefined) {
+    error = {};
+  }
   return (
 
     <div className={styles.deliveryAddress}>
@@ -24,6 +29,7 @@ const BillingDetails = ({ onChange, billingData, useShippingForBilling }) => {
             label="Street"
             onChange={onChange}
             value={billingData.billingStreet}
+            error={error.billingStreet}
           />
 
           <FormItem
@@ -33,6 +39,7 @@ const BillingDetails = ({ onChange, billingData, useShippingForBilling }) => {
             label="Street 2 (Optional)"
             onChange={onChange}
             value={billingData.billingStreet2}
+            error={error.billingStreet2}
           />
 
           <FormItem
@@ -41,6 +48,7 @@ const BillingDetails = ({ onChange, billingData, useShippingForBilling }) => {
             label="City"
             onChange={onChange}
             value={billingData.billingCity}
+            error={error.billingCity}
           />
 
           <FormItemDropdown
@@ -49,6 +57,7 @@ const BillingDetails = ({ onChange, billingData, useShippingForBilling }) => {
             onChange={onChange}
             value={billingData.billingState}
             options={usStates}
+            error={error.billingState}
           />
 
           <FormItem
@@ -58,6 +67,7 @@ const BillingDetails = ({ onChange, billingData, useShippingForBilling }) => {
             label="Zip"
             onChange={onChange}
             value={billingData.billingZip}
+            error={error.billingZip}
           />
         </>
       )}
@@ -68,6 +78,7 @@ const BillingDetails = ({ onChange, billingData, useShippingForBilling }) => {
         label="Email"
         onChange={onChange}
         value={billingData.email}
+        error={error.email}
       />
 
       <FormItem
@@ -77,6 +88,7 @@ const BillingDetails = ({ onChange, billingData, useShippingForBilling }) => {
         label="Phone"
         onChange={onChange}
         value={billingData.phone}
+        error={error.phone}
       />
 
       <FormItem
@@ -86,6 +98,7 @@ const BillingDetails = ({ onChange, billingData, useShippingForBilling }) => {
         label="Credit Card"
         onChange={onChange}
         value={billingData.creditCard}
+        error={error.creditCard}
       />
 
       <FormItem
@@ -95,6 +108,7 @@ const BillingDetails = ({ onChange, billingData, useShippingForBilling }) => {
         label="CVV"
         onChange={onChange}
         value={billingData.cvv}
+        error={error.cvv}
       />
 
       <FormItem
@@ -104,6 +118,7 @@ const BillingDetails = ({ onChange, billingData, useShippingForBilling }) => {
         label="Expiration"
         onChange={onChange}
         value={billingData.expiration}
+        error={error.expiration}
       />
 
       <FormItem
@@ -112,6 +127,7 @@ const BillingDetails = ({ onChange, billingData, useShippingForBilling }) => {
         label="Cardholder Name"
         onChange={onChange}
         value={billingData.cardholder}
+        error={error.cardholder}
       />
     </div>
 

@@ -40,43 +40,46 @@ const CheckoutPage = () => {
       setChecked(true);
     }
   };
+  const [errors, setErrors] = React.useState({});
 
   const handlePay = () => {
-    validateForm(deliveryData, billingData, checked)
-    const productData = products.map(({ id, quantity }) => ({ id, quantity }));
-    const deliveryAddress = {
-      firstName: deliveryData.firstName,
-      lastName: deliveryData.lastName,
-      street: deliveryData.street,
-      street2: deliveryData.street2,
-      city: deliveryData.city,
-      state: deliveryData.state,
-      zip: deliveryData.zip
-    };
-    const billingAddress = {};
-    if (checked) {
-      billingAddress.street = deliveryAddress.street;
-      billingAddress.street2 = deliveryAddress.street2;
-      billingAddress.city = deliveryAddress.city;
-      billingAddress.state = deliveryAddress.state;
-      billingAddress.zip = deliveryAddress.zip;
-    } else {
-      billingAddress.street = billingData.billingStreet;
-      billingAddress.street2 = billingData.billingStreet2;
-      billingAddress.city = billingData.billingCity;
-      billingAddress.state = billingData.billingState;
-      billingAddress.zip = billingData.billingZip;
-    }
-    billingAddress.email = billingData.email;
-    billingAddress.phone = billingData.phone;
+    setErrors(validateForm(deliveryData, billingData, checked));
+    if (Object.keys(errors).length === 0) {
+      const productData = products.map(({ id, quantity }) => ({ id, quantity }));
+      const deliveryAddress = {
+        firstName: deliveryData.firstName,
+        lastName: deliveryData.lastName,
+        street: deliveryData.street,
+        street2: deliveryData.street2,
+        city: deliveryData.city,
+        state: deliveryData.state,
+        zip: deliveryData.zip
+      };
+      const billingAddress = {};
+      if (checked) {
+        billingAddress.street = deliveryAddress.street;
+        billingAddress.street2 = deliveryAddress.street2;
+        billingAddress.city = deliveryAddress.city;
+        billingAddress.state = deliveryAddress.state;
+        billingAddress.zip = deliveryAddress.zip;
+      } else {
+        billingAddress.street = billingData.billingStreet;
+        billingAddress.street2 = billingData.billingStreet2;
+        billingAddress.city = billingData.billingCity;
+        billingAddress.state = billingData.billingState;
+        billingAddress.zip = billingData.billingZip;
+      }
+      billingAddress.email = billingData.email;
+      billingAddress.phone = billingData.phone;
 
-    const creditCard = {
-      cardNumber: billingData.creditCard,
-      cvv: billingData.cvv,
-      expiration: billingData.expiration,
-      cardholder: billingData.cardholder
-    };
-    makePurchase(productData, deliveryAddress, billingAddress, creditCard).then(() => history.push('/confirmation'));
+      const creditCard = {
+        cardNumber: billingData.creditCard,
+        cvv: billingData.cvv,
+        expiration: billingData.expiration,
+        cardholder: billingData.cardholder
+      };
+      makePurchase(productData, deliveryAddress, billingAddress, creditCard).then(() => history.push('/confirmation'));
+    }
   };
 
   return (
@@ -87,7 +90,7 @@ const CheckoutPage = () => {
       </div>
       <div className={`${styles.step} ${styles.delivery}`}>
         <h3 className={styles.title}>2. Delivery Address</h3>
-        <DeliveryAddress onChange={onDeliveryChange} deliveryData={deliveryData} />
+        <DeliveryAddress onChange={onDeliveryChange} deliveryData={deliveryData} errors={errors} />
         <label htmlFor="useSame" className={styles.sameAddressText}>
           <div className={styles.useSameAddress}>
             <input
@@ -106,6 +109,7 @@ const CheckoutPage = () => {
           onChange={onBillingChange}
           billingData={billingData}
           useShippingForBilling={checked}
+          errors={errors}
         />
       </div>
       <div className={styles.payNow}>
