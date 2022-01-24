@@ -10,7 +10,7 @@ import Constants from '../../utils/constants';
  */
 export default async function makeProduct(product) {
   console.log(product);
-  await HttpHelper(Constants.CREATE_PRODUCT_ENDPOINT, 'POST', {
+  await HttpHelper(Constants.PRODUCTS_ENDPOINT, 'POST', {
     name: product.name,
     sku: product.sku,
     description: product.description,
