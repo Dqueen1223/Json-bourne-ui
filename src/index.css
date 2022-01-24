@@ -1,7 +1,4 @@
-a{
-  background-color: black;
-  color: black;
-}
+
 body {
   margin: 0;
   margin-top: 90px;
@@ -86,10 +83,6 @@ float: right;
   padding-left: 20px;
   bottom: 60%;
   flex-direction: row;
-  background-color: black;
-}
-.profileicon:before{
-  background-color: black;
 }
 #root{
   display:flex;

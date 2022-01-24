@@ -68,7 +68,7 @@ const Header = () => {
     <a href="/profilepage">
       <img
         className="profileicon"
-        src="file:///C:/Users/dqueen/Desktop/PBL/json-bourne-ui/src/components/header/ProfileIcon.png"
+        src="https://www.citypng.com/public/uploads/preview/download-profile-user-round-orange-icon-symbol-png-11639594360ksf6tlhukf.png"
         alt="profileIcon"
       />
     </a>
