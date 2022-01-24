@@ -96,7 +96,12 @@ const Header = () => {
         src="https://icon-library.com/images/sports-app-icon/sports-app-icon-14.jpg"
         alt="applogo"
       />
-      <img className="profileIcon" src="https://www.citypng.com/public/uploads/preview/download-profile-user-round-orange-icon-symbol-png-11639594360ksf6tlhukf.png" alt="profileIcon" />
+      <img
+        href="/profilepage"
+        className="profileIcon"
+        src="https://www.citypng.com/public/uploads/preview/download-profile-user-round-orange-icon-symbol-png-11639594360ksf6tlhukf.png"
+        alt="profileIcon"
+      />
     </div>
   );
 };
