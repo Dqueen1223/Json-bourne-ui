@@ -1,5 +1,7 @@
 import React from 'react';
 import styles from './FormItem.module.css';
+import validateForm from './FormValidate';
+
 
 /**
  * @name FormItem
@@ -22,6 +24,7 @@ const FormItem = ({
           type={type}
           value={value}
         />
+        errors.{id} && <p>{errors.id}</p>
       </div>
     </label>
   </div>

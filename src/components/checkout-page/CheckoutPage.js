@@ -6,6 +6,7 @@ import ReviewOrderWidget from './ReviewOrderWidget';
 import DeliveryAddress from './forms/DeliveryAddress';
 import BillingDetails from './forms/BillingDetails';
 import makePurchase from './CheckoutService';
+import validateForm from '../form/FormValidate';
 
 /**
  * @name CheckoutPage
@@ -41,6 +42,7 @@ const CheckoutPage = () => {
   };
 
   const handlePay = () => {
+    validateForm(deliveryData, billingData, checked)
     const productData = products.map(({ id, quantity }) => ({ id, quantity }));
     const deliveryAddress = {
       firstName: deliveryData.firstName,
