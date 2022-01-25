@@ -15,6 +15,7 @@ import isLoggedIn from '../header/Header';
 import Footer from '../footer/Footer';
 // eslint-disable-next-line import/no-duplicates
 import Header from '../header/Header';
+import LogoutPage from '../Profile/Logoutpage';
 
 toast.configure();
 const App = () => {
@@ -104,6 +105,7 @@ const App = () => {
           && (<Route exact path="/profilepage" render={() => <ProfilePage />} />)}
         <Route exact path="/checkout" render={() => <CheckoutPage />} />
         <Route exact path="/confirmation" render={() => <ConfirmationPage />} />
+        <Route exact path="/Logout" render={() => <LogoutPage />} />
       </Switch>
       <Footer />
     </BrowserRouter>

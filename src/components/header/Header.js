@@ -6,6 +6,7 @@ import GoogleLogin, { GoogleLogout } from 'react-google-login';
 import loginUser from './HeaderService';
 import constants from '../../utils/constants';
 import { useProfile } from '../Profile/ProfileContext';
+// import logout from '../Profile/Logoutpage';
 
 /**
  * @name Header
@@ -13,11 +14,14 @@ import { useProfile } from '../Profile/ProfileContext';
  * @return component
  */
 const Header = () => {
-  const [user, setUser] = useState('');
+  // const [user, setUser] = useState('');
   const [googleError, setGoogleError] = useState('');
   const [apiError, setApiError] = useState(false);
   const [isLoggedIn, setisLoggedIn] = useState(false);
   const { dispatch } = useProfile();
+  const {
+    state: { user }
+  } = useProfile();
   /**
    * @name handleGoogleLoginSuccess
    * @description Function to run if google login was successful
@@ -30,7 +34,7 @@ const Header = () => {
       firstName: response.profileObj.givenName,
       lastName: response.profileObj.familyName
     };
-    loginUser(googleUser, setUser, setApiError, dispatch);
+    loginUser(googleUser, dispatch, setApiError);
     if (googleUser !== null) { setisLoggedIn(true); }
     setGoogleError('');
   };
@@ -49,9 +53,21 @@ const Header = () => {
    * @name handleGoogleLogoutSuccess
    * @description Function to run if google logout was successful
    */
-  const handleGoogleLogoutSuccess = () => {
-    setUser('');
+  const handleGoogleLogoutSuccess = (response) => {
+    dispatch({
+      type: 'logout',
+      Profile: {
+        firstName: response.firstName,
+        lastName: response.lastName,
+        Street: response.street,
+        City: response.city,
+        State: response.state,
+        Zip: response.zip
+      }
+    });
     setGoogleError('');
+    setisLoggedIn(false);
+    // logout();
   };
 
   /**
@@ -78,12 +94,12 @@ const Header = () => {
       {/* <NavLink to="/home">Home</NavLink> */}
       {/* <NavLink to="/checkout">Cart</NavLink> */}
       <div className="googlebutton">
-        {user && <span>{user.firstName}</span>}
-        {user && <span> </span>}
-        {user && <span>{user.lastName}</span>}
+        {user.length !== 0 && <span>{user.firstName}</span>}
+        {user.length !== 0 && <span> </span>}
+        {user.length !== 0 && <span>{user.lastName}</span>}
         {googleError && <span>{googleError}</span>}
         {apiError && <span>Api Error</span>}
-        {!user ? (
+        {user.length === 0 ? (
           <GoogleLogin
             clientId={constants.GOOGLE_CLIENT_ID}
             buttonText="Login"
@@ -100,7 +116,6 @@ const Header = () => {
           />
         )}
       </div>
-      {/* <div className="box"> */}
       <a href="/checkout">
         {' '}
         <img
@@ -119,9 +134,6 @@ const Header = () => {
       </a>
       {' '}
       {isLoggedIn ? renderProfileicon() : <></>}
-      {/* If a user is logged in then direct them towards the profile page
-      if a user is not logged in don't direct them to profile page and display a warning message */}
-      {/* </div> */}
     </div>
   );
 };
