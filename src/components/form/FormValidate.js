@@ -1,4 +1,11 @@
-export default function validateForm(deliveryData, billingData, checked) {
+/**
+ * takes in all user inputs in checkout page, and makes an object error messages named errors
+ * @param {*} deliveryData
+ * @param {*} billingData
+ * @param {*} checked
+ * @returns
+ */
+export default function validateForm(deliveryData, billingData) {
   const errors = {};
   if (deliveryData.firstName === undefined || deliveryData.firstName.trim() === '') {
     errors.firstName = 'The first name field is required';
@@ -18,19 +25,17 @@ export default function validateForm(deliveryData, billingData, checked) {
   if (deliveryData.zip === undefined || deliveryData.zip.trim() === '') {
     errors.zip = 'The zip field is required';
   }
-  if (!checked) {
-    if (billingData.street === undefined || billingData.street.trim() === '') {
-      errors.billingStreet = 'The street field is required';
-    }
-    if (billingData.street === undefined || billingData.street.trim() === '') {
-      errors.billingCity = 'The city field is required';
-    }
-    if (billingData.street === undefined || billingData.street.trim() === '') {
-      errors.billingState = 'The state field is required';
-    }
-    if (billingData.street === undefined || billingData.street.trim() === '') {
-      errors.billingZip = 'The zip field is required';
-    }
+  if (billingData.billingStreet === undefined || billingData.billingStreet.trim() === '') {
+    errors.billingStreet = 'The street field is required';
+  }
+  if (billingData.billingCity === undefined || billingData.billingCity.trim() === '') {
+    errors.billingCity = 'The city field is required';
+  }
+  if (billingData.billingState === undefined || billingData.billingState.trim() === '') {
+    errors.billingState = 'The state field is required';
+  }
+  if (billingData.billingZip === undefined || billingData.billingZip.trim() === '') {
+    errors.billingZip = 'The zip field is required';
   }
   if (billingData.email === undefined || billingData.email.trim() === '') {
     errors.email = 'The email field is required';
@@ -44,7 +49,9 @@ export default function validateForm(deliveryData, billingData, checked) {
     if (/[^0-9]/.test(billingData.creditCard)) {
       errors.creditCard = 'credit card numbers may not contain non-numbers';
     }
-    if (billingData.creditCard.trim()[0] !== 4 || billingData.creditCard.trim()[0] !== 5) {
+    const CCN = billingData.creditCard.trim().charAt(0);
+    if (CCN !== '4'
+      && billingData.creditCard.trim().charAt(0) !== '5') {
       errors.creditCard = 'this credit card provider is not supported';
     }
     if (billingData.creditCard.trim().length < 16 || billingData.creditCard.trim().length > 19) {
@@ -53,14 +60,35 @@ export default function validateForm(deliveryData, billingData, checked) {
   }
   if (billingData.cvv === undefined || billingData.cvv.trim() === '') {
     errors.cvv = 'The cvv field is required';
-  } else if (billingData.cvv.trim.length !== 3) {
-    errors.cvv = 'The cvv field must be exactly 3 digits long';
-  }
-  if (billingData.expiration === undefined || billingData.expiration.trim() === '') {
-    errors.expiration = 'The expiration field is required';
+  } else {
+    if (/[^0-9]/.test(billingData.cvv)) {
+      errors.cvv = 'the cvv must be only numbers';
+    }
+    if (billingData.cvv.trim().length !== 3) {
+      errors.cvv = 'The cvv field must be exactly 3 digits long';
+    }
   }
   if (billingData.cardholder === undefined || billingData.cardholder.trim() === '') {
     errors.cardholder = 'The cardholder field is required';
+  }
+  if (billingData.expiration === undefined || billingData.expiration.trim() === '') {
+    errors.expiration = 'The expiration field is required';
+  } else {
+    // Date validation
+    const today = new Date();
+    let todayMM = today.getMonth() + 1;
+    const todayYY = today.getFullYear() % 100;
+    if (todayMM < 10) {
+      todayMM = `0${todayMM}`;
+    }
+    const expiryMonth = billingData.expiration.trim().substring(0, 2);
+    const conector = billingData.expiration.trim().substring(2, 3);
+    const expiryYear = billingData.expiration.trim().substring(3);
+    if (/[^0-9]/.test(expiryMonth) || /[^0-9]/.test(expiryYear) || conector.trim() !== '/') {
+      errors.expiration = 'Dates must match format "MM/YY"';
+    } else if (expiryYear < todayYY || (expiryYear === todayYY && expiryMonth <= todayMM)) {
+      errors.expiration = 'This card is expired';
+    }
   }
   return errors;
 }

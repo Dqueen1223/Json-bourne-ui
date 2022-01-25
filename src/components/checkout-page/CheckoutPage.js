@@ -1,5 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { useCart } from './CartContext';
 import styles from './CheckoutPage.module.css';
 import ReviewOrderWidget from './ReviewOrderWidget';
@@ -43,8 +44,7 @@ const CheckoutPage = () => {
   const [errors, setErrors] = React.useState({});
 
   const handlePay = () => {
-    setErrors(validateForm(deliveryData, billingData, checked));
-    if (Object.keys(errors).length === 0) {
+    if (Object.keys(validateForm(deliveryData, billingData)).length === 0) {
       const productData = products.map(({ id, quantity }) => ({ id, quantity }));
       const deliveryAddress = {
         firstName: deliveryData.firstName,
@@ -79,6 +79,9 @@ const CheckoutPage = () => {
         cardholder: billingData.cardholder
       };
       makePurchase(productData, deliveryAddress, billingAddress, creditCard).then(() => history.push('/confirmation'));
+    } else {
+      toast.error('Some fields contain invalid inputs. You have not been charged');
+      setErrors(validateForm(deliveryData, billingData));
     }
   };
 
