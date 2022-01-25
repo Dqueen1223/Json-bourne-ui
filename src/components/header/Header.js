@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+// import { NavLink } from 'react-router-dom';
 import GoogleLogin, { GoogleLogout } from 'react-google-login';
 import loginUser from './HeaderService';
 import constants from '../../utils/constants';
@@ -54,10 +54,16 @@ const Header = () => {
   const handleGoogleLogoutFailure = () => {
     setGoogleError('There was a problem logging out with Google. Please wait and try again later.');
   };
-
+  
   return (
     <div className="header">
       {/* <NavLink to="/home">Home</NavLink> */}
+      <a href="/checkout">
+        <img className="carticon" src="https://icon-library.com/images/white-shopping-cart-icon/white-shopping-cart-icon-1.jpg" alt="cartimage" />
+      </a>
+      <a href="/home">
+        <img className="applogo" src="https://icon-library.com/images/sports-app-icon/sports-app-icon-14.jpg" alt="applogo" />
+      </a>
       {/* <NavLink to="/checkout">Cart</NavLink> */}
       <div className="googlebutton">
       {user && <span>{user.firstName}</span>}
@@ -81,10 +87,7 @@ const Header = () => {
           onFailure={handleGoogleLogoutFailure}
           />
           )}
-      </div>
-      <a href="/checkout"> <img className="carticon" src="https://icon-library.com/images/white-shopping-cart-icon/white-shopping-cart-icon-1.jpg" alt="cartimage" /></a>
-      <a href="/home"><img className="applogo" src="https://icon-library.com/images/sports-app-icon/sports-app-icon-14.jpg" alt="applogo" /> </a>
-      
+      </div>     
     </div>
   );
 };
