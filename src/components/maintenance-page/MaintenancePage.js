@@ -55,25 +55,25 @@ const MaintenancePage = () => {
           </thead>
           <tbody>
             {products.map((product) => (
-              <tr key={product.id} className="Product">
-                <td className="Product">{product.id}</td>
-                <td className="Product">{product.name}</td>
-                <td className="Product">{product.sku}</td>
-                <td className="Product">{product.description}</td>
-                <td className="Product">{product.demographic}</td>
-                <td className="Product">{product.category}</td>
-                <td className="Product">{product.type}</td>
-                <td className="Product">{product.releaseDate}</td>
-                <td className="Product">{product.primaryColorCode}</td>
-                <td className="Product">{product.secondaryColorCode}</td>
-                <td className="Product">{product.styleNumber}</td>
-                <td className="Product">{product.globalProductCode}</td>
-                <td className="Product">{String(product.active)}</td>
-                <td className="Product">{product.brand}</td>
-                <td className="Product">{product.imageSrc}</td>
-                <td className="Product">{product.material}</td>
-                <td className="Product">{product.price.toFixed(2)}</td>
-                <td className="Product">{product.quantity}</td>
+              <tr key={product.id} className="ProductCells">
+                <td className="ProductCells">{product.id}</td>
+                <td className="ProductCells">{product.name}</td>
+                <td className="ProductCells">{product.sku}</td>
+                <td className="ProductCells">{product.demographic}</td>
+                <td className="ProductCells">{product.description}</td>
+                <td className="ProductCells">{product.category}</td>
+                <td className="ProductCells">{product.type}</td>
+                <td className="ProductCells">{product.releaseDate}</td>
+                <td className="ProductCells">{product.primaryColorCode}</td>
+                <td className="ProductCells">{product.secondaryColorCode}</td>
+                <td className="ProductCells">{product.styleNumber}</td>
+                <td className="ProductCells">{product.globalProductCode}</td>
+                <td className="ProductCells">{String(product.active)}</td>
+                <td className="ProductCells">{product.brand}</td>
+                <td className="ProductCells">{product.imageSrc}</td>
+                <td className="ProductCells">{product.material}</td>
+                <td className="ProductCells">{product.price.toFixed(2)}</td>
+                <td className="ProductCells">{product.quantity}</td>
               </tr>
             ))}
           </tbody>

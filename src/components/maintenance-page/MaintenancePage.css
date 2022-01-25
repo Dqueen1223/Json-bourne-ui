@@ -1,7 +1,6 @@
 table {
     border-width: 1px;
     border-color: #1d2228;
-    border-style: solid;
     border-collapse: collapse;
     width: 90vw;
     height: 40vh;
@@ -29,7 +28,7 @@ td {
 
 tbody {
     width: 80vw;
-    height: 40vh;
+    height: 35vh;
     overflow: scroll;
     padding: 10vh, 10vw;
     }
