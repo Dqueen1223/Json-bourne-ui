@@ -54,7 +54,7 @@ const Header = () => {
   const handleGoogleLogoutFailure = () => {
     setGoogleError('There was a problem logging out with Google. Please wait and try again later.');
   };
-  
+
   return (
     <div className="header">
       {/* <NavLink to="/home">Home</NavLink> */}
@@ -66,28 +66,28 @@ const Header = () => {
       </a>
       {/* <NavLink to="/checkout">Cart</NavLink> */}
       <div className="googlebutton">
-      {user && <span>{user.firstName}</span>}
-      {user && <span>{' '}</span>}
-      {user && <span>{user.lastName}</span>}
-      {googleError && <span>{googleError}</span>}
-      {apiError && <span>Api Error</span>}
-      {!user ? (
-        <GoogleLogin
-        clientId={constants.GOOGLE_CLIENT_ID}
-        buttonText="Login"
-        onSuccess={handleGoogleLoginSuccess}
-        onFailure={handleGoogleLoginFailure}
-        cookiePolicy="single_host_origin"
-        />
+        {user && <span>{user.firstName}</span>}
+        {user && <span>{' '}</span>}
+        {user && <span>{user.lastName}</span>}
+        {googleError && <span>{googleError}</span>}
+        {apiError && <span>Api Error</span>}
+        {!user ? (
+          <GoogleLogin
+            clientId={constants.GOOGLE_CLIENT_ID}
+            buttonText="Login"
+            onSuccess={handleGoogleLoginSuccess}
+            onFailure={handleGoogleLoginFailure}
+            cookiePolicy="single_host_origin"
+          />
         ) : (
           <GoogleLogout
-          clientId={constants.GOOGLE_CLIENT_ID}
-          buttonText="Logout"
-          onLogoutSuccess={handleGoogleLogoutSuccess}
-          onFailure={handleGoogleLogoutFailure}
+            clientId={constants.GOOGLE_CLIENT_ID}
+            buttonText="Logout"
+            onLogoutSuccess={handleGoogleLogoutSuccess}
+            onFailure={handleGoogleLogoutFailure}
           />
-          )}
-      </div>     
+        )}
+      </div>
     </div>
   );
 };
