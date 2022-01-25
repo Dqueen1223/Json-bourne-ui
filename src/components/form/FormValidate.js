@@ -5,7 +5,7 @@
  * @param {*} checked
  * @returns
  */
-export default function validateForm(deliveryData, billingData) {
+export default function validateForm(deliveryData, billingData, checked) {
   const errors = {};
   if (deliveryData.firstName === undefined || deliveryData.firstName.trim() === '') {
     errors.firstName = 'The first name field is required';
@@ -25,17 +25,19 @@ export default function validateForm(deliveryData, billingData) {
   if (deliveryData.zip === undefined || deliveryData.zip.trim() === '') {
     errors.zip = 'The zip field is required';
   }
-  if (billingData.billingStreet === undefined || billingData.billingStreet.trim() === '') {
-    errors.billingStreet = 'The street field is required';
-  }
-  if (billingData.billingCity === undefined || billingData.billingCity.trim() === '') {
-    errors.billingCity = 'The city field is required';
-  }
-  if (billingData.billingState === undefined || billingData.billingState.trim() === '') {
-    errors.billingState = 'The state field is required';
-  }
-  if (billingData.billingZip === undefined || billingData.billingZip.trim() === '') {
-    errors.billingZip = 'The zip field is required';
+  if (!checked) {
+    if (billingData.billingStreet === undefined || billingData.billingStreet.trim() === '') {
+      errors.billingStreet = 'The street field is required';
+    }
+    if (billingData.billingCity === undefined || billingData.billingCity.trim() === '') {
+      errors.billingCity = 'The city field is required';
+    }
+    if (billingData.billingState === undefined || billingData.billingState.trim() === '') {
+      errors.billingState = 'The state field is required';
+    }
+    if (billingData.billingZip === undefined || billingData.billingZip.trim() === '') {
+      errors.billingZip = 'The zip field is required';
+    }
   }
   if (billingData.email === undefined || billingData.email.trim() === '') {
     errors.email = 'The email field is required';

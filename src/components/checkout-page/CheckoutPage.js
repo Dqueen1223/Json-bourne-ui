@@ -44,7 +44,7 @@ const CheckoutPage = () => {
   const [errors, setErrors] = React.useState({});
 
   const handlePay = () => {
-    if (Object.keys(validateForm(deliveryData, billingData)).length === 0) {
+    if (Object.keys(validateForm(deliveryData, billingData, checked)).length === 0) {
       const productData = products.map(({ id, quantity }) => ({ id, quantity }));
       const deliveryAddress = {
         firstName: deliveryData.firstName,
@@ -81,7 +81,7 @@ const CheckoutPage = () => {
       makePurchase(productData, deliveryAddress, billingAddress, creditCard).then(() => history.push('/confirmation'));
     } else {
       toast.error('Some fields contain invalid inputs. You have not been charged');
-      setErrors(validateForm(deliveryData, billingData));
+      setErrors(validateForm(deliveryData, billingData, checked));
     }
   };
 
