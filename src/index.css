@@ -46,14 +46,15 @@ code {
 }
 
 .googlebutton{
-  position: relative;
-  left: 39vw;
+  position: absolute;
+  left: 85%;
   top: 20%;
   padding-right: 20px;
+  margin-right: 20px;
 }
 
 .carticon{
-height: 60px;
+height: 90%;
 position: absolute;
 left: 93%;
 bottom: 1%;
@@ -64,15 +65,12 @@ float: right;
 }
 
 .applogo{
-  height: 50px;
+  height: 75%;
   position: absolute;
   right: 95%;
   bottom: 11%;
-  padding-left: 1%;
-  /* filter: invert(69%) sepia(56%) saturate(4559%) hue-rotate(345deg) brightness(101%) contrast(97); */
-  /* filter: invert(51%) sepia(1100%) saturate(700%) hue-rotate(345deg) brightness(100%) contrast(100%); */
+  /* padding-left: 1%; */
    filter: invert(20%) sepia(56%) saturate(303%) hue-rotate(1deg) brightness(170%) contrast(90%);
-  /* filter: invert(67%) sepia(37%) saturate(5565%) hue-rotate(345deg) brightness(101%) contrast(97%); */
   float: left;
 }
 
