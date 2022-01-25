@@ -6,24 +6,13 @@ import HttpHelper from '../../utils/HttpHelper';
  * @param {String} email Target Email
  * @param {Function} setUser Sets the user state
  */
-const getUserByEmail = async (email, dispatch) => {
+const getUserByEmail = async (email, setUser) => {
   let userByEmailExists;
 
   await HttpHelper(`/users/${email}`, 'GET')
     .then((response) => {
       if (response.status === 200) {
         userByEmailExists = true;
-        dispatch({
-          type: 'login',
-          Profile: {
-            firstName: response.body.firstName,
-            lastName: response.body.lastName,
-            Street: response.body.street,
-            City: response.body.city,
-            State: response.body.state,
-            Zip: response.body.zip
-          }
-        });
         return response.json();
       }
       if (response.status === 404) {
@@ -32,10 +21,11 @@ const getUserByEmail = async (email, dispatch) => {
       throw new Error(response.statusText);
     })
     .then((body) => {
+      setUser(body);
       document.cookie = `user=${JSON.stringify(body)}`;
-      console.log(body);
     })
-    .catch(() => { });
+    .catch(() => {});
+
   return userByEmailExists;
 };
 
@@ -46,26 +36,16 @@ const getUserByEmail = async (email, dispatch) => {
  * @param {Function} setUser Sets the user state
  * @param {Function} setApiError Sets the API Error state
  */
-const createUser = async (user, dispatch, setApiError) => {
+const createUser = async (user, setUser, setApiError) => {
   await HttpHelper('/users', 'POST', user)
     .then((response) => {
       if (response.ok) {
-        dispatch({
-          type: 'login',
-          Profile: {
-            firstName: response.firstName,
-            lastName: response.lastName,
-            Street: response.street,
-            City: response.city,
-            State: response.state,
-            Zip: response.zip
-          }
-        });
         return response.json();
       }
       throw new Error(response.statusText);
     })
     .then((body) => {
+      setUser(body);
       document.cookie = `user=${JSON.stringify(body)}`;
     })
     .catch(() => {
@@ -80,10 +60,10 @@ const createUser = async (user, dispatch, setApiError) => {
  * @param {Function} setUser Sets the user
  * @param {Function} setApiError Sets the Api Error
  */
-const loginUser = async (googleUser, setApiError, dispatch) => {
-  const userByEmailExists = await getUserByEmail(googleUser.email, dispatch);
+const loginUser = async (googleUser, setUser, setApiError) => {
+  const userByEmailExists = await getUserByEmail(googleUser.email, setUser);
   if (!userByEmailExists) {
-    createUser(googleUser, dispatch, setApiError);
+    createUser(googleUser, setUser, setApiError);
   }
 };
 

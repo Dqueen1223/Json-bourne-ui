@@ -3,10 +3,15 @@ import React, { useState } from 'react';
 import GoogleLogin, { GoogleLogout } from 'react-google-login';
 // import { render } from 'react-dom';
 // import { formatDiagnosticsWithColorAndContext } from 'typescript';
+// import { Redirect } from 'react-router-dom';
+// import { render } from 'react-dom';
+// } from 'react-dom';
+// import { Redirect } from 'react-router-dom';
 import loginUser from './HeaderService';
 import constants from '../../utils/constants';
-import { useProfile } from '../Profile/ProfileContext';
-// import logout from '../Profile/Logoutpage';
+// eslint-disable-next-line no-unused-vars
+import { useProfile, ProfileProvider } from '../Profile/ProfileContext';
+// import LogoutPage from '../Profile/Logoutpage';
 
 /**
  * @name Header
@@ -14,14 +19,25 @@ import { useProfile } from '../Profile/ProfileContext';
  * @return component
  */
 const Header = () => {
-  // const [user, setUser] = useState('');
+  const [user, setUser] = useState('');
   const [googleError, setGoogleError] = useState('');
   const [apiError, setApiError] = useState(false);
   const [isLoggedIn, setisLoggedIn] = useState(false);
-  const { dispatch } = useProfile();
-  const {
-    state: { user }
-  } = useProfile();
+  // const { dispatch } = useProfile();
+  // const {
+  //   state: { user }
+  // } = useProfile();
+  // dispatch({
+  //   type: 'login',
+  //   Profile: {
+  //     firstName: response.firstName,
+  //     lastName: response.lastName,
+  //     Street: response.street,
+  //     City: response.city,
+  //     State: response.state,
+  //     Zip: response.zip
+  //   }
+  // });
   /**
    * @name handleGoogleLoginSuccess
    * @description Function to run if google login was successful
@@ -34,8 +50,11 @@ const Header = () => {
       firstName: response.profileObj.givenName,
       lastName: response.profileObj.familyName
     };
-    loginUser(googleUser, dispatch, setApiError);
-    if (googleUser !== null) { setisLoggedIn(true); }
+
+    loginUser(googleUser, setUser, setApiError);
+    if (googleUser !== null) {
+      setisLoggedIn(true);
+    }
     setGoogleError('');
   };
 
@@ -53,21 +72,10 @@ const Header = () => {
    * @name handleGoogleLogoutSuccess
    * @description Function to run if google logout was successful
    */
-  const handleGoogleLogoutSuccess = (response) => {
-    dispatch({
-      type: 'logout',
-      Profile: {
-        firstName: response.firstName,
-        lastName: response.lastName,
-        Street: response.street,
-        City: response.city,
-        State: response.state,
-        Zip: response.zip
-      }
-    });
+  const handleGoogleLogoutSuccess = () => {
+    setUser('');
     setGoogleError('');
     setisLoggedIn(false);
-    // logout();
   };
 
   /**
@@ -94,12 +102,12 @@ const Header = () => {
       {/* <NavLink to="/home">Home</NavLink> */}
       {/* <NavLink to="/checkout">Cart</NavLink> */}
       <div className="googlebutton">
-        {user.length !== 0 && <span>{user.firstName}</span>}
-        {user.length !== 0 && <span> </span>}
-        {user.length !== 0 && <span>{user.lastName}</span>}
+        {user && <span>{user.firstName}</span>}
+        {user && <span> </span>}
+        {user && <span>{user.lastName}</span>}
         {googleError && <span>{googleError}</span>}
         {apiError && <span>Api Error</span>}
-        {user.length === 0 ? (
+        {!user ? (
           <GoogleLogin
             clientId={constants.GOOGLE_CLIENT_ID}
             buttonText="Login"

@@ -1,6 +1,8 @@
+/* eslint-disable import/no-duplicates */
 import React from 'react';
+import { useReducer, createContext, useContext } from 'react';
 
-const ProfileContext = React.createContext();
+const ProfileContext = createContext();
 
 function profileReducer(state, action) {
   switch (action.type) {
@@ -24,11 +26,10 @@ function profileReducer(state, action) {
 
 function ProfileProvider({ children }) {
   const initialUsers = {
-    user: [
-    ],
+    user: [],
     setUsers: () => { }
   };
-  const [state, dispatch] = React.useReducer(profileReducer, initialUsers);
+  const [state, dispatch] = useReducer(profileReducer, initialUsers);
 
   const value = { state, dispatch };
 
@@ -40,7 +41,7 @@ function ProfileProvider({ children }) {
 }
 
 function useProfile() {
-  const context = React.useContext(ProfileContext);
+  const context = useContext(ProfileContext);
   if (context === undefined) {
     throw new Error('useProfileDispatch must be used within a profileProvider');
   }
