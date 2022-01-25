@@ -51,12 +51,13 @@ code {
   top: 20%;
   padding-right: 20px;
   margin-right: 20px;
+  z-index: 1;
 }
 
 .carticon{
 height: 90%;
 position: absolute;
-left: 93%;
+left: 94%;
 bottom: 1%;
 padding-right:3%;
 padding-left: 1%;
