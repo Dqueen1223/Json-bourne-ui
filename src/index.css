@@ -35,8 +35,7 @@ code {
   align-items: center;
   background-color: #1D2228; 
   color: #E1E2E2;
-  display: flexbox;
-  flex-wrap: wrap;
+  display: grid;
   grid-row: 50px;
   text-align: center;
   flex-direction: column;
@@ -50,27 +49,28 @@ code {
   position: relative;
   left: 39vw;
   top: 20%;
-  padding-right: 10px;
+  padding-right: 20px;
 }
 
 .carticon{
 height: 60px;
-position: relative;
-/* left: 50%; */
-bottom: 55%;
-padding-right: 35px;
+position: absolute;
+left: 93%;
+bottom: 1%;
+padding-right:3%;
+padding-left: 1%;
 filter:invert(13%) opacity(90%); 
 float: right;
 }
 
 .applogo{
   height: 50px;
-  position: relative;
-  /* right: 50%; */
-  padding-left: 30px;
-  bottom: 50%;
+  position: absolute;
+  right: 95%;
+  bottom: 11%;
+  padding-left: 1%;
   /* filter: invert(69%) sepia(56%) saturate(4559%) hue-rotate(345deg) brightness(101%) contrast(97); */
-  filter: invert(51%) sepia(1100%) saturate(700%) hue-rotate(345deg) brightness(100%) contrast(100%);
+  /* filter: invert(51%) sepia(1100%) saturate(700%) hue-rotate(345deg) brightness(100%) contrast(100%); */
    filter: invert(20%) sepia(56%) saturate(303%) hue-rotate(1deg) brightness(170%) contrast(90%);
   /* filter: invert(67%) sepia(37%) saturate(5565%) hue-rotate(345deg) brightness(101%) contrast(97%); */
   float: left;
