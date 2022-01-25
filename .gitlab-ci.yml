@@ -19,3 +19,4 @@ lint:
 test:
   script:
     - CI=true npm run test -- --coverage --watchAll=false
+

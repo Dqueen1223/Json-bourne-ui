@@ -22,7 +22,7 @@ const Header = () => {
   const [user, setUser] = useState('');
   const [googleError, setGoogleError] = useState('');
   const [apiError, setApiError] = useState(false);
-  const [isLoggedIn, setisLoggedIn] = useState(false);
+  const [isLoggedIn, setisLoggedIn] = useState(true);
   // const { dispatch } = useProfile();
   // const {
   //   state: { user }
@@ -99,7 +99,22 @@ const Header = () => {
   );
   return (
     <div className="header">
+      {isLoggedIn ? renderProfileicon() : <></>}
       {/* <NavLink to="/home">Home</NavLink> */}
+      <a href="/checkout">
+        <img
+          className="carticon"
+          src="https://icon-library.com/images/white-shopping-cart-icon/white-shopping-cart-icon-1.jpg"
+          alt="cartimage"
+        />
+      </a>
+      <a href="/home">
+        <img
+          className="applogo"
+          src="https://icon-library.com/images/sports-app-icon/sports-app-icon-14.jpg"
+          alt="applogo"
+        />
+      </a>
       {/* <NavLink to="/checkout">Cart</NavLink> */}
       <div className="googlebutton">
         {user && <span>{user.firstName}</span>}
@@ -124,24 +139,6 @@ const Header = () => {
           />
         )}
       </div>
-      <a href="/checkout">
-        {' '}
-        <img
-          className="carticon"
-          src="https://icon-library.com/images/white-shopping-cart-icon/white-shopping-cart-icon-1.jpg"
-          alt="cartimage"
-        />
-      </a>
-      <a href="/home">
-        <img
-          className="applogo"
-          src="https://icon-library.com/images/sports-app-icon/sports-app-icon-14.jpg"
-          alt="applogo"
-        />
-        {' '}
-      </a>
-      {' '}
-      {isLoggedIn ? renderProfileicon() : <></>}
     </div>
   );
 };
