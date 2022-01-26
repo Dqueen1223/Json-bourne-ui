@@ -9,6 +9,7 @@ import ConfirmationPage from '../confirmation-page/ConfirmationPage';
 import HomePage from '../home-page/HomePage';
 import Header from '../header/Header';
 import Footer from '../footer/Footer';
+import MaintenancePage from '../maintenance-page/MaintenancePage';
 
 toast.configure();
 /**
@@ -74,6 +75,7 @@ const App = () => {
         <Route exact path="/home" render={() => <HomePage />} />
         <Route exact path="/checkout" render={() => <CheckoutPage />} />
         <Route exact path="/confirmation" render={() => <ConfirmationPage />} />
+        <Route exact path="/maintenance" render={() => <MaintenancePage />} />
       </Switch>
       <Footer />
     </BrowserRouter>
