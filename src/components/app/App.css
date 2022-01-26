@@ -33,6 +33,11 @@
   width:300px;
 }
 
+.toastBar{
+  width:70%;
+  padding:0 200px;
+}
+
 .Toastify__toast--info {
   --toastify-color-progress-info:linear-gradient(to right,#005994,lightblue)!important;
   width:300px;
