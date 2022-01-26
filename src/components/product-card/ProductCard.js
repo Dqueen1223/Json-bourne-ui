@@ -83,7 +83,7 @@ const ProductCard = ({ product }) => {
     <Card className={classes.root}>
       {modalIsOpen && reactDom.createPortal(
         <ProductCardModal product={product} closeModal={setModalIsOpen} />,
-        document.getElementsByClassName('productPage')[0].parentNode
+        document.getElementById('root')
       )}
       <CardHeader
         onClick={() => {
