@@ -47,13 +47,18 @@ const App = () => {
 
   return (
     <BrowserRouter>
+      <Switch>
+        <Route exact path="/" render={() => <ProductPage />} />
+        <Route exact path="/home" render={() => <HomePage />} />
+        <Route exact path="/checkout" render={() => <CheckoutPage />} />
+        <Route exact path="/confirmation" render={() => <ConfirmationPage />} />
+      </Switch>
       <div className="headerContainer">
         <ToastContainer
           autoClose={8000}
           position={toast.POSITION.TOP_CENTER}
           pauseOnHover={false}
         />
-
         <Header />
         <div className="toastBar">
           <button className="btnToast success" type="button" onClick={() => displayToast('success message', 'success')}>Success</button>
@@ -69,12 +74,6 @@ const App = () => {
           </button>
         </div>
       </div>
-      <Switch>
-        <Route exact path="/" render={() => <ProductPage />} />
-        <Route exact path="/home" render={() => <HomePage />} />
-        <Route exact path="/checkout" render={() => <CheckoutPage />} />
-        <Route exact path="/confirmation" render={() => <ConfirmationPage />} />
-      </Switch>
       <Footer />
     </BrowserRouter>
   );
