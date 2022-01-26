@@ -59,10 +59,10 @@ const Header = () => {
   return (
     <div className="header">
       {/* <NavLink to="/home">Home</NavLink> */}
-      <Link href="/checkout">
+      <Link to="/checkout">
         <img className="carticon" src="https://icon-library.com/images/white-shopping-cart-icon/white-shopping-cart-icon-1.jpg" alt="cartimage" />
       </Link>
-      <Link href="/home">
+      <Link to="/home">
         <img className="applogo" src="https://icon-library.com/images/sports-app-icon/sports-app-icon-14.jpg" alt="applogo" />
       </Link>
       {/* <NavLink to="/checkout">Cart</NavLink> */}
