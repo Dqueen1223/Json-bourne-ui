@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 // import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import GoogleLogin, { GoogleLogout } from 'react-google-login';
 import loginUser from './HeaderService';
 import constants from '../../utils/constants';
@@ -58,12 +59,12 @@ const Header = () => {
   return (
     <div className="header">
       {/* <NavLink to="/home">Home</NavLink> */}
-      <a href="/checkout">
+      <Link href="/checkout">
         <img className="carticon" src="https://icon-library.com/images/white-shopping-cart-icon/white-shopping-cart-icon-1.jpg" alt="cartimage" />
-      </a>
-      <a href="/home">
+      </Link>
+      <Link href="/home">
         <img className="applogo" src="https://icon-library.com/images/sports-app-icon/sports-app-icon-14.jpg" alt="applogo" />
-      </a>
+      </Link>
       {/* <NavLink to="/checkout">Cart</NavLink> */}
       <div className="googlebutton">
         {user && <span>{user.firstName}</span>}
