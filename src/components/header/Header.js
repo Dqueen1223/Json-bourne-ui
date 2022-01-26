@@ -1,12 +1,8 @@
 import React, { useState } from 'react';
 import GoogleLogin, { GoogleLogout } from 'react-google-login';
-// import { NavLink } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import loginUser from './HeaderService';
 import constants from '../../utils/constants';
-// eslint-disable-next-line no-unused-vars
-import { useProfile, ProfileProvider } from '../Profile/ProfileContext';
-// import LogoutPage from '../Profile/Logoutpage';
 
 /**
  * @name Header
@@ -19,21 +15,6 @@ const Header = () => {
   const [apiError, setApiError] = useState(false);
   const [isLoggedIn, setisLoggedIn] = useState(false);
   const history = useHistory();
-  // const { dispatch } = useProfile();
-  // const {
-  //   state: { user }
-  // } = useProfile();
-  // dispatch({
-  //   type: 'login',
-  //   Profile: {
-  //     firstName: response.firstName,
-  //     lastName: response.lastName,
-  //     Street: response.street,
-  //     City: response.city,
-  //     State: response.state,
-  //     Zip: response.zip
-  //   }
-  // });
   /**
    * @name handleGoogleLoginSuccess
    * @description Function to run if google login was successful
@@ -96,7 +77,6 @@ const Header = () => {
   return (
     <div className="header">
       {isLoggedIn ? renderProfileicon() : <></>}
-      {/* <NavLink to="/home">Home</NavLink> */}
       <a href="/checkout">
         <img
           className="carticon"
@@ -111,7 +91,6 @@ const Header = () => {
           alt="applogo"
         />
       </a>
-      {/* <NavLink to="/checkout">Cart</NavLink> */}
       <div className="googlebutton">
         {user && <span>{user.firstName}</span>}
         {user && <span> </span>}

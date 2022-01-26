@@ -1,7 +1,5 @@
 import React from 'react';
 import './ProfilePage.css';
-// import HttpHelper from '../../utils/HttpHelper';
-// import handleGoogleLoginSuccess from "../header/Header";
 
 const ProfilePage = () => {
   const shipping = {
@@ -15,48 +13,13 @@ const ProfilePage = () => {
     firstname: 'JSON',
     lastname: 'Bourne'
   };
-  // const getUserByEmail = async (email, setUser) => {
-  //   let userByEmailExists;
-  //   await HttpHelper(`/users/${email}`, 'GET')
-  //     .then((response) => {
-  //       if (response.status === 200) {
-  //         userByEmailExists = true;
-  //         return response.json();
-  //       }
-  //       if (response.status === 404) {
-  //         userByEmailExists = false;
-  //       }
-  //       throw new Error(response.statusText);
-  //     })
-  //     .then((body) => {
-  //       setUser(body);
-  //       document.cookie = `user=${JSON.stringify(body)}`;
-  //       name.firstname.push(body.firstName);
-  //       name.lastname.push(body.lastName);
-  //     })
-  //     .catch(() => { });
-  //   return userByEmailExists;
-  // };
-  // const handleGoogleLoginSuccess = (response) => {
-  //   sessionStorage.setItem('token', response.getAuthResponse().id_token);
-  //   const googleUser = {
-  //     firstName: response.profileObj.givenName,
-  //     lastName: response.profileObj.familyName
-  //   };
-  //   name.push(googleUser);
-  // };
-  // const [displayName, setDisplayName] = useState(true);
-  // const [displayShipping, setDisplayShipping] = useState(true);
-
   const renderName = () => {
     const { firstname, lastname } = name;
     return (
       <div className="userInfo">
-        {// eslint-disable-next-line react/jsx-indent
-          <ul className="headerName">
+        <ul className="headerName">
           Name
-          </ul>
-        }
+        </ul>
         <li>
           First Name:
           {' '}
@@ -100,29 +63,13 @@ const ProfilePage = () => {
       </div>
     );
   };
-  // const clickShipping = () => {
-  //   setDisplayName(false);
-  //   setDisplayShipping(true);
-  // };
-  // const clickName = () => {
-  //   setDisplayShipping(false);
-  //   setDisplayName(true);
-  // };
-
   return (
     <div className="profile">
       <div className="ui">
-        {/* <button className="tabs" type="button" onClick={clickName}>
-          Name
-        </button>
-        <button className="tabs" type="button" onClick={clickShipping}>
-          Shipping Address
-        </button> */}
+
         <div className="userInfodiv">
           {renderName()}
           {renderShipping()}
-          {/* {displayName ? renderName() : <></>}
-          {displayShipping ? renderShipping() : <></>} */}
         </div>
       </div>
     </div>
