@@ -14,6 +14,7 @@ const FormItemDropdown = ({
     <label className={styles.label} htmlFor={id}>
       {label}
       <div>
+        {!error && (
         <select
           className={styles.input}
           id={id}
@@ -29,6 +30,24 @@ const FormItemDropdown = ({
             </option>
           ))}
         </select>
+        )}
+        {error && (
+        <select
+          className={styles.inputError}
+          id={id}
+          onBlur={onChange}
+          value={value}
+        >
+          {options.map((optionText) => (
+            <option
+              value={optionText}
+              key={optionText}
+            >
+              {optionText}
+            </option>
+          ))}
+        </select>
+        )}
         {!error && (<p className={styles.paragraph} />)}
         {error && (
           <p className={styles.error_item}>
