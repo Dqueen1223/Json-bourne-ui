@@ -1,12 +1,7 @@
 import React, { useState } from 'react';
-// import { NavLink } from 'react-router-dom';
 import GoogleLogin, { GoogleLogout } from 'react-google-login';
-// import { render } from 'react-dom';
-// import { formatDiagnosticsWithColorAndContext } from 'typescript';
-// import { Redirect } from 'react-router-dom';
-// import { render } from 'react-dom';
-// } from 'react-dom';
-// import { Redirect } from 'react-router-dom';
+// import { NavLink } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import loginUser from './HeaderService';
 import constants from '../../utils/constants';
 // eslint-disable-next-line no-unused-vars
@@ -23,6 +18,7 @@ const Header = () => {
   const [googleError, setGoogleError] = useState('');
   const [apiError, setApiError] = useState(false);
   const [isLoggedIn, setisLoggedIn] = useState(false);
+  const history = useHistory();
   // const { dispatch } = useProfile();
   // const {
   //   state: { user }
@@ -50,7 +46,6 @@ const Header = () => {
       firstName: response.profileObj.givenName,
       lastName: response.profileObj.familyName
     };
-
     loginUser(googleUser, setUser, setApiError);
     if (googleUser !== null) {
       setisLoggedIn(true);
@@ -76,6 +71,7 @@ const Header = () => {
     setUser('');
     setGoogleError('');
     setisLoggedIn(false);
+    history.push('/logoutpage');
   };
 
   /**

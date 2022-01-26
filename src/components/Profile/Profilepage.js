@@ -1,5 +1,7 @@
 import React from 'react';
 import './ProfilePage.css';
+// import HttpHelper from '../../utils/HttpHelper';
+// import handleGoogleLoginSuccess from "../header/Header";
 
 const ProfilePage = () => {
   const shipping = {
@@ -13,6 +15,36 @@ const ProfilePage = () => {
     firstname: 'JSON',
     lastname: 'Bourne'
   };
+  // const getUserByEmail = async (email, setUser) => {
+  //   let userByEmailExists;
+  //   await HttpHelper(`/users/${email}`, 'GET')
+  //     .then((response) => {
+  //       if (response.status === 200) {
+  //         userByEmailExists = true;
+  //         return response.json();
+  //       }
+  //       if (response.status === 404) {
+  //         userByEmailExists = false;
+  //       }
+  //       throw new Error(response.statusText);
+  //     })
+  //     .then((body) => {
+  //       setUser(body);
+  //       document.cookie = `user=${JSON.stringify(body)}`;
+  //       name.firstname.push(body.firstName);
+  //       name.lastname.push(body.lastName);
+  //     })
+  //     .catch(() => { });
+  //   return userByEmailExists;
+  // };
+  // const handleGoogleLoginSuccess = (response) => {
+  //   sessionStorage.setItem('token', response.getAuthResponse().id_token);
+  //   const googleUser = {
+  //     firstName: response.profileObj.givenName,
+  //     lastName: response.profileObj.familyName
+  //   };
+  //   name.push(googleUser);
+  // };
   // const [displayName, setDisplayName] = useState(true);
   // const [displayShipping, setDisplayShipping] = useState(true);
 
@@ -76,6 +108,7 @@ const ProfilePage = () => {
   //   setDisplayShipping(false);
   //   setDisplayName(true);
   // };
+
   return (
     <div className="profile">
       <div className="ui">
