@@ -5,7 +5,7 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
-import Avatar from '@material-ui/core/Avatar';
+// import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
@@ -73,11 +73,11 @@ const ProductCard = ({ product }) => {
   return (
     <Card className={classes.root}>
       <CardHeader
-        avatar={(
-          <Avatar aria-label="demographics" className={classes.avatar}>
-            {product.demographic.charAt(0)}
-          </Avatar>
-        )}
+        // avatar={(
+        //   <Avatar aria-label="demographics" className={classes.avatar}>
+        //     {product.demographic.charAt(0)}
+        //   </Avatar>
+        // )}
         action={(
           <IconButton aria-label="settings">
             <MoreVertIcon />

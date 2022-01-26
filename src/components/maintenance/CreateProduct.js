@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import ProductForm from './CreateProductForm';
 import makeProduct from './CreateProductService';
+import isEmpty from '../form/FormValidation';
 // import { useCreatedProduct } from './CreateProductContext';
 import styles from './CreateProduct.module.css';
 
@@ -10,6 +11,9 @@ const CreateProduct = () => {
   const onProductChange = (e) => {
     product.releaseDate = date.toDateString();
     setProductData({ ...product, [e.target.id]: e.target.value });
+    if (isEmpty(e.target.value)) {
+      e.target.placeholder = 'Required';
+    }
   };
   const handleCreate = () => {
     if (product.isActive === 'Active') {
@@ -29,7 +33,7 @@ const CreateProduct = () => {
       secondaryColorCode: product.secondaryColorCode,
       styleNumber: product.styleNumber,
       globalProductCode: product.globalProductCode,
-      active: product.isActive,
+      active: product.active,
       brand: product.brand,
       imageSrc: product.imageSrc,
       material: product.material,

@@ -22,6 +22,7 @@ const ProductForm = ({
           onChange={onProductChange}
           value={product.imageSrc}
         />
+        {}
         <FormItem
           id="name"
           label="Name"
