@@ -7,7 +7,7 @@ function cartReducer(state, action) {
     case 'delete': {
       return {
         ...state,
-        products: state.products.filter((product) => product.title !== action.product.title)
+        products: state.products.filter((product) => product.name !== action.product.name)
       };
     }
     case 'add': {
@@ -25,20 +25,6 @@ function cartReducer(state, action) {
 function CartProvider({ children }) {
   const initialProducts = {
     products: [
-      {
-        id: null,
-        title: 'Sport Shoes',
-        price: 49.99,
-        description: 'Sporty shoes for sporty people',
-        quantity: 2
-      },
-      {
-        id: null,
-        title: 'Sport Shorts',
-        price: 39.99,
-        description: 'Sporty shorts for sporty people',
-        quantity: 5
-      }
     ],
     setProducts: () => { }
   };

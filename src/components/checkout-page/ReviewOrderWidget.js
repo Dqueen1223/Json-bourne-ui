@@ -3,6 +3,7 @@ import { useCart } from './CartContext';
 import OrderItem from './OrderItem';
 import { getSubtotal } from './ReviewOrderWidgetService';
 import styles from './ReviewOrderWidget.module.css';
+import cartLogic from './cartLogic';
 
 /**
  * @name ReviewOrderWidget
@@ -13,6 +14,7 @@ const ReviewOrderWidget = () => {
   const {
     state: { products }
   } = useCart();
+  cartLogic();
   return (
     <>
       {products.map(({
@@ -38,5 +40,4 @@ const ReviewOrderWidget = () => {
     </>
   );
 };
-
 export default ReviewOrderWidget;

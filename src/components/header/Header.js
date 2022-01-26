@@ -31,7 +31,7 @@ const Header = () => {
   };
 
   /**
-   * @name handleGoogleLoginSuccess
+   * @name handleGoogleLoginFailure
    * @description Function to run if google login was unsuccessful
    */
   const handleGoogleLoginFailure = () => {
@@ -60,6 +60,7 @@ const Header = () => {
       <NavLink to="/home">Home</NavLink>
       <NavLink to="/checkout">Cart</NavLink>
       {user && <span>{user.firstName}</span>}
+      {user && <span>{' '}</span>}
       {user && <span>{user.lastName}</span>}
       {googleError && <span>{googleError}</span>}
       {apiError && <span>Api Error</span>}
