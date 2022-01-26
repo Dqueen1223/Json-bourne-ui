@@ -17,7 +17,7 @@ export default async function makeProduct(product) {
     demographic: product.demographic,
     category: product.category,
     type: product.type,
-    releaseDate: '0001-01-01T00:00:00',
+    releaseDate: product.releaseDate,
     primaryColorCode: product.primaryColorCode,
     secondaryColorCode: product.secondaryColorCode,
     styleNumber: product.styleNumber,

@@ -9,7 +9,7 @@ const CreateProduct = () => {
   const [product, setProductData] = useState({});
   const [date, onChange] = useState(new Date());
   const onProductChange = (e) => {
-    product.releaseDate = date.toDateString();
+    product.releaseDate = date.toISOString();
     setProductData({ ...product, [e.target.id]: e.target.value });
     if (isEmpty(e.target.value)) {
       e.target.placeholder = 'Required';
