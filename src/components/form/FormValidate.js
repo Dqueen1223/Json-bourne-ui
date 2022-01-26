@@ -1,3 +1,4 @@
+/* eslint-disable no-template-curly-in-string */
 /**
  * takes in all user inputs in checkout page, and makes an object error messages named errors
  * @param {*} deliveryData
@@ -19,7 +20,7 @@ export default function validateForm(deliveryData, billingData, checked) {
   if (deliveryData.city === undefined || deliveryData.city.trim() === '') {
     errors.city = 'The city field is required';
   }
-  if (deliveryData.state === undefined || deliveryData.state.trim() === '') {
+  if (deliveryData.state === undefined || deliveryData.state.trim() === '' || deliveryData.state === 'Select a state') {
     errors.state = 'The state field is required';
   }
   if (deliveryData.zip === undefined || deliveryData.zip.trim() === '') {
@@ -32,7 +33,7 @@ export default function validateForm(deliveryData, billingData, checked) {
     if (billingData.billingCity === undefined || billingData.billingCity.trim() === '') {
       errors.billingCity = 'The city field is required';
     }
-    if (billingData.billingState === undefined || billingData.billingState.trim() === '') {
+    if (billingData.billingState === undefined || billingData.billingState.trim() === '' || billingData.billingState === 'Select a state') {
       errors.billingState = 'The state field is required';
     }
     if (billingData.billingZip === undefined || billingData.billingZip.trim() === '') {
@@ -53,7 +54,7 @@ export default function validateForm(deliveryData, billingData, checked) {
     }
     const CCN = billingData.creditCard.trim().charAt(0);
     if (CCN !== '4'
-      && billingData.creditCard.trim().charAt(0) !== '5') {
+      && CCN !== '5') {
       errors.creditCard = 'this credit card provider is not supported';
     }
     if (billingData.creditCard.trim().length < 16 || billingData.creditCard.trim().length > 19) {
@@ -89,6 +90,12 @@ export default function validateForm(deliveryData, billingData, checked) {
     if (/[^0-9]/.test(expiryMonth) || /[^0-9]/.test(expiryYear) || conector.trim() !== '/') {
       errors.expiration = 'Dates must match format "MM/YY"';
     } else if (expiryYear < todayYY || (expiryYear === todayYY && expiryMonth <= todayMM)) {
+      errors.expiration = 'This card is expired';
+    }
+    if (expiryMonth > 12) {
+      errors.expiration = 'this month does not exist';
+    }
+    if ((todayYY + 50) < expiryYear) {
       errors.expiration = 'This card is expired';
     }
   }
