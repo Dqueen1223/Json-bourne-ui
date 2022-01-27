@@ -16,6 +16,7 @@ import Footer from '../footer/Footer';
 // eslint-disable-next-line import/no-duplicates
 import Header from '../header/Header';
 import LogoutPage from '../Profile/Logoutpage';
+import MaintenancePage from '../maintenance-page/MaintenancePage';
 
 toast.configure();
 const App = () => {
@@ -50,14 +51,20 @@ const App = () => {
 
   return (
     <BrowserRouter>
+      <Header />
+      <Switch>
+        <Route exact path="/" render={() => <ProductPage />} />
+        <Route exact path="/home" render={() => <HomePage />} />
+        <Route exact path="/checkout" render={() => <CheckoutPage />} />
+        <Route exact path="/confirmation" render={() => <ConfirmationPage />} />
+        <Route exact path="/maintenance" render={() => <MaintenancePage />} />
+      </Switch>
       <div className="headerContainer">
         <ToastContainer
           autoClose={8000}
           position={toast.POSITION.TOP_CENTER}
           pauseOnHover={false}
         />
-
-        <Header />
         <div className="toastBar">
           <button
             className="btnToast success"
