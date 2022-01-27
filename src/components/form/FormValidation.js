@@ -6,13 +6,15 @@
  */
 
 const isEmpty = (input) => {
+  const errors = {};
   const empty = input.replace(/\s/g, '');
   if (!input || empty === '') {
+    errors.empty = 'Required';
     console.log('empty');
-    return true;
+    // return true;
   }
-  console.log('not empty');
-  return false;
+  console.log(errors);
+  return errors;
 };
 
 export default isEmpty;

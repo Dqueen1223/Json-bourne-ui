@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { toast } from 'react-toastify';
 import ProductForm from './CreateProductForm';
 import makeProduct from './CreateProductService';
 import isEmpty from '../form/FormValidation';
@@ -8,19 +9,25 @@ import styles from './CreateProduct.module.css';
 const CreateProduct = () => {
   const [product, setProductData] = useState({});
   const [date, onChange] = useState(new Date());
+  const [errors, setErrors] = useState({});
+
   const onProductChange = (e) => {
     product.releaseDate = date.toISOString();
     setProductData({ ...product, [e.target.id]: e.target.value });
+
     if (isEmpty(e.target.value)) {
       e.target.placeholder = 'Required';
+      setErrors(isEmpty(e.target.value));
     }
   };
+
   const handleCreate = () => {
     if (product.isActive === 'Active') {
       product.active = true;
     } else {
       product.active = false;
     }
+
     const newProduct = {
       name: product.name,
       sku: product.sku,
@@ -43,6 +50,15 @@ const CreateProduct = () => {
 
     makeProduct(newProduct);
   };
+
+  const handleSubmit = () => {
+    if (Object.keys(errors).length === 0) {
+      handleCreate();
+    } else {
+      toast.error('Some fields contain invalid inputs.');
+    }
+  };
+
   return (
     <>
       <div className={styles.productFormContainer}>
@@ -57,7 +73,7 @@ const CreateProduct = () => {
       </div>
       <button
         className={styles.submitButton}
-        onClick={handleCreate}
+        onClick={handleSubmit}
         type="button"
       >
         Submit

@@ -8,8 +8,8 @@ import styles from './CreateProduct.module.css';
 const ProductForm = ({
   product, date, onChange, onProductChange
 }) => {
-  const demographicList = ['Men', 'Women', 'Kids'];
-  let activeProduct = ['Active', 'Inactive'];
+  const demographicList = [' ', 'Men', 'Women', 'Kids'];
+  let activeProduct = [' ', 'Active', 'Inactive'];
 
   if (date > new Date()) activeProduct = ['Inactive'];
 
@@ -22,7 +22,6 @@ const ProductForm = ({
           onChange={onProductChange}
           value={product.imageSrc}
         />
-        {}
         <FormItem
           id="name"
           label="Name"

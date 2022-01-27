@@ -12,14 +12,14 @@
 
 .createProductDetails {
     margin-right: 10px;
-    width: 250px;
+    width: 260px;
 }
 .createProductTypes {
-    width: 250px;
+    width: 260px;
 }
 .createProductControl {
     margin-left: 10px;
-    width: 250px;
+    width: 260px;
 }
 /* .react-datetime-picker >  {
     height: inherit;
@@ -31,6 +31,11 @@
     height: 32px;
     width: 250px;
 } 
+/* .react-datetime-picker__wrapper {
+    height: 32px;
+    width: 250px;
+    overflow-x: hidden;
+}  */
 
 .submitButton {
     margin: auto;

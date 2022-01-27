@@ -9,7 +9,6 @@ import Constants from '../../utils/constants';
  * @returns
  */
 export default async function makeProduct(product) {
-  console.log(product);
   await HttpHelper(Constants.PRODUCTS_ENDPOINT, 'POST', {
     name: product.name,
     sku: product.sku,
