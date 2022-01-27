@@ -14,7 +14,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import ShareIcon from '@material-ui/icons/Share';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import Constants from '../../utils/constants';
+// import Constants from '../../utils/constants';
 import { useCart } from '../checkout-page/CartContext';
 import ProductCardModal from '../product-page/ProductCardModal';
 
@@ -107,7 +107,7 @@ const ProductCard = ({ product }) => {
           setModalIsOpen(true);
         }}
         className={classes.media}
-        image={Constants.PLACEHOLDER_IMAGE}
+        image={product.imageSrc}
         title="placeholder"
       />
       <CardContent
