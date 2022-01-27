@@ -5,6 +5,14 @@
   box-sizing: border-box;
 }
 
+.inputError {
+  margin-top: .5em;
+  width: 100%;
+  padding: .5em;
+  box-sizing: border-box;
+  border: 1px solid red;
+}
+
 .label {
   font-weight: 700;
   color: #666666;
@@ -19,4 +27,12 @@
 }
 .calendar > {
   background: white;
+}
+.paragraph {
+  margin:22px 0px 0px 0px;
+}
+
+.error_item {
+  color:red;
+  margin:3px 0px 0px 0px;
 }

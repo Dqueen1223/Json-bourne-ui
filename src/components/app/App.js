@@ -10,6 +10,7 @@ import HomePage from '../home-page/HomePage';
 import Header from '../header/Header';
 import Footer from '../footer/Footer';
 import CreateProduct from '../maintenance/CreateProduct';
+import MaintenancePage from '../maintenance-page/MaintenancePage';
 
 toast.configure();
 /**
@@ -48,14 +49,20 @@ const App = () => {
 
   return (
     <BrowserRouter>
+      <Header />
+      <Switch>
+        <Route exact path="/" render={() => <ProductPage />} />
+        <Route exact path="/home" render={() => <HomePage />} />
+        <Route exact path="/checkout" render={() => <CheckoutPage />} />
+        <Route exact path="/confirmation" render={() => <ConfirmationPage />} />
+        <Route exact path="/maintenance" render={() => <MaintenancePage />} />
+      </Switch>
       <div className="headerContainer">
         <ToastContainer
           autoClose={8000}
           position={toast.POSITION.TOP_CENTER}
           pauseOnHover={false}
         />
-
-        <Header />
         <div className="toastBar">
           <button className="btnToast success" type="button" onClick={() => displayToast('success message', 'success')}>Success</button>
           <button className="btnToast info" type="button" onClick={() => displayToast('info message', 'info')}>Info</button>
