@@ -8,6 +8,7 @@ import DeliveryAddress from './forms/DeliveryAddress';
 import BillingDetails from './forms/BillingDetails';
 import makePurchase from './CheckoutService';
 import validateForm from '../form/FormValidate';
+import { useProfile } from '../Profile/ProfileContext';
 
 /**
  * @name CheckoutPage
@@ -16,7 +17,7 @@ import validateForm from '../form/FormValidate';
  */
 const CheckoutPage = () => {
   const history = useHistory();
-
+  const { dispatch } = useProfile();
   const {
     state: { products }
   } = useCart();
@@ -79,6 +80,18 @@ const CheckoutPage = () => {
         cardholder: billingData.cardholder
       };
       makePurchase(productData, deliveryAddress, billingAddress, creditCard).then(() => history.push('/confirmation'));
+      dispatch({
+        type: 'login',
+        userProfile: {
+          street: deliveryData.street,
+          city: deliveryData.city,
+          state: deliveryData.state,
+          zip: deliveryData.zip
+        }
+      });
+      console.log(deliveryData[0]);
+      console.log(deliveryAddress);
+      console.log(deliveryData.street);
     } else {
       toast.error('Some fields contain invalid inputs. You have not been charged');
       setErrors(validateForm(deliveryData, billingData, checked));

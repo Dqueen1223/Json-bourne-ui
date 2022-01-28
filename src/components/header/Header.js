@@ -1,9 +1,12 @@
+/* eslint-disable import/no-named-as-default-member */
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import GoogleLogin, { GoogleLogout } from 'react-google-login';
+import { FaUserCircle } from 'react-icons/fa';
 import loginUser from './HeaderService';
 import constants from '../../utils/constants';
-
+import { useProfile } from '../Profile/ProfileContext';
+// eslint-disable-next-line import/no-named-as-default
 /**
  * @name Header
  * @description Displays the navigation header
@@ -14,15 +17,9 @@ const Header = () => {
   const [googleError, setGoogleError] = useState('');
   const [apiError, setApiError] = useState(false);
   const [isLoggedIn, setisLoggedIn] = useState(false);
+  const { dispatch } = useProfile();
+  // const { state: { userProfile } } = useProfile();
   const history = useHistory();
-  // const email = [];
-  // const firstname = [];
-  // const lastname = [];
-  // const googleUser = {
-  //   email: email,
-  //   firstName: firstname,
-  //   lastName: lastname
-  // }
   /**
    * @name handleGoogleLoginSuccess
    * @description Function to run if google login was successful
@@ -36,6 +33,14 @@ const Header = () => {
       lastName: response.profileObj.familyName
     };
     loginUser(googleUser, setUser, setApiError);
+    dispatch({
+      type: 'login',
+      userProfile: {
+        email: response.profileObj.email,
+        firstName: response.profileObj.givenName,
+        lastName: response.profileObj.familyName
+      }
+    });
     setisLoggedIn(true);
     setGoogleError('');
   };
@@ -73,11 +78,7 @@ const Header = () => {
 
   const renderProfileicon = () => (
     <Link to="/profilepage">
-      <img
-        className="profileicon"
-        src="https://www.citypng.com/public/uploads/preview/download-profile-user-round-orange-icon-symbol-png-11639594360ksf6tlhukf.png"
-        alt="profileIcon"
-      />
+      <FaUserCircle className="profileicon" alt="profileIcon" />
     </Link>
   );
   return (

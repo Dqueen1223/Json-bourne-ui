@@ -78,11 +78,13 @@ float: right;
 }
 .profileicon{
   height: 60px;
+  width: 100px;
   position: absolute;
   padding-right: 10px;
   left:77.5%;
   bottom: 7.5%;
   flex-direction: row;
+  color: #FB8122;
 }
 #root{
   display:flex;

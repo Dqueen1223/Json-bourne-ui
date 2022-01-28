@@ -1,35 +1,36 @@
+/* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import './ProfilePage.css';
+import { useProfile } from './ProfileContext';
 
 const ProfilePage = () => {
-  const shipping = {
-    Shipping: '',
-    street: '123 main',
-    city: 'Baltimore',
-    state: 'MD',
-    zip: '23104'
+  const {
+    state: { userProfile }
+  } = useProfile();
+
+  const renderName = () => {
+    const { firstName, lastName } = userProfile[0];
+    return (
+      <div className="userInfo">
+        <ul className="headerName">Name</ul>
+        <li>
+          First Name:
+          {' '}
+          {firstName}
+        </li>
+        <li>
+          Last Name:
+          {' '}
+          {lastName}
+        </li>
+      </div>
+    );
   };
-  // handleGoogleLoginSuccess();
-  const renderName = () => (
-    <div className="userInfo">
-      <ul className="headerName">Name</ul>
-      <li>
-        First Name:
-        {' '}
-        firstname
-      </li>
-      <li>
-        Last Name:
-        {' '}
-        lastName
-      </li>
-    </div>
-  );
 
   const renderShipping = () => {
     const {
       street, city, state, zip
-    } = shipping;
+    } = userProfile[1];
     return (
       <div className="userInfo">
         <ul className="headerShipping">Shipping Address</ul>
@@ -56,16 +57,23 @@ const ProfilePage = () => {
       </div>
     );
   };
-
-  return (
-    <div className="profile">
-      <div className="ui">
-        <div className="userInfodiv">
-          {renderName()}
-          {renderShipping()}
+  try {
+    return (
+      <div className="profile">
+        <div className="ui">
+          <div className="userInfodiv">
+            {renderName()}
+            {renderShipping()}
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  } catch {
+    return (
+      <div>
+        <p>You must be logged in to view the profile page</p>
+      </div>
+    );
+  }
 };
 export default ProfilePage;

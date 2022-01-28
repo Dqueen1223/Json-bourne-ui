@@ -108,15 +108,6 @@ const App = () => {
           </button>
         </div>
       </div>
-      <Switch>
-        <Route exact path="/" render={() => <ProductPage />} />
-        <Route exact path="/home" render={() => <HomePage />} />
-        <Route exact path="/checkout" render={() => <CheckoutPage />} />
-        <Route exact path="/confirmation" render={() => <ConfirmationPage />} />
-        <Route exact path="/profilepage" render={() => <ProfilePage />} />
-        <Route exact path="/logoutpage" render={() => <LogoutPage />} />
-        <Route exact path="/maintenance" render={() => <MaintenancePage />} />
-      </Switch>
       <Footer />
     </BrowserRouter>
   );

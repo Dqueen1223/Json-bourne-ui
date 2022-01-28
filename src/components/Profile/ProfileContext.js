@@ -9,13 +9,14 @@ function profileReducer(state, action) {
     case 'logout': {
       return {
         ...state,
-        user: state.user.filter((user) => user.firstName !== action.user.firstName)
+        userProfile: state.userProfile.filter((userProfile) => userProfile.firstName
+          !== action.userProfile.firstName)
       };
     }
     case 'login': {
       return {
         ...state,
-        user: [...state.user, action.user]
+        userProfile: [...state.userProfile, action.userProfile]
       };
     }
     default: {
@@ -26,7 +27,7 @@ function profileReducer(state, action) {
 
 function ProfileProvider({ children }) {
   const initialUsers = {
-    user: [],
+    userProfile: [],
     setUsers: () => { }
   };
   const [state, dispatch] = useReducer(profileReducer, initialUsers);
