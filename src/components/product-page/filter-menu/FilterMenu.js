@@ -6,125 +6,135 @@ import styles from './filterMenu.module.css';
  * @return component
  */
 const FilterMenu = ({ setFilter, isActive }) => {
-  const [menIsChecked, setMenIsChecked] = useState(false);
-  const [womenIsChecked, setWomenIsChecked] = useState(false);
-  const [kidsIsChecked, setKidsIsChecked] = useState(false);
-  const [nikeIsChecked, setNikeIsChecked] = useState(false);
-  const [reebokIsChecked, setReebokIsChecked] = useState(false);
-  const [asicsIsChecked, setAsicsIsChecked] = useState(false);
-  const [brooksIsChecked, setBrooksIsChecked] = useState(false);
-  const [skechersIsChecked, setSkechersIsChecked] = useState(false);
-  const [pumaIsChecked, setPumaIsChecked] = useState(false);
-  const [underArmorIsChecked, setUnderArmorIsChecked] = useState(false);
-  const [adidasIsChecked, setAdidasIsChecked] = useState(false);
+  // const [menIsChecked, setMenIsChecked] = useState(false);
+  // const [womenIsChecked, setWomenIsChecked] = useState(false);
+  // const [kidsIsChecked, setKidsIsChecked] = useState(false);
+  // const [nikeIsChecked, setNikeIsChecked] = useState(false);
+  // const [reebokIsChecked, setReebokIsChecked] = useState(false);
+  // const [asicsIsChecked, setAsicsIsChecked] = useState(false);
+  // const [brooksIsChecked, setBrooksIsChecked] = useState(false);
+  // const [skechersIsChecked, setSkechersIsChecked] = useState(false);
+  // const [pumaIsChecked, setPumaIsChecked] = useState(false);
+  // const [underArmorIsChecked, setUnderArmorIsChecked] = useState(false);
+  // const [adidasIsChecked, setAdidasIsChecked] = useState(false);
 
-  const checkboxReset = () => {
-    setMenIsChecked(false);
-    setWomenIsChecked(false);
-    setKidsIsChecked(false);
-  };
-
-  const handleMensCheckbox = () => {
-    checkboxReset();
-    if (!menIsChecked) {
-      setFilter('&demographic=Men');
-    } else {
-      setFilter('');
+  const [checkboxIsChecked, setCheckboxIsChecked] = useState(false);
+  // const checkboxReset = () => {
+  //   setMenIsChecked(false);
+  //   setWomenIsChecked(false);
+  //   setKidsIsChecked(false);
+  // };
+  const filterArray = [];
+  const handleCheckbox = (e) => {
+    if (!e.target.checkboxIsChecked) {
+      filterArray.push(`&${e.target.closest('div').previousElementSibling.innerText}=${e.target.id}`);
+      setFilter(filterArray);
     }
-    setMenIsChecked(!menIsChecked);
+    console.log(filterArray);
+    setCheckboxIsChecked(!e.target.checkboxIsChecked);
   };
 
-  const handleWomensCheckbox = () => {
-    checkboxReset();
-    if (!womenIsChecked) {
-      setFilter('&demographic=Women');
-    } else {
-      setFilter('');
-    }
-    setWomenIsChecked(!womenIsChecked);
-  };
+  // const handleMensCheckbox = () => {
+  //   checkboxReset();
+  //   if (!menIsChecked) {
+  //     setFilter('&demographic=Men');
+  //   } else {
+  //     setFilter('');
+  //   }
+  //   setMenIsChecked(!menIsChecked);
+  // };
 
-  const handleKidsCheckbox = () => {
-    checkboxReset();
-    if (!kidsIsChecked) {
-      setFilter('&demographic=Kids');
-    } else {
-      setFilter('');
-    }
-    setKidsIsChecked(!kidsIsChecked);
-  };
+  // const handleWomensCheckbox = () => {
+  //   checkboxReset();
+  //   if (!womenIsChecked) {
+  //     setFilter('&demographic=Women');
+  //   } else {
+  //     setFilter('');
+  //   }
+  //   setWomenIsChecked(!womenIsChecked);
+  // };
 
-  const handleNikeCheckbox = () => {
-    if (!nikeIsChecked) {
-      setFilter('&brand=Nike');
-    } else {
-      setFilter('');
-    }
-    setNikeIsChecked(!nikeIsChecked);
-  };
+  // const handleKidsCheckbox = () => {
+  //   checkboxReset();
+  //   if (!kidsIsChecked) {
+  //     setFilter('&demographic=Kids');
+  //   } else {
+  //     setFilter('');
+  //   }
+  //   setKidsIsChecked(!kidsIsChecked);
+  // };
 
-  const handleReebokCheckbox = () => {
-    if (!reebokIsChecked) {
-      setFilter('&brand=Reebok');
-    } else {
-      setFilter('');
-    }
-    setReebokIsChecked(!reebokIsChecked);
-  };
+  // const handleNikeCheckbox = () => {
+  //   if (!nikeIsChecked) {
+  //     setFilter('&brand=Nike');
+  //   } else {
+  //     setFilter('');
+  //   }
+  //   setNikeIsChecked(!nikeIsChecked);
+  // };
 
-  const handleAsicsCheckbox = () => {
-    if (!nikeIsChecked) {
-      setFilter('&brand=Asics');
-    } else {
-      setFilter('');
-    }
-    setAsicsIsChecked(!asicsIsChecked);
-  };
+  // const handleReebokCheckbox = () => {
+  //   if (!reebokIsChecked) {
+  //     setFilter('&brand=Reebok');
+  //   } else {
+  //     setFilter('');
+  //   }
+  //   setReebokIsChecked(!reebokIsChecked);
+  // };
 
-  const handleBrooksCheckbox = () => {
-    if (!asicsIsChecked) {
-      setFilter('&brand=Brooks');
-    } else {
-      setFilter('');
-    }
-    setBrooksIsChecked(!brooksIsChecked);
-  };
+  // const handleAsicsCheckbox = () => {
+  //   if (!nikeIsChecked) {
+  //     setFilter('&brand=Asics');
+  //   } else {
+  //     setFilter('');
+  //   }
+  //   setAsicsIsChecked(!asicsIsChecked);
+  // };
 
-  const handleSkechersCheckbox = () => {
-    if (!skechersIsChecked) {
-      setFilter('&brand=Skechers');
-    } else {
-      setFilter('');
-    }
-    setSkechersIsChecked(!skechersIsChecked);
-  };
+  // const handleBrooksCheckbox = () => {
+  //   if (!asicsIsChecked) {
+  //     setFilter('&brand=Brooks');
+  //   } else {
+  //     setFilter('');
+  //   }
+  //   setBrooksIsChecked(!brooksIsChecked);
+  // };
 
-  const handlePumaCheckbox = () => {
-    if (!pumaIsChecked) {
-      setFilter('&brand=Puma');
-    } else {
-      setFilter('');
-    }
-    setPumaIsChecked(!pumaIsChecked);
-  };
+  // const handleSkechersCheckbox = () => {
+  //   if (!skechersIsChecked) {
+  //     setFilter('&brand=Skechers');
+  //   } else {
+  //     setFilter('');
+  //   }
+  //   setSkechersIsChecked(!skechersIsChecked);
+  // };
 
-  const handleUnderArmorCheckbox = () => {
-    if (!underArmorIsChecked) {
-      setFilter('&brand=Under&#160;Armor');
-    } else {
-      setFilter('');
-    }
-    setUnderArmorIsChecked(!underArmorIsChecked);
-  };
+  // const handlePumaCheckbox = () => {
+  //   if (!pumaIsChecked) {
+  //     setFilter('&brand=Puma');
+  //   } else {
+  //     setFilter('');
+  //   }
+  //   setPumaIsChecked(!pumaIsChecked);
+  // };
 
-  const handleAdidasCheckbox = () => {
-    if (!adidasIsChecked) {
-      setFilter('&brand=Adidas');
-    } else {
-      setFilter('');
-    }
-    setAdidasIsChecked(!adidasIsChecked);
-  };
+  // const handleUnderArmorCheckbox = () => {
+  //   if (!underArmorIsChecked) {
+  //     setFilter('&brand=Under&#160;Armor');
+  //   } else {
+  //     setFilter('');
+  //   }
+  //   setUnderArmorIsChecked(!underArmorIsChecked);
+  // };
+
+  // const handleAdidasCheckbox = () => {
+  //   if (!adidasIsChecked) {
+  //     setFilter('&brand=Adidas');
+  //   } else {
+  //     setFilter('');
+  //   }
+  //   setAdidasIsChecked(!adidasIsChecked);
+  // };
 
   return (
     <div className={isActive ? styles.sidebar : styles.sideCollapsed}>
@@ -135,8 +145,8 @@ const FilterMenu = ({ setFilter, isActive }) => {
             <input
               id="nike"
               type="checkbox"
-              checked={nikeIsChecked}
-              onChange={handleNikeCheckbox}
+              checked={checkboxIsChecked}
+              onChange={handleCheckbox}
             />
             Nike
           </label>
@@ -145,8 +155,8 @@ const FilterMenu = ({ setFilter, isActive }) => {
             <input
               id="reebok"
               type="checkbox"
-              checked={reebokIsChecked}
-              onChange={handleReebokCheckbox}
+              checked={checkboxIsChecked}
+              onChange={handleCheckbox}
             />
             Reebok
           </label>
@@ -155,8 +165,8 @@ const FilterMenu = ({ setFilter, isActive }) => {
             <input
               id="asics"
               type="checkbox"
-              checked={asicsIsChecked}
-              onChange={handleAsicsCheckbox}
+              checked={checkboxIsChecked}
+              onChange={handleCheckbox}
             />
             Asics
           </label>
@@ -165,8 +175,8 @@ const FilterMenu = ({ setFilter, isActive }) => {
             <input
               id="brooks"
               type="checkbox"
-              checked={brooksIsChecked}
-              onChange={handleBrooksCheckbox}
+              checked={checkboxIsChecked}
+              onChange={handleCheckbox}
             />
             Brooks
           </label>
@@ -175,8 +185,8 @@ const FilterMenu = ({ setFilter, isActive }) => {
             <input
               id="skechers"
               type="checkbox"
-              checked={skechersIsChecked}
-              onChange={handleSkechersCheckbox}
+              checked={checkboxIsChecked}
+              onChange={handleCheckbox}
             />
             Skechers
           </label>
@@ -185,8 +195,8 @@ const FilterMenu = ({ setFilter, isActive }) => {
             <input
               id="puma"
               type="checkbox"
-              checked={pumaIsChecked}
-              onChange={handlePumaCheckbox}
+              checked={checkboxIsChecked}
+              onChange={handleCheckbox}
             />
             Puma
           </label>
@@ -195,8 +205,8 @@ const FilterMenu = ({ setFilter, isActive }) => {
             <input
               id="underarmor"
               type="checkbox"
-              checked={underArmorIsChecked}
-              onChange={handleUnderArmorCheckbox}
+              checked={checkboxIsChecked}
+              onChange={handleCheckbox}
             />
             Under Armor
           </label>
@@ -205,8 +215,8 @@ const FilterMenu = ({ setFilter, isActive }) => {
             <input
               id="adidas"
               type="checkbox"
-              checked={adidasIsChecked}
-              onChange={handleAdidasCheckbox}
+              checked={checkboxIsChecked}
+              onChange={handleCheckbox}
             />
             Adidas
           </label>
@@ -217,8 +227,8 @@ const FilterMenu = ({ setFilter, isActive }) => {
               <input
                 id="mens"
                 type="checkbox"
-                checked={menIsChecked}
-                onChange={handleMensCheckbox}
+                checked={checkboxIsChecked}
+                onChange={handleCheckbox}
               />
               Mens
             </label>
@@ -227,8 +237,8 @@ const FilterMenu = ({ setFilter, isActive }) => {
               <input
                 id="womens"
                 type="checkbox"
-                checked={womenIsChecked}
-                onChange={handleWomensCheckbox}
+                checked={checkboxIsChecked}
+                onChange={handleCheckbox}
               />
               Womens
             </label>
@@ -237,8 +247,8 @@ const FilterMenu = ({ setFilter, isActive }) => {
               <input
                 id="kids"
                 type="checkbox"
-                checked={kidsIsChecked}
-                onChange={handleKidsCheckbox}
+                checked={checkboxIsChecked}
+                onChange={handleCheckbox}
               />
               Kids
             </label>
