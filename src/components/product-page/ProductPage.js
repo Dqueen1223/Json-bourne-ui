@@ -34,9 +34,9 @@ const ProductPage = () => {
         {apiError && <p className={styles.errMsg} data-testid="errMsg">{Constants.API_ERROR}</p>}
         <IconButton
           style={isActive ? {
-            position: 'fixed', height: '10px', width: '10px', top: '100px', left: '135px', zIndex: '1', backgroundColor: '#fb8122', border: '.5px solid white', color: '#e1e2e2', transition: '500ms'
+            position: 'fixed', height: '10px', width: '10px', top: '150px', left: '135px', zIndex: '1', backgroundColor: '#fb8122', border: '.5px solid white', color: '#e1e2e2', transition: '500ms'
           } : {
-            position: 'fixed', height: '10px', width: '10px', top: '100px', left: '-5px', zIndex: '1', backgroundColor: '#fb8122', border: '.5px solid white', color: '#e1e2e2', transition: '500ms'
+            position: 'fixed', height: '10px', width: '10px', top: '150px', left: '-5px', zIndex: '1', backgroundColor: '#fb8122', border: '.5px solid white', color: '#e1e2e2', transition: '500ms'
           }}
           aria-label="arrow-right"
           onClick={toggleFilterMenu}

@@ -76,10 +76,6 @@ float: right;
    filter: invert(20%) sepia(56%) saturate(303%) hue-rotate(1deg) brightness(170%) contrast(90%);
   float: left;
 }
-/* .box{
-  display: flex;
-  flex-direction:space-between;
-} */
 .profileicon{
   height: 60px;
   position: absolute;
@@ -95,11 +91,3 @@ float: right;
   justify-items: center;
   min-height: 100vh;
 }
-
-/* @media screen and (max-width: 500px) {
-  .header a {
-    float: none;
-    display: block;
-    text-align: left;
-  }
-} */

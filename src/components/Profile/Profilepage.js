@@ -9,30 +9,23 @@ const ProfilePage = () => {
     state: 'MD',
     zip: '23104'
   };
-  const name = {
-    firstname: 'JSON',
-    lastname: 'Bourne'
-  };
-  const renderName = () => {
-    const { firstname, lastname } = name;
-    return (
-      <div className="userInfo">
-        <ul className="headerName">
-          Name
-        </ul>
-        <li>
-          First Name:
-          {' '}
-          {firstname}
-        </li>
-        <li>
-          Last Name:
-          {' '}
-          {lastname}
-        </li>
-      </div>
-    );
-  };
+  // handleGoogleLoginSuccess();
+  const renderName = () => (
+    <div className="userInfo">
+      <ul className="headerName">Name</ul>
+      <li>
+        First Name:
+        {' '}
+        firstname
+      </li>
+      <li>
+        Last Name:
+        {' '}
+        lastName
+      </li>
+    </div>
+  );
+
   const renderShipping = () => {
     const {
       street, city, state, zip
@@ -63,10 +56,10 @@ const ProfilePage = () => {
       </div>
     );
   };
+
   return (
     <div className="profile">
       <div className="ui">
-
         <div className="userInfodiv">
           {renderName()}
           {renderShipping()}

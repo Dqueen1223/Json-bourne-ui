@@ -9,14 +9,15 @@ import ProductPage from '../product-page/ProductPage';
 import CheckoutPage from '../checkout-page/CheckoutPage';
 import ConfirmationPage from '../confirmation-page/ConfirmationPage';
 import HomePage from '../home-page/HomePage';
-import ProfilePage from '../Profile/Profilepage';
-// eslint-disable-next-line import/no-duplicates
-import isLoggedIn from '../header/Header';
+// import ProfilePage from '../Profile/Profilepage';
 import Footer from '../footer/Footer';
 // eslint-disable-next-line import/no-duplicates
 import Header from '../header/Header';
 import LogoutPage from '../Profile/Logoutpage';
 import MaintenancePage from '../maintenance-page/MaintenancePage';
+import ProfilePage from '../Profile/Profilepage';
+// eslint-disable-next-line import/no-duplicates
+// import isLoggedIn from '../header/Header';
 
 toast.configure();
 const App = () => {
@@ -57,6 +58,8 @@ const App = () => {
         <Route exact path="/home" render={() => <HomePage />} />
         <Route exact path="/checkout" render={() => <CheckoutPage />} />
         <Route exact path="/confirmation" render={() => <ConfirmationPage />} />
+        <Route exact path="/profilepage" render={() => <ProfilePage />} />
+        <Route exact path="/logoutpage" render={() => <LogoutPage />} />
         <Route exact path="/maintenance" render={() => <MaintenancePage />} />
       </Switch>
       <div className="headerContainer">
@@ -108,11 +111,11 @@ const App = () => {
       <Switch>
         <Route exact path="/" render={() => <ProductPage />} />
         <Route exact path="/home" render={() => <HomePage />} />
-        {(isLoggedIn)
-          && (<Route exact path="/profilepage" render={() => <ProfilePage />} />)}
         <Route exact path="/checkout" render={() => <CheckoutPage />} />
         <Route exact path="/confirmation" render={() => <ConfirmationPage />} />
+        <Route exact path="/profilepage" render={() => <ProfilePage />} />
         <Route exact path="/logoutpage" render={() => <LogoutPage />} />
+        <Route exact path="/maintenance" render={() => <MaintenancePage />} />
       </Switch>
       <Footer />
     </BrowserRouter>

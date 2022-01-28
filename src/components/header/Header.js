@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-// import { NavLink } from 'react-router-dom';
-// import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import GoogleLogin, { GoogleLogout } from 'react-google-login';
-import { useHistory } from 'react-router-dom';
 import loginUser from './HeaderService';
 import constants from '../../utils/constants';
 
@@ -17,6 +15,14 @@ const Header = () => {
   const [apiError, setApiError] = useState(false);
   const [isLoggedIn, setisLoggedIn] = useState(false);
   const history = useHistory();
+  // const email = [];
+  // const firstname = [];
+  // const lastname = [];
+  // const googleUser = {
+  //   email: email,
+  //   firstName: firstname,
+  //   lastName: lastname
+  // }
   /**
    * @name handleGoogleLoginSuccess
    * @description Function to run if google login was successful
@@ -30,9 +36,7 @@ const Header = () => {
       lastName: response.profileObj.familyName
     };
     loginUser(googleUser, setUser, setApiError);
-    if (googleUser !== null) {
-      setisLoggedIn(true);
-    }
+    setisLoggedIn(true);
     setGoogleError('');
   };
 
@@ -68,31 +72,31 @@ const Header = () => {
   };
 
   const renderProfileicon = () => (
-    <a href="/profilepage">
+    <Link to="/profilepage">
       <img
         className="profileicon"
         src="https://www.citypng.com/public/uploads/preview/download-profile-user-round-orange-icon-symbol-png-11639594360ksf6tlhukf.png"
         alt="profileIcon"
       />
-    </a>
+    </Link>
   );
   return (
     <div className="header">
       {isLoggedIn ? renderProfileicon() : <></>}
-      <a href="/checkout">
+      <Link to="/checkout">
         <img
           className="carticon"
           src="https://icon-library.com/images/white-shopping-cart-icon/white-shopping-cart-icon-1.jpg"
           alt="cartimage"
         />
-      </a>
-      <a href="/home">
+      </Link>
+      <Link to="/home">
         <img
           className="applogo"
           src="https://icon-library.com/images/sports-app-icon/sports-app-icon-14.jpg"
           alt="applogo"
         />
-      </a>
+      </Link>
       <div className="googlebutton">
         {user && <span>{user.firstName}</span>}
         {user && <span> </span>}
