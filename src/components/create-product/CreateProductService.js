@@ -9,6 +9,7 @@ import Constants from '../../utils/constants';
  * @returns
  */
 export default async function makeProduct(product) {
+  console.log(product);
   await HttpHelper(Constants.PRODUCTS_ENDPOINT, 'POST', {
     name: product.name,
     sku: product.sku,
@@ -28,7 +29,7 @@ export default async function makeProduct(product) {
     price: product.price,
     quantity: product.quantity
   })
-    .then((response) => console.log(response.json()))
+    .then((response) => response.json())
     .catch(() => {
       /* eslint-disable no-console */
       console.log('Failed to create');

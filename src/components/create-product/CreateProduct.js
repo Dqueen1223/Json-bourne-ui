@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import ProductForm from './CreateProductForm';
 import makeProduct from './CreateProductService';
-import isEmpty from '../form/FormValidation';
-// import { useCreatedProduct } from './CreateProductContext';
+import generateErrors from './forms/FormValidation';
 import styles from './CreateProduct.module.css';
+// import { useErrors } from './forms/CreateProductContext';
 
 const CreateProduct = () => {
   const [product, setProductData] = useState({});
@@ -14,13 +15,21 @@ const CreateProduct = () => {
   const onProductChange = (e) => {
     product.releaseDate = date.toISOString();
     setProductData({ ...product, [e.target.id]: e.target.value });
-
-    if (isEmpty(e.target.value)) {
-      e.target.placeholder = 'Required';
-      setErrors(isEmpty(e.target.value));
-    }
+    setErrors({});
   };
 
+  const handleErrors = (form) => {
+    const idList = Object.keys(form);
+    const errorLists = generateErrors(form, idList);
+    for (let i = 0; i < idList.length; i += 1) {
+      const id = idList[i];
+      if (errorLists[id]) {
+        errors[id] = errorLists[id];
+      }
+    }
+
+    setErrors(errors);
+  };
   const handleCreate = () => {
     if (product.isActive === 'Active') {
       product.active = true;
@@ -48,12 +57,14 @@ const CreateProduct = () => {
       quantity: product.quantity
     };
 
-    makeProduct(newProduct);
+    handleErrors(newProduct);
+    setProductData(newProduct);
   };
 
   const handleSubmit = () => {
+    handleCreate();
     if (Object.keys(errors).length === 0) {
-      handleCreate();
+      makeProduct(product);
     } else {
       toast.error('Some fields contain invalid inputs.');
     }
@@ -61,23 +72,34 @@ const CreateProduct = () => {
 
   return (
     <>
-      <div className={styles.productFormContainer}>
+      <form className={styles.productFormContainer}>
         <ProductForm
-          className={styles.productForm}
           product={product}
           setProductData={setProductData}
           date={date}
           onChange={onChange}
           onProductChange={onProductChange}
+          handleErrors={handleErrors}
+          errors={errors}
         />
+      </form>
+      <div className={styles.buttons}>
+        <button
+          className={styles.submitButton}
+          onClick={handleSubmit}
+          type="button"
+        >
+          Submit
+        </button>
+        <Link to="/maintenance">
+          <button
+            className={styles.cancelButton}
+            type="button"
+          >
+            Cancel
+          </button>
+        </Link>
       </div>
-      <button
-        className={styles.submitButton}
-        onClick={handleSubmit}
-        type="button"
-      >
-        Submit
-      </button>
     </>
   );
 };

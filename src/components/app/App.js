@@ -9,7 +9,7 @@ import ConfirmationPage from '../confirmation-page/ConfirmationPage';
 import HomePage from '../home-page/HomePage';
 import Header from '../header/Header';
 import Footer from '../footer/Footer';
-import CreateProduct from '../maintenance/CreateProduct';
+import CreateProduct from '../create-product/CreateProduct';
 import MaintenancePage from '../maintenance-page/MaintenancePage';
 
 toast.configure();
@@ -55,6 +55,7 @@ const App = () => {
         <Route exact path="/home" render={() => <HomePage />} />
         <Route exact path="/checkout" render={() => <CheckoutPage />} />
         <Route exact path="/confirmation" render={() => <ConfirmationPage />} />
+        <Route exact path="/maintenance/create" render={() => <CreateProduct />} />
         <Route exact path="/maintenance" render={() => <MaintenancePage />} />
       </Switch>
       <div className="headerContainer">
@@ -77,13 +78,6 @@ const App = () => {
           </button>
         </div>
       </div>
-      <Switch>
-        <Route exact path="/" render={() => <ProductPage />} />
-        <Route exact path="/home" render={() => <HomePage />} />
-        <Route exact path="/checkout" render={() => <CheckoutPage />} />
-        <Route exact path="/confirmation" render={() => <ConfirmationPage />} />
-        <Route exact path="/maintenance/create" render={() => <CreateProduct />} />
-      </Switch>
       <Footer />
     </BrowserRouter>
   );

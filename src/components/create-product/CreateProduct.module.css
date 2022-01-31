@@ -1,11 +1,13 @@
 /* */
 .productFormContainer {
     margin: auto;
+    margin-top: 100px;
     width: auto;
     display: inherit;
 }
 .productForm {
     margin: auto;
+    justify-content: space-around;
     width: auto;
     display: inherit;
 }
@@ -21,31 +23,32 @@
     margin-left: 10px;
     width: 260px;
 }
-/* .react-datetime-picker >  {
-    height: inherit;
-    width: 100%;
-    margin-top: 0px;
-    box-sizing: border-box;
-} */
+
 .react-datetime-picker__inputGroup  {
+    margin: auto;
     height: 32px;
     width: 250px;
 } 
-/* .react-datetime-picker__wrapper {
-    height: 32px;
-    width: 250px;
-    overflow-x: hidden;
-}  */
 
-.submitButton {
+.buttons {
     margin: auto;
+    width: 800px;
+}
+
+.submitButton, .cancelButton {
+    margin: auto;
+    margin-right: 25px;
+    margin-top: 25px;
     background: #666666;
     border-radius: 20px;
     color: #EEEEEE;
     cursor: pointer;
     font-weight: 600px;
     height: 3em;
-    justify-self: center;
-    width: 750px;
+    width: 250px;
+}
+
+.description {
+    width: 530px;
 }
 

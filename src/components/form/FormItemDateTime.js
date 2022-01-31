@@ -15,9 +15,10 @@ const FormItemDateTime = ({
       {label}
       <DateTimePicker
         minDate={new Date()}
-        disableClock="true"
         calendarClassName={styles.calendar}
         className={styles.calendar}
+        disableClock="true"
+        clearIcon={null}
         id={id}
         onChange={onChange}
         placeholder={placeholder}

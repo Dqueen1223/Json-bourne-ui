@@ -7,21 +7,39 @@ import styles from './FormItem.module.css';
  * @return component
  */
 const FormItemTextArea = ({
-  onChange, value, id, label, placeholder, type
+  onChange, value, id, label, placeholder, type, error
 }) => (
 
   <div>
     <label className={styles.label} htmlFor={id}>
       {label}
       <div>
-        <textarea
-          className={styles.input}
-          id={id}
-          onChange={onChange}
-          placeholder={placeholder}
-          type={type}
-          value={value}
-        />
+        {!error && (
+          <textarea
+            className={styles.inputTextArea}
+            id={id}
+            onChange={onChange}
+            placeholder={placeholder}
+            type={type}
+            value={value}
+          />
+        )}
+        {error && (
+          <textarea
+            className={styles.inputErrorTA}
+            id={id}
+            onChange={onChange}
+            placeholder={placeholder}
+            type={type}
+            value={value}
+          />
+        )}
+        {!error && (<p className={styles.paragraph} />)}
+        {error && (
+        <p className={styles.error_item}>
+          {error}
+        </p>
+        )}
       </div>
     </label>
   </div>

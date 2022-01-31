@@ -18,6 +18,7 @@ const FormItemDropdown = ({
         <select
           className={styles.input}
           id={id}
+          onChange={onChange}
           onBlur={onChange}
           value={value}
         >
@@ -35,6 +36,7 @@ const FormItemDropdown = ({
         <select
           className={styles.inputError}
           id={id}
+          onChange={onChange}
           onBlur={onChange}
           value={value}
         >
