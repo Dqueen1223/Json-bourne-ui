@@ -81,6 +81,9 @@ const ProductCard = ({ product }) => {
   const share = (e) => {
     e.stopPropagation();
   };
+  const ReviewsModal = (e) => {
+    e.stopPropagation(ProductCardReviewsModal);
+  };
   return (
     <Card className={classes.root}>
       {modalIsOpen && reactDom.createPortal(
@@ -141,7 +144,7 @@ const ProductCard = ({ product }) => {
         <IconButton aria-label="add to shopping cart" onClick={onAdd}>
           <AddShoppingCartIcon />
         </IconButton>
-        <Button variant="contained" onClick={ProductCardReviewsModal}>
+        <Button variant="contained" onClick={ReviewsModal}>
           Reviews
         </Button>
       </CardActions>

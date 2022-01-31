@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import './ProductCardModal.css';
+// import './ProductCardModal.css';
+import './ReviewsModal.css';
 import { Modal, Button } from 'react-bootstrap';
 
 /**
@@ -9,34 +10,29 @@ import { Modal, Button } from 'react-bootstrap';
  */
 
 const ProductCardReviewsModal = () => {
-  const [showModal, setShow] = useState(false);
-
+  const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
   return (
     <>
-      <div
-        className="d-flex align-items-center justify-content-center"
-        style={{ height: '100vh' }}
-      >
-        <Button variant="primary" onClick={handleShow}>
-          Launch demo modal
-        </Button>
-      </div>
-      <Modal show={showModal} onHide={handleClose}>
+      <Button variant="primary" onClick={handleShow}>
+        Launch demo modal
+      </Button>
+      <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Review title</Modal.Title>
+          <Modal.Title>Item name</Modal.Title>
         </Modal.Header>
-        <Modal.Body>This should be the reviews area</Modal.Body>
+        <Modal.Body>This should be the review area. Review stars above and date below</Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close
+          </Button>
+          <Button variant="primary" onClick={handleClose}>
+            Save Changes
           </Button>
         </Modal.Footer>
       </Modal>
     </>
   );
 };
-
 export default ProductCardReviewsModal;
