@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styles from './filterMenu.module.css';
 /**
  * @name FilterMenu
@@ -18,21 +18,27 @@ const FilterMenu = ({ setFilter, isActive }) => {
   // const [underArmorIsChecked, setUnderArmorIsChecked] = useState(false);
   // const [adidasIsChecked, setAdidasIsChecked] = useState(false);
 
-  const [checkboxIsChecked, setCheckboxIsChecked] = useState(false);
+  // const [checkboxIsChecked, setCheckboxIsChecked] = useState(false);
   // const checkboxReset = () => {
   //   setMenIsChecked(false);
   //   setWomenIsChecked(false);
   //   setKidsIsChecked(false);
   // };
   const filterArray = [];
-
+  // try just checking if the e.target.id checked is true, then setting the filter
   const handleCheckbox = (e) => {
-    if (!checkboxIsChecked) {
-      filterArray.push(`&${e.target.closest('div').previousElementSibling.innerText}=${e.target.id}`.toLowerCase);
+    if (e.target.checked === true) {
+      filterArray.push(`&${e.target.closest('div').previousElementSibling.innerText.toString().toLowerCase()}=${e.target.id}`);
       setFilter(filterArray);
+      // setCheckboxIsChecked(true);
+    } else {
+      const index = filterArray.indexOf(`&${e.target.closest('div').previousElementSibling.innerText}=${e.target.id}`);
+      filterArray.splice(index, 1);
+      setFilter(filterArray);
+      // setCheckboxIsChecked(false);
     }
     console.log(filterArray);
-    setCheckboxIsChecked(!checkboxIsChecked);
+    // setCheckboxIsChecked(!checkboxIsChecked);
   };
   // const handleCheckbox = (e) => {
   //   if (!this.checkboxIsChecked) {
@@ -145,7 +151,6 @@ const FilterMenu = ({ setFilter, isActive }) => {
   //   }
   //   setAdidasIsChecked(!adidasIsChecked);
   // };
-
   return (
     <div className={isActive ? styles.sidebar : styles.sideCollapsed}>
       <div className={styles.filterCheckbox}>
@@ -153,9 +158,9 @@ const FilterMenu = ({ setFilter, isActive }) => {
         <div className={styles.fieldset}>
           <label htmlFor="nike">
             <input
-              id="nike"
+              id="Nike"
               type="checkbox"
-              checked={checkboxIsChecked}
+             // checked={checkboxIsChecked}
               onChange={handleCheckbox}
             />
             Nike
@@ -163,9 +168,9 @@ const FilterMenu = ({ setFilter, isActive }) => {
           <br />
           <label htmlFor="reebok">
             <input
-              id="reebok"
+              id="Reebok"
               type="checkbox"
-              checked={checkboxIsChecked}
+             // checked={checkboxIsChecked}
               onChange={handleCheckbox}
             />
             Reebok
@@ -173,9 +178,9 @@ const FilterMenu = ({ setFilter, isActive }) => {
           <br />
           <label htmlFor="asics">
             <input
-              id="asics"
+              id="Asics"
               type="checkbox"
-              checked={checkboxIsChecked}
+             // checked={checkboxIsChecked}
               onChange={handleCheckbox}
             />
             Asics
@@ -183,9 +188,9 @@ const FilterMenu = ({ setFilter, isActive }) => {
           <br />
           <label htmlFor="brooks">
             <input
-              id="brooks"
+              id="Brooks"
               type="checkbox"
-              checked={checkboxIsChecked}
+             // checked={checkboxIsChecked}
               onChange={handleCheckbox}
             />
             Brooks
@@ -193,9 +198,9 @@ const FilterMenu = ({ setFilter, isActive }) => {
           <br />
           <label htmlFor="skechers">
             <input
-              id="skechers"
+              id="Skechers"
               type="checkbox"
-              checked={checkboxIsChecked}
+             // checked={checkboxIsChecked}
               onChange={handleCheckbox}
             />
             Skechers
@@ -203,9 +208,9 @@ const FilterMenu = ({ setFilter, isActive }) => {
           <br />
           <label htmlFor="puma">
             <input
-              id="puma"
+              id="Puma"
               type="checkbox"
-              checked={checkboxIsChecked}
+             // checked={checkboxIsChecked}
               onChange={handleCheckbox}
             />
             Puma
@@ -213,9 +218,9 @@ const FilterMenu = ({ setFilter, isActive }) => {
           <br />
           <label htmlFor="underarmor">
             <input
-              id="underarmor"
+              id="Under Armor"
               type="checkbox"
-              checked={checkboxIsChecked}
+            //  checked={checkboxIsChecked}
               onChange={handleCheckbox}
             />
             Under Armor
@@ -225,7 +230,7 @@ const FilterMenu = ({ setFilter, isActive }) => {
             <input
               id="adidas"
               type="checkbox"
-              checked={checkboxIsChecked}
+            //  checked={checkboxIsChecked}
               onChange={handleCheckbox}
             />
             Adidas
@@ -235,9 +240,9 @@ const FilterMenu = ({ setFilter, isActive }) => {
           <div className={styles.fieldset}>
             <label htmlFor="mens">
               <input
-                id="mens"
+                id="Men"
                 type="checkbox"
-                checked={checkboxIsChecked}
+              //  checked={checkboxIsChecked}
                 onChange={handleCheckbox}
               />
               Mens
@@ -245,9 +250,9 @@ const FilterMenu = ({ setFilter, isActive }) => {
             <br />
             <label htmlFor="womens">
               <input
-                id="womens"
+                id="Women"
                 type="checkbox"
-                checked={checkboxIsChecked}
+              //  checked={checkboxIsChecked}
                 onChange={handleCheckbox}
               />
               Womens
@@ -255,9 +260,9 @@ const FilterMenu = ({ setFilter, isActive }) => {
             <br />
             <label htmlFor="kids">
               <input
-                id="kids"
+                id="Kid"
                 type="checkbox"
-                checked={checkboxIsChecked}
+              //  checked={checkboxIsChecked}
                 onChange={handleCheckbox}
               />
               Kids
