@@ -21,15 +21,16 @@ const CreateProduct = () => {
   const handleErrors = (form) => {
     const idList = Object.keys(form);
     const errorLists = generateErrors(form, idList);
+
     for (let i = 0; i < idList.length; i += 1) {
       const id = idList[i];
       if (errorLists[id]) {
         errors[id] = errorLists[id];
       }
     }
-
     setErrors(errors);
   };
+
   const handleCreate = () => {
     if (product.isActive === 'Active') {
       product.active = true;
@@ -56,7 +57,6 @@ const CreateProduct = () => {
       price: product.price,
       quantity: product.quantity
     };
-
     handleErrors(newProduct);
     setProductData(newProduct);
   };

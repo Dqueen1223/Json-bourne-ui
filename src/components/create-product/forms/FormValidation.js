@@ -7,6 +7,7 @@
 const generateErrors = (form, idList) => {
   const noValue = [];
   const twoDecimal = [];
+  const noDecimal = [];
   const noNegativeNumbers = [];
   const errors = {};
 
@@ -29,6 +30,12 @@ const generateErrors = (form, idList) => {
     if ((id === 'quantity' || id === 'price') && value < 0) {
       noNegativeNumbers.push(id);
     }
+    if (id === 'quantity' && value) {
+      const splitNumber = value.toString().split('.');
+      if (splitNumber.length > 1) {
+        noDecimal.push(id);
+      }
+    }
   }
 
   if (noValue.length) {
@@ -39,6 +46,11 @@ const generateErrors = (form, idList) => {
   if (twoDecimal.length) {
     twoDecimal.forEach((i) => {
       errors[i] = 'Requires two decimals';
+    });
+  }
+  if (noDecimal.length) {
+    noDecimal.forEach((i) => {
+      errors[i] = 'No decimals allowed';
     });
   }
   if (noNegativeNumbers.length) {

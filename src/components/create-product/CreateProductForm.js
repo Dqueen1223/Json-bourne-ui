@@ -6,7 +6,7 @@ import FormItemTextArea from '../form/FormItemTextArea';
 import styles from './CreateProduct.module.css';
 
 const ProductForm = ({
-  product, date, onChange, onProductChange, handleErrors, errors
+  product, date, onChange, onProductChange, errors
 }) => {
   const demographicList = [' ', 'Men', 'Women', 'Kids'];
   const activeProduct = ['Active', 'Inactive'];
@@ -21,7 +21,6 @@ const ProductForm = ({
           id="name"
           label="Name"
           onChange={onProductChange}
-          handleErrors={handleErrors}
           value={product.name}
           error={errors.name}
         />
@@ -37,7 +36,6 @@ const ProductForm = ({
           id="type"
           label="Type"
           onChange={onProductChange}
-          handleErrors={handleErrors}
           value={product.type}
           error={errors.type}
         />
@@ -45,7 +43,6 @@ const ProductForm = ({
           id="brand"
           label="Brand"
           onChange={onProductChange}
-          handleErrors={handleErrors}
           value={product.brand}
           error={errors.brand}
         />
@@ -53,7 +50,6 @@ const ProductForm = ({
           id="material"
           label="Material"
           onChange={onProductChange}
-          handleErrors={handleErrors}
           value={product.material}
           error={errors.material}
         />
@@ -61,7 +57,6 @@ const ProductForm = ({
           id="description"
           label="Description"
           onChange={onProductChange}
-          handleErrors={handleErrors}
           value={product.description}
           error={errors.description}
         />
@@ -78,7 +73,6 @@ const ProductForm = ({
           id="primaryColorCode"
           label="PrimaryColorCode"
           onChange={onProductChange}
-          handleErrors={handleErrors}
           value={product.primaryColorCode}
           error={errors.primaryColorCode}
         />
@@ -86,7 +80,6 @@ const ProductForm = ({
           id="secondaryColorCode"
           label="SecondaryColorCode"
           onChange={onProductChange}
-          handleErrors={handleErrors}
           value={product.secondaryColorCode}
           error={errors.secondaryColorCode}
         />
@@ -94,7 +87,6 @@ const ProductForm = ({
           id="globalProductCode"
           label="Global Product Code"
           onChange={onProductChange}
-          handleErrors={handleErrors}
           value={product.globalProductCode}
           error={errors.globalProductCode}
         />
@@ -102,7 +94,6 @@ const ProductForm = ({
           id="styleNumber"
           label="Style Number"
           onChange={onProductChange}
-          handleErrors={handleErrors}
           value={product.styleNumber}
           error={errors.styleNumber}
         />
@@ -112,7 +103,6 @@ const ProductForm = ({
           id="quantity"
           label="Quantity"
           onChange={onProductChange}
-          handleErrors={handleErrors}
           value={product.quantity}
           error={errors.quantity}
         />
@@ -120,7 +110,6 @@ const ProductForm = ({
           id="price"
           label="Price"
           onChange={onProductChange}
-          handleErrors={handleErrors}
           value={product.price}
           error={errors.price}
         />
@@ -128,7 +117,6 @@ const ProductForm = ({
           id="imageSrc"
           label="Image Source"
           onChange={onProductChange}
-          handleErrors={handleErrors}
           value={product.imageSrc}
           error={errors.imageSrc}
         />
@@ -136,7 +124,6 @@ const ProductForm = ({
           id="category"
           label="Category"
           onChange={onProductChange}
-          handleErrors={handleErrors}
           value={product.category}
           error={errors.category}
         />
@@ -144,7 +131,6 @@ const ProductForm = ({
           id="sku"
           label="SKU"
           onChange={onProductChange}
-          handleErrors={handleErrors}
           value={product.sku}
           error={errors.sku}
         />
