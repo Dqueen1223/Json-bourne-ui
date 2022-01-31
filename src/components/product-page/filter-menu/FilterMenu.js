@@ -25,14 +25,24 @@ const FilterMenu = ({ setFilter, isActive }) => {
   //   setKidsIsChecked(false);
   // };
   const filterArray = [];
+
   const handleCheckbox = (e) => {
-    if (!e.target.checkboxIsChecked) {
-      filterArray.push(`&${e.target.closest('div').previousElementSibling.innerText}=${e.target.id}`);
+    if (!checkboxIsChecked) {
+      filterArray.push(`&${e.target.closest('div').previousElementSibling.innerText}=${e.target.id}`.toLowerCase);
       setFilter(filterArray);
     }
     console.log(filterArray);
-    setCheckboxIsChecked(!e.target.checkboxIsChecked);
+    setCheckboxIsChecked(!checkboxIsChecked);
   };
+  // const handleCheckbox = (e) => {
+  //   if (!this.checkboxIsChecked) {
+  //     filterArray.push(`&${e.target.closest('div').previousElementSibling.innerText}
+  // =${ e.target.id }`);
+  //     setFilter(filterArray);
+  //   }
+  //   console.log(filterArray);
+  //   setCheckboxIsChecked(!this.checkboxIsChecked);
+  // };
 
   // const handleMensCheckbox = () => {
   //   checkboxReset();
@@ -139,7 +149,7 @@ const FilterMenu = ({ setFilter, isActive }) => {
   return (
     <div className={isActive ? styles.sidebar : styles.sideCollapsed}>
       <div className={styles.filterCheckbox}>
-        <span className={styles.checkBoxLabel}>Brand</span>
+        <span className="checkBoxLabel">Brand</span>
         <div className={styles.fieldset}>
           <label htmlFor="nike">
             <input
