@@ -4,13 +4,12 @@ import './LogoutPage.css';
 
 const LogoutPage = () => (
   <>
-    <div className="home">
-      <a href="/" className="homebutton">
-        Home
+    <div className="logout">
+      <p> Successful Logout!</p>
+      <a href="/" className="products">
+        Click here to return to products.
       </a>
     </div>
-
-    <p className="logout"> Successful Logout!</p>
   </>
 );
 export default LogoutPage;

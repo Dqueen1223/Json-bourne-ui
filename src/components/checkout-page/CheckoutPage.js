@@ -84,14 +84,12 @@ const CheckoutPage = () => {
         type: 'login',
         userProfile: {
           street: deliveryData.street,
+          street2: deliveryData.street2,
           city: deliveryData.city,
           state: deliveryData.state,
           zip: deliveryData.zip
         }
       });
-      console.log(deliveryData[0]);
-      console.log(deliveryAddress);
-      console.log(deliveryData.street);
     } else {
       toast.error('Some fields contain invalid inputs. You have not been charged');
       setErrors(validateForm(deliveryData, billingData, checked));

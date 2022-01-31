@@ -29,8 +29,8 @@ const ProfilePage = () => {
 
   const renderShipping = () => {
     const {
-      street, city, state, zip
-    } = userProfile[1];
+      street, street2, city, state, zip
+    } = userProfile[userProfile.length - 1];
     return (
       <div className="userInfo">
         <ul className="headerShipping">Shipping Address</ul>
@@ -38,6 +38,8 @@ const ProfilePage = () => {
           Street:
           {' '}
           {street}
+          {' '}
+          {street2}
         </li>
         <li>
           City:
