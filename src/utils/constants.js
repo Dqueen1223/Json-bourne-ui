@@ -7,6 +7,5 @@ module.exports = Object.freeze({
   RUNNING_SHORTS_ENDPOINT: '/products?category=Running&type=Short',
   GOOGLE_CLIENT_ID: '912899852587-7996nh9mlpvpa2446q0il4f9hj5o492h.apps.googleusercontent.com', // ENTER CLIENT ID HERE
   ACTIVE_PRODUCTS_ENDPOINT: '/products?active=true',
-  PRODUCTS_ENDPOINT: '/products',
-  INACTIVE_PRODUCTS_ENDPOINT: '/products?active=false'
+  PRODUCTS_ENDPOINT: '/products'
 });

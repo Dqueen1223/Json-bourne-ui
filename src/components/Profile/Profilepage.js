@@ -1,14 +1,22 @@
 /* eslint-disable react/destructuring-assignment */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './ProfilePage.css';
+// import Constants from '../../utils/constants';
 import { useProfile } from './ProfileContext';
+import fetchPurchases from './ProfilePageService';
+import ProfilePurchase from './ProfilePurchase';
 
 const ProfilePage = () => {
   const {
     state: { userProfile }
   } = useProfile();
+  const [purchases, setPurchases] = useState([]);
   const [profileInfo, setProfileInfo] = useState(true);
+  // const [apiError, setApiError] = useState(false);
   const [purchaseInfo, setPurchaseInfo] = useState(false);
+  useEffect(() => {
+    fetchPurchases(`?email=${userProfile[0].email}`, setPurchases);
+  }, [userProfile]);
   const renderName = () => {
     const { firstName, lastName } = userProfile[0];
     return (
@@ -58,22 +66,12 @@ const ProfilePage = () => {
       </div>
     );
   };
-  const renderPurchase = () => {
-    const {
-      purchases
-    } = userProfile[1];
-    return (
-      <div className="test">
-        test asdjkfaslfjsdaklfjsdak
-        fdaslkfjas
-        fdsafjk
-        fdskal;fks
-        fdsakjf
-        asdjf
-        {purchases}
-      </div>
-    );
-  };
+  /* const renderPurchase = () => {
+    <div className="test">
+      {console.log(purchases)}
+            {userProfile[0].email}
+    </div>;
+  }; */
   const changeStatePurchase = () => {
     setProfileInfo(false);
     setPurchaseInfo(true);
@@ -88,10 +86,14 @@ const ProfilePage = () => {
         <div className="ui">
           <div className="userInfodiv">
             <button className="test" type="button" onClick={changeStateProfileInfo}> User info</button>
-            <button className="test2" type="button" onClick={changeStatePurchase}> Purchase History </button>
+            {purchases.length !== 0 && <button className="test2" type="button" onClick={changeStatePurchase}> Purchase History </button>}
             {profileInfo && renderName()}
             {profileInfo && renderShipping()}
-            {purchaseInfo && renderPurchase()}
+            {purchaseInfo && purchases.map((purchase) => (
+              <div key={purchase.id}>
+                <ProfilePurchase purchases={purchase} />
+              </div>
+            ))}
           </div>
         </div>
       </div>
