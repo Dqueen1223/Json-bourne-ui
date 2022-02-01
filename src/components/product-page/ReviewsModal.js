@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './ProductCardModal.css';
 // import { Modal, Button } from 'react-bootstrap';
 // import { render } from '@testing-library/react';
@@ -9,31 +9,30 @@ import './ProductCardModal.css';
  * @return component
  */
 
-const ProductCardReviewsModal = ({ product, closeModal }) => {
-  const [setShow] = useState(true);
+const ProductCardReviewsModal = ({ product }) => {
+  // const [setShow] = useState(true);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-  const onAdd = () => {
-    dispatch(
-      {
-        type: 'add',
-        product: {
-          id: product.id,
-          name: product.name,
-          description: product.description
-        }
-      }
-    );
-  };
+  // const handleShow = () => setShow(true);
+  // const reviewInfo = () => {
+  //   dispatch(
+  //     {
+  //       type: 'add',
+  //       product: {
+  //         id: product.id,
+  //         name: product.name,
+  //         description: product.description
+  //       }
+  //     }
+  //   );
+  // };
   const closeTheModal = (e) => {
-    if (e.target.className === 'productCardModalBackground' || e.target.className === 'closeButton') {
-      closeModal(false);
+    if (e.target.className === 'reviewModalBackground' || e.target.className === 'closeButton') {
+      closeTheModal(false);
     }
   };
   return (
     <div
-      className="productCardModalBackground"
+      className="reviewModalBackground"
       onClick={closeTheModal}
       aria-hidden="true"
     >
