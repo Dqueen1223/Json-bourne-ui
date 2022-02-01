@@ -1,10 +1,9 @@
 import React from 'react';
 import './ProfilePage.css';
 import PurchaseItem from './PurchaseItem';
-import TotalPrice from './TotalPrice';
 // import fetchPurchaseItem from './profileProductService';
 
-const ProfilePurchase = ({ purchases }) => {
+const ProfilePurchase = ({ purchases, totalPrice }) => {
   // const [newPurchase, setNewPurchase] = useState({});
   // const [itemPurchaseList, setItemPurchaseList] = useState([]);
   console.log({ purchases });
@@ -12,7 +11,8 @@ const ProfilePurchase = ({ purchases }) => {
   return (
     <div className="purchases">
       <div className="purchaseTotal">
-        purchaseTotal
+        purchaseTotal:
+        {totalPrice}
       </div>
       <div className="orderDate">
         {purchases.orderDate}
@@ -20,7 +20,7 @@ const ProfilePurchase = ({ purchases }) => {
       <div className="productsCollapsible">
         {purchases.lineItems.map((purchaseItems) => (
           <div key={purchaseItems.id}>
-            <PurchaseItem item={purchaseItems} totalPrice={TotalPrice(purchases)} />
+            <PurchaseItem item={purchaseItems} />
           </div>
         ))}
       </div>
