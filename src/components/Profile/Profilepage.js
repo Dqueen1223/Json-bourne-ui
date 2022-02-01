@@ -1,5 +1,5 @@
 /* eslint-disable react/destructuring-assignment */
-import React from 'react';
+import React, { useState } from 'react';
 import './ProfilePage.css';
 import { useProfile } from './ProfileContext';
 
@@ -7,7 +7,8 @@ const ProfilePage = () => {
   const {
     state: { userProfile }
   } = useProfile();
-
+  const [profileInfo, setProfileInfo] = useState(true);
+  const [purchaseInfo, setPurchaseInfo] = useState(false);
   const renderName = () => {
     const { firstName, lastName } = userProfile[0];
     return (
@@ -57,13 +58,40 @@ const ProfilePage = () => {
       </div>
     );
   };
+  const renderPurchase = () => {
+    const {
+      purchases
+    } = userProfile[1];
+    return (
+      <div className="test">
+        test asdjkfaslfjsdaklfjsdak
+        fdaslkfjas
+        fdsafjk
+        fdskal;fks
+        fdsakjf
+        asdjf
+        {purchases}
+      </div>
+    );
+  };
+  const changeStatePurchase = () => {
+    setProfileInfo(false);
+    setPurchaseInfo(true);
+  };
+  const changeStateProfileInfo = () => {
+    setProfileInfo(true);
+    setPurchaseInfo(false);
+  };
   try {
     return (
       <div className="profile">
         <div className="ui">
           <div className="userInfodiv">
-            {renderName()}
-            {renderShipping()}
+            <button className="test" type="button" onClick={changeStateProfileInfo}> User info</button>
+            <button className="test2" type="button" onClick={changeStatePurchase}> Purchase History </button>
+            {profileInfo && renderName()}
+            {profileInfo && renderShipping()}
+            {purchaseInfo && renderPurchase()}
           </div>
         </div>
       </div>
