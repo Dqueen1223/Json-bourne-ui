@@ -1,7 +1,6 @@
 import React from 'react';
 import './ProductCardModal.css';
-// import { Modal, Button } from 'react-bootstrap';
-// import { render } from '@testing-library/react';
+import '../product-card/ProductCard';
 
 /**
  * @name ProductCardReviewModal
@@ -9,7 +8,7 @@ import './ProductCardModal.css';
  * @return component
  */
 
-const ProductCardReviewsModal = ({ product }) => {
+const ProductCardReviewsModal = ({ product, closeModal }) => {
   // const [setShow] = useState(true);
 
   // const handleShow = () => setShow(true);
@@ -27,7 +26,7 @@ const ProductCardReviewsModal = ({ product }) => {
   // };
   const closeTheModal = (e) => {
     if (e.target.className === 'reviewModalBackground' || e.target.className === 'closeButton') {
-      closeTheModal(false);
+      closeModal(false);
     }
   };
   return (
