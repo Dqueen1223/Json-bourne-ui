@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-// import './ProductCardModal.css';
-import './ReviewsModal.css';
-import { Modal, Button } from 'react-bootstrap';
+import './ProductCardModal.css';
+// import { Modal, Button } from 'react-bootstrap';
+// import { render } from '@testing-library/react';
 
 /**
  * @name ProductCardReviewModal
@@ -9,30 +9,56 @@ import { Modal, Button } from 'react-bootstrap';
  * @return component
  */
 
-const ProductCardReviewsModal = () => {
-  const [show, setShow] = useState(false);
+const ProductCardReviewsModal = ({ product, closeModal }) => {
+  const [setShow] = useState(true);
+
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const onAdd = () => {
+    dispatch(
+      {
+        type: 'add',
+        product: {
+          id: product.id,
+          name: product.name,
+          description: product.description
+        }
+      }
+    );
+  };
+  const closeTheModal = (e) => {
+    if (e.target.className === 'productCardModalBackground' || e.target.className === 'closeButton') {
+      closeModal(false);
+    }
+  };
   return (
-    <>
-      <Button variant="primary" onClick={handleShow}>
-        Launch demo modal
-      </Button>
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Item name</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>This should be the review area. Review stars above and date below</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
-      </Modal>
-    </>
+    <div
+      className="productCardModalBackground"
+      onClick={closeTheModal}
+      aria-hidden="true"
+    >
+      <div className="reviewModal">
+        <div className="reviewModal-content">
+          <div className="reviewModal-header">
+            <button
+              type="button"
+              className="closeButton"
+              onClick={closeTheModal}
+            >
+              &times;
+            </button>
+          </div>
+          <div className="reviewModal-body">
+            <div className="row">
+              <div className="reviewModal-title">{product.name}</div>
+            </div>
+            <div className="row">
+              <div className="productReview">{product.description}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 export default ProductCardReviewsModal;
