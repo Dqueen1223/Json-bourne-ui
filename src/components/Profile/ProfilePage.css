@@ -61,3 +61,18 @@ width: 150px;
     width:50%;
     display:flex;
 }
+.productsCollapsible{
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+}
+.itemName{
+    flex: 1 1 40%;
+}
+.itemQuantity{
+    flex: 1 1 20%;
+}
+
+.itemCost{
+    flex: 1 1 40%;
+}

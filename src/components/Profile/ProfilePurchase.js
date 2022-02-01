@@ -1,32 +1,28 @@
 import React from 'react';
-import { getSubtotal } from '../checkout-page/ReviewOrderWidgetService';
 import './ProfilePage.css';
+import PurchaseItem from './PurchaseItem';
+import TotalPrice from './TotalPrice';
+// import fetchPurchaseItem from './profileProductService';
 
 const ProfilePurchase = ({ purchases }) => {
-  console.log('test');
+  // const [newPurchase, setNewPurchase] = useState({});
+  // const [itemPurchaseList, setItemPurchaseList] = useState([]);
   console.log({ purchases });
-  const purchasePrice = getSubtotal(purchases.lineItems);
-  console.log(purchasePrice);
+  // console.log(cost);
   return (
     <div className="purchases">
       <div className="purchaseTotal">
-        {purchasePrice}
+        purchaseTotal
       </div>
       <div className="orderDate">
         {purchases.orderDate}
       </div>
       <div className="productsCollapsible">
-        <div className="itemName">
-          itemName
-        </div>
-        <div className="itemQuantity">
-          itemQuantity
-          {purchases.lineItems.map((purchaseItems) => (
-            <div key={purchaseItems.id}>
-              {purchaseItems.productId}
-            </div>
-          ))}
-        </div>
+        {purchases.lineItems.map((purchaseItems) => (
+          <div key={purchaseItems.id}>
+            <PurchaseItem item={purchaseItems} totalPrice={TotalPrice(purchases)} />
+          </div>
+        ))}
       </div>
     </div>
   );

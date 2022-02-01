@@ -10,15 +10,16 @@ import Constants from '../../utils/constants';
  * @param {*} setApiError sets error if response other than 200 is returned
  * @returns sets state for purchases if 200 response, else sets state for apiError
  */
-export default async function fetchPurchases(email, setPurchases) {
-  await HttpHelper(Constants.PURCHASE_ENDPOINT + email, 'GET')
+export default async function fetchProduct(productId, setCost) {
+  // eslint-disable-next-line prefer-template
+  await HttpHelper(Constants.PRODUCTS_ENDPOINT + '/' + productId, 'GET')
     .then((response) => {
       if (response.ok) {
         return response.json();
       }
       throw new Error(Constants.API_ERROR);
     })
-    .then(setPurchases)
+    .then(setCost)
     .catch(() => {
     /* eslint-disable no-console */
       console.log('Failed to load');
