@@ -21,6 +21,7 @@ const ProductPage = () => {
 
   useEffect(() => {
     fetchProducts(setProducts, setApiError, filter);
+    console.log(`filter from productpage: ${filter}`);
   }, [filter]);
 
   const toggleFilterMenu = () => {

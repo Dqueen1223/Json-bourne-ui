@@ -1,5 +1,6 @@
 import { React, useState } from 'react';
 import styles from './filterMenu.module.css';
+
 /**
  * @name FilterMenu
  * @description Displays Sidebar filter menu
@@ -7,30 +8,42 @@ import styles from './filterMenu.module.css';
  */
 const FilterMenu = ({ setFilter, isActive }) => {
   const [filterArray, setFilterArray] = useState([]);
-  const [checkboxIsChecked, setCheckboxIsChecked] = useState(false);
+
+  /**
+   * @name handleCheckbox
+   * @description When a checkbox is checked in the filter menu, it adds that filter to the endpoint
+   * @param {e} e - mouseclick event
+   */
   const handleCheckbox = (e) => {
     const newArray = filterArray;
-    if (!checkboxIsChecked) {
-      newArray.push(`&${e.target.closest('div').previousElementSibling.innerText.toString().toLowerCase()}=${e.target.id}`);
-      setFilterArray(newArray);
+    const checkedBox = `&${e.target.closest('div').previousElementSibling.innerText.toString().toLowerCase()}=${e.target.id}`;
+    const combinedQueries = newArray.map((element) => element.join());
+    // if a checkbox is checked
+    if (e.target.checked === true) {
+      // Add the filter query string to the array.
+      newArray.push(checkedBox);
+      console.log(`newArray after pushing: ${newArray}`);
+      // Set the filterArray state to the contents of newArray.
+      setFilterArray(combinedQueries);
+      console.log(`filterArray after setting it to newArray ${filterArray}`);
+      // Set the filter state from ProductPage.js to filterArray.
       setFilter(filterArray);
-      setCheckboxIsChecked(!checkboxIsChecked);
     } else {
-      const index = newArray.indexOf(`&${e.target.closest('div').previousElementSibling.innerText}=${e.target.id}`);
+      // Find the index of the query from the box that was unchecked.
+      const index = newArray.indexOf(checkedBox);
+      // Remove the filter query.
       newArray.splice(index, 1);
+      console.log(`newArray after splicing: ${newArray}`);
+      // Set the filter array to the newArray without the removed filter.
       setFilterArray(newArray);
-      console.log(filterArray);
-      setFilter('');
+      console.log(`filterArray after setting it to spliced newArray: ${filterArray}`);
       setFilter(filterArray);
-      setCheckboxIsChecked(!checkboxIsChecked);
     }
-
-    return filterArray;
   };
   return (
     <div className={isActive ? styles.sidebar : styles.sideCollapsed}>
       <div className={styles.filterCheckbox}>
-        <span className="checkBoxLabel">Brand</span>
+        <span className={styles.checkBoxLabel}>Brand</span>
         <div className={styles.fieldset}>
           <label htmlFor="nike">
             <input
@@ -198,7 +211,7 @@ const FilterMenu = ({ setFilter, isActive }) => {
           </label>
           <br />
         </div>
-        <span className={styles.checkBoxLabel}>Demographics</span>
+        <span className={styles.checkBoxLabel}>Demographic</span>
         <div className={styles.fieldset}>
           <label htmlFor="mens">
             <input
@@ -220,7 +233,7 @@ const FilterMenu = ({ setFilter, isActive }) => {
           <br />
           <label htmlFor="kids">
             <input
-              id="Kid"
+              id="Kids"
               type="checkbox"
               onChange={handleCheckbox}
             />
