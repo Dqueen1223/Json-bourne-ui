@@ -5,9 +5,8 @@ import ProductForm from './CreateProductForm';
 import makeProduct from './CreateProductService';
 import generateErrors from './forms/FormValidation';
 import styles from './CreateProduct.module.css';
-// import { useErrors } from './forms/CreateProductContext';
 
-const CreateProduct = () => {
+const CreateProductPage = () => {
   const [product, setProductData] = useState({});
   const [date, onChange] = useState(new Date());
   const [errors, setErrors] = useState({});
@@ -69,7 +68,6 @@ const CreateProduct = () => {
       toast.error('Some fields contain invalid inputs.');
     }
   };
-
   return (
     <>
       <form className={styles.productFormContainer}>
@@ -104,4 +102,4 @@ const CreateProduct = () => {
   );
 };
 
-export default CreateProduct;
+export default CreateProductPage;

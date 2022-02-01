@@ -1,5 +1,8 @@
+import { toast } from 'react-toastify';
 import HttpHelper from '../../utils/HttpHelper';
 import Constants from '../../utils/constants';
+// eslint-disable-next-line import/no-cycle
+// import displayToast from '../app/App';
 
 /**
  *
@@ -31,7 +34,7 @@ export default async function makeProduct(product) {
     .then((response) => response.json())
     .catch(() => {
       /* eslint-disable no-console */
-      console.log('Failed to create');
+      toast.error('There is a problem connecting to the database');
       /* eslint-enable no-console */
     });
 }

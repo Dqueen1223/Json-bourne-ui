@@ -9,6 +9,7 @@ const generateErrors = (form, idList) => {
   const twoDecimal = [];
   const noDecimal = [];
   const noNegativeNumbers = [];
+  const nonDecimal = [];
   const errors = {};
 
   for (let i = 0; i < idList.length; i += 1) {
@@ -20,11 +21,15 @@ const generateErrors = (form, idList) => {
     }
     if (id === 'price' && value) {
       const splitNumber = value.toString().split('.');
-      if (splitNumber.length > 2) {
-        twoDecimal.push(id);
-      }
-      if (splitNumber[1].length !== 2) {
-        twoDecimal.push(id);
+      if (value.includes('.') && value.match(/^\d+(\.\d+)?$/)) {
+        if (splitNumber.length > 2) {
+          twoDecimal.push(id);
+        }
+        if (splitNumber[1].length !== 2) {
+          twoDecimal.push(id);
+        }
+      } else {
+        nonDecimal.push(id);
       }
     }
     if ((id === 'quantity' || id === 'price') && value < 0) {
@@ -56,6 +61,11 @@ const generateErrors = (form, idList) => {
   if (noNegativeNumbers.length) {
     noNegativeNumbers.forEach((i) => {
       errors[i] = 'No Negative Quantity';
+    });
+  }
+  if (nonDecimal.length) {
+    nonDecimal.forEach((i) => {
+      errors[i] = 'Price must be a decimal';
     });
   }
 
