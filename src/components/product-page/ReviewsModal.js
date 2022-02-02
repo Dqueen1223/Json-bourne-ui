@@ -1,62 +1,116 @@
+// import * as React from 'react';
+// import Box from '@mui/material/Box';
+// import Button from '@mui/material/Button';
+// import Typography from '@mui/material/Typography';
+// import Modal from '@mui/material/Modal';
+
+// const style = {
+//   position: 'absolute',
+//   top: '50%',
+//   left: '50%',
+//   transform: 'translate(-50%, -50%)',
+//   width: 400,
+//   bgcolor: 'background.paper',
+//   border: '2px solid #000',
+//   boxShadow: 24,
+//   p: 4
+// };
+
+// const ReviewsModal = () => {
+//   const [open, setOpen] = React.useState(false);
+//   const handleOpen = () => setOpen(true);
+//   const handleClose = () => setOpen(false);
+
+//   return (
+//     <div>
+//       <Button onClick={handleOpen}>Open modal</Button>
+//       <Modal
+//         open={open}
+//         onClose={handleClose}
+//         aria-labelledby="modal-modal-title"
+//         aria-describedby="modal-modal-description"
+//       >
+//         <Box sx={style}>
+//           <Typography id="modal-modal-title" variant="h6" component="h2">
+//             Text in a modal
+//           </Typography>
+//           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+//             Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+//           </Typography>
+//         </Box>
+//       </Modal>
+//     </div>
+//   );
+// };
+// export default ReviewsModal;
 import React from 'react';
-import './ProductCardModal.css';
-import '../product-card/ProductCard';
+import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import Modal from '@material-ui/core/Modal';
 
-/**
- * @name ProductCardReviewModal
- * @description material-ui styling for product card review modal
- * @return component
- */
+function rand() {
+  return Math.round(Math.random() * 20) - 10;
+}
 
-const ProductCardReviewsModal = ({ product, closeModal }) => {
-  // const [setShow] = useState(true);
-
-  // const handleShow = () => setShow(true);
-  // const reviewInfo = () => {
-  //   dispatch(
-  //     {
-  //       type: 'add',
-  //       product: {
-  //         id: product.id,
-  //         name: product.name,
-  //         description: product.description
-  //       }
-  //     }
-  //   );
-  // };
-  const closeTheModal = (e) => {
-    if (e.target.className === 'reviewModalBackground' || e.target.className === 'closeButton') {
-      closeModal(false);
-    }
+function getModalStyle() {
+  const top = 50 + rand();
+  const left = 50 + rand();
+  return {
+    top: `${top}%`,
+    left: `${left}%`,
+    transform: `translate(-${top}%, -${left}%)`
   };
+}
+
+const useStyles = makeStyles((theme) => ({
+  modal: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  paper: {
+    position: 'absolute',
+    width: 450,
+    backgroundColor: theme.palette.background.paper,
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3)
+  }
+}));
+
+function ReviewsModal() {
+  const classes = useStyles();
+  const [modalStyle] = React.useState(getModalStyle);
+  const [open, setOpen] = React.useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
-    <div
-      className="reviewModalBackground"
-      onClick={closeTheModal}
-      aria-hidden="true"
-    >
-      <div className="reviewModal">
-        <div className="reviewModal-content">
-          <div className="reviewModal-header">
-            <button
-              type="button"
-              className="closeButton"
-              onClick={closeTheModal}
-            >
-              &times;
-            </button>
-          </div>
-          <div className="reviewModal-body">
-            <div className="row">
-              <div className="reviewModal-title">{product.name}</div>
-            </div>
-            <div className="row">
-              <div className="productReview">{product.description}</div>
-            </div>
-          </div>
+    <div>
+      <Button variant="contained" color="primary" onClick={handleOpen}>
+        Open Modal
+      </Button>
+
+      <Modal
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+        open={open}
+        onClose={handleClose}
+      >
+        <div style={modalStyle} className={classes.paper}>
+          <h2>Simple React Modal</h2>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi accumsan odio enim.
+          </p>
         </div>
-      </div>
+      </Modal>
     </div>
   );
-};
-export default ProductCardReviewsModal;
+}
+
+export default ReviewsModal;

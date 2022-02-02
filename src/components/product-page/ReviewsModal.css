@@ -3,7 +3,7 @@
     height: 100%;
     width: 100%;
     background-color: rgba(0,0,0,0.4);
-    z-index: 2;
+    z-index: 0;
 }
 .reviewModal{
     display: flex;
@@ -15,4 +15,73 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+.reviewModal-content{
+    display:flex;
+    flex:1;
+    flex-direction: column;
+    max-height: 100%;
+    margin:10px;
+    color: #1d2228;
+}
+.closeButton {
+    background-color: transparent;
+    position: absolute;
+    font-size: 1.5em;
+    right:10px;
+    top:10px;
+    color: #1d2228;
+    border: none;
+    border-radius: 10px;
+}
+.closeButton:hover {
+    background-color: rgba(0,0,0,0.1);
+}
+
+.reviewModal-header{
+    flex:1 1 50%;
+    height: 50%;
+    text-align: center;
+    display: flex;
+}
+
+.reviewModal-body{
+    flex: 1 1 60%;
+    display: flex;
+    height: 60%;
+    flex-direction: column;
+    text-align: center;
+}
+.row{
+    display: flex;
+    flex-direction: row;
+    flex: 1 1 30%;
+}
+.reviewModal-title{
+    display:inline-block;
+    width: 40%;
+    margin-right: auto;
+    margin-top: 1em;
+}
+
+.productCardDescription{
+    display:inline-block;
+    width: 40%;
+    margin-right: auto;
+    margin-top: 1em;
+}
+.productCardType{
+    width: 40%;
+    display:inline-block;
+    margin-right: 0.5em;
+    margin-left: auto;
+    margin-top: 1em;
+}
+.productCardModal-footer{
+    display:flex;
+    flex-direction: row;
+    flex: 1 1 50px;
+    margin-top: auto;
+    max-height: 50px;
+    justify-content: center;
 }

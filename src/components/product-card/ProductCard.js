@@ -14,11 +14,10 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import ShareIcon from '@material-ui/icons/Share';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-// import Constants from '../../utils/constants';
 import Button from '@material-ui/core/button';
 import { useCart } from '../checkout-page/CartContext';
-import ProductCardReviewsModal from '../product-page/ReviewsModal';
 import ProductCardModal from '../product-page/ProductCardModal';
+import ReviewsModal from '../product-page/ReviewsModal';
 
 /**
  * @name useStyles
@@ -141,11 +140,13 @@ const ProductCard = ({ product }) => {
         <IconButton aria-label="add to shopping cart" onClick={onAdd}>
           <AddShoppingCartIcon />
         </IconButton>
-        <Button variant="contained" className={classes.root}>
-          {modalIsOpen && reactDom.createPortal(
-            <ProductCardReviewsModal onClick={() => { setModalIsOpen(true); }} />,
-            document.getElementById('root')
-          )}
+        <Button
+          type="button"
+          onClick={() => {
+            setModalIsOpen(true);
+              <ReviewsModal product={product} closeModal={setModalIsOpen} />;
+          }}
+        >
           Reviews
         </Button>
       </CardActions>
