@@ -57,6 +57,7 @@ const ProductCard = ({ product }) => {
   const classes = useStyles();
   const { dispatch } = useCart();
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [modalIsAlsoOpen, setModaltoOpen] = useState(false);
 
   const onAdd = (e) => {
     dispatch(
@@ -142,11 +143,12 @@ const ProductCard = ({ product }) => {
         </IconButton>
         <Button
           type="button"
-          onClick={() => {
-            setModalIsOpen(true);
-              <ReviewsModal product={product} closeModal={setModalIsOpen} />;
-          }}
+          onClick={ReviewsModal}
         >
+          {modalIsAlsoOpen && reactDom.createPortal(
+            <ProductCardModal product={product} closeModal={setModaltoOpen} />,
+            document.getElementById('root')
+          )}
           Reviews
         </Button>
       </CardActions>

@@ -64,20 +64,20 @@
     margin-top: 1em;
 }
 
-.productCardDescription{
+.reviewDescription{
     display:inline-block;
     width: 40%;
     margin-right: auto;
     margin-top: 1em;
 }
-.productCardType{
+.reviewCardType{
     width: 40%;
     display:inline-block;
     margin-right: 0.5em;
     margin-left: auto;
     margin-top: 1em;
 }
-.productCardModal-footer{
+.reviewModal-footer{
     display:flex;
     flex-direction: row;
     flex: 1 1 50px;
