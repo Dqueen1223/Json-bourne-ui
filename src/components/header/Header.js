@@ -1,10 +1,12 @@
+/* eslint-disable import/no-named-as-default-member */
 import React, { useState } from 'react';
-// import { NavLink } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import GoogleLogin, { GoogleLogout } from 'react-google-login';
+import { FaUserCircle } from 'react-icons/fa';
 import loginUser from './HeaderService';
 import constants from '../../utils/constants';
-
+import { useProfile } from '../Profile/ProfileContext';
+// eslint-disable-next-line import/no-named-as-default
 /**
  * @name Header
  * @description Displays the navigation header
@@ -14,7 +16,10 @@ const Header = () => {
   const [user, setUser] = useState('');
   const [googleError, setGoogleError] = useState('');
   const [apiError, setApiError] = useState(false);
-
+  const [isLoggedIn, setisLoggedIn] = useState(false);
+  const { dispatch } = useProfile();
+  // const { state: { userProfile } } = useProfile();
+  const history = useHistory();
   /**
    * @name handleGoogleLoginSuccess
    * @description Function to run if google login was successful
@@ -28,6 +33,15 @@ const Header = () => {
       lastName: response.profileObj.familyName
     };
     loginUser(googleUser, setUser, setApiError);
+    dispatch({
+      type: 'login',
+      userProfile: {
+        email: response.profileObj.email,
+        firstName: response.profileObj.givenName,
+        lastName: response.profileObj.familyName
+      }
+    });
+    setisLoggedIn(true);
     setGoogleError('');
   };
 
@@ -36,7 +50,9 @@ const Header = () => {
    * @description Function to run if google login was unsuccessful
    */
   const handleGoogleLoginFailure = () => {
-    setGoogleError('There was a problem logging in with Google. Please wait and try again later.');
+    setGoogleError(
+      'There was a problem logging in with Google. Please wait and try again later.'
+    );
   };
 
   /**
@@ -46,6 +62,8 @@ const Header = () => {
   const handleGoogleLogoutSuccess = () => {
     setUser('');
     setGoogleError('');
+    setisLoggedIn(false);
+    history.push('/logoutpage');
   };
 
   /**
@@ -53,22 +71,36 @@ const Header = () => {
    * @description Function to run if google logout was unsuccessful
    */
   const handleGoogleLogoutFailure = () => {
-    setGoogleError('There was a problem logging out with Google. Please wait and try again later.');
+    setGoogleError(
+      'There was a problem logging out with Google. Please wait and try again later.'
+    );
   };
 
+  const renderProfileicon = () => (
+    <Link to="/profilepage">
+      <FaUserCircle className="profileicon" alt="profileIcon" />
+    </Link>
+  );
   return (
     <div className="header">
-      {/* <NavLink to="/home">Home</NavLink> */}
+      {isLoggedIn ? renderProfileicon() : <></>}
       <Link to="/checkout">
-        <img className="carticon" src="https://icon-library.com/images/white-shopping-cart-icon/white-shopping-cart-icon-1.jpg" alt="cartimage" />
+        <img
+          className="carticon"
+          src="https://icon-library.com/images/white-shopping-cart-icon/white-shopping-cart-icon-1.jpg"
+          alt="cartimage"
+        />
       </Link>
       <Link to="/home">
-        <img className="applogo" src="https://icon-library.com/images/sports-app-icon/sports-app-icon-14.jpg" alt="applogo" />
+        <img
+          className="applogo"
+          src="https://icon-library.com/images/sports-app-icon/sports-app-icon-14.jpg"
+          alt="applogo"
+        />
       </Link>
-      {/* <NavLink to="/checkout">Cart</NavLink> */}
       <div className="googlebutton">
         {user && <span>{user.firstName}</span>}
-        {user && <span>{' '}</span>}
+        {user && <span> </span>}
         {user && <span>{user.lastName}</span>}
         {googleError && <span>{googleError}</span>}
         {apiError && <span>Api Error</span>}
@@ -92,5 +124,4 @@ const Header = () => {
     </div>
   );
 };
-
 export default Header;
