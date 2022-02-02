@@ -47,7 +47,7 @@ tbody {
 .Buttons{
     margin-left: 2vw;
 }
-.createButton{
+.createButton, .promoButton{
     background: #666666;
     border-radius: 20px;
     color: #EEEEEE;
