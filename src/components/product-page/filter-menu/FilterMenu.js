@@ -40,7 +40,7 @@ const FilterMenu = ({ setFilter, isActive }) => {
       // Set the filter array to the newArray without the removed filter.
       setFilterArray(newArray);
       console.log(`filterArray after setting it to spliced newArray: ${filterArray}`);
-      setFilter(filterArray);
+      setFilter(filterArray.join(''));
     }
   };
   return (
