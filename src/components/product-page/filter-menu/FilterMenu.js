@@ -17,17 +17,20 @@ const FilterMenu = ({ setFilter, isActive }) => {
   const handleCheckbox = (e) => {
     const newArray = filterArray;
     const checkedBox = `&${e.target.closest('div').previousElementSibling.innerText.toString().toLowerCase()}=${e.target.id}`;
-    const combinedQueries = newArray.map((element) => element.join());
+    // let combinedQueries = filterArray;
+    // for (let i = 0; i < newArray.length; i += 1) {
+    //   combinedQueries += newArray[i];
+    // }
     // if a checkbox is checked
     if (e.target.checked === true) {
       // Add the filter query string to the array.
       newArray.push(checkedBox);
       console.log(`newArray after pushing: ${newArray}`);
       // Set the filterArray state to the contents of newArray.
-      setFilterArray(combinedQueries);
+      setFilterArray(newArray);
       console.log(`filterArray after setting it to newArray ${filterArray}`);
       // Set the filter state from ProductPage.js to filterArray.
-      setFilter(filterArray);
+      setFilter(filterArray.join(''));
     } else {
       // Find the index of the query from the box that was unchecked.
       const index = newArray.indexOf(checkedBox);
