@@ -33,8 +33,6 @@ export default async function makeProduct(product) {
   })
     .then((response) => response.json())
     .catch(() => {
-      /* eslint-disable no-console */
       toast.error('There is a problem connecting to the database');
-      /* eslint-enable no-console */
     });
 }

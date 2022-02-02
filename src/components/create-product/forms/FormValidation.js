@@ -10,6 +10,7 @@ const generateErrors = (form, idList) => {
   const noDecimal = [];
   const noNegativeNumbers = [];
   const nonDecimal = [];
+  const nonNumeric = [];
   const errors = {};
 
   for (let i = 0; i < idList.length; i += 1) {
@@ -40,6 +41,9 @@ const generateErrors = (form, idList) => {
       if (splitNumber.length > 1) {
         noDecimal.push(id);
       }
+      if (!value.match(/^-?\d+(\.\d+)?$/)) {
+        nonNumeric.push(id);
+      }
     }
   }
 
@@ -68,7 +72,11 @@ const generateErrors = (form, idList) => {
       errors[i] = 'Price must be a decimal';
     });
   }
-
+  if (nonNumeric.length) {
+    nonNumeric.forEach((i) => {
+      errors[i] = 'This field must numeric';
+    });
+  }
   return errors;
 };
 
