@@ -11,7 +11,7 @@ import Constants from '../../utils/constants';
  * @param {*}
  * @returns
  */
-export default async function makeProduct(product) {
+export default async function MakeProduct(product) {
   await HttpHelper(Constants.PRODUCTS_ENDPOINT, 'POST', {
     name: product.name,
     sku: product.sku,
@@ -31,7 +31,12 @@ export default async function makeProduct(product) {
     price: product.price,
     quantity: product.quantity
   })
-    .then((response) => response.json())
+    .then((response) => {
+      if (response.ok) {
+        toast.success('Your product has been successfully created');
+        return response.json();
+      } throw new Error(response.statusText);
+    })
     .catch(() => {
       toast.error('There is a problem connecting to the database');
     });

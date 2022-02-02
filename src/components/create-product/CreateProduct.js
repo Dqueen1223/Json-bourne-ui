@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import ProductForm from './CreateProductForm';
-import makeProduct from './CreateProductService';
+import MakeProduct from './CreateProductService';
 import generateErrors from './forms/FormValidation';
 import styles from './CreateProduct.module.css';
 
@@ -10,6 +10,8 @@ const CreateProductPage = () => {
   const [product, setProductData] = useState({});
   const [date, onChange] = useState(new Date());
   const [errors, setErrors] = useState({});
+
+  const history = useHistory();
 
   const onProductChange = (e) => {
     product.releaseDate = date.toISOString();
@@ -63,7 +65,8 @@ const CreateProductPage = () => {
   const handleSubmit = () => {
     handleCreate();
     if (Object.keys(errors).length === 0) {
-      makeProduct(product);
+      MakeProduct(product);
+      history.push('/maintenance');
     } else {
       toast.error('Some fields contain invalid inputs.');
     }
