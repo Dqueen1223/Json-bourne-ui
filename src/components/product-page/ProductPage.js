@@ -5,8 +5,10 @@ import ArrowForward from '@material-ui/icons/ArrowForward';
 import ProductCard from '../product-card/ProductCard';
 import styles from './ProductPage.module.css';
 import Constants from '../../utils/constants';
+import fetchProductsCount from './productCountPageService';
 import fetchProducts from './ProductPageService';
 import FilterMenu from './filter-menu/FilterMenu';
+import Pagination from './Pagination';
 
 /**
  * @name ProductPage
@@ -15,45 +17,65 @@ import FilterMenu from './filter-menu/FilterMenu';
  */
 const ProductPage = () => {
   const [products, setProducts] = useState([]);
+  const [productsCount, setProductsCount] = useState([0]);
+  const [currentPage, setCurrentPage] = useState(1);
   const [apiError, setApiError] = useState(false);
   const [isActive, setIsActive] = useState(true);
   const [filter, setFilter] = useState('');
 
   useEffect(() => {
-    fetchProducts(setProducts, setApiError, filter);
+    fetchProducts(setProducts, setApiError, filter, (`&range=${(currentPage * 20) - 20}`));
+  }, [filter, currentPage]);
+
+  useEffect(() => {
+    fetchProductsCount(setProductsCount, setApiError, filter);
   }, [filter]);
 
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [filter]);
   const toggleFilterMenu = () => {
     setIsActive(!isActive);
   };
 
   return (
-    <div className={styles.productPageContainer}>
-      <div className="productPage" />
-      <div>
-        {apiError && <p className={styles.errMsg} data-testid="errMsg">{Constants.API_ERROR}</p>}
-        <IconButton
-          style={isActive ? {
-            position: 'fixed', height: '10px', width: '10px', top: '100px', left: '135px', zIndex: '1', backgroundColor: '#fb8122', border: '.5px solid white', color: '#e1e2e2', transition: '500ms'
-          } : {
-            position: 'fixed', height: '10px', width: '10px', top: '100px', left: '-5px', zIndex: '1', backgroundColor: '#fb8122', border: '.5px solid white', color: '#e1e2e2', transition: '500ms'
-          }}
-          aria-label="arrow-right"
-          onClick={toggleFilterMenu}
-        >
-          {isActive && <ArrowBack />}
-          {!isActive && <ArrowForward />}
-        </IconButton>
-        <FilterMenu setFilter={setFilter} isActive={isActive} />
+    <>
+      <div className={styles.productPageContainer}>
+        <div className="productPage" />
+        <div>
+          {apiError && <p className={styles.errMsg} data-testid="errMsg">{Constants.API_ERROR}</p>}
+          <IconButton
+            style={isActive ? {
+              position: 'fixed', height: '10px', width: '10px', top: '100px', left: '135px', zIndex: '1', backgroundColor: '#fb8122', border: '.5px solid white', color: '#e1e2e2', transition: '500ms'
+            } : {
+              position: 'fixed', height: '10px', width: '10px', top: '100px', left: '-5px', zIndex: '1', backgroundColor: '#fb8122', border: '.5px solid white', color: '#e1e2e2', transition: '500ms'
+            }}
+            aria-label="arrow-right"
+            onClick={toggleFilterMenu}
+          >
+            {isActive && <ArrowBack />}
+            {!isActive && <ArrowForward />}
+          </IconButton>
+          <FilterMenu setFilter={setFilter} isActive={isActive} />
+        </div>
+        <div className={isActive ? styles.addLeftMargin : styles.app}>
+          {products.map((product) => (
+            <div key={product.id}>
+              <ProductCard product={product} />
+            </div>
+          ))}
+        </div>
       </div>
-      <div className={isActive ? styles.addLeftMargin : styles.app}>
-        {products.map((product) => (
-          <div key={product.id}>
-            <ProductCard product={product} />
-          </div>
-        ))}
+      <div className={styles.pagination}>
+        <Pagination
+          className="pagination-bar"
+          currentPage={currentPage}
+          totalCount={productsCount}
+          pageSize={20}
+          onPageChange={(page) => setCurrentPage(page)}
+        />
       </div>
-    </div>
+    </>
   );
 };
 
