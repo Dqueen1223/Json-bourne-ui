@@ -12,6 +12,7 @@ import Constants from '../../utils/constants';
  * @returns
  */
 export default async function MakeProduct(product) {
+  let checkValid = 'invalid';
   await HttpHelper(Constants.PRODUCTS_ENDPOINT, 'POST', {
     name: product.name,
     sku: product.sku,
@@ -33,11 +34,14 @@ export default async function MakeProduct(product) {
   })
     .then((response) => {
       if (response.ok) {
-        toast.success('Your product has been successfully created');
-        return response.json();
-      } throw new Error(response.statusText);
+        checkValid = 'valid';
+        response.json();
+      } else {
+        throw new Error(response.statusText);
+      }
     })
     .catch(() => {
       toast.error('There is a problem connecting to the database');
     });
+  return checkValid;
 }
