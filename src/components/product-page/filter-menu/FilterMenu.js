@@ -43,6 +43,7 @@ const FilterMenu = ({ setFilter, isActive }) => {
       setFilter(filterArray.join(''));
     }
   };
+
   return (
     <div className={isActive ? styles.sidebar : styles.sideCollapsed}>
       <div className={styles.filterCheckbox}>
@@ -244,7 +245,249 @@ const FilterMenu = ({ setFilter, isActive }) => {
           </label>
           <br />
         </div>
-
+        <span className={styles.checkBoxLabel}>Price</span>
+        <div className={styles.fieldset}>
+          <label htmlFor="minPrice">
+            <input
+              id="minPrice"
+              type="number"
+              onChange={handleCheckbox}
+            />
+            Minimum Price
+          </label>
+          <br />
+          <label htmlFor="maxPrice">
+            <input
+              id="maxPrice"
+              type="number"
+              onChange={handleCheckbox}
+            />
+            Maximum Price
+          </label>
+          <br />
+        </div>
+        <span className={styles.checkBoxLabel}>Color</span>
+        <div className={styles.fieldset}>
+          <label htmlFor="white">
+            <input
+              id="000000"
+              type="checkbox"
+              onChange={handleCheckbox}
+            />
+            White
+          </label>
+          <br />
+          <label htmlFor="black">
+            <input
+              id="ffffff"
+              type="checkbox"
+              onChange={handleCheckbox}
+            />
+            Black
+          </label>
+          <br />
+          <label htmlFor="lightBlue">
+            <input
+              id="39add1"
+              type="checkbox"
+              onChange={handleCheckbox}
+            />
+            Light Blue
+          </label>
+          <br />
+          <label htmlFor="darkBlue">
+            <input
+              id="3079ab"
+              type="checkbox"
+              onChange={handleCheckbox}
+            />
+            Dark Blue
+          </label>
+          <br />
+          <label htmlFor="mauve">
+            <input
+              id="c25975"
+              type="checkbox"
+              onChange={handleCheckbox}
+            />
+            Mauve
+          </label>
+          <br />
+          <label htmlFor="red">
+            <input
+              id="e15258"
+              type="checkbox"
+              onChange={handleCheckbox}
+            />
+            Red
+          </label>
+          <br />
+          <label htmlFor="orange">
+            <input
+              id="f9845b"
+              type="checkbox"
+              onChange={handleCheckbox}
+            />
+            Orange
+          </label>
+          <br />
+          <label htmlFor="lavender">
+            <input
+              id="838cc7"
+              type="checkbox"
+              onChange={handleCheckbox}
+            />
+            Lavender
+          </label>
+          <br />
+          <label htmlFor="purple">
+            <input
+              id="7d669e"
+              type="checkbox"
+              onChange={handleCheckbox}
+            />
+            Purple
+          </label>
+          <br />
+          <label htmlFor="aqua">
+            <input
+              id="53bbb4"
+              type="checkbox"
+              onChange={handleCheckbox}
+            />
+            Aqua
+          </label>
+          <br />
+          <label htmlFor="green">
+            <input
+              id="51b46d"
+              type="checkbox"
+              onChange={handleCheckbox}
+            />
+            Green
+          </label>
+          <br />
+          <label htmlFor="mustard">
+            <input
+              id="e0ab18"
+              type="checkbox"
+              onChange={handleCheckbox}
+            />
+            Mustard
+          </label>
+          <br />
+          <label htmlFor="darkGray">
+            <input
+              id="637a91"
+              type="checkbox"
+              onChange={handleCheckbox}
+            />
+            Dark Grey
+          </label>
+          <br />
+          <label htmlFor="pink">
+            <input
+              id="f092b0"
+              type="checkbox"
+              onChange={handleCheckbox}
+            />
+            Pink
+          </label>
+          <br />
+          <label htmlFor="lightGray">
+            <input
+              id="b7c0c7"
+              type="checkbox"
+              onChange={handleCheckbox}
+            />
+            Light Gray
+          </label>
+          <br />
+        </div>
+        <span className={styles.checkBoxLabel}>Material</span>
+        <div className={styles.fieldset}>
+          <label htmlFor="cotton">
+            <input
+              id="Cotton"
+              type="checkbox"
+              onChange={handleCheckbox}
+            />
+            Cotton
+          </label>
+          <br />
+          <label htmlFor="polyester">
+            <input
+              id="Polyester"
+              type="checkbox"
+              onChange={handleCheckbox}
+            />
+            Polyester
+          </label>
+          <br />
+          <label htmlFor="microfiber">
+            <input
+              id="Microfiber"
+              type="checkbox"
+              onChange={handleCheckbox}
+            />
+            Microfiber
+          </label>
+          <br />
+          <label htmlFor="nylon">
+            <input
+              id="Nylon"
+              type="checkbox"
+              onChange={handleCheckbox}
+            />
+            Nylon
+          </label>
+          <br />
+          <label htmlFor="Synthetic">
+            <input
+              id="Synthetic"
+              type="checkbox"
+              onChange={handleCheckbox}
+            />
+            Synthetic
+          </label>
+          <br />
+          <label htmlFor="gore-tex">
+            <input
+              id="Gore-Tex"
+              type="checkbox"
+              onChange={handleCheckbox}
+            />
+            Gore-Tex
+          </label>
+          <br />
+          <label htmlFor="Spandex">
+            <input
+              id="Spandex"
+              type="checkbox"
+              onChange={handleCheckbox}
+            />
+            Spandex
+          </label>
+          <br />
+          <label htmlFor="Calico">
+            <input
+              id="Calico"
+              type="checkbox"
+              onChange={handleCheckbox}
+            />
+            Calico
+          </label>
+          <br />
+          <label htmlFor="Bamboo-Fiber">
+            <input
+              id="Bamboo-Fiber"
+              type="checkbox"
+              onChange={handleCheckbox}
+            />
+            Bamboo-Fiber
+          </label>
+          <br />
+        </div>
       </div>
     </div>
   );
