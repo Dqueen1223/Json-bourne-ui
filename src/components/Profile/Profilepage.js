@@ -5,7 +5,6 @@ import './ProfilePage.css';
 import { useProfile } from './ProfileContext';
 import fetchPurchases from './ProfilePageService';
 import ProfilePurchase from './ProfilePurchase';
-import TotalPrice from './TotalPrice';
 
 const ProfilePage = () => {
   const {
@@ -93,7 +92,9 @@ const ProfilePage = () => {
             {purchaseInfo && purchases.map((purchase) => (
               <div key={purchase.id}>
                 {console.log(purchase)}
-                <ProfilePurchase purchases={purchase} totalPrice={TotalPrice(purchase.lineItems)} />
+                <ProfilePurchase
+                  purchases={purchase}
+                />
               </div>
             ))}
           </div>

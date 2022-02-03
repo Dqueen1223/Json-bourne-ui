@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './ProfilePage.css';
-import fetchProduct from './profileProductService';
+import fetchProduct from './ProfileProductService';
 
 const PurchaseItem = ({ item }) => {
   const [product, setProduct] = useState(null);
@@ -8,8 +8,6 @@ const PurchaseItem = ({ item }) => {
     fetchProduct(item.productId, setProduct);
   }, [item]);
   // const [collapsibleOpen, setCollapsibleOpen] = useState(false);
-  console.log(item);
-  console.log(product);
   return (
     <div className="purchaseItem">
       <div className="productName">
