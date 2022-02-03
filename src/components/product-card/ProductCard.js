@@ -147,18 +147,15 @@ const ProductCard = ({ product }) => {
             className="reviewsButton"
             type="button"
             variant="contained"
-            onClick={() => ReviewsModal()}
-          // onClick={(event) => {
-          //   <ReviewsModal />;
-          //   event.stopPropagation();
-          //   event.preventDefault();
-          // }}
-          // onClick={ReviewsModal}
-            // onClick={modalIsOpen && reactDom.createPortal(
-            //   <ReviewsModal product={product} closeModal={setModalIsOpen} />,
-            //   document.getElementById('root')
-            // )}
+            // onClick={() => ReviewsModal()}
+            onClick={() => {
+              setModalIsOpen(true);
+            }}
           >
+            {modalIsOpen && reactDom.createPortal(
+              <ReviewsModal product={product} closeModal={setModalIsOpen} />,
+              document.getElementById('root')
+            )}
             Reviews
           </Button>
         </div>
