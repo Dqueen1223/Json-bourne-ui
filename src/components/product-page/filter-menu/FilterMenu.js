@@ -8,6 +8,7 @@ import styles from './filterMenu.module.css';
  */
 const FilterMenu = ({ setFilter, isActive }) => {
   const [filterArray, setFilterArray] = useState([]);
+  const newArray = filterArray;
 
   /**
    * @name handleCheckbox
@@ -15,12 +16,8 @@ const FilterMenu = ({ setFilter, isActive }) => {
    * @param {e} e - mouseclick event
    */
   const handleCheckbox = (e) => {
-    const newArray = filterArray;
     const checkedBox = `&${e.target.closest('div').previousElementSibling.innerText.toString().toLowerCase()}=${e.target.id}`;
-    // let combinedQueries = filterArray;
-    // for (let i = 0; i < newArray.length; i += 1) {
-    //   combinedQueries += newArray[i];
-    // }
+
     // if a checkbox is checked
     if (e.target.checked === true) {
       // Add the filter query string to the array.
@@ -44,10 +41,48 @@ const FilterMenu = ({ setFilter, isActive }) => {
     }
   };
 
+  const handlePrice = (e) => {
+    const minPrice = document.getElementById('minPrice');
+    const maxPrice = document.getElementById('maxPrice');
+    const priceError = document.getElementById('priceError');
+
+    priceError.innerText = '';
+    priceError.display = 'none';
+
+    if (minPrice.value === '' && maxPrice.value !== '') {
+      e.preventDefault();
+      priceError.display = 'block';
+      priceError.innerText = 'Please input a minimum price.';
+    }
+    if (maxPrice.value === '' && minPrice.value !== '') {
+      e.preventDefault();
+      priceError.display = 'block';
+      priceError.innerText = 'Please input a maximum price.';
+    }
+    if (minPrice.value === '' && maxPrice.value === '') {
+      const minIndex = newArray.indexOf(newArray.substring('minPrice'));
+      const maxIndex = newArray.indexOf(newArray.substring('maxPrice'));
+      newArray.splice(minIndex, 1);
+      newArray.splice(maxIndex, 1);
+      setFilterArray(newArray);
+      setFilter(filterArray.join(''));
+    }
+
+    if (minPrice.value > maxPrice.value) {
+      e.preventDefault();
+      priceError.display = 'block';
+      priceError.innerText = 'Minimum price must be less than the maximum price.';
+    } else if (minPrice !== '' && maxPrice !== '') {
+      newArray.push(`&minPrice=${minPrice.value}&maxPrice=${maxPrice.value}`);
+      setFilterArray(newArray);
+      setFilter(filterArray.join(''));
+    }
+  };
+
   return (
     <div className={isActive ? styles.sidebar : styles.sideCollapsed}>
       <div className={styles.filterCheckbox}>
-        <span className={styles.checkBoxLabel}>Brand</span>
+        {/* <span className={styles.checkBoxLabel}>Brand</span>
         <div className={styles.fieldset}>
           <label htmlFor="nike">
             <input
@@ -214,7 +249,7 @@ const FilterMenu = ({ setFilter, isActive }) => {
             Weightlifting
           </label>
           <br />
-        </div>
+        </div> */}
         <span className={styles.checkBoxLabel}>Demographic</span>
         <div className={styles.fieldset}>
           <label htmlFor="mens">
@@ -247,24 +282,20 @@ const FilterMenu = ({ setFilter, isActive }) => {
         </div>
         <span className={styles.checkBoxLabel}>Price</span>
         <div className={styles.fieldset}>
-          <label htmlFor="minPrice">
-            <input
-              id="minPrice"
-              type="number"
-              onChange={handleCheckbox}
-            />
-            Minimum Price
-          </label>
+          <input
+            id="minPrice"
+            className={styles.priceInput}
+            type="number"
+          />
+          <p>-</p>
+          <input
+            id="maxPrice"
+            className={styles.priceInput}
+            type="number"
+          />
           <br />
-          <label htmlFor="maxPrice">
-            <input
-              id="maxPrice"
-              type="number"
-              onChange={handleCheckbox}
-            />
-            Maximum Price
-          </label>
-          <br />
+          <div id="priceError" display="none" />
+          <button type="button" onClick={handlePrice}>Submit</button>
         </div>
         <span className={styles.checkBoxLabel}>Color</span>
         <div className={styles.fieldset}>
