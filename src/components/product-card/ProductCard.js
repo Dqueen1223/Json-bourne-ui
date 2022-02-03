@@ -18,6 +18,7 @@ import Button from '@material-ui/core/button';
 import { useCart } from '../checkout-page/CartContext';
 import ProductCardModal from '../product-page/ProductCardModal';
 import ReviewsModal from '../product-page/ReviewsModal';
+import '../product-page/ReviewsModal.css';
 
 /**
  * @name useStyles
@@ -57,8 +58,7 @@ const ProductCard = ({ product }) => {
   const classes = useStyles();
   const { dispatch } = useCart();
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [modalIsAlsoOpen, setModaltoOpen] = useState(false);
-
+  // const [modalIsAlsoOpen, setModaltoOpen] = useState(false);
   const onAdd = (e) => {
     dispatch(
       {
@@ -81,6 +81,7 @@ const ProductCard = ({ product }) => {
   const share = (e) => {
     e.stopPropagation();
   };
+
   return (
     <Card className={classes.root}>
       {modalIsOpen && reactDom.createPortal(
@@ -141,16 +142,26 @@ const ProductCard = ({ product }) => {
         <IconButton aria-label="add to shopping cart" onClick={onAdd}>
           <AddShoppingCartIcon />
         </IconButton>
-        <Button
-          type="button"
-          onClick={ReviewsModal}
-        >
-          {modalIsAlsoOpen && reactDom.createPortal(
-            <ProductCardModal product={product} closeModal={setModaltoOpen} />,
-            document.getElementById('root')
-          )}
-          Reviews
-        </Button>
+        <div>
+          <Button
+            className="reviewsButton"
+            type="button"
+            variant="contained"
+            onClick={() => ReviewsModal()}
+          // onClick={(event) => {
+          //   <ReviewsModal />;
+          //   event.stopPropagation();
+          //   event.preventDefault();
+          // }}
+          // onClick={ReviewsModal}
+            // onClick={modalIsOpen && reactDom.createPortal(
+            //   <ReviewsModal product={product} closeModal={setModalIsOpen} />,
+            //   document.getElementById('root')
+            // )}
+          >
+            Reviews
+          </Button>
+        </div>
       </CardActions>
     </Card>
   );

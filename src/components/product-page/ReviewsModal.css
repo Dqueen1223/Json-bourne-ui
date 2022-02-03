@@ -85,3 +85,6 @@
     max-height: 50px;
     justify-content: center;
 }
+.reviewsButton{
+    z-index: 0; 
+}
