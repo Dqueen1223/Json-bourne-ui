@@ -34,6 +34,7 @@ export default async function MakeProduct(product) {
   })
     .then((response) => {
       if (response.ok) {
+        toast.success('Your product has been successfully made!');
         checkValid = 'valid';
         response.json();
       } else {
