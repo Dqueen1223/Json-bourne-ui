@@ -3,7 +3,7 @@ import PromoForm from './CreatePromoForm';
 
 // import { useCart } from '../checkout-page/CartContext';
 /**
- * @name ProductCardModal
+ * @name CreatePromoModal
  * @description material-ui styling for product card modal
  * @return component
  */
@@ -22,7 +22,7 @@ const CreatePromo = ({ closeModal }) => {
     >
       <div className="productCardModal">
         <div className="productCardModal-content">
-          <div className="productCardModal-header">
+          <div className="PromoModal-header">
             <button
               type="button"
               className="closeButton"
