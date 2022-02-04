@@ -55,6 +55,11 @@ const FilterMenu = ({ setFilter, isActive }) => {
       priceError.visibility = 'visible';
       priceError.innerText = 'Please input a maximum price.';
     }
+    if (minPrice === '' && maxPrice === '') {
+      e.preventDefault();
+      priceError.visibility = 'visible';
+      priceError.innerText = 'Please input prices to sort by.';
+    }
 
     if (minPrice > maxPrice && maxPrice !== '') {
       e.preventDefault();
@@ -82,6 +87,7 @@ const FilterMenu = ({ setFilter, isActive }) => {
   return (
     <div className={isActive ? styles.sidebar : styles.sideCollapsed}>
       <div className={styles.filterCheckbox}>
+        <h4>Product Filter</h4>
         <span className={styles.checkBoxLabel}>Brand</span>
         <div className={styles.fieldset}>
           <label htmlFor="nike">
