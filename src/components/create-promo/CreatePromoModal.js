@@ -26,11 +26,11 @@ const CreatePromo = ({ closeModal }) => {
 
   const handleSubmit = async () => {
     const newPromo = {
-      code: promo.name,
-      discount: promo.discount,
-      type: promo.type,
-      startDate: promo.startDate,
-      endDate: promo.endDate,
+      Code: promo.name,
+      Discount: promo.discount,
+      Type: promo.type,
+      StartDate: promo.startDate,
+      EndDate: promo.endDate,
     };
     makePromo(newPromo);
     // if (Object.keys(errors).length === 0) {
