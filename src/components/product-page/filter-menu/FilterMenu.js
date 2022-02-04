@@ -72,9 +72,11 @@ const FilterMenu = ({ setFilter, isActive }) => {
     const maxPrice = document.getElementById('maxPrice').value;
     const priceIndex = newArray.indexOf(`&minPrice=${minPrice}&maxPrice=${maxPrice}`);
 
-    newArray.splice(priceIndex, 1);
-    setFilterArray(newArray);
-    setFilter(filterArray.join(''));
+    if (priceIndex !== -1) {
+      newArray.splice(priceIndex, 1);
+      setFilterArray(newArray);
+      setFilter(filterArray.join(''));
+    }
   };
   return (
     <div className={isActive ? styles.sidebar : styles.sideCollapsed}>
