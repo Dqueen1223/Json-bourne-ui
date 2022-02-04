@@ -61,7 +61,7 @@ const FilterMenu = ({ setFilter, isActive }) => {
       priceError.innerText = 'Please input prices to sort by.';
     }
 
-    if (minPrice > maxPrice && maxPrice !== '') {
+    if (parseFloat(minPrice) > parseFloat(maxPrice) && maxPrice !== '' && minPrice !== '') {
       e.preventDefault();
       priceError.visibility = 'visible';
       priceError.innerText = 'Minimum price must be less than the maximum price.';
