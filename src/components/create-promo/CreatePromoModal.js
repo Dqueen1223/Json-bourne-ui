@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PromoForm from './CreatePromoForm';
 import styles from './PromoForm.module.css';
+import makePromo from './CreatePromoService';
 
 // import { useCart } from '../checkout-page/CartContext';
 /**
@@ -24,14 +25,11 @@ const CreatePromo = ({ closeModal }) => {
   };
 
   const handleSubmit = async () => {
-    // handleCreate();
-    // console.log(Object.keys(errors));
+    makePromo(promo);
     // if (Object.keys(errors).length === 0) {
-    //   MakeProduct(product);
-    //   if (await MakeProduct(product) === 'valid') {
-    //     toast.success('');
-    //   }
-    //   // history.push('/maintenance');
+    //   // if (await makePromo(product) === 'valid') {
+    //   //   toast.success('');
+    //   // }
     // } else {
     //   toast.error('Some fields contain invalid inputs.');
     // }
