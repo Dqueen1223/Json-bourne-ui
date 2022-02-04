@@ -1,6 +1,6 @@
 import React from 'react';
 import DateTimePicker from 'react-datetime-picker';
-import styles from './FormItem.module.css';
+import styles from '../PromoForm.module.css';
 
 /**
  * @name FormItem
@@ -8,10 +8,10 @@ import styles from './FormItem.module.css';
  * @return component
  */
 const FormItemDateTime = ({
-  onChange, value, id, label, placeholder, type
+  onChange, value, id, label, placeholder, type, className
 }) => (
-  <div>
-    <label className={styles.label} htmlFor={id}>
+  <div className={className}>
+    <label className={styles.promoLabel} htmlFor={id}>
       {label}
       <DateTimePicker
         minDate={new Date()}

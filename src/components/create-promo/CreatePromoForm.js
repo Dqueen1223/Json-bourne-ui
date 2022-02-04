@@ -1,30 +1,62 @@
 import React from 'react';
-import FormItem from '../form/FormItem';
-import FormItemDropdown from '../form/FormItemDropdown';
-import FormItemDateTime from '../form/FormItemDateTime';
+import FormItem from './forms/FormItem';
+import FormItemDropdown from './forms/FormItemDropdown';
+import FormItemDateTime from './forms/FormItemDateTime';
 import styles from './PromoForm.module.css';
 
-const PromoForm = () => {
+const PromoForm = ({
+  endChange, startChange, startDate, endDate, onClick, onChange
+}) => {
   const typeOptions = ['%', '$'];
   return (
     <>
       <div className={styles.createPromo}>
         <FormItem
           id="name"
+          label="Name"
+          className={styles.nameInput}
+          onChange={onChange}
         />
-        <FormItemDropdown
-          id="type"
-          options={typeOptions}
-        />
-        <FormItem
-          id="value"
-        />
-        <FormItemDateTime
-          id="dateStart"
-        />
-        <FormItemDateTime
-          id="dateEnd"
-        />
+        <div className={styles.discount}>
+          <FormItemDropdown
+            id="type"
+            label="Type"
+            options={typeOptions}
+            className={styles.typeDropdown}
+            onChange={onChange}
+          />
+          <FormItem
+            id="value"
+            label="Amount"
+            className={styles.valueInput}
+            onChange={onChange}
+          />
+        </div>
+        <div className={styles.promoDates}>
+          <FormItemDateTime
+            id="dateStart"
+            label="Start Date"
+            className={styles.dateInput}
+            onChange={startChange}
+            onClick={onChange}
+            value={startDate}
+          />
+          <FormItemDateTime
+            id="dateEnd"
+            label="End Date"
+            className={styles.dateInput}
+            onChange={endChange}
+            onClick={onChange}
+            value={endDate}
+          />
+        </div>
+        <button
+          type="button"
+          className={styles.buttons}
+          onClick={onClick}
+        >
+          Submit
+        </button>
       </div>
     </>
   );

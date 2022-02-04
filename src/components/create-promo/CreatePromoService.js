@@ -8,7 +8,7 @@ import Constants from '../../utils/constants';
  * @param {*}
  * @returns
  */
-export default async function makeProduct(promo) {
+export default async function makePromo(promo) {
   console.log(promo);
   await HttpHelper(Constants.PROMOTIONS_ENDPOINT, 'POST', {
     promo

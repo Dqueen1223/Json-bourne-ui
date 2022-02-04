@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PromoForm from './CreatePromoForm';
+import styles from './PromoForm.module.css';
 
 // import { useCart } from '../checkout-page/CartContext';
 /**
@@ -8,21 +9,50 @@ import PromoForm from './CreatePromoForm';
  * @return component
  */
 const CreatePromo = ({ closeModal }) => {
+  const [startDate, onStartChange] = useState(new Date());
+  const [endDate, onEndChange] = useState(new Date());
+  const [promo, setPromoData] = useState({});
+
+  const onPromoChange = (e) => {
+    if (startDate && endDate) {
+      promo.startDate = startDate.toISOString();
+      promo.endDate = endDate.toISOString();
+    }
+    setPromoData({ ...promo, [e.target.id]: e.target.value });
+    console.log(promo);
+    // setErrors({});
+  };
+
+  const handleSubmit = async () => {
+    // handleCreate();
+    // console.log(Object.keys(errors));
+    // if (Object.keys(errors).length === 0) {
+    //   MakeProduct(product);
+    //   if (await MakeProduct(product) === 'valid') {
+    //     toast.success('');
+    //   }
+    //   // history.push('/maintenance');
+    // } else {
+    //   toast.error('Some fields contain invalid inputs.');
+    // }
+  };
+
   const closeTheModal = (e) => {
-    if (e.target.className === 'productCardModalBackground' || e.target.className === 'closeButton') {
+    if (e.target.className === styles.promoModalBackground || e.target.className === 'closeButton') {
       closeModal(false);
     }
   };
 
   return (
     <div
-      className="productCardModalBackground"
+      className={styles.promoModalBackground}
       onClick={closeTheModal}
       aria-hidden="true"
     >
-      <div className="productCardModal">
-        <div className="productCardModal-content">
-          <div className="PromoModal-header">
+      <div className={styles.promoModal}>
+        <div className={styles.promoModalContent}>
+          <div className={styles.promoModalHeader}>
+            <h2 className={styles.promoTitle}>Create Promotion</h2>
             <button
               type="button"
               className="closeButton"
@@ -31,8 +61,15 @@ const CreatePromo = ({ closeModal }) => {
               &times;
             </button>
           </div>
-          <div className="productCardModal-body">
-            <PromoForm />
+          <div className={styles.promoModalBody}>
+            <PromoForm
+              startChange={onStartChange}
+              endChange={onEndChange}
+              startDate={startDate}
+              endDate={endDate}
+              onChange={onPromoChange}
+              onClick={handleSubmit}
+            />
           </div>
         </div>
       </div>
