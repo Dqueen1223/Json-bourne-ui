@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import ProductForm from './CreateProductForm';
 import MakeProduct from './CreateProductService';
-import generateErrors from './forms/FormValidation';
+import validateCreateProductForm from './forms/FormValidation';
 import styles from './CreateProduct.module.css';
 
 const CreateProductPage = () => {
@@ -20,7 +20,7 @@ const CreateProductPage = () => {
 
   const handleErrors = (form) => {
     const idList = Object.keys(form);
-    const errorLists = generateErrors(form, idList);
+    const errorLists = validateCreateProductForm(form, idList);
 
     for (let i = 0; i < idList.length; i += 1) {
       const id = idList[i];

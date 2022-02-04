@@ -4,7 +4,7 @@
  *
  * Validation for required input fields, test if input has any value
  */
-const generateErrors = (form, idList) => {
+const validateCreateProductForm = (form, idList) => {
   const noValue = [];
   const twoDecimal = [];
   const noDecimal = [];
@@ -80,4 +80,4 @@ const generateErrors = (form, idList) => {
   return errors;
 };
 
-export default generateErrors;
+export default validateCreateProductForm;
