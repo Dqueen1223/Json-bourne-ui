@@ -30,8 +30,13 @@ const ProductPage = () => {
   return (
     <div className={styles.productPageContainer}>
       <div className="productPage" />
-      <div>
+      <div className={styles.errContainer}>
         {apiError && <p className={styles.errMsg} data-testid="errMsg">{Constants.API_ERROR}</p>}
+        { !apiError && filter !== '' && products.length === 0 && (
+        <p className={styles.errMsg} data-testid="errMsg">
+          No products found matching that filter request.
+        </p>
+        )}
         <IconButton
           style={isActive ? {
             position: 'fixed', height: '10px', width: '10px', top: '100px', left: '135px', zIndex: '1', backgroundColor: '#fb8122', border: '.5px solid white', color: '#e1e2e2', transition: '500ms'

@@ -17,6 +17,7 @@
   color: red;
   font-size: 14px;
   margin: 0px 2px 4px 4px;
+  left: 50%;
 }
 
 .productPageContainer{
@@ -24,4 +25,10 @@
   flex-direction: row;
   flex-wrap:nowrap;
   margin-top: 100px;
+}
+
+.errContainer{
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
 }

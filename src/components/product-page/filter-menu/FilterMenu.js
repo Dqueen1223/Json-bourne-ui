@@ -286,7 +286,8 @@ const FilterMenu = ({ setFilter, isActive }) => {
             <input
               id="minPrice"
               className={styles.priceInput}
-              type="number"
+             // type="number"
+              placeholder="Min Price"
             />
             -
           </label>
@@ -294,7 +295,8 @@ const FilterMenu = ({ setFilter, isActive }) => {
             <input
               id="maxPrice"
               className={styles.priceInput}
-              type="number"
+            //  type="number"
+              placeholder="Max Price"
             />
           </label>
           <br />
