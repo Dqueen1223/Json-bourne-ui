@@ -13,7 +13,7 @@ const PromoForm = ({
       <div className={styles.createPromo}>
         <FormItem
           id="name"
-          label="Name"
+          label="Promo Code"
           className={styles.nameInput}
           onChange={onChange}
         />

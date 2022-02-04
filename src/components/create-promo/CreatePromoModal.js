@@ -25,7 +25,14 @@ const CreatePromo = ({ closeModal }) => {
   };
 
   const handleSubmit = async () => {
-    makePromo(promo);
+    const newPromo = {
+      code: promo.name,
+      discount: promo.discount,
+      type: promo.type,
+      startDate: promo.startDate,
+      endDate: promo.endDate,
+    };
+    makePromo(newPromo);
     // if (Object.keys(errors).length === 0) {
     //   // if (await makePromo(product) === 'valid') {
     //   //   toast.success('');
