@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">33.33% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/27</span>
+                <span class='fraction'>9/27</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">12.5% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/8</span>
+                <span class='fraction'>1/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">20% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/5</span>
+                <span class='fraction'>1/5</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">33.33% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/27</span>
+                <span class='fraction'>9/27</span>
             </div>
         
             
@@ -160,28 +160,18 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -191,7 +181,7 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -201,7 +191,17 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -250,18 +250,18 @@ import styles from './filterMenu.module.css';
  * @description Displays Sidebar filter menu
  * @return component
  */
-const FilterMenu = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >({</span> setFilter, isActive }) =&gt; {</span>
-  const [menIsChecked, setMenIsChecked] = <span class="cstat-no" title="statement not covered" >useState(false);</span>
-  const [womenIsChecked, setWomenIsChecked] = <span class="cstat-no" title="statement not covered" >useState(false);</span>
-  const [kidsIsChecked, setKidsIsChecked] = <span class="cstat-no" title="statement not covered" >useState(false);</span>
+const FilterMenu = ({ setFilter, isActive }) =&gt; {
+  const [menIsChecked, setMenIsChecked] = useState(false);
+  const [womenIsChecked, setWomenIsChecked] = useState(false);
+  const [kidsIsChecked, setKidsIsChecked] = useState(false);
 &nbsp;
-  const checkboxReset = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
+  const checkboxReset = <span class="fstat-no" title="function not covered" >()</span> =&gt; {
 <span class="cstat-no" title="statement not covered" >    setMenIsChecked(false);</span>
 <span class="cstat-no" title="statement not covered" >    setWomenIsChecked(false);</span>
 <span class="cstat-no" title="statement not covered" >    setKidsIsChecked(false);</span>
   };
 &nbsp;
-  const handleMensCheckbox = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
+  const handleMensCheckbox = <span class="fstat-no" title="function not covered" >()</span> =&gt; {
 <span class="cstat-no" title="statement not covered" >    checkboxReset();</span>
 <span class="cstat-no" title="statement not covered" >    if (!menIsChecked) {</span>
 <span class="cstat-no" title="statement not covered" >      setFilter('&amp;demographic=Men');</span>
@@ -271,7 +271,7 @@ const FilterMenu = <span class="cstat-no" title="statement not covered" ><span c
 <span class="cstat-no" title="statement not covered" >    setMenIsChecked(!menIsChecked);</span>
   };
 &nbsp;
-  const handleWomensCheckbox = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
+  const handleWomensCheckbox = <span class="fstat-no" title="function not covered" >()</span> =&gt; {
 <span class="cstat-no" title="statement not covered" >    checkboxReset();</span>
 <span class="cstat-no" title="statement not covered" >    if (!womenIsChecked) {</span>
 <span class="cstat-no" title="statement not covered" >      setFilter('&amp;demographic=Women');</span>
@@ -281,7 +281,7 @@ const FilterMenu = <span class="cstat-no" title="statement not covered" ><span c
 <span class="cstat-no" title="statement not covered" >    setWomenIsChecked(!womenIsChecked);</span>
   };
 &nbsp;
-  const handleKidsCheckbox = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
+  const handleKidsCheckbox = <span class="fstat-no" title="function not covered" >()</span> =&gt; {
 <span class="cstat-no" title="statement not covered" >    checkboxReset();</span>
 <span class="cstat-no" title="statement not covered" >    if (!kidsIsChecked) {</span>
 <span class="cstat-no" title="statement not covered" >      setFilter('&amp;demographic=Kids');</span>
@@ -291,8 +291,8 @@ const FilterMenu = <span class="cstat-no" title="statement not covered" ><span c
 <span class="cstat-no" title="statement not covered" >    setKidsIsChecked(!kidsIsChecked);</span>
   };
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  return (</span>
-    &lt;div className={isActive ? styles.sidebar : styles.sideCollapsed}&gt;
+  return (
+    &lt;div className={isActive ? styles.sidebar : <span class="branch-1 cbranch-no" title="branch not covered" >styles.sideCollapsed}</span>&gt;
       &lt;div className={styles.filterCheckbox}&gt;
         &lt;span className={styles.checkBoxLabel}&gt;Products&lt;/span&gt;
         &lt;div className={styles.fieldset}&gt;
@@ -340,7 +340,7 @@ export default FilterMenu;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Fri Feb 04 2022 13:28:54 GMT-0500 (Eastern Standard Time)
+                at Fri Feb 04 2022 16:25:32 GMT-0500 (Eastern Standard Time)
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

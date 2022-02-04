@@ -9,7 +9,6 @@ const validateCreateProductForm = (form, idList) => {
   const twoDecimal = [];
   const noDecimal = [];
   const noNegativeNumbers = [];
-  const nonDecimal = [];
   const nonNumeric = [];
   const errors = {};
 
@@ -22,7 +21,7 @@ const validateCreateProductForm = (form, idList) => {
     }
     if (id === 'price' && value) {
       const splitNumber = value.toString().split('.');
-      if (value.includes('.') && value.match(/^\d+(\.\d+)?$/)) {
+      if (value.toString().includes('.') && value.match(/^\d+(\.\d+)?$/)) {
         if (splitNumber.length > 2) {
           twoDecimal.push(id);
         }
@@ -30,18 +29,21 @@ const validateCreateProductForm = (form, idList) => {
           twoDecimal.push(id);
         }
       } else {
-        nonDecimal.push(id);
+        twoDecimal.push(id);
       }
     }
     if ((id === 'quantity' || id === 'price') && value < 0) {
       noNegativeNumbers.push(id);
+    }
+    if ((id === 'demographic') && value.trim() < 0) {
+      noValue.push(id);
     }
     if (id === 'quantity' && value) {
       const splitNumber = value.toString().split('.');
       if (splitNumber.length > 1) {
         noDecimal.push(id);
       }
-      if (!value.match(/^-?\d+(\.\d+)?$/)) {
+      if (!value.toString().match(/^-?\d+(\.\d+)?$/)) {
         nonNumeric.push(id);
       }
     }
@@ -67,14 +69,9 @@ const validateCreateProductForm = (form, idList) => {
       errors[i] = 'No Negative Quantity';
     });
   }
-  if (nonDecimal.length) {
-    nonDecimal.forEach((i) => {
-      errors[i] = 'Price must be a decimal';
-    });
-  }
   if (nonNumeric.length) {
     nonNumeric.forEach((i) => {
-      errors[i] = 'This field must numeric';
+      errors[i] = 'This field must be numeric';
     });
   }
   return errors;

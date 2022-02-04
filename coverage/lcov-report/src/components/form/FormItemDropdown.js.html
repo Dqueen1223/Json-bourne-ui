@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">75% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/4</span>
+                <span class='fraction'>3/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">75% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/8</span>
+                <span class='fraction'>6/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">66.66% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/3</span>
+                <span class='fraction'>2/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">75% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/4</span>
+                <span class='fraction'>3/4</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -135,15 +135,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">32x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -152,7 +148,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">96x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -199,11 +199,11 @@ import styles from './FormItem.module.css';
  * @description Input field
  * @return component
  */
-const FormItemDropdown = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >({</span></span>
+const FormItemDropdown = ({
   onChange, value, id, label, options, error
 }) =&gt; (
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  &lt;div&gt;</span>
+  &lt;div&gt;
     &lt;label className={styles.label} htmlFor={id}&gt;
       {label}
       &lt;div&gt;
@@ -215,8 +215,8 @@ const FormItemDropdown = <span class="cstat-no" title="statement not covered" ><
           onBlur={onChange}
           value={value}
         &gt;
-          {options.map(<span class="fstat-no" title="function not covered" >(o</span>ptionText) =&gt; (
-<span class="cstat-no" title="statement not covered" >            &lt;option</span>
+          {options.map((optionText) =&gt; (
+            &lt;option
               value={optionText}
               key={optionText}
             &gt;
@@ -226,7 +226,7 @@ const FormItemDropdown = <span class="cstat-no" title="statement not covered" ><
         &lt;/select&gt;
         )}
         {error &amp;&amp; (
-        &lt;select
+<span class="branch-1 cbranch-no" title="branch not covered" >        &lt;select</span>
           className={styles.inputError}
           id={id}
           onChange={onChange}
@@ -245,7 +245,7 @@ const FormItemDropdown = <span class="cstat-no" title="statement not covered" ><
         )}
         {!error &amp;&amp; (&lt;p className={styles.paragraph} /&gt;)}
         {error &amp;&amp; (
-          &lt;p className={styles.error_item}&gt;
+<span class="branch-1 cbranch-no" title="branch not covered" >          &lt;p className={styles.error_item}&gt;</span>
             {error}
           &lt;/p&gt;
         )}
@@ -262,7 +262,7 @@ export default FormItemDropdown;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Fri Feb 04 2022 13:28:54 GMT-0500 (Eastern Standard Time)
+                at Fri Feb 04 2022 16:25:32 GMT-0500 (Eastern Standard Time)
             </div>
         <script src="../../../prettify.js"></script>
         <script>

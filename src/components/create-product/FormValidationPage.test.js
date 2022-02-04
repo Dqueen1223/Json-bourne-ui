@@ -39,23 +39,4 @@ describe('CreateProductPage', () => {
     });
     user.type(name, 'Sports Headband');
   });
-  // it('will display errors', async () => {
-  //   MakeProduct.mockImplementation((product, setApiError) => {
-  //     setApiError(true);
-  //   });
-  //   await act(async () => {
-  //     render(
-  //       <Router>
-  //         <CreateProductPage />
-  //       </Router>,
-  //       container
-  //     );
-  //     const createProduct = screen.getByTestId('quantity');
-  //     const quantity = 1230;
-  //     await fireEvent.change(createProduct, {
-  //       target: { value: quantity }
-  //     });
-  //     expect(createProduct.innerHTML).toBe(quantity);
-  //   });
-  // });
 });

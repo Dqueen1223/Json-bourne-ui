@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">83.33% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/18</span>
+                <span class='fraction'>15/18</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">70% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/10</span>
+                <span class='fraction'>7/10</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">57.14% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/7</span>
+                <span class='fraction'>4/7</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">83.33% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/18</span>
+                <span class='fraction'>15/18</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -162,30 +162,30 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -244,30 +244,30 @@ import Pagination from './Pagination';
  * @description fetches products from API and displays products as product cards
  * @return component
  */
-const ProductPage = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
-  const [products, setProducts] = <span class="cstat-no" title="statement not covered" >useState([]);</span>
-  const [productsCount, setProductsCount] = <span class="cstat-no" title="statement not covered" >useState([0]);</span>
-  const [currentPage, setCurrentPage] = <span class="cstat-no" title="statement not covered" >useState(1);</span>
-  const [apiError, setApiError] = <span class="cstat-no" title="statement not covered" >useState(false);</span>
-  const [isActive, setIsActive] = <span class="cstat-no" title="statement not covered" >useState(true);</span>
-  const [filter, setFilter] = <span class="cstat-no" title="statement not covered" >useState('');</span>
+const ProductPage = () =&gt; {
+  const [products, setProducts] = useState([]);
+  const [productsCount, setProductsCount] = useState([0]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [apiError, setApiError] = useState(false);
+  const [isActive, setIsActive] = useState(true);
+  const [filter, setFilter] = useState('');
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  useEffect(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    fetchProducts(setProducts, setApiError, filter, (`&amp;range=${(currentPage * 20) - 20}`));</span>
+  useEffect(() =&gt; {
+    fetchProducts(setProducts, setApiError, filter, (`&amp;range=${(currentPage * 20) - 20}`));
   }, [filter, currentPage]);
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  useEffect(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    fetchProductsCount(setProductsCount, setApiError, filter);</span>
+  useEffect(() =&gt; {
+    fetchProductsCount(setProductsCount, setApiError, filter);
   }, [filter]);
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  useEffect(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    setCurrentPage(1);</span>
+  useEffect(() =&gt; {
+    setCurrentPage(1);
   }, [filter]);
-  const toggleFilterMenu = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
+  const toggleFilterMenu = <span class="fstat-no" title="function not covered" >()</span> =&gt; {
 <span class="cstat-no" title="statement not covered" >    setIsActive(!isActive);</span>
   };
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  return (</span>
+  return (
     &lt;&gt;
       &lt;div className={styles.productPageContainer}&gt;
         &lt;div className="productPage" /&gt;
@@ -276,18 +276,18 @@ const ProductPage = <span class="cstat-no" title="statement not covered" ><span 
           &lt;IconButton
             style={isActive ? {
               position: 'fixed', height: '10px', width: '10px', top: '100px', left: '135px', zIndex: '1', backgroundColor: '#fb8122', border: '.5px solid white', color: '#e1e2e2', transition: '500ms'
-            } : {
+            } : <span class="branch-1 cbranch-no" title="branch not covered" >{</span>
               position: 'fixed', height: '10px', width: '10px', top: '100px', left: '-5px', zIndex: '1', backgroundColor: '#fb8122', border: '.5px solid white', color: '#e1e2e2', transition: '500ms'
             }}
             aria-label="arrow-right"
             onClick={toggleFilterMenu}
           &gt;
             {isActive &amp;&amp; &lt;ArrowBack /&gt;}
-            {!isActive &amp;&amp; &lt;ArrowForward /&gt;}
+            {!isActive &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >&lt;ArrowForward /&gt;}</span>
           &lt;/IconButton&gt;
           &lt;FilterMenu setFilter={setFilter} isActive={isActive} /&gt;
         &lt;/div&gt;
-        &lt;div className={isActive ? styles.addLeftMargin : styles.app}&gt;
+        &lt;div className={isActive ? styles.addLeftMargin : <span class="branch-1 cbranch-no" title="branch not covered" >styles.app}</span>&gt;
           {products.map(<span class="fstat-no" title="function not covered" >(p</span>roduct) =&gt; (
 <span class="cstat-no" title="statement not covered" >            &lt;div key={product.id}&gt;</span>
               &lt;ProductCard product={product} /&gt;
@@ -316,7 +316,7 @@ export default ProductPage;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Fri Feb 04 2022 13:28:54 GMT-0500 (Eastern Standard Time)
+                at Fri Feb 04 2022 16:25:32 GMT-0500 (Eastern Standard Time)
             </div>
         <script src="../../../prettify.js"></script>
         <script>
