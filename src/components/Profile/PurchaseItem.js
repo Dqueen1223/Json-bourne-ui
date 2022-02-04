@@ -7,18 +7,19 @@ const PurchaseItem = ({ item }) => {
   useEffect(() => {
     fetchProduct(item.productId, setProduct);
   }, [item]);
-  // const [collapsibleOpen, setCollapsibleOpen] = useState(false);
   return (
     <div className="purchaseItem">
       <div className="productName">
         {product != null && product.name}
       </div>
       <div className="productQuantity">
+        QTY:&nbsp;
         {item.quantity}
       </div>
+      -
       <div className="productPrice">
         $
-        {product != null && (product.price * item.quantity).toFixed(2)}
+        {product != null && (product.price).toFixed(2)}
       </div>
 
     </div>

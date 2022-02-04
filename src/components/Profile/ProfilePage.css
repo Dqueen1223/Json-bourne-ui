@@ -33,10 +33,12 @@ width: 150px;
     text-align: left;
 }
 .profile{
-    display: relative;
+    position:relative;
     flex: 1 1 5%;
     flex-direction: column;
     height: 80%;
+    top: 70px;
+    display: flex;
 }
 .tabs{
     background-color: #1d2228;
@@ -48,55 +50,108 @@ width: 150px;
     width: 8em;
 }
 .ui {
-    display: flex;
-    height: 100%;
-    width: 100%;
+    flex: 1 1 20%;
+}
+.content{
+    flex: 1 1 80%;
+    overflow: auto;
 }
 .buttons {
-    
+    position: relative;
+    top: 2em;
+    left: 42%;
+    width: 20%;
+    height: 2em;
 }
-
+.profileButton{
+    flex: 1 1 40%;
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+}
 .userInfodiv{
     position: absolute;
-    top: 10.5em;
+    top: 7em;
     left: 44.5%;
     width: 15%;
     height: 8em;
 }
 .purchases{
-    position: absolute;
-    width:50%;
+    position: relative;
+    flex-direction: column;
+    margin-top: 3em;
+    left:27%;
+    width: 45%;
     display:flex;
-    left:50%;
-    top: 10.5em;
-    height: 80%;
-    width: 50%;
+    border-top: 4px solid black;
+}
+.purchase{
+    flex: 1;
+    flex-direction: column;
+    border-left: 4px solid black;
+    border-right: 4px solid black;
+    border-bottom: 4px solid black;;
+}
+.purchaseOpen{
+    display: flex;
+    flex-direction: row;
+    font-size: 1.1em;
+}
+.orderInfo{
+    flex: 1 1 75%;
+    display: flex;
+}
+.orderId{
+    flex: 1 1 20%;
+    text-align: center;
 }
 .purchaseTotal{
-    flex: 1 1 30%;
+    text-align: center;
+    flex: 1 1 40%;
 }
 .orderDate{
-    flex: 1 1 30%;
+    text-align: center;
+    flex: 1 1 40%;
+}
+
+.productsCollapsibleBtn{
+    margin-left: auto;
+    border: 0px;
+}
+.productsCollapsibleBtn:hover{
+    background-color: rgba(0,0,0,0.1);
 }
 .productsCollapsible{
+    flex: 1 1 40%;
     display: flex;
     flex-direction: column;
 }
 .closed{
     display: none;
 }
-.productsCollapsible{
+
+.purchaseItem{
     display: flex;
-    flex-direction: column;
-    margin-left: 10px;
+    flex-direction: row;
+    border-top: 2px solid gray;
 }
-.itemName{
+.productName{
     flex: 1 1 40%;
+    margin-left: 1em;
+    font-weight: 100;
 }
-.itemQuantity{
-    flex: 1 1 20%;
+.productQuantity{
+    flex: 1 1 5%;
+    text-align: center;
+    font-weight: 100;
 }
 
-.itemCost{
-    flex: 1 1 40%;
+.productPrice{
+    flex: 1 1 5%;
+    margin-left: 1em;
+    text-align: center;
+    font-weight: 100;
+}
+.stopOverflow{
+    margin-top: 2em;
+    margin-bottom: 2em;
 }

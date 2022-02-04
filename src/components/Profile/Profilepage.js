@@ -1,7 +1,6 @@
 /* eslint-disable react/destructuring-assignment */
 import React, { useState, useEffect } from 'react';
 import './ProfilePage.css';
-// import Constants from '../../utils/constants';
 import { useProfile } from './ProfileContext';
 import fetchPurchases from './ProfilePageService';
 import ProfilePurchase from './ProfilePurchase';
@@ -90,18 +89,24 @@ const ProfilePage = () => {
             <button className="profileButton" type="button" onClick={changeStateProfileInfo}> User info</button>
             {purchases.length !== 0 && <button className="profileButton" type="button" onClick={changeStatePurchase}> Purchase History </button>}
           </div>
+        </div>
+        <div className="content">
           <div className="userInfodiv">
             {profileInfo && renderName()}
             {profileInfo && renderShipping()}
           </div>
-          {purchaseInfo && purchases.map((purchase) => (
-            <div key={purchase.id}>
-              {console.log(purchase)}
-              <ProfilePurchase
-                purchases={purchase}
-              />
-            </div>
-          ))}
+          {purchaseInfo && (
+          <div className="purchases">
+            {purchases.map((purchase) => (
+              <div key={purchase.id} className="purchase">
+                <ProfilePurchase
+                  purchases={purchase}
+                />
+              </div>
+            ))}
+          </div>
+          )}
+          <div className="stopOverflow" />
         </div>
       </div>
     );
