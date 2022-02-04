@@ -58,7 +58,7 @@ const ProductCard = ({ product }) => {
   const classes = useStyles();
   const { dispatch } = useCart();
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  // const [modalIsAlsoOpen, setModaltoOpen] = useState(false);
+  const [reviewsModal, setReviewsModal] = useState(false);
   const onAdd = (e) => {
     dispatch(
       {
@@ -86,6 +86,10 @@ const ProductCard = ({ product }) => {
     <Card className={classes.root}>
       {modalIsOpen && reactDom.createPortal(
         <ProductCardModal product={product} closeModal={setModalIsOpen} />,
+        document.getElementById('root')
+      )}
+      {reviewsModal && reactDom.createPortal(
+        <ReviewsModal product={product} closeModal={setReviewsModal} />,
         document.getElementById('root')
       )}
       <CardHeader
@@ -142,24 +146,18 @@ const ProductCard = ({ product }) => {
         <IconButton aria-label="add to shopping cart" onClick={onAdd}>
           <AddShoppingCartIcon />
         </IconButton>
-        <div>
-          <Button
-            className="reviewsButton"
-            type="button"
-            variant="contained"
-            // onClick={() => ReviewsModal()}
-            onClick={() => {
-              setModalIsOpen(true);
-            }}
-          >
-            {modalIsOpen && reactDom.createPortal(
-              <ReviewsModal product={product} closeModal={setModalIsOpen} />,
-              document.getElementById('root')
-            )}
-            Reviews
-          </Button>
-        </div>
       </CardActions>
+      <div>
+        <Button
+          type="button"
+          variant="primary"
+          onClick={() => {
+            setReviewsModal(true);
+          }}
+        >
+          Reviews
+        </Button>
+      </div>
     </Card>
   );
 };
