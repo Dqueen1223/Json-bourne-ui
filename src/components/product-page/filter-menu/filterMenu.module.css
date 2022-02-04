@@ -39,12 +39,11 @@
     padding-left:10%;
 }
 
+.priceInput{
+    width: 25%;
+}
 #priceError{
     color: red;
     font-size: 14px;
     margin: 0px 2px 4px 4px;
-}
-
-.priceInput{
-    width: 25%;
 }
