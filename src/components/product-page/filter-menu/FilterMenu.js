@@ -22,10 +22,8 @@ const FilterMenu = ({ setFilter, isActive }) => {
     if (e.target.checked === true) {
       // Add the filter query string to the array.
       newArray.push(checkedBox);
-      console.log(`newArray after pushing: ${newArray}`);
       // Set the filterArray state to the contents of newArray.
       setFilterArray(newArray);
-      console.log(`filterArray after setting it to newArray ${filterArray}`);
       // Set the filter state from ProductPage.js to filterArray.
       setFilter(filterArray.join(''));
     } else {
@@ -33,52 +31,51 @@ const FilterMenu = ({ setFilter, isActive }) => {
       const index = newArray.indexOf(checkedBox);
       // Remove the filter query.
       newArray.splice(index, 1);
-      console.log(`newArray after splicing: ${newArray}`);
       // Set the filter array to the newArray without the removed filter.
       setFilterArray(newArray);
-      console.log(`filterArray after setting it to spliced newArray: ${filterArray}`);
       setFilter(filterArray.join(''));
     }
   };
 
   const handlePrice = (e) => {
-    const minPrice = document.getElementById('minPrice');
-    const maxPrice = document.getElementById('maxPrice');
+    const minPrice = document.getElementById('minPrice').value;
+    const maxPrice = document.getElementById('maxPrice').value;
     const priceError = document.getElementById('priceError');
 
     priceError.innerText = '';
-    priceError.display = 'none';
+    priceError.visibility = 'hidden';
 
-    if (minPrice.value === '' && maxPrice.value !== '') {
+    if (minPrice === '' && maxPrice !== '') {
       e.preventDefault();
-      priceError.display = 'block';
+      priceError.visibility = 'visible';
       priceError.innerText = 'Please input a minimum price.';
     }
-    if (maxPrice.value === '' && minPrice.value !== '') {
+    if (maxPrice === '' && minPrice !== '') {
       e.preventDefault();
-      priceError.display = 'block';
+      priceError.visibility = 'visible';
       priceError.innerText = 'Please input a maximum price.';
     }
-    if (minPrice.value === '' && maxPrice.value === '') {
-      const minIndex = newArray.indexOf(newArray.substring('minPrice'));
-      const maxIndex = newArray.indexOf(newArray.substring('maxPrice'));
-      newArray.splice(minIndex, 1);
-      newArray.splice(maxIndex, 1);
-      setFilterArray(newArray);
-      setFilter(filterArray.join(''));
-    }
 
-    if (minPrice.value > maxPrice.value) {
+    if (minPrice > maxPrice) {
       e.preventDefault();
-      priceError.display = 'block';
+      priceError.visibility = 'visible';
       priceError.innerText = 'Minimum price must be less than the maximum price.';
     } else if (minPrice !== '' && maxPrice !== '') {
-      newArray.push(`&minPrice=${minPrice.value}&maxPrice=${maxPrice.value}`);
+      newArray.push(`&minPrice=${minPrice}&maxPrice=${maxPrice}`);
       setFilterArray(newArray);
       setFilter(filterArray.join(''));
     }
   };
 
+  const removePrice = () => {
+    const minPrice = document.getElementById('minPrice').value;
+    const maxPrice = document.getElementById('maxPrice').value;
+    const priceIndex = newArray.indexOf(`&minPrice=${minPrice}&maxPrice=${maxPrice}`);
+
+    newArray.splice(priceIndex, 1);
+    setFilterArray(newArray);
+    setFilter(filterArray.join(''));
+  };
   return (
     <div className={isActive ? styles.sidebar : styles.sideCollapsed}>
       <div className={styles.filterCheckbox}>
@@ -295,7 +292,8 @@ const FilterMenu = ({ setFilter, isActive }) => {
           />
           <br />
           <div id="priceError" display="none" />
-          <button type="button" onClick={handlePrice}>Submit</button>
+          <button type="button" onClick={handlePrice}>Filter Prices</button>
+          <button type="button" onClick={removePrice}>Clear Prices</button>
         </div>
         <span className={styles.checkBoxLabel}>Color</span>
         <div className={styles.fieldset}>
