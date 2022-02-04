@@ -84,20 +84,22 @@ const ProfilePage = () => {
     return (
       <div className="profile">
         <div className="ui">
+          <div className="buttons">
+            <button className="profileButton" type="button" onClick={changeStateProfileInfo}> User info</button>
+            {purchases.length !== 0 && <button className="profileButton" type="button" onClick={changeStatePurchase}> Purchase History </button>}
+          </div>
           <div className="userInfodiv">
-            <button className="test" type="button" onClick={changeStateProfileInfo}> User info</button>
-            {purchases.length !== 0 && <button className="test2" type="button" onClick={changeStatePurchase}> Purchase History </button>}
             {profileInfo && renderName()}
             {profileInfo && renderShipping()}
-            {purchaseInfo && purchases.map((purchase) => (
-              <div key={purchase.id}>
-                {console.log(purchase)}
-                <ProfilePurchase
-                  purchases={purchase}
-                />
-              </div>
-            ))}
           </div>
+          {purchaseInfo && purchases.map((purchase) => (
+            <div key={purchase.id}>
+              {console.log(purchase)}
+              <ProfilePurchase
+                purchases={purchase}
+              />
+            </div>
+          ))}
         </div>
       </div>
     );

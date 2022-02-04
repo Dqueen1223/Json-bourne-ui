@@ -4,6 +4,10 @@ import PurchaseItem from './PurchaseItem';
 
 const ProfilePurchase = ({ purchases }) => (
   <div className="purchases">
+    <div className="orderId">
+      Purchase ID:
+      {purchases.id}
+    </div>
     <div className="purchaseTotal">
       purchaseTotal:
       {purchases.totalCost}

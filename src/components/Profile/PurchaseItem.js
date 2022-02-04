@@ -18,7 +18,7 @@ const PurchaseItem = ({ item }) => {
       </div>
       <div className="productPrice">
         $
-        {product != null && product.price * item.quantity}
+        {product != null && (product.price * item.quantity).toFixed(2)}
       </div>
 
     </div>

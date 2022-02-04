@@ -46,8 +46,11 @@ width: 150px;
 }
 .ui {
     display: flex;
-    flex: 1 1 10%;
     height: 100%;
+    width: 100%;
+}
+.buttons {
+    
 }
 
 .userInfodiv{
@@ -58,9 +61,13 @@ width: 150px;
     height: 8em;
 }
 .purchases{
+    position: absolute;
     width:50%;
     display:flex;
-    height: 3em;
+    left:50%;
+    top: 10.5em;
+    height: 80%;
+    width: 50%;
 }
 .purchaseTotal{
     flex: 1 1 30%;
