@@ -10,9 +10,7 @@ import Constants from '../../utils/constants';
  */
 export default async function makePromo(promo) {
   console.log(promo);
-  await HttpHelper(Constants.PROMOTIONS_ENDPOINT, 'POST', {
-    promo
-  })
+  await HttpHelper(Constants.PROMOTIONS_ENDPOINT, 'POST', promo)
     .then((response) => response.json())
     .catch(() => {
       /* eslint-disable no-console */

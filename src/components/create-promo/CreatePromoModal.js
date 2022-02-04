@@ -16,8 +16,8 @@ const CreatePromo = ({ closeModal }) => {
 
   const onPromoChange = (e) => {
     if (startDate && endDate) {
-      promo.startDate = startDate.toISOString();
-      promo.endDate = endDate.toISOString();
+      promo.StartDate = startDate.toISOString();
+      promo.EndDate = endDate.toISOString();
     }
     setPromoData({ ...promo, [e.target.id]: e.target.value });
     console.log(promo);
