@@ -8,7 +8,7 @@
     width:155px;
     left:0;
     top: 70px;
-    transition: left 250ms;
+    transition: left 500ms;
 }
 
 .sideCollapsed{
@@ -21,19 +21,30 @@
     box-sizing: border-box;
     color: #E1E2E2;
     font-size:1rem;
-    min-height:120px;
+    height: 90%;
     padding:7% 0%;
     width:100%;
-    height: auto;
+    overflow-y: scroll;
+    
 }
   
 .fieldset{
     border:none;
     font-size: .9rem;
-    width:150px;
+    width: 150px;
     padding: 2% 8%;
 }
 
 .checkBoxLabel{
     padding-left:10%;
+}
+
+#priceError{
+    text-decoration-color: red;
+    font-size: 14px;
+    margin: 0px 2px 4px 4px;
+}
+
+.priceInput{
+    width: 25%;
 }

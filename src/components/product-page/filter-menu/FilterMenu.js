@@ -56,7 +56,7 @@ const FilterMenu = ({ setFilter, isActive }) => {
       priceError.innerText = 'Please input a maximum price.';
     }
 
-    if (minPrice > maxPrice) {
+    if (minPrice > maxPrice && maxPrice !== '') {
       e.preventDefault();
       priceError.visibility = 'visible';
       priceError.innerText = 'Minimum price must be less than the maximum price.';
@@ -78,10 +78,11 @@ const FilterMenu = ({ setFilter, isActive }) => {
       setFilter(filterArray.join(''));
     }
   };
+
   return (
     <div className={isActive ? styles.sidebar : styles.sideCollapsed}>
       <div className={styles.filterCheckbox}>
-        {/* <span className={styles.checkBoxLabel}>Brand</span>
+        <span className={styles.checkBoxLabel}>Brand</span>
         <div className={styles.fieldset}>
           <label htmlFor="nike">
             <input
@@ -248,7 +249,7 @@ const FilterMenu = ({ setFilter, isActive }) => {
             Weightlifting
           </label>
           <br />
-        </div> */}
+        </div>
         <span className={styles.checkBoxLabel}>Demographic</span>
         <div className={styles.fieldset}>
           <label htmlFor="mens">
@@ -281,19 +282,23 @@ const FilterMenu = ({ setFilter, isActive }) => {
         </div>
         <span className={styles.checkBoxLabel}>Price</span>
         <div className={styles.fieldset}>
-          <input
-            id="minPrice"
-            className={styles.priceInput}
-            type="number"
-          />
-          <p>-</p>
-          <input
-            id="maxPrice"
-            className={styles.priceInput}
-            type="number"
-          />
+          <label htmlFor="minPrice">
+            <input
+              id="minPrice"
+              className={styles.priceInput}
+              type="number"
+            />
+            -
+          </label>
+          <label htmlFor="maxPrice">
+            <input
+              id="maxPrice"
+              className={styles.priceInput}
+              type="number"
+            />
+          </label>
           <br />
-          <div id="priceError" display="none" />
+          <div id="priceError" />
           <button type="button" onClick={handlePrice}>Filter Prices</button>
           <button type="button" onClick={removePrice}>Clear Prices</button>
         </div>
