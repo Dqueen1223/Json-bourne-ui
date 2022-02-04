@@ -8,8 +8,7 @@
   overflow-x: auto;
   transition: margin-left 500ms;
 }
-
-.addLeftMargin{
+ .addLeftMargin{
   margin-left:185px;
 }
 
@@ -17,7 +16,6 @@
   color: red;
   font-size: 14px;
   margin: 0px 2px 4px 4px;
-  left: 50%;
 }
 
 .productPageContainer{
@@ -25,6 +23,8 @@
   flex-direction: row;
   flex-wrap:nowrap;
   margin-top: 100px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .errContainer{
