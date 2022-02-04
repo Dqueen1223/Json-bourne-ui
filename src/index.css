@@ -43,16 +43,16 @@ code {
   flex-direction: column;
   height: 70px;
   justify-content:center;
-  /* margin-bottom:10vh; */
   width: 100%; ;
 }
 
 .googlebutton{
   position: absolute;
-  left: 85%;
+  left: 82%;
   top: 20%;
   padding-right: 20px;
   margin-right: 20px;
+  flex-direction: row;
   z-index: 1;
 }
 
@@ -72,7 +72,6 @@ float: right;
   position: absolute;
   right: 95%;
   bottom: 11%;
-  /* padding-left: 1%; */
    filter: invert(20%) sepia(56%) saturate(303%) hue-rotate(1deg) brightness(170%) contrast(90%);
   float: left;
 }
@@ -81,7 +80,7 @@ float: right;
   width: 100px;
   position: absolute;
   padding-right: 10px;
-  left:77.5%;
+  left:75%;
   bottom: 7.5%;
   flex-direction: row;
   color: #FB8122;
