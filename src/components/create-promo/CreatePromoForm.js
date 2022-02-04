@@ -5,7 +5,7 @@ import FormItemDateTime from './forms/FormItemDateTime';
 import styles from './PromoForm.module.css';
 
 const PromoForm = ({
-  endChange, startChange, startDate, endDate, onClick, onChange
+  endChange, startChange, startDate, endDate, onClick, onChange, promo
 }) => {
   const typeOptions = ['%', '$'];
   return (
@@ -30,6 +30,7 @@ const PromoForm = ({
             label="Amount"
             className={styles.valueInput}
             onChange={onChange}
+            value={promo.value}
           />
         </div>
         <div className={styles.promoDates}>

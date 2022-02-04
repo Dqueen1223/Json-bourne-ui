@@ -16,8 +16,8 @@ const CreatePromo = ({ closeModal }) => {
 
   const onPromoChange = (e) => {
     if (startDate && endDate) {
-      promo.StartDate = startDate.toISOString();
-      promo.EndDate = endDate.toISOString();
+      promo.startDate = startDate.toISOString();
+      promo.endDate = endDate.toISOString();
     }
     setPromoData({ ...promo, [e.target.id]: e.target.value });
     console.log(promo);
@@ -29,8 +29,8 @@ const CreatePromo = ({ closeModal }) => {
       Code: promo.name,
       Discount: promo.discount,
       Type: promo.type,
-      StartDate: promo.startDate,
-      EndDate: promo.endDate,
+      startDate: promo.startDate,
+      endDate: promo.endDate,
     };
     makePromo(newPromo);
     // if (Object.keys(errors).length === 0) {
@@ -74,6 +74,7 @@ const CreatePromo = ({ closeModal }) => {
               endDate={endDate}
               onChange={onPromoChange}
               onClick={handleSubmit}
+              promo={promo}
             />
           </div>
         </div>
