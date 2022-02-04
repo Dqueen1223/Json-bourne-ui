@@ -101,6 +101,7 @@ const ProductForm = ({
       <div className={styles.createProductControl}>
         <FormItem
           id="quantity"
+          data-testid="quantity"
           label="Quantity"
           onChange={onProductChange}
           value={product.quantity}

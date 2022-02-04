@@ -87,6 +87,8 @@ const CreateProductPage = () => {
           className={styles.submitButton}
           onClick={handleSubmit}
           type="button"
+          data-testid="submit"
+          label="submit"
         >
           Submit
         </button>
@@ -94,6 +96,8 @@ const CreateProductPage = () => {
           <button
             className={styles.cancelButton}
             type="button"
+            id="cancel"
+            label="cancel"
           >
             Cancel
           </button>
