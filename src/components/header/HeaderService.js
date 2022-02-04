@@ -24,7 +24,7 @@ const getUserByEmail = async (email, setUser) => {
       setUser(body);
       document.cookie = `user=${JSON.stringify(body)}`;
     })
-    .catch(() => {});
+    .catch(() => { });
 
   return userByEmailExists;
 };
