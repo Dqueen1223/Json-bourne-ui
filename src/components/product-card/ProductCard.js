@@ -149,8 +149,9 @@ const ProductCard = ({ product }) => {
       </CardActions>
       <div>
         <Button
+          className="reviewsProductCardButton"
           type="button"
-          variant="primary"
+          variant="contained"
           onClick={() => {
             setReviewsModal(true);
           }}

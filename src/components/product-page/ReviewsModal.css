@@ -1,3 +1,10 @@
+.reviewsProductCardButton{
+    background-color: #fb8122;
+    color: #E1E2E2;
+    position: relative;
+    left: 5%;
+    width: 40%;
+}
 .reviewsModalBackground{
     position: fixed;
     height: 100%;
@@ -17,12 +24,14 @@
     transform: translate(-50%, -50%);
 }
 .reviewsModal-content{
-    display:flex;
-    flex:1;
+    display:flex-end;
     flex-direction: column;
+    flex:1;
+    position: relative;
     max-height: 100%;
     margin:10px;
     color: #1d2228;
+    overflow: scroll;
 }
 .reviewscloseButton {
     background-color: transparent;
@@ -39,20 +48,41 @@
 }
 
 .reviewsModal-header{
-    flex:1 1 50%;
+    flex:2 1 50%;
     height: 50%;
     text-align: center;
     display: flex;
+    font-size: 120%;
 }
-.reviewsModalImg{
-    height: 100%;
-    margin: auto;
+.productName{
+    font-size: 200%;
+    position: relative;
+    bottom: 40%;
+    border: solid;
+    width: 91%;
 }
-.reviewsImg {
-    width:100%;
-    height:100%;
-    object-fit: contain;
-    margin: auto;
+.reviewsOrderButton{
+    position: relative;
+    bottom: 60%;
+    width: 20%;
+}
+.reviewsTitle{
+    font-size: 140%;
+    margin: 2%;
+}
+.reviewsOfProduct{
+    position: relative;
+    bottom: 40%;
+    text-align: left;
+}
+.reviewsRating{
+    margin: 2%;
+}
+.reviewsActual{
+    margin: 2%;
+}
+.reviewsDate{
+    margin: 2%;
 }
 .reviewsModal-body{
     flex: 1 1 60%;
@@ -67,59 +97,12 @@
     flex: 1 1 30%;
 }
 .reviewsModal-title{
-    display:inline-block;
     width: 40%;
+    height: 30%;
     margin-right: auto;
     margin-top: 1em;
 }
-.reviewsPrice{
-    display:inline-block;
-    width: 40%;
-    margin-left: auto;
-    margin-top: 1em;
-}
-.reviewsDescription{
-    display:inline-block;
-    width: 40%;
-    margin-right: auto;
-    margin-top: 1em;
-}
-.reviewsColors{
-    display: flex;
-    flex-direction: column;
-    align-items: end;
-    margin-top: 1em;
-    margin-left: auto;
-    margin-right:3em;
-    width:40%;
-}
-.reviewsPrimaryColor{
-    height: 1em;
-    width: 1em;
-    display: inline-block;
-    border: 0.5px solid black;
-    margin-left: 1em;
-}
-.reviewsSecondaryColor{
-    height: 1em;
-    width: 1em;
-    display: inline-block;
-    border: 0.5px solid black;
-    margin-left: 1em;
-}
-.reviewsCategory{
-    width: 40%;
-    display:inline-block;
-    margin-right: auto;
-    margin-top: 1em;
-}
-.reviewsType{
-    width: 40%;
-    display:inline-block;
-    margin-right: 0.5em;
-    margin-left: auto;
-    margin-top: 1em;
-}
+
 .reviewsModal-footer{
     display:flex;
     flex-direction: row;
@@ -129,45 +112,7 @@
     justify-content: center;
 }
 
-.reviewsPicker{
-    display:inline-flex;
-    align-items: center;
-    margin-left: 15%;
-}
-.reviewsInput{
-    border: 0.5px solid black;
-    width: 40px;
-    margin-left: 0.2em;
-    margin-right: 0.2em;
-    text-align: center;
-}
-.reviewsCart{
-    margin-left: 1em;
-}
-.raiseQuantity{
-    width:1.5em;
-}
-.raiseQuantityBtn{
-    font-size: 1.5em;
-    border-radius: 10px;
-    background-color: transparent;
-    border:none;
-}
-.raiseQuantityBtn:hover{
-    background-color: rgba(0,0,0,0.1);
-}
-.lowerQuantity{
-    width: 1.5em;
-}
-.lowerQuantityBtn{
-    font-size: 1.5em;
-    border-radius: 10px;
-    background-color: transparent;
-    border:none;
-}
-.lowerQuantityBtn:hover{
-    background-color: rgba(0,0,0,0.1);
-}
+
 /* remove arrows from input */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
