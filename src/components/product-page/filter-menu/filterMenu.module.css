@@ -5,14 +5,14 @@
     height:100%;
     padding:15px;
     position:fixed;
-    width:155px;
+    width:185px;
     left:0;
     top: 70px;
     transition: left 500ms;
 }
 
 .sideCollapsed{
-    left:-140px;
+    left:-175px;
 }
 
 .filterCheckbox{
@@ -25,6 +25,7 @@
     padding:7% 0%;
     width:100%;
     overflow-y: scroll;
+    overflow-x: hidden;
     
 }
   
@@ -40,6 +41,9 @@
 }
 
 .priceInput{
+    width: 25%;
+}
+.priceButtons{
     width: 25%;
 }
 #priceError{

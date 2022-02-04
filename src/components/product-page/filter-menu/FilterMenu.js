@@ -307,8 +307,8 @@ const FilterMenu = ({ setFilter, isActive }) => {
           </label>
           <br />
           <div id="priceError" />
-          <button type="button" onClick={handlePrice}>Filter Prices</button>
-          <button type="button" onClick={removePrice}>Clear Prices</button>
+          <button type="button" className="priceButtons" onClick={handlePrice}>Filter</button>
+          <button type="button" className="priceButtons" onClick={removePrice}>Clear</button>
         </div>
         <span className={styles.checkBoxLabel}>Color</span>
         <div className={styles.fieldset}>
