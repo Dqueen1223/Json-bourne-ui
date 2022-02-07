@@ -6,7 +6,7 @@ import styles from '../PromoForm.module.css';
  * @description Input field
  * @return component
  */
-const FormItemDropdown = ({
+const FormItemDropdownStart = ({
   onChange, value, id, label, options, error, className
 }) => (
 
@@ -61,4 +61,4 @@ const FormItemDropdown = ({
   </div>
 );
 
-export default FormItemDropdown;
+export default FormItemDropdownStart;

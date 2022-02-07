@@ -49,6 +49,7 @@ Input Styling
 .input {
     margin-top: .5em;
     width: 100%;
+    height: 30px;
     padding: .5em;
     box-sizing: border-box;
 }
@@ -117,6 +118,7 @@ Errors
 .inputError {
     margin-top: .5em;
     width: 100%;
+    height: 30px;
     padding: .5em;
     box-sizing: border-box;
     border: 1px solid red;

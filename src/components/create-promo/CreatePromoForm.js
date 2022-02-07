@@ -5,17 +5,19 @@ import FormItemDateTime from './forms/FormItemDateTime';
 import styles from './PromoForm.module.css';
 
 const PromoForm = ({
-  endChange, startChange, startDate, endDate, onClick, onChange, promo
+  endChange, startChange, startDate, endDate, onClick, onChange, errors, promo
 }) => {
   const typeOptions = ['%', '$'];
   return (
     <>
       <div className={styles.createPromo}>
         <FormItem
-          id="name"
+          id="code"
           label="Promo Code"
           className={styles.nameInput}
           onChange={onChange}
+          value={promo.code}
+          error={errors.code}
         />
         <div className={styles.discount}>
           <FormItemDropdown
@@ -26,29 +28,33 @@ const PromoForm = ({
             onChange={onChange}
           />
           <FormItem
-            id="value"
+            id="discount"
             label="Amount"
             className={styles.valueInput}
             onChange={onChange}
-            value={promo.value}
+            value={promo.discount}
+            error={errors.discount}
           />
         </div>
         <div className={styles.promoDates}>
           <FormItemDateTime
-            id="dateStart"
+            id="startDate"
             label="Start Date"
             className={styles.dateInput}
+            maxDate={endDate}
             onChange={startChange}
             onClick={onChange}
             value={startDate}
           />
           <FormItemDateTime
-            id="dateEnd"
+            id="endDate"
             label="End Date"
             className={styles.dateInput}
+            minDate={new Date()}
             onChange={endChange}
             onClick={onChange}
             value={endDate}
+            error={errors.endDate}
           />
         </div>
         <button

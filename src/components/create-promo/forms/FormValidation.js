@@ -7,35 +7,48 @@
 const generateErrors = (form, idList) => {
   const noValue = [];
   const twoDecimal = [];
-  const noDecimal = [];
+  const onlyAlphaNum = [];
+  const onlyNum = [];
+  const invalidRange = [];
   const noNegativeNumbers = [];
+  const expired = [];
   const errors = {};
 
   for (let i = 0; i < idList.length; i += 1) {
     const id = idList[i];
     const value = form[id];
+    const alphaNum = /^[a-z0-9]+$/i;
+    const numbers = /^[.0-9]+$/;
 
-    if (!value && id !== 'active') {
+    if (!value && (id !== 'endDate')) {
+      console.log(id);
       noValue.push(id);
     }
-    if (id === 'price' && value) {
-      const splitNumber = value.toString().split('.');
-      if (splitNumber.length > 2) {
+    if (value && (id === 'code' && !value.match(alphaNum))) {
+      onlyAlphaNum.push(id);
+    }
+    if (value && (id === 'discount' && !value.match(numbers))) {
+      onlyNum.push(id);
+    }
+    if (value && (form.type === '$' && id === 'discount')) {
+      const cents = value.toString().split('.');
+      console.log(cents.length);
+      if (cents.length > 2) {
         twoDecimal.push(id);
       }
-      if (splitNumber[1].length !== 2) {
+      if (cents.length === 2 && cents[1].length !== 2) {
         twoDecimal.push(id);
       }
     }
-    if ((id === 'quantity' || id === 'price') && value < 0) {
+    if (value && (value > 100 || value < 1) && (form.type === '%' && id === 'discount')) {
+      invalidRange.push(id);
+    }
+    if (value && (value < 0) && (form.type === '$' && id === 'discount')) {
       noNegativeNumbers.push(id);
     }
-    if (id === 'quantity' && value) {
-      const splitNumber = value.toString().split('.');
-      if (splitNumber.length > 1) {
-        noDecimal.push(id);
-      }
-    }
+    // if (id === 'endDate' && new Date() > value.toDate()) {
+    //   expired.push(id);
+    // }
   }
 
   if (noValue.length) {
@@ -48,17 +61,32 @@ const generateErrors = (form, idList) => {
       errors[i] = 'Requires two decimals';
     });
   }
-  if (noDecimal.length) {
-    noDecimal.forEach((i) => {
-      errors[i] = 'No decimals allowed';
+  if (onlyAlphaNum.length) {
+    onlyAlphaNum.forEach((i) => {
+      errors[i] = 'Must contain only alphanumeric characters';
+    });
+  }
+  if (invalidRange.length) {
+    invalidRange.forEach((i) => {
+      errors[i] = 'Must be between 1-100%';
+    });
+  }
+  if (onlyNum.length) {
+    onlyNum.forEach((i) => {
+      errors[i] = 'Must contain only numbers';
     });
   }
   if (noNegativeNumbers.length) {
     noNegativeNumbers.forEach((i) => {
-      errors[i] = 'No Negative Quantity';
+      errors[i] = 'No Negative Amount';
     });
   }
-
+  if (expired.length) {
+    expired.forEach((i) => {
+      errors[i] = 'Date is expired';
+    });
+  }
+  console.log(errors);
   return errors;
 };
 
