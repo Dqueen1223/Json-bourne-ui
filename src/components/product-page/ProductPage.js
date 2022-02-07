@@ -51,7 +51,7 @@ const ProductPage = () => {
           )}
           <IconButton
             style={isActive ? {
-              position: 'fixed', height: '10px', width: '10px', top: '100px', left: '165px', zIndex: '1', backgroundColor: '#fb8122', border: '.5px solid white', color: '#e1e2e2', transition: '500ms'
+              position: 'fixed', height: '10px', width: '10px', top: '100px', left: '145px', zIndex: '1', backgroundColor: '#fb8122', border: '.5px solid white', color: '#e1e2e2', transition: '500ms'
             } : {
               position: 'fixed', height: '10px', width: '10px', top: '100px', left: '-5px', zIndex: '1', backgroundColor: '#fb8122', border: '.5px solid white', color: '#e1e2e2', transition: '500ms'
             }}

@@ -93,10 +93,11 @@ const FilterMenu = ({ setFilter, isActive }) => {
     return filterArray;
   };
 
-  return (
+  return (filterArray,
     <div className={isActive ? styles.sidebar : styles.sideCollapsed}>
       <div className={styles.filterCheckbox}>
-        <h4>Product Filter</h4>
+        <span className={styles.filterTitle}>Product Filter</span>
+        <br />
         <span className={styles.checkBoxLabel}>Brand</span>
         <div className={styles.fieldset}>
           <label htmlFor="nike">

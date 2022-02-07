@@ -25,16 +25,16 @@ describe('handleCheckbox', () => {
     expect(nikeCheckbox.checked).toEqual(true);
   });
 
-  it('checks that handleCheckbox is returning the appropriate filter string', () => {
-    const { getByTestId } = render(<ProductPage><FilterMenu /></ProductPage>,
-      container);
-    const 
-    const nikeCheckbox = getByTestId('nikeCheckbox');
-    fireEvent.click(nikeCheckbox, new MouseEvent('click', {
-      bubbles: true,
-      cancelable: true
+  // it('checks that handleCheckbox is returning the appropriate filter string', () => {
+  //   const { getByTestId } = render(<ProductPage><FilterMenu /></ProductPage>,
+  //     container);
 
-    }));
-  });
-  expect(handleCheckbox()).toEqual(expect.arrayContaining('&Brand=Nike'));
+  //   const nikeCheckbox = getByTestId('nikeCheckbox');
+  //   fireEvent.click(nikeCheckbox, new MouseEvent('click', {
+  //     bubbles: true,
+  //     cancelable: true
+
+  //   }));
+  // });
+  // expect({filterArray}).toEqual(expect.arrayContaining('&Brand=Nike'));
 });

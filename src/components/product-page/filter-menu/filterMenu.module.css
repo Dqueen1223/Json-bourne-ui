@@ -1,14 +1,15 @@
 .sidebar, .sideCollapsed{
-    background-color: #1d2228;
+    background-color: #fb8122;
     box-sizing: border-box;
     color:#e1e2e2;
     height:100%;
     padding-bottom:15px;
-    position:fixed;
+    position: fixed;
     width:185px;
     left:0;
     top: 70px;
     transition: left 500ms;
+    
 }
 
 .sideCollapsed{
@@ -29,6 +30,11 @@
     
 }
   
+.filterTitle{
+    font-size: 1.2em;
+    font-weight: bold;
+    padding-left: 7%;
+}
 .fieldset{
     border:none;
     font-size: .9rem;
