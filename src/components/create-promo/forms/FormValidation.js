@@ -46,9 +46,6 @@ const generateErrors = (form, idList) => {
     if (value && (value < 0) && (form.type === '$' && id === 'discount')) {
       noNegativeNumbers.push(id);
     }
-    // if (id === 'endDate' && new Date() > value.toDate()) {
-    //   expired.push(id);
-    // }
   }
 
   if (noValue.length) {
@@ -86,7 +83,7 @@ const generateErrors = (form, idList) => {
       errors[i] = 'Date is expired';
     });
   }
-  console.log(errors);
+
   return errors;
 };
 

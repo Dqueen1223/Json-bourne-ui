@@ -59,7 +59,7 @@ const PromoForm = ({
         </div>
         <button
           type="button"
-          className={styles.buttons}
+          className={styles.submitButton}
           onClick={onClick}
         >
           Submit

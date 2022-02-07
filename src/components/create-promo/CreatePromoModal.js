@@ -5,7 +5,6 @@ import styles from './PromoForm.module.css';
 import generateErrors from './forms/FormValidation';
 import makePromo from './CreatePromoService';
 
-// import { useCart } from '../checkout-page/CartContext';
 /**
  * @name CreatePromoModal
  * @description material-ui styling for product card modal
@@ -54,22 +53,20 @@ const CreatePromo = ({ closeModal }) => {
     setPromoData(newPromo);
   };
 
-  const handleSubmit = async () => {
-    handleCreate();
-    if (Object.keys(errors).length === 0) {
-      console.log(await makePromo(promo));
-      makePromo(promo);
-      // if (await makePromo(newPromo) === 'valid') {
-      //   toast.success('');
-      // }
-    } else {
-      toast.error('Some fields contain invalid inputs.');
+  const closeTheModal = (e) => {
+    if (e.target.className === styles.promoModalBackground || e.target.className === 'closeButton' || e.target.className === 'submitButton') {
+      closeModal(false);
     }
   };
 
-  const closeTheModal = (e) => {
-    if (e.target.className === styles.promoModalBackground || e.target.className === 'closeButton') {
+  const handleSubmit = async () => {
+    handleCreate();
+    if (Object.keys(errors).length === 0) {
+      await makePromo(promo);
       closeModal(false);
+      toast.success('Promo Created');
+    } else {
+      toast.error('Some fields contain invalid inputs.');
     }
   };
 
