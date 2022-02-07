@@ -51,10 +51,13 @@ width: 150px;
 }
 .ui {
     flex: 1 1 20%;
+    max-height: 6em;
+    min-height: 6em;
 }
 .content{
-    flex: 1 1 80%;
+    flex: 1 1 70%;
     overflow: auto;
+    margin-bottom:2em;
 }
 .buttons {
     position: relative;
@@ -67,6 +70,18 @@ width: 150px;
     flex: 1 1 40%;
     margin-left: 0.5em;
     margin-right: 0.5em;
+    height:1.5em;
+    border-radius:5px;
+    border:2px solid black;
+}
+.profileButton:hover{
+    background-color: rgba(0,0,0,0.1);
+}
+.active:hover{
+    background-color:rgba(251, 129, 34, 0.9)
+}
+.active{
+    background-color: #FB8122;
 }
 .userInfodiv{
     position: absolute;
@@ -78,11 +93,11 @@ width: 150px;
 .purchases{
     position: relative;
     flex-direction: column;
-    margin-top: 3em;
     left:27%;
     width: 45%;
     display:flex;
     border-top: 4px solid black;
+    background-color: #FB8122;
 }
 .purchase{
     flex: 1;
@@ -94,7 +109,9 @@ width: 150px;
 .purchaseOpen{
     display: flex;
     flex-direction: row;
-    font-size: 1.1em;
+    font-size: 1.3em;
+    padding-top: 0.75em;
+    padding-bottom: 0.75em;
 }
 .orderInfo{
     flex: 1 1 75%;
@@ -103,10 +120,13 @@ width: 150px;
 .orderId{
     flex: 1 1 20%;
     text-align: center;
+    margin-left: 1em;
+    margin-right: 0.5em;
 }
 .purchaseTotal{
     text-align: center;
-    flex: 1 1 40%;
+    flex: 1 1 35%;
+    margin-right: 0.5em;
 }
 .orderDate{
     text-align: center;
@@ -116,6 +136,7 @@ width: 150px;
 .productsCollapsibleBtn{
     margin-left: auto;
     border: 0px;
+    background-color: #FB8122;;
 }
 .productsCollapsibleBtn:hover{
     background-color: rgba(0,0,0,0.1);
@@ -133,10 +154,12 @@ width: 150px;
     display: flex;
     flex-direction: row;
     border-top: 2px solid gray;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
 }
 .productName{
     flex: 1 1 40%;
-    margin-left: 1em;
+    margin-left: 4em;
     font-weight: 100;
 }
 .productQuantity{
@@ -148,6 +171,7 @@ width: 150px;
 .productPrice{
     flex: 1 1 5%;
     margin-left: 1em;
+    margin-right: 3em;
     text-align: center;
     font-weight: 100;
 }

@@ -76,18 +76,22 @@ const ProfilePage = () => {
   const changeStatePurchase = () => {
     setProfileInfo(false);
     setPurchaseInfo(true);
+    document.getElementById('purchase').classList.add('active');
+    document.getElementById('profile').classList.remove('active');
   };
   const changeStateProfileInfo = () => {
     setProfileInfo(true);
     setPurchaseInfo(false);
+    document.getElementById('profile').classList.add('active');
+    document.getElementById('purchase').classList.remove('active');
   };
   try {
     return (
       <div className="profile">
         <div className="ui">
           <div className="buttons">
-            <button className="profileButton" type="button" onClick={changeStateProfileInfo}> User info</button>
-            {purchases.length !== 0 && <button className="profileButton" type="button" onClick={changeStatePurchase}> Purchase History </button>}
+            <button className="profileButton active" id="profile" type="button" onClick={changeStateProfileInfo}> User info</button>
+            {purchases.length !== 0 && <button className="profileButton" id="purchase" type="button" onClick={changeStatePurchase}> Purchase History </button>}
           </div>
         </div>
         <div className="content">
