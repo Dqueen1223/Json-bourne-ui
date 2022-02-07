@@ -21,7 +21,6 @@ const generateErrors = (form, idList) => {
     const numbers = /^[.0-9]+$/;
 
     if (!value && (id !== 'endDate')) {
-      console.log(id);
       noValue.push(id);
     }
     if (value && (id === 'code' && !value.match(alphaNum))) {
@@ -32,7 +31,6 @@ const generateErrors = (form, idList) => {
     }
     if (value && (form.type === '$' && id === 'discount')) {
       const cents = value.toString().split('.');
-      console.log(cents.length);
       if (cents.length > 2) {
         twoDecimal.push(id);
       }
