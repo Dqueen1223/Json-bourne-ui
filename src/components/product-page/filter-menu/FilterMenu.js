@@ -16,7 +16,7 @@ const FilterMenu = ({ setFilter, isActive }) => {
    * @param {e} e - mouseclick event
    */
   const handleCheckbox = (e) => {
-    const checkedBox = `&${e.target.closest('div').previousElementSibling.innerText.toString().toLowerCase()}=${e.target.id}`;
+    const checkedBox = `&${e.target.closest('div').previousElementSibling.innerText}=${e.target.id}`;
 
     // if a checkbox is checked
     if (e.target.checked === true) {
@@ -35,6 +35,24 @@ const FilterMenu = ({ setFilter, isActive }) => {
       setFilterArray(newArray);
       setFilter(filterArray.join(''));
     }
+
+    return filterArray;
+  };
+
+  const removePrice = () => {
+    const minPrice = document.getElementById('minPrice');
+    const maxPrice = document.getElementById('maxPrice');
+    const priceIndex = newArray.indexOf(`&minPrice=${minPrice.value}&maxPrice=${maxPrice.value}`);
+
+    if (priceIndex !== -1) {
+      newArray.splice(priceIndex, 1);
+      setFilterArray(newArray);
+      setFilter(filterArray.join(''));
+      minPrice.value = '';
+      maxPrice.value = '';
+    }
+
+    return filterArray;
   };
 
   const handlePrice = (e) => {
@@ -66,22 +84,13 @@ const FilterMenu = ({ setFilter, isActive }) => {
       priceError.visibility = 'visible';
       priceError.innerText = 'Minimum price must be less than the maximum price.';
     } else if (minPrice !== '' && maxPrice !== '') {
+      removePrice();
       newArray.push(`&minPrice=${minPrice}&maxPrice=${maxPrice}`);
       setFilterArray(newArray);
       setFilter(filterArray.join(''));
     }
-  };
 
-  const removePrice = () => {
-    const minPrice = document.getElementById('minPrice').value;
-    const maxPrice = document.getElementById('maxPrice').value;
-    const priceIndex = newArray.indexOf(`&minPrice=${minPrice}&maxPrice=${maxPrice}`);
-
-    if (priceIndex !== -1) {
-      newArray.splice(priceIndex, 1);
-      setFilterArray(newArray);
-      setFilter(filterArray.join(''));
-    }
+    return filterArray;
   };
 
   return (
@@ -94,6 +103,7 @@ const FilterMenu = ({ setFilter, isActive }) => {
             <input
               id="Nike"
               type="checkbox"
+              data-testid="nikeCheckbox"
               onChange={handleCheckbox}
             />
             Nike
@@ -293,7 +303,7 @@ const FilterMenu = ({ setFilter, isActive }) => {
               id="minPrice"
               className={styles.priceInput}
              // type="number"
-              placeholder="Min Price"
+              placeholder="Min"
             />
             -
           </label>
@@ -302,7 +312,7 @@ const FilterMenu = ({ setFilter, isActive }) => {
               id="maxPrice"
               className={styles.priceInput}
             //  type="number"
-              placeholder="Max Price"
+              placeholder="Max"
             />
           </label>
           <br />

@@ -3,7 +3,7 @@
     box-sizing: border-box;
     color:#e1e2e2;
     height:100%;
-    padding:15px;
+    padding-bottom:15px;
     position:fixed;
     width:185px;
     left:0;
@@ -21,9 +21,9 @@
     box-sizing: border-box;
     color: #E1E2E2;
     font-size:1rem;
-    height: 90%;
+    height:85%;
     padding:7% 0%;
-    width:100%;
+    width: 100%;
     overflow-y: scroll;
     overflow-x: hidden;
     
@@ -37,11 +37,12 @@
 }
 
 .checkBoxLabel{
+    font-weight: bold;
     padding-left:10%;
 }
 
 .priceInput{
-    width: 25%;
+    width: 30%;
 }
 .priceButtons{
     width: 25%;
