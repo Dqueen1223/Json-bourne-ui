@@ -42,7 +42,8 @@ const FilterMenu = ({ setFilter, isActive }) => {
   const removePrice = () => {
     const minPrice = document.getElementById('minPrice');
     const maxPrice = document.getElementById('maxPrice');
-    const priceIndex = newArray.indexOf(`&minPrice=${minPrice.value}&maxPrice=${maxPrice.value}`);
+    const priceFilter = (element) => element.includes('&minPrice=');
+    const priceIndex = newArray.findIndex(priceFilter);
 
     if (priceIndex !== -1) {
       newArray.splice(priceIndex, 1);
@@ -318,8 +319,8 @@ const FilterMenu = ({ setFilter, isActive }) => {
           </label>
           <br />
           <div id="priceError" />
-          <button type="button" className="priceButtons" onClick={handlePrice}>Filter</button>
-          <button type="button" className="priceButtons" onClick={removePrice}>Clear</button>
+          <button type="button" className="priceButtons" id="filterPrice" onClick={handlePrice}>Filter</button>
+          <button type="button" className="priceButtons" id="clearPrice" onClick={removePrice}>Clear</button>
         </div>
         <span className={styles.checkBoxLabel}>Color</span>
         <div className={styles.fieldset}>
