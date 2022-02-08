@@ -90,7 +90,7 @@ const ProfilePage = () => {
       <div className="profile">
         <div className="ui">
           <div className="buttons">
-            <button className="profileButton active" id="profile" type="button" onClick={changeStateProfileInfo}> User info</button>
+            <button className="profileButton active" id="profile" type="button" onClick={changeStateProfileInfo}> User Info</button>
             {purchases.length !== 0 && <button className="profileButton" id="purchase" type="button" onClick={changeStatePurchase}> Purchase History </button>}
           </div>
         </div>

@@ -53,6 +53,9 @@ width: 150px;
     flex: 1 1 20%;
     max-height: 6em;
     min-height: 6em;
+    display:flex;
+    align-items: top;
+    justify-content: center;
 }
 .content{
     flex: 1 1 70%;
@@ -60,18 +63,14 @@ width: 150px;
     margin-bottom:2em;
 }
 .buttons {
-    position: relative;
-    top: 2em;
-    left: 42%;
-    width: 20%;
-    height: 2em;
+    display:flex;
+    min-width:30em;
 }
 .profileButton{
     flex: 1 1 40%;
-    margin-left: 0.5em;
-    margin-right: 0.5em;
-    height:1.5em;
-    border-radius:5px;
+    font-size:large;
+    height:4em;
+    width:12em;
     border:2px solid black;
 }
 .profileButton:hover{
@@ -93,11 +92,13 @@ width: 150px;
 .purchases{
     position: relative;
     flex-direction: column;
-    left:27%;
+    left:28%;
     width: 45%;
     display:flex;
     border-top: 4px solid black;
-    background-color: #FB8122;
+    background-color: #1d2228;
+    color:#e1e2e2;
+    min-width: 25em;
 }
 .purchase{
     flex: 1;
@@ -136,7 +137,8 @@ width: 150px;
 .productsCollapsibleBtn{
     margin-left: auto;
     border: 0px;
-    background-color: #FB8122;;
+    background-color: #1d2228;
+    color:#e1e2e2;
 }
 .productsCollapsibleBtn:hover{
     background-color: rgba(0,0,0,0.1);

@@ -66,7 +66,7 @@ const ProductPage = () => {
           ))}
         </div>
       </div>
-      <div className={styles.pagination}>
+      <div className={styles.pagination} data-testid="pagination">
         <Pagination
           className="pagination-bar"
           currentPage={currentPage}
