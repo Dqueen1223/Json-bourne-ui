@@ -4,11 +4,12 @@
  *
  * Validation for required input fields, test if input has any value
  */
-const generateErrors = (form, idList) => {
+const validateCreateProductForm = (form, idList) => {
   const noValue = [];
   const twoDecimal = [];
   const noDecimal = [];
   const noNegativeNumbers = [];
+  const nonNumeric = [];
   const errors = {};
 
   for (let i = 0; i < idList.length; i += 1) {
@@ -20,20 +21,30 @@ const generateErrors = (form, idList) => {
     }
     if (id === 'price' && value) {
       const splitNumber = value.toString().split('.');
-      if (splitNumber.length > 2) {
-        twoDecimal.push(id);
-      }
-      if (splitNumber[1].length !== 2) {
+      if (value.toString().includes('.') && value.match(/^\d+(\.\d+)?$/)) {
+        if (splitNumber.length > 2) {
+          twoDecimal.push(id);
+        }
+        if (splitNumber[1].length !== 2) {
+          twoDecimal.push(id);
+        }
+      } else {
         twoDecimal.push(id);
       }
     }
     if ((id === 'quantity' || id === 'price') && value < 0) {
       noNegativeNumbers.push(id);
     }
+    if ((id === 'demographic') && value.trim() < 0) {
+      noValue.push(id);
+    }
     if (id === 'quantity' && value) {
       const splitNumber = value.toString().split('.');
       if (splitNumber.length > 1) {
         noDecimal.push(id);
+      }
+      if (!value.toString().match(/^-?\d+(\.\d+)?$/)) {
+        nonNumeric.push(id);
       }
     }
   }
@@ -58,8 +69,12 @@ const generateErrors = (form, idList) => {
       errors[i] = 'No Negative Quantity';
     });
   }
-
+  if (nonNumeric.length) {
+    nonNumeric.forEach((i) => {
+      errors[i] = 'This field must be numeric';
+    });
+  }
   return errors;
 };
 
-export default generateErrors;
+export default validateCreateProductForm;

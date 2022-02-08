@@ -1,5 +1,8 @@
+import { toast } from 'react-toastify';
 import HttpHelper from '../../utils/HttpHelper';
 import Constants from '../../utils/constants';
+// eslint-disable-next-line import/no-cycle
+// import displayToast from '../app/App';
 
 /**
  *
@@ -8,7 +11,8 @@ import Constants from '../../utils/constants';
  * @param {*}
  * @returns
  */
-export default async function makeProduct(product) {
+export default async function MakeProduct(product) {
+  let checkValid = 'invalid';
   await HttpHelper(Constants.PRODUCTS_ENDPOINT, 'POST', {
     name: product.name,
     sku: product.sku,
@@ -28,10 +32,17 @@ export default async function makeProduct(product) {
     price: product.price,
     quantity: product.quantity
   })
-    .then((response) => response.json())
+    .then((response) => {
+      if (response.ok) {
+        toast.success('Your product has been successfully made!');
+        checkValid = 'valid';
+        response.json();
+      } else {
+        throw new Error(response.statusText);
+      }
+    })
     .catch(() => {
-      /* eslint-disable no-console */
-      console.log('Failed to create');
-      /* eslint-enable no-console */
+      toast.error('There is a problem connecting to the database');
     });
+  return checkValid;
 }

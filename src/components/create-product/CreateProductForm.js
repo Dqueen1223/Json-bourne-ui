@@ -9,9 +9,9 @@ const ProductForm = ({
   product, date, onChange, onProductChange, errors
 }) => {
   const demographicList = [' ', 'Men', 'Women', 'Kids'];
-  const activeProduct = ['Active', 'Inactive'];
+  const activeProduct = ['Inactive', 'Active'];
   if (date > new Date()) {
-    activeProduct.shift();
+    activeProduct.pop();
   }
 
   return (
@@ -101,6 +101,7 @@ const ProductForm = ({
       <div className={styles.createProductControl}>
         <FormItem
           id="quantity"
+          data-testid="quantity"
           label="Quantity"
           onChange={onProductChange}
           value={product.quantity}

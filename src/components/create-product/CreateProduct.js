@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import { Link, useHistory } from 'react-router-dom';
 import ProductForm from './CreateProductForm';
-import makeProduct from './CreateProductService';
-import generateErrors from './forms/FormValidation';
+import MakeProduct from './CreateProductService';
+import validateCreateProductForm from './forms/FormValidation';
 import styles from './CreateProduct.module.css';
-// import { useErrors } from './forms/CreateProductContext';
 
-const CreateProduct = () => {
+const CreateProductPage = () => {
   const [product, setProductData] = useState({});
   const [date, onChange] = useState(new Date());
   const [errors, setErrors] = useState({});
+
+  const history = useHistory();
 
   const onProductChange = (e) => {
     product.releaseDate = date.toISOString();
@@ -20,7 +20,7 @@ const CreateProduct = () => {
 
   const handleErrors = (form) => {
     const idList = Object.keys(form);
-    const errorLists = generateErrors(form, idList);
+    const errorLists = validateCreateProductForm(form, idList);
 
     for (let i = 0; i < idList.length; i += 1) {
       const id = idList[i];
@@ -61,15 +61,14 @@ const CreateProduct = () => {
     setProductData(newProduct);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     handleCreate();
     if (Object.keys(errors).length === 0) {
-      makeProduct(product);
-    } else {
-      toast.error('Some fields contain invalid inputs.');
+      if (await MakeProduct(product) === 'valid') {
+        history.push('/maintenance');
+      }
     }
   };
-
   return (
     <>
       <form className={styles.productFormContainer}>
@@ -88,6 +87,8 @@ const CreateProduct = () => {
           className={styles.submitButton}
           onClick={handleSubmit}
           type="button"
+          data-testid="submit"
+          label="submit"
         >
           Submit
         </button>
@@ -95,6 +96,8 @@ const CreateProduct = () => {
           <button
             className={styles.cancelButton}
             type="button"
+            id="cancel"
+            label="cancel"
           >
             Cancel
           </button>
@@ -104,4 +107,4 @@ const CreateProduct = () => {
   );
 };
 
-export default CreateProduct;
+export default CreateProductPage;
