@@ -52,9 +52,9 @@ const FilterMenu = ({ setFilter, isActive }) => {
       newArray.splice(priceIndex, 1);
       setFilterArray(newArray);
       setFilter(filterArray.join(''));
-      minPrice.value = '';
-      maxPrice.value = '';
     }
+    minPrice.value = '';
+    maxPrice.value = '';
   };
 
   /**
