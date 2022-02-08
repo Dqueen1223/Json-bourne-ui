@@ -35,10 +35,13 @@ const FilterMenu = ({ setFilter, isActive }) => {
       setFilterArray(newArray);
       setFilter(filterArray.join(''));
     }
-
-    return filterArray;
   };
 
+  /**
+   * @name removePrice
+   * @description When the clear button is checked or a new price filter is entered
+   *    this removes the price filters in the Filter and clears the input boxes.
+   */
   const removePrice = () => {
     const minPrice = document.getElementById('minPrice');
     const maxPrice = document.getElementById('maxPrice');
@@ -52,10 +55,14 @@ const FilterMenu = ({ setFilter, isActive }) => {
       minPrice.value = '';
       maxPrice.value = '';
     }
-
-    return filterArray;
   };
 
+  /**
+   * @name handlePrice
+   * @param {*} e - mouse click event.
+   * @description When the filter price button is clicked, this adds the price to be filtered
+   *    by to Filter.
+   */
   const handlePrice = (e) => {
     const minPrice = document.getElementById('minPrice').value;
     const maxPrice = document.getElementById('maxPrice').value;
@@ -90,8 +97,6 @@ const FilterMenu = ({ setFilter, isActive }) => {
       setFilterArray(newArray);
       setFilter(filterArray.join(''));
     }
-
-    return filterArray;
   };
 
   return (filterArray,
@@ -304,7 +309,7 @@ const FilterMenu = ({ setFilter, isActive }) => {
             <input
               id="minPrice"
               className={styles.priceInput}
-             // type="number"
+              type="number"
               placeholder="Min"
             />
             -
@@ -313,7 +318,7 @@ const FilterMenu = ({ setFilter, isActive }) => {
             <input
               id="maxPrice"
               className={styles.priceInput}
-            //  type="number"
+              type="number"
               placeholder="Max"
             />
           </label>
