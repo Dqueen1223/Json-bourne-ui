@@ -18,6 +18,8 @@
     font-size: 13px;
     min-width: 32px;
     background-color: #fb8122;
+    width: 32px;
+    max-width: 32px;
   }
   .pagination-item.dots:hover {
     background-color: transparent;

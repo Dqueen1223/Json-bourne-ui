@@ -746,5 +746,9 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
->>>>>>> b8f182a2c66647c040790549e25b8f527f1a23be
->>>>>>> 16087f330cb6620d51ab43063cf193d4911aa178
+<<<<<<< HEAD
+
+# Visual Studio Code coverage results
+lcov.info
+coverage/
+
