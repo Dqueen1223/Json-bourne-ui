@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './ProfilePage.css';
-import fetchProduct from './ProfileProductService';
+import fetchProduct from './profileProductService';
 
 const PurchaseItem = ({ item }) => {
   const [product, setProduct] = useState(null);
