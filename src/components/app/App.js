@@ -1,7 +1,6 @@
 import React from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import './App.css';
 import {
   BrowserRouter, Route, Switch
 } from 'react-router-dom';
@@ -9,19 +8,12 @@ import ProductPage from '../product-page/ProductPage';
 import CheckoutPage from '../checkout-page/CheckoutPage';
 import ConfirmationPage from '../confirmation-page/ConfirmationPage';
 import HomePage from '../home-page/HomePage';
-// import ProfilePage from '../Profile/Profilepage';
+import ProfilePage from '../Profile/Profilepage';
 import Footer from '../footer/Footer';
-<<<<<<< HEAD
-// eslint-disable-next-line import/no-duplicates
 import Header from '../header/Header';
 import LogoutPage from '../Profile/Logoutpage';
-=======
 import CreateProduct from '../create-product/CreateProduct';
->>>>>>> 45e4a85bca4e829d065d260810f909a28739843b
 import MaintenancePage from '../maintenance-page/MaintenancePage';
-import ProfilePage from '../Profile/Profilepage';
-// eslint-disable-next-line import/no-duplicates
-// import isLoggedIn from '../header/Header';
 
 toast.configure();
 /**
