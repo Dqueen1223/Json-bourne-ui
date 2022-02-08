@@ -1,10 +1,6 @@
 module.exports = Object.freeze({
   API_ERROR: 'Oops, something went wrong',
-<<<<<<< HEAD
   BASE_URL_API: 'http://localhost:8085',
-=======
-  BASE_URL_API: 'http://localhost:5000',
->>>>>>> 0d6cbe8aa32564d953de29f2e7d844818251586e
   // BASE_URL_API: 'https://json-bourne-api.herokuapp.com',
   PLACEHOLDER_IMAGE: 'https://www.signfix.com.au/wp-content/uploads/2017/09/placeholder-600x400.png',
   PURCHASE_ENDPOINT: '/purchases',
