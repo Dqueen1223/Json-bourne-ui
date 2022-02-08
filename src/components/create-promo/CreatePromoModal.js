@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import PromoForm from './CreatePromoForm';
 import styles from './PromoForm.module.css';
@@ -16,14 +16,34 @@ const CreatePromo = ({ closeModal }) => {
   const [promo, setPromoData] = useState({});
   const [errors, setErrors] = useState({});
 
-  const onPromoChange = (e) => {
-    promo.startDate = startDate.toISOString();
+  useEffect(() => {
+    onStartChange(startDate);
+    onEndChange(endDate);
     promo.endDate = endDate.toISOString();
+    promo.startDate = startDate.toISOString();
+    if (promo.type === undefined) {
+      promo.type = '%';
+    }
+    if (errors.date) {
+      if (promo.startDate !== promo.endDate) {
+        delete errors.date;
+      }
+      if (promo.endDate > new Date().toISOString()) {
+        delete errors.date;
+      }
+    }
+  }, [startDate, endDate, promo, errors]);
+
+  const onPromoChange = (e) => {
+    promo.endDate = endDate.toISOString();
+    promo.startDate = startDate.toISOString();
 
     if (promo.type === undefined) {
       promo.type = '%';
     }
-    setPromoData({ ...promo, [e.target.id]: e.target.value });
+    if ((e instanceof Date) === false) {
+      setPromoData({ ...promo, [e.target.id]: e.target.value });
+    }
     setErrors({});
   };
 
@@ -35,6 +55,9 @@ const CreatePromo = ({ closeModal }) => {
       const id = idList[i];
       if (errorLists[id]) {
         errors[id] = errorLists[id];
+      }
+      if (errorLists.date) {
+        errors.date = errorLists.date;
       }
     }
     setErrors(errors);
@@ -62,9 +85,13 @@ const CreatePromo = ({ closeModal }) => {
   const handleSubmit = async () => {
     handleCreate();
     if (Object.keys(errors).length === 0) {
-      await makePromo(promo);
-      closeModal(false);
-      toast.success('Promo Created');
+      if (await makePromo(promo) !== 'Bad Request') {
+        await makePromo(promo);
+        closeModal(false);
+        toast.success('Promo Created');
+      } else {
+        toast.error('Bad Request');
+      }
     } else {
       toast.error('Some fields contain invalid inputs.');
     }

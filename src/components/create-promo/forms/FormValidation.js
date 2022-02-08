@@ -11,6 +11,7 @@ const generateErrors = (form, idList) => {
   const onlyNum = [];
   const invalidRange = [];
   const noNegativeNumbers = [];
+  const startEndSame = [];
   const expired = [];
   const errors = {};
 
@@ -44,6 +45,12 @@ const generateErrors = (form, idList) => {
     if (value && (value < 0) && (form.type === '$' && id === 'discount')) {
       noNegativeNumbers.push(id);
     }
+    if (form.endDate === form.startDate && (id === 'startDate' || id === 'endDate')) {
+      startEndSame.push(id);
+    }
+    if (form.endDate <= new Date().toISOString() && (id === 'endDate')) {
+      expired.push(id);
+    }
   }
 
   if (noValue.length) {
@@ -58,7 +65,7 @@ const generateErrors = (form, idList) => {
   }
   if (onlyAlphaNum.length) {
     onlyAlphaNum.forEach((i) => {
-      errors[i] = 'Must contain only alphanumeric characters';
+      errors[i] = 'Must contain alphanumeric characters only';
     });
   }
   if (invalidRange.length) {
@@ -77,11 +84,15 @@ const generateErrors = (form, idList) => {
     });
   }
   if (expired.length) {
-    expired.forEach((i) => {
-      errors[i] = 'Date is expired';
+    expired.forEach(() => {
+      errors.date = 'Date is expired';
     });
   }
-
+  if (startEndSame.length) {
+    startEndSame.forEach(() => {
+      errors.date = 'Start and end dates cannot be equal';
+    });
+  }
   return errors;
 };
 
