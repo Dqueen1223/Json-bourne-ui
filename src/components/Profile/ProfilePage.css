@@ -54,7 +54,7 @@ width: 150px;
     max-height: 6em;
     min-height: 6em;
     display:flex;
-    align-items: top;
+    align-items: center;
     justify-content: center;
 }
 .content{
@@ -71,7 +71,13 @@ width: 150px;
     font-size:large;
     height:4em;
     width:12em;
-    border:2px solid black;
+    border-left: 2px solid black;
+    border-right: 2px solid black;
+    border-bottom: 2px solid black;
+    border-top:none;
+}
+.purchaseHistory{
+    border-left:none;
 }
 .profileButton:hover{
     background-color: rgba(0,0,0,0.1);
