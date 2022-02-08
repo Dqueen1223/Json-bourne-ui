@@ -11,6 +11,7 @@ import ConfirmationPage from '../confirmation-page/ConfirmationPage';
 import HomePage from '../home-page/HomePage';
 // import ProfilePage from '../Profile/Profilepage';
 import Footer from '../footer/Footer';
+import CreateProductPage from '../create-product/CreateProduct';
 // eslint-disable-next-line import/no-duplicates
 import Header from '../header/Header';
 import LogoutPage from '../Profile/Logoutpage';
@@ -40,6 +41,7 @@ const App = () => (
       <Route exact path="/checkout" render={() => <CheckoutPage />} />
       <Route exact path="/confirmation" render={() => <ConfirmationPage />} />
       <Route exact path="/profilepage" render={() => <ProfilePage />} />
+      <Route exact path="/maintenance/create" render={() => <CreateProductPage />} />
       <Route exact path="/logoutpage" render={() => <LogoutPage />} />
       <Route exact path="/maintenance" render={() => <MaintenancePage />} />
     </Switch>
