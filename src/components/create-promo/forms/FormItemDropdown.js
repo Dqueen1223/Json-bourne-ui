@@ -1,17 +1,17 @@
 import React from 'react';
-import styles from './FormItem.module.css';
+import styles from '../PromoForm.module.css';
 
 /**
  * @name FormItemDropdown
  * @description Input field
  * @return component
  */
-const FormItemDropdown = ({
-  onChange, value, id, label, options, error
+const FormItemDropdownStart = ({
+  onChange, value, id, label, options, error, className
 }) => (
 
-  <div>
-    <label className={styles.label} htmlFor={id}>
+  <div className={className}>
+    <label className={styles.promoLabel} htmlFor={id}>
       {label}
       <div>
         {!error && (
@@ -61,4 +61,4 @@ const FormItemDropdown = ({
   </div>
 );
 
-export default FormItemDropdown;
+export default FormItemDropdownStart;

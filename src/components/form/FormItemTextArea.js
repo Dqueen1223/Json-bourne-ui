@@ -6,27 +6,27 @@ import styles from './FormItem.module.css';
  * @description Input field
  * @return component
  */
-const FormItem = ({
+const FormItemTextArea = ({
   onChange, value, id, label, placeholder, type, error
 }) => (
+
   <div>
     <label className={styles.label} htmlFor={id}>
       {label}
       <div>
         {!error && (
-        <input
-          className={styles.input}
-          id={id}
-          // onBlur={handleErrors}
-          onChange={onChange}
-          placeholder={placeholder}
-          type={type}
-          value={value}
-        />
+          <textarea
+            className={styles.inputTextArea}
+            id={id}
+            onChange={onChange}
+            placeholder={placeholder}
+            type={type}
+            value={value}
+          />
         )}
         {error && (
-          <input
-            className={styles.inputError}
+          <textarea
+            className={styles.inputErrorTA}
             id={id}
             onChange={onChange}
             placeholder={placeholder}
@@ -45,4 +45,4 @@ const FormItem = ({
   </div>
 );
 
-export default FormItem;
+export default FormItemTextArea;

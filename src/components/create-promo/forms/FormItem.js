@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './FormItem.module.css';
+import styles from '../PromoForm.module.css';
 
 /**
  * @name FormItem
@@ -7,17 +7,16 @@ import styles from './FormItem.module.css';
  * @return component
  */
 const FormItem = ({
-  onChange, value, id, label, placeholder, type, error
+  onChange, value, id, label, placeholder, type, error, className
 }) => (
-  <div>
-    <label className={styles.label} htmlFor={id}>
+  <div className={className}>
+    <label className={styles.promoLabel} htmlFor={id}>
       {label}
       <div>
         {!error && (
         <input
           className={styles.input}
           id={id}
-          // onBlur={handleErrors}
           onChange={onChange}
           placeholder={placeholder}
           type={type}
