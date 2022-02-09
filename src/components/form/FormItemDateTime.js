@@ -17,7 +17,7 @@ const FormItemDateTime = ({
         minDate={new Date()}
         calendarClassName={styles.calendar}
         className={styles.calendar}
-        disableClock="true"
+        disableClock
         clearIcon={null}
         id={id}
         onChange={onChange}
