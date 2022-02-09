@@ -92,3 +92,29 @@ float: right;
   justify-items: center;
   min-height: 100vh;
 }
+
+.cartQty{
+  align-items: center;
+  border-radius:50%;
+  background-color: #fb8122;
+  color:#E1E2E2;
+  display: flex;
+  font-size:.85rem;
+  font-weight: 600;
+  height:20px;
+  justify-content: center;
+  padding-bottom:1px;
+  width:20px;
+  position: absolute;
+  left: 97.1%;
+  top: 13%;
+}
+
+.btnTemp{
+  background-color: white;
+  color:blue;
+  height:50px;
+  text-align: center;
+  width:100px;
+}
+
