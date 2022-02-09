@@ -12,6 +12,7 @@
   box-sizing: border-box;
   border: 1px solid red;
 }
+
 .inputErrorTA {
   margin-top: .5em;
   width: 530px;
@@ -30,6 +31,12 @@
 }
 
 .label {
+  font-weight: 700;
+  color: #666666;
+  margin-bottom: .5em;
+}
+
+.promoLabel {
   font-weight: 700;
   color: #666666;
   margin-bottom: .5em;

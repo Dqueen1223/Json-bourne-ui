@@ -1,19 +1,47 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles';
+import reactDom from 'react-dom';
+import CreatePromo from '../create-promo/CreatePromoModal';
 import fetchProducts from './MaintenancePageService';
 import './MaintenancePage.css';
 import styles from '../product-page/ProductPage.module.css';
 import Constants from '../../utils/constants';
 // import styles2 from '../checkout-page/CheckoutPage.module.css';
-
+/**
+ * @name useStyles
+ * @description Material-ui styling for ProductCard component
+ * @return styling
+ */
+const useStyles = makeStyles((theme) => ({
+  root: {
+    maxWidth: 345
+  },
+  media: {
+    height: 0,
+    paddingTop: '56.25%'
+  },
+  expand: {
+    transform: 'rotate(0deg)',
+    marginLeft: 'auto',
+    transition: theme.transitions.create('transform', {
+      duration: theme.transitions.duration.shortest
+    })
+  },
+  expandOpen: {
+    transform: 'rotate(180deg)'
+  }
+}));
 /**
  * @name MaintenancePage
  * @description  basic maintenance page with table of products from database
  * @returns component
  */
 const MaintenancePage = () => {
+  const classes = useStyles();
   const [apiError, setApiError] = useState(false);
   const [products, setProducts] = useState([]);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   useEffect(() => {
     fetchProducts(setProducts, setApiError);
@@ -29,6 +57,19 @@ const MaintenancePage = () => {
             Create Product
           </button>
         </Link>
+        {modalIsOpen && reactDom.createPortal(
+          <CreatePromo className={classes.root} closeModal={setModalIsOpen} />,
+          document.getElementById('root')
+        )}
+        <button
+          type="button"
+          className="promoButton"
+          onClick={() => {
+            setModalIsOpen(true);
+          }}
+        >
+          Create Promotion
+        </button>
       </div>
       <div className="ProductTable">
 

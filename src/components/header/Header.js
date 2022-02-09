@@ -2,9 +2,11 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import GoogleLogin, { GoogleLogout } from 'react-google-login';
+// eslint-disable-next-line import/no-unresolved
 import { FaUserCircle } from 'react-icons/fa';
 import loginUser from './HeaderService';
 import constants from '../../utils/constants';
+import { useCart } from '../checkout-page/CartContext';
 import { useProfile } from '../Profile/ProfileContext';
 // eslint-disable-next-line import/no-named-as-default
 /**
@@ -16,6 +18,11 @@ const Header = () => {
   const [user, setUser] = useState('');
   const [googleError, setGoogleError] = useState('');
   const [apiError, setApiError] = useState(false);
+
+  const {
+    state: { products }
+  } = useCart();
+
   const [isLoggedIn, setisLoggedIn] = useState(false);
   const { dispatch } = useProfile();
   // const { state: { userProfile } } = useProfile();
@@ -85,11 +92,8 @@ const Header = () => {
     <div className="header">
       {isLoggedIn ? renderProfileicon() : <></>}
       <Link to="/checkout">
-        <img
-          className="carticon"
-          src="https://icon-library.com/images/white-shopping-cart-icon/white-shopping-cart-icon-1.jpg"
-          alt="cartimage"
-        />
+        <img className="carticon" src="https://icon-library.com/images/white-shopping-cart-icon/white-shopping-cart-icon-1.jpg" alt="cartimage" />
+        {products.length > 0 && <span className="cartQty">{(products.length <= 9) ? products.length : '9+'}</span>}
       </Link>
       <Link to="/home">
         <img
