@@ -3,8 +3,8 @@ import IconButton from '@material-ui/core/IconButton';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import './ProductCardModal.css';
 import { useCart } from '../checkout-page/CartContext';
+import getQtyInCart, { displayToast, isInventoryAvailable } from './ProductCardModalService';
 
-// import { useCart } from '../checkout-page/CartContext';
 /**
  * @name ProductCardModal
  * @description material-ui styling for product card modal
@@ -16,7 +16,28 @@ const ProductCardModal = ({ product, closeModal }) => {
   const [higherValue, setHigherValue] = useState(true);
   const [lowerValue, setLowerValue] = useState(false);
 
+  const {
+    state: { products }
+  } = useCart();
+
   const onAdd = () => {
+    const qtyInCart = getQtyInCart(products, product);
+    if (!isInventoryAvailable(quantityPicker, qtyInCart, product)) return;
+    if (qtyInCart > 0) {
+      dispatch(
+        {
+          type: 'delete',
+          product: {
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            description: product.description,
+            quantity: product.quantity,
+            imageSrc: product.imageSrc
+          }
+        }
+      );
+    }
     dispatch(
       {
         type: 'add',
@@ -25,19 +46,23 @@ const ProductCardModal = ({ product, closeModal }) => {
           name: product.name,
           price: product.price,
           description: product.description,
-          quantity: quantityPicker,
+          quantity: Number(quantityPicker) + qtyInCart,
           imageSrc: product.imageSrc
         }
       }
     );
+    displayToast(quantityPicker, product);
   };
+
   const higherValueCheck = (quantitySelector) => {
-    if (quantitySelector >= product.quantity) {
+    const qty = getQtyInCart(products, product);
+    if (quantitySelector >= product.quantity - qty) {
       setHigherValue(false);
     } else {
       setHigherValue(true);
     }
   };
+
   const lowerValueCheck = (quantitySelector) => {
     if (Number(quantitySelector) <= 1) {
       setLowerValue(false);
@@ -45,6 +70,7 @@ const ProductCardModal = ({ product, closeModal }) => {
       setLowerValue(true);
     }
   };
+
   const lowerQuantity = () => {
     if (quantityPicker > 0) {
       setQuantityPicker(Number(quantityPicker) - 1);
@@ -52,6 +78,7 @@ const ProductCardModal = ({ product, closeModal }) => {
     higherValueCheck(quantityPicker - 1);
     lowerValueCheck(quantityPicker - 1);
   };
+
   const raiseQuantity = () => {
     if (quantityPicker < product.quantity) {
       setQuantityPicker(Number(quantityPicker) + 1);
@@ -61,12 +88,13 @@ const ProductCardModal = ({ product, closeModal }) => {
   };
 
   const onChange = (e) => {
-    if (e.target.value < product.quantity) {
+    const qty = getQtyInCart(products, product);
+    if (e.target.value < product.quantity - qty) {
       setQuantityPicker(e.target.value);
     } else {
-      setQuantityPicker(product.quantity);
+      setQuantityPicker((product.quantity - qty) === 0 ? 1 : product.quantity - qty);
     }
-    if (e.target.value === null) {
+    if (e.target.value === null || e.target.value === '0') {
       setQuantityPicker(1);
     }
 

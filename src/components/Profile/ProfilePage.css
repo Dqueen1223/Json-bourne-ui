@@ -1,0 +1,187 @@
+
+li{
+    margin: 1.5em 0;
+    flex-direction: row;
+    width: 400px;
+}
+.headerShipping{
+position: relative;
+text-align: justify;
+padding:2px 1.25em 0px;
+border-bottom: 5px solid #FB8122;
+border-radius: 5%;
+width: 150px;
+}
+
+.headerName{
+    display: block;
+    text-align: center;
+    padding:2px 1.25em 0px;
+    position: relative;
+    border-radius: 5%;
+    border-bottom: 5px solid #FB8122;
+    width: 150px;
+}
+.userInfo{
+    margin-bottom: 4em;
+    font-size: large;
+    flex: 1 1 90%;
+    color: #1d2228;
+    width: 400px;
+    flex-direction: row;
+    height: 6em;
+    text-align: left;
+}
+.profile{
+    position:relative;
+    flex: 1 1 5%;
+    flex-direction: column;
+    height: 80%;
+    top: 70px;
+    display: flex;
+}
+.tabs{
+    background-color: #1d2228;
+    border: 1px solid;
+    color: #FB8122;
+    display: block;
+    font-size: 1em;
+    height: 2.5em;
+    width: 8em;
+}
+.ui {
+    flex: 1 1 20%;
+    max-height: 8em;
+    min-height: 8em;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+.content{
+    flex: 1 1 70%;
+    overflow: auto;
+    margin-bottom:2em;
+}
+.buttons {
+    display:flex;
+    min-width:30em;
+}
+.profileButton{
+    flex: 1 1 40%;
+    font-size:large;
+    height:4em;
+    width:12em;
+    border-left: 2px solid black;
+    border-right: 2px solid black;
+    border-bottom: 2px solid black;
+    border-top:none;
+}
+.purchaseHistory{
+    border-left:none;
+}
+.profileButton:hover{
+    background-color: rgba(0,0,0,0.1);
+}
+.active:hover{
+    background-color:rgba(251, 129, 34, 0.9)
+}
+.active{
+    background-color: #FB8122;
+}
+.userInfodiv{
+    position: absolute;
+    top: 7em;
+    left: 43%;
+    width: 15%;
+    height: 8em;
+}
+.purchases{
+    position: relative;
+    flex-direction: column;
+    left:28%;
+    width: 45%;
+    display:flex;
+    border-top: 4px solid black;
+    background-color: #1d2228;
+    color:#e1e2e2;
+    min-width: 25em;
+}
+.purchase{
+    flex: 1;
+    flex-direction: column;
+    border-left: 4px solid black;
+    border-right: 4px solid black;
+    border-bottom: 4px solid black;;
+}
+.purchaseOpen{
+    display: flex;
+    flex-direction: row;
+    font-size: 1.2em;
+    padding-top: 0.75em;
+    padding-bottom: 0.75em;
+}
+.orderInfo{
+    flex: 1 1 75%;
+    display: flex;
+}
+.orderId{
+    flex: 1 1 20%;
+    text-align: center;
+    margin-left: 0.7em;
+}
+.purchaseTotal{
+    text-align: center;
+    flex: 1 1 35%;
+}
+.orderDate{
+    text-align: center;
+    flex: 1 1 40%;
+}
+
+.productsCollapsibleBtn{
+    margin-left: auto;
+    border: 0px;
+    background-color: #1d2228;
+    color:#e1e2e2;
+}
+.productsCollapsibleBtn:hover{
+    background-color: rgba(0,0,0,0.1);
+}
+.productsCollapsible{
+    flex: 1 1 40%;
+    display: flex;
+    flex-direction: column;
+}
+.closed{
+    display: none;
+}
+
+.purchaseItem{
+    display: flex;
+    flex-direction: row;
+    border-top: 2px solid gray;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+}
+.productName{
+    flex: 1 1 40%;
+    margin-left: 4em;
+    font-weight: 100;
+}
+.productQuantity{
+    flex: 1 1 5%;
+    text-align: center;
+    font-weight: 100;
+}
+
+.productPrice{
+    flex: 1 1 5%;
+    margin-left: 1em;
+    margin-right: 3em;
+    text-align: center;
+    font-weight: 100;
+}
+.stopOverflow{
+    margin-top: 2em;
+    margin-bottom: 2em;
+}

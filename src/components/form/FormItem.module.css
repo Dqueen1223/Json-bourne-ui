@@ -13,10 +13,44 @@
   border: 1px solid red;
 }
 
+.inputErrorTA {
+  margin-top: .5em;
+  width: 530px;
+  height: 30px;
+  padding: .5em;
+  box-sizing: border-box;
+  border: 1px solid red;
+}
+
+.inputTextArea {
+  margin-top: .5em;
+  width: 530px;
+  height: 33.33px;
+  padding: .5em;
+  box-sizing: border-box;
+}
+
 .label {
   font-weight: 700;
   color: #666666;
   margin-bottom: .5em;
+}
+
+.promoLabel {
+  font-weight: 700;
+  color: #666666;
+  margin-bottom: .5em;
+}
+
+.calendar {
+  margin-top: .5em;
+  width: 100%;
+  box-sizing: border-box;
+  background: white;
+}
+
+.calendar > {
+  background: white;
 }
 
 .paragraph {
@@ -27,3 +61,4 @@
   color:red;
   margin:3px 0px 0px 0px;
 }
+
