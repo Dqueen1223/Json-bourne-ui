@@ -36,6 +36,7 @@ const App = () => (
       <Route exact path="/checkout" render={() => <CheckoutPage />} />
       <Route exact path="/confirmation" render={() => <ConfirmationPage />} />
       <Route exact path="/profilepage" render={() => <ProfilePage />} />
+      <Route exact path="/maintenance/create" render={() => <CreateProduct />} />
       <Route exact path="/logoutpage" render={() => <LogoutPage />} />
       <Route exact path="/maintenance/create" render={() => <CreateProduct />} />
       <Route exact path="/maintenance" render={() => <MaintenancePage />} />

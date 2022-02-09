@@ -136,5 +136,6 @@ Errors
 .error_item {
     color:red;
     margin:3px 0px 0px 0px;
+    width: 120%;
 }
 

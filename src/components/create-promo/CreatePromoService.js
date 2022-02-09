@@ -9,6 +9,7 @@ import Constants from '../../utils/constants';
  * @returns
  */
 export default async function makePromo(promo) {
+  let status = 'waiting';
   await HttpHelper(Constants.PROMOTIONS_ENDPOINT, 'POST', {
     Code: promo.code,
     Discount: promo.discount,
@@ -16,10 +17,18 @@ export default async function makePromo(promo) {
     StartDate: promo.startDate,
     EndDate: promo.endDate
   })
-    .then((response) => response.json())
+    .then((response) => {
+      if (response.ok) {
+        response.json();
+      } else {
+        status = response.statusText;
+        throw new Error(response.statusText);
+      }
+    })
     .catch(() => {
       /* eslint-disable no-console */
       console.log('Failed to create');
       /* eslint-enable no-console */
     });
+  return status;
 }

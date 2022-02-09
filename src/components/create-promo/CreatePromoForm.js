@@ -45,6 +45,7 @@ const PromoForm = ({
             onChange={startChange}
             onClick={onChange}
             value={startDate}
+            error={errors.date}
           />
           <FormItemDateTime
             id="endDate"
@@ -54,7 +55,6 @@ const PromoForm = ({
             onChange={endChange}
             onClick={onChange}
             value={endDate}
-            error={errors.endDate}
           />
         </div>
         <button
