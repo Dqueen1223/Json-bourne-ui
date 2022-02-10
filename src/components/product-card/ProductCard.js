@@ -81,6 +81,10 @@ const ProductCard = ({ product }) => {
   const share = (e) => {
     e.stopPropagation();
   };
+  const onReview = (e) => {
+    e.stopPropagation();
+    setReviewsModal(true);
+  };
 
   return (
     <Card className={classes.root}>
@@ -146,19 +150,15 @@ const ProductCard = ({ product }) => {
         <IconButton aria-label="add to shopping cart" onClick={onAdd}>
           <AddShoppingCartIcon />
         </IconButton>
-      </CardActions>
-      <div>
         <Button
           className="reviewsProductCardButton"
           type="button"
           variant="contained"
-          onClick={() => {
-            setReviewsModal(true);
-          }}
+          onClick={onReview}
         >
           Reviews
         </Button>
-      </div>
+      </CardActions>
     </Card>
   );
 };
