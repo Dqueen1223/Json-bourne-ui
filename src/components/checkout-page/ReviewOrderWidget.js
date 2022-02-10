@@ -37,19 +37,27 @@ const ReviewOrderWidget = ({ shippingFee }) => {
         <div className={styles.price}>
           <p>{getSubtotal(products) }</p>
         </div>
-      </div>
-      <div>
-        <p>
-          Shipping fee
-          {' '}
-          { shippingFee.toFixed(2) }
-        </p>
-      </div>
-      <div>
-        <p>Total</p>
-      </div>
-      <div className="TotalPrice">
-        {calculateTotal()}
+        <div>
+          <p>
+            Shipping fee
+          </p>
+        </div>
+        <div className={styles.price}>
+          <p>
+            $
+            { shippingFee.toFixed(2) }
+          </p>
+        </div>
+        <div>
+          <p>Total</p>
+        </div>
+        <div className={styles.price}>
+          <p>
+            $
+            {calculateTotal()}
+          </p>
+
+        </div>
       </div>
     </>
   );

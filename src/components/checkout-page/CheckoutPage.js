@@ -10,6 +10,7 @@ import makePurchase from './CheckoutService';
 import validateForm from '../form/FormValidate';
 import { useProfile } from '../Profile/ProfileContext';
 import { getSubtotal } from './ReviewOrderWidgetService';
+import getBillingRate from './BillingRateService';
 /**
  * @name CheckoutPage
  * @description A view that contains details needed to process a transaction for items
@@ -28,10 +29,15 @@ const CheckoutPage = () => {
 
   const [shippingFee, setShippingFee] = React.useState(0.00);
 
+  const [shippingFeeState, setShippingFeeState] = React.useState(0.00);
+
   const onDeliveryChange = (e) => {
     setDeliveryData({ ...deliveryData, [e.target.id]: e.target.value });
   };
-
+  React.useEffect(() => {
+    getBillingRate(deliveryData.state, setShippingFeeState);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [deliveryData]);
   React.useEffect(() => {
     let productsPriceAdd = 0.00;
     const subTotal = getSubtotal(products);
@@ -39,17 +45,9 @@ const CheckoutPage = () => {
     if (subTotalVal > 50.00) {
       productsPriceAdd = 5.00;
     }
-    if (deliveryData.state === 'Hawaii' || deliveryData.state === 'Alaska') {
-      setShippingFee(productsPriceAdd + Number(10.00));
-      console.log(productsPriceAdd + Number(10.00));
-    } else if (typeof deliveryData.state !== 'undefined') {
-      setShippingFee(productsPriceAdd + Number(5.00));
-    } else if (deliveryData.state === 'Select a state') {
-      setShippingFee(productsPriceAdd);
-    } else {
-      setShippingFee(productsPriceAdd);
-    }
-  }, [deliveryData, products]);
+    setShippingFee(productsPriceAdd + shippingFeeState);
+  }, [shippingFeeState, products]);
+
   const onBillingChange = (e) => {
     setBillingData({ ...billingData, [e.target.id]: e.target.value });
   };
