@@ -44,8 +44,8 @@
     "webpack": "^5.68.0"
   },
   "scripts": {
-    "start": "node --max_old_space_size=2560 node_modules/.bin/react-scripts start",
-    "build": "node --max_old_space_size=2560 node_modules/.bin/react-scripts build",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
     "test": "react-scripts test --coverage",
     "coverage": "react-scripts test --coverage --watchAll=false",
     "eject": "react-scripts eject",

@@ -97,6 +97,7 @@ const MaintenancePage = () => {
           <tbody>
             {products.map((product) => (
               <tr key={product.id} className="ProductCells">
+                <td className="delete"></td>
                 <td className="ProductCells">{product.id}</td>
                 <td className="ProductCells">{product.name}</td>
                 <td className="ProductCells">{product.sku}</td>
