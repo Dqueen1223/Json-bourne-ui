@@ -4,6 +4,7 @@ import './ProfilePage.css';
 import { useProfile } from './ProfileContext';
 import fetchPurchases from './ProfilePageService';
 import ProfilePurchase from './ProfilePurchase';
+import FormItem from '../create-promo/forms/FormItem';
 
 const ProfilePage = () => {
   const {
@@ -13,6 +14,12 @@ const ProfilePage = () => {
   const [profileInfo, setProfileInfo] = useState(true);
   // const [apiError, setApiError] = useState(false);
   const [purchaseInfo, setPurchaseInfo] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [tempPurchaseInfo, setTempPurchaseInfo] = useState(null);
+  const [updateUser, setUpdateUser] = useState([]);
+  const onUpdateUser = (e) => {
+    setUpdateUser({ ...updateUser, [e, target.id]: e.target.value })
+  }
   useEffect(() => {
     fetchPurchases(`?email=${userProfile[0].email}`, setPurchases);
   }, [userProfile]);
@@ -34,6 +41,64 @@ const ProfilePage = () => {
       </div>
     );
   };
+  const startEditing = () => {
+    setTempPurchaseInfo(purchaseInfo);
+    setPurchaseInfo(false);
+    setIsEditing(true);
+  };
+  const renderEditName = (onUpdateUser, errors) => {
+
+  }
+  const renderEditShipping = (onUpdateUser, errors) => (
+    <div className="userInfo">
+      <ul className="headerShipping">Shipping Address</ul>
+      <FormItem
+        placeholder="e.g. 123 Sesame Street"
+        type="text"
+        id="street"
+        label="Street"
+        onChange={onUpdateUser}
+        value={updateUser.street}
+        error={errors.street}
+      />
+      <FormItem
+        placeholder="e.g. 123 Sesame Street"
+        type="text"
+        id="street2"
+        label="Street2"
+        onChange={onUpdateUser}
+        value={updateUser.street}
+        error={errors.street2}
+      />
+      <FormItem
+        placeholder="e.g. 123 Sesame Street"
+        type="text"
+        id="city"
+        label="City"
+        onChange={onUpdateUser}
+        value={updateUser.city}
+        error={errors.city}
+      />
+      <FormItem
+        placeholder="e.g. 123 Sesame Street"
+        type="text"
+        id="state"
+        label="State"
+        onChange={onUpdateUser}
+        value={updateUser.state}
+        error={errors.state}
+      />
+      <FormItem
+        placeholder="e.g. 123 Sesame Street"
+        type="text"
+        id="zip"
+        label="zip"
+        onChange={onUpdateUser}
+        value={updateUser.zip}
+        error={errors.zip}
+      />
+    </div>
+  );
 
   const renderShipping = () => {
     const {
@@ -95,20 +160,23 @@ const ProfilePage = () => {
           </div>
         </div>
         <div className="content">
+          {!isEditing && <button className="edit" type="button" onClick={startEditing} />}
           <div className="userInfodiv">
             {profileInfo && renderName()}
             {profileInfo && renderShipping()}
+            {isEditing && renderEditName}
+            {isEditing && renderEditShipping}
           </div>
           {purchaseInfo && (
-          <div className="purchases">
-            {purchases.map((purchase) => (
-              <div key={purchase.id} className="purchase">
-                <ProfilePurchase
-                  purchases={purchase}
-                />
-              </div>
-            ))}
-          </div>
+            <div className="purchases">
+              {purchases.map((purchase) => (
+                <div key={purchase.id} className="purchase">
+                  <ProfilePurchase
+                    purchases={purchase}
+                  />
+                </div>
+              ))}
+            </div>
           )}
           <div className="stopOverflow" />
         </div>
