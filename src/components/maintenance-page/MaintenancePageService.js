@@ -22,3 +22,17 @@ export default async function fetchProducts(setProducts, setApiError) {
       setApiError(true);
     });
 }
+
+// const UpdateProducts = async (Products, setApiError) => {
+//   await HttpHelper(Constants.PRODUCTS_ENDPOINT, 'PUT')
+//     .then((response) => {
+//       if (response.ok) {
+//         return response.json();
+//       }
+//       throw new Error(Constants.API_ERROR);
+//     })
+//     .then(Products)
+//     .catch(() => {
+//       setApiError(true);
+//     });
+// };
