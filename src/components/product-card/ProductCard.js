@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import reactDom from 'react-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -62,6 +62,11 @@ const ProductCard = ({ product }) => {
   const [reviewsModal, setReviewsModal] = useState(false);
   const [reviews, setReviews] = useState([]);
   const [apiError, setApiError] = useState(false);
+
+  useEffect(() => {
+    fetchReviews(setReviews, setApiError);
+  }, []);
+
   const onAdd = (e) => {
     dispatch(
       {
@@ -88,7 +93,7 @@ const ProductCard = ({ product }) => {
     e.stopPropagation();
     setReviewsModal(true);
     console.log(apiError);
-    fetchReviews(setReviews, setApiError);
+    // fetchReviews(setReviews, setApiError);
     console.log(reviews);
   };
 
@@ -99,7 +104,7 @@ const ProductCard = ({ product }) => {
         document.getElementById('root')
       )}
       {reviewsModal && reactDom.createPortal(
-        <ReviewsModal product={product} closeModal={setReviewsModal} />,
+        <ReviewsModal product={product} reviews={reviews} closeModal={setReviewsModal} />,
         document.getElementById('root')
       )}
       <CardHeader
