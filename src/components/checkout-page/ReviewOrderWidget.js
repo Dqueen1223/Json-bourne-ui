@@ -39,7 +39,7 @@ const ReviewOrderWidget = ({ shippingFee }) => {
         </div>
         <div>
           <p>
-            Shipping fee
+            Shipping Fee
           </p>
         </div>
         <div className={styles.price}>
