@@ -18,8 +18,8 @@ const ProfilePage = () => {
   const [tempPurchaseInfo, setTempPurchaseInfo] = useState(null);
   const [updateUser, setUpdateUser] = useState([]);
   const onUpdateUser = (e) => {
-    setUpdateUser({ ...updateUser, [e, target.id]: e.target.value })
-  }
+    setUpdateUser({ ...updateUser, [e.target.id]: e.target.value });
+  };
   useEffect(() => {
     fetchPurchases(`?email=${userProfile[0].email}`, setPurchases);
   }, [userProfile]);
@@ -46,59 +46,6 @@ const ProfilePage = () => {
     setPurchaseInfo(false);
     setIsEditing(true);
   };
-  const renderEditName = (onUpdateUser, errors) => {
-
-  }
-  const renderEditShipping = (onUpdateUser, errors) => (
-    <div className="userInfo">
-      <ul className="headerShipping">Shipping Address</ul>
-      <FormItem
-        placeholder="e.g. 123 Sesame Street"
-        type="text"
-        id="street"
-        label="Street"
-        onChange={onUpdateUser}
-        value={updateUser.street}
-        error={errors.street}
-      />
-      <FormItem
-        placeholder="e.g. 123 Sesame Street"
-        type="text"
-        id="street2"
-        label="Street2"
-        onChange={onUpdateUser}
-        value={updateUser.street}
-        error={errors.street2}
-      />
-      <FormItem
-        placeholder="e.g. 123 Sesame Street"
-        type="text"
-        id="city"
-        label="City"
-        onChange={onUpdateUser}
-        value={updateUser.city}
-        error={errors.city}
-      />
-      <FormItem
-        placeholder="e.g. 123 Sesame Street"
-        type="text"
-        id="state"
-        label="State"
-        onChange={onUpdateUser}
-        value={updateUser.state}
-        error={errors.state}
-      />
-      <FormItem
-        placeholder="e.g. 123 Sesame Street"
-        type="text"
-        id="zip"
-        label="zip"
-        onChange={onUpdateUser}
-        value={updateUser.zip}
-        error={errors.zip}
-      />
-    </div>
-  );
 
   const renderShipping = () => {
     const {
