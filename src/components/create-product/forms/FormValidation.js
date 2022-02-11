@@ -14,14 +14,16 @@ const validateCreateProductForm = (form, idList) => {
 
   for (let i = 0; i < idList.length; i += 1) {
     const id = idList[i];
+    console.log(`idlist:${idList}`);
     const value = form[id];
-
+    console.log(form);
+    console.log(value);
     if (!value && id !== 'active') {
       noValue.push(id);
     }
     if (id === 'price' && value) {
       const splitNumber = value.toString().split('.');
-      if (value.toString().includes('.') && value.match(/^\d+(\.\d+)?$/)) {
+      if (value.toString().includes('.') && value.toString().match(/^\d+(\.\d+)?$/)) {
         if (splitNumber.length > 2) {
           twoDecimal.push(id);
         }
@@ -35,7 +37,7 @@ const validateCreateProductForm = (form, idList) => {
     if ((id === 'quantity' || id === 'price') && value < 0) {
       noNegativeNumbers.push(id);
     }
-    if ((id === 'demographic') && value.trim() < 0) {
+    if ((id === 'demographic') && value < 0) {
       noValue.push(id);
     }
     if (id === 'quantity' && value) {
@@ -74,6 +76,7 @@ const validateCreateProductForm = (form, idList) => {
       errors[i] = 'This field must be numeric';
     });
   }
+  console.log(errors);
   return errors;
 };
 

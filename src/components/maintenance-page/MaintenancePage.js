@@ -11,6 +11,8 @@ import fetchProducts from './MaintenancePageService';
 import './MaintenancePage.css';
 import styles from '../product-page/ProductPage.module.css';
 import Constants from '../../utils/constants';
+import validateCreateProductForm from '../create-product/forms/FormValidation';
+
 /**
  * @name useStyles
  * @description Material-ui styling for ProductCard component
@@ -43,37 +45,43 @@ const useStyles = makeStyles((theme) => ({
 const MaintenancePage = () => {
   const classes = useStyles();
   const [apiError, setApiError] = useState(false);
+  const [updateProduct, setProductData] = useState({});
   const [products, setProducts] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [Editable, setEditable] = useState(null);
+  const [errors, setErrors] = useState({});
 
   useEffect(() => {
     fetchProducts(setProducts, setApiError);
   }, []);
 
-  // eslint-disable-next-line no-shadow
-  const UpdateProducts = async (Product, setApiError) => {
-    await HttpHelper(Constants.PRODUCTS_ENDPOINT, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-        // Authorization: `Bearer${sessionStorage.getItem('token')}`
-      },
-      body: JSON.stringify(Product)
-    })
-      .then((response) => {
-        if (response.ok) {
-          console.log(response.json);
-          return response.json();
-        }
-        console.log(Constants.API_ERROR);
-        throw new Error(Constants.API_ERROR);
-      })
-      .then(Product);
-    console.log(Product).catch(() => {
-      setApiError(true);
-    });
+  const onProductChange = (e) => {
+    setProductData({ ...updateProduct, [e.target.id]: e.target.value });
+    // setErrors({});
   };
+  // eslint-disable-next-line no-shadow
+  // const UpdateProducts = async (Product, setApiError) => {
+  //   await HttpHelper(Constants.PRODUCTS_ENDPOINT, {
+  //     method: 'PUT',
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //       // Authorization: `Bearer${sessionStorage.getItem('token')}`
+  //     },
+  //     body: JSON.stringify(Product)
+  //   })
+  //     .then((response) => {
+  //       if (response.ok) {
+  //         console.log(response.json);
+  //         return response.json();
+  //       }
+  //       console.log(Constants.API_ERROR);
+  //       throw new Error(Constants.API_ERROR);
+  //     })
+  //     .then(Product);
+  //   console.log(Product).catch(() => {
+  //     setApiError(true);
+  //   });
+  // };
   const clickEditMaitenance = (e, product) => {
     e.preventDefault();
     setEditable(product.id);
@@ -82,72 +90,179 @@ const MaintenancePage = () => {
     e.preventDefault();
     setEditable(null);
   };
-  const submitEdit = (e, product) => {
+  const submitEdit = (e) => {
     e.preventDefault();
-    UpdateProducts(product);
-    console.log('Product has atempted an update');
+    const product = updateProduct;
+    const idList = Object.keys(product);
+    const errorList = validateCreateProductForm(product, idList);
+    for (let i = 0; i < idList.length; i += 1) {
+      const id = idList[i];
+      if (errorList[id]) {
+        errors[id] = errorList[id];
+      }
+    }
+    if (errors > 0) {
+      console.log('works');
+    }
+    setErrors(errors);
+    console.log('Product has attempted an update');
   };
   const editRow = (product) => (
     <tr key={product.id} className="ProductCells">
-      <td className="ProductCells editButton">
-        <button type="button" onClick={(e) => submitEdit(e, product)}>
+      <td className="ProductCells">
+        <button
+          type="submit"
+          onClick={(e) => submitEdit(e)}
+          className="Confirm"
+        >
           Confirm
         </button>
-        <button type="button" onClick={(e) => cancelEditing(e)}>
+        <button
+          type="button"
+          onClick={(e) => cancelEditing(e)}
+          className="Cancel"
+        >
           Cancel
         </button>
       </td>
       <td className="ProductCells">{product.id}</td>
-      <td className="ProductCells" contentEditable="true">
+      <td
+        className="ProductCells"
+        contentEditable="true"
+        id="name"
+        onChange={onProductChange}
+      >
         {product.name}
       </td>
-      <td className="ProductCells" contentEditable="true">
+      <td
+        className="ProductCells"
+        contentEditable="true"
+        id="sku"
+        onChange={onProductChange}
+      >
         {product.sku}
       </td>
-      <td className="ProductCells" contentEditable="true">
-        {product.demographic}
-      </td>
-      <td className="ProductCells" contentEditable="true">
+      <td
+        className="ProductCells"
+        contentEditable="true"
+        id="description"
+        onChange={onProductChange}
+      >
         {product.description}
       </td>
-      <td className="ProductCells" contentEditable="true">
+      <td
+        className="ProductCells"
+        contentEditable="true"
+        id="demographic"
+        onChange={onProductChange}
+      >
+        {product.demographic}
+      </td>
+      <td
+        className="ProductCells"
+        contentEditable="true"
+        id="category"
+        onChange={onProductChange}
+      >
         {product.category}
       </td>
-      <td className="ProductCells" contentEditable="true">
+      <td
+        className="ProductCells"
+        contentEditable="true"
+        id="type"
+        onChange={onProductChange}
+      >
         {product.type}
       </td>
-      <td className="ProductCells" contentEditable="true">
+      <td
+        className="ProductCells"
+        contentEditable="true"
+        id="releaseDate"
+        onChange={onProductChange}
+      >
         {product.releaseDate}
       </td>
-      <td className="ProductCells" contentEditable="true">
+      <td
+        className="ProductCells"
+        contentEditable="true"
+        id="primaryColorCode"
+        onChange={onProductChange}
+      >
         {product.primaryColorCode}
       </td>
-      <td className="ProductCells" contentEditable="true">
+      <td
+        className="ProductCells"
+        contentEditable="true"
+        id="secondaryColorCode"
+        onChange={onProductChange}
+      >
         {product.secondaryColorCode}
       </td>
-      <td className="ProductCells" contentEditable="true">
+      <td
+        className="ProductCells"
+        contentEditable="true"
+        id="styleNumber"
+        onChange={onProductChange}
+      >
         {product.styleNumber}
       </td>
-      <td className="ProductCells" contentEditable="true">
+      <td
+        className="ProductCells"
+        contentEditable="true"
+        id="globalProductCode"
+        onChange={onProductChange}
+      >
         {product.globalProductCode}
       </td>
-      <td className="ProductCells" contentEditable="true">
+      <td
+        className="ProductCells"
+        contentEditable="true"
+        id="active"
+        onChange={onProductChange}
+      >
         {String(product.active)}
       </td>
-      <td className="ProductCells" contentEditable="true">
+      <td
+        className="ProductCells"
+        contentEditable="true"
+        id="brand"
+        onChange={onProductChange}
+      >
         {product.brand}
       </td>
-      <td className="ProductCells" contentEditable="true">
+      <td
+        className="ProductCells"
+        contentEditable="true"
+        id="imageSrc"
+        onChange={onProductChange}
+      >
         {product.imageSrc}
       </td>
-      <td className="ProductCells" contentEditable="true">
+      <td
+        className="ProductCells"
+        contentEditable="true"
+        id="material"
+        onChange={onProductChange}
+      >
         {product.material}
       </td>
-      <td className="ProductCells" contentEditable="true">
+      <td
+        className="ProductCells"
+        contentEditable="true"
+        id="price"
+        value={product.price.toFixed(2)}
+        onChange={onProductChange}
+      >
         {product.price.toFixed(2)}
       </td>
-      <td className="ProductCells" contentEditable="true">
-        {product.quantity}
+      <td
+        className="ProductCells"
+        contentEditable="true"
+        id="quantity"
+        value={product.quantity}
+        onChange={onProductChange}
+      >
+        <input placeholder={product.quantity} />
       </td>
     </tr>
   );
@@ -158,17 +273,17 @@ const MaintenancePage = () => {
           <button
             type="button"
             onClick={(e) => clickEditMaitenance(e, product)}
-            icon="editButton"
+            className="editbutton"
           >
-            <FaPencilAlt className="editButton" alt="editButton" />
+            <FaPencilAlt className="editIcon" alt="editIcon" />
           </button>
         </span>
       </td>
       <td className="ProductCells">{product.id}</td>
       <td className="ProductCells">{product.name}</td>
       <td className="ProductCells">{product.sku}</td>
-      <td className="ProductCells">{product.demographic}</td>
       <td className="ProductCells">{product.description}</td>
+      <td className="ProductCells">{product.demographic}</td>
       <td className="ProductCells">{product.category}</td>
       <td className="ProductCells">{product.type}</td>
       <td className="ProductCells">{product.releaseDate}</td>
