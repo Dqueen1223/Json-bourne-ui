@@ -4,7 +4,8 @@ import './ProfilePage.css';
 import { useProfile } from './ProfileContext';
 import fetchPurchases from './ProfilePageService';
 import ProfilePurchase from './ProfilePurchase';
-import FormItem from '../create-promo/forms/FormItem';
+import renderEditShipping from './Profile_Forms/EditShipping';
+import renderEditName from './Profile_Forms/EditName';
 
 const ProfilePage = () => {
   const {

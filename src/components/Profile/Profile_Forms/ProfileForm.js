@@ -2,13 +2,16 @@ import React from 'react';
 import styles from '../ProfilePage.css';
 
 const ProfileItem = ({
-  onChange, value, id, label, placeholder, type, error
+  onChange, value, id, label, placeholder, type, error, editing
 }) => (
   <ul>
     <li>
       {label}
       :
-      {!error && (
+      {!editing && (
+        { value }
+      )}
+      {!error && editing && (
         <input
           className={styles.input}
           id={id}
@@ -18,7 +21,7 @@ const ProfileItem = ({
           value={value}
         />
       )}
-      {error && (
+      {error && editing && (
       <input
         className={styles.inputError}
         id={id}
