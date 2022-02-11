@@ -19,6 +19,7 @@ import { useCart } from '../checkout-page/CartContext';
 import ProductCardModal from '../product-page/ProductCardModal';
 import ReviewsModal from '../product-page/ReviewsModal';
 import '../product-page/ReviewsModal.css';
+import fetchReviews from '../product-page/ReviewService';
 
 /**
  * @name useStyles
@@ -59,6 +60,8 @@ const ProductCard = ({ product }) => {
   const { dispatch } = useCart();
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [reviewsModal, setReviewsModal] = useState(false);
+  const [reviews, setReviews] = useState([]);
+  const [apiError, setApiError] = useState(false);
   const onAdd = (e) => {
     dispatch(
       {
@@ -84,6 +87,9 @@ const ProductCard = ({ product }) => {
   const onReview = (e) => {
     e.stopPropagation();
     setReviewsModal(true);
+    console.log(apiError);
+    fetchReviews(setReviews, setApiError);
+    console.log(reviews);
   };
 
   return (
