@@ -4,6 +4,7 @@ import React, { useState, useEffect, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import reactDom from 'react-dom';
+import { FaPencilAlt } from 'react-icons/fa';
 import HttpHelper from '../../utils/HttpHelper';
 import CreatePromo from '../create-promo/CreatePromoModal';
 import fetchProducts from './MaintenancePageService';
@@ -50,6 +51,29 @@ const MaintenancePage = () => {
     fetchProducts(setProducts, setApiError);
   }, []);
 
+  // eslint-disable-next-line no-shadow
+  const UpdateProducts = async (Product, setApiError) => {
+    await HttpHelper(Constants.PRODUCTS_ENDPOINT, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+        // Authorization: `Bearer${sessionStorage.getItem('token')}`
+      },
+      body: JSON.stringify(Product)
+    })
+      .then((response) => {
+        if (response.ok) {
+          console.log(response.json);
+          return response.json();
+        }
+        console.log(Constants.API_ERROR);
+        throw new Error(Constants.API_ERROR);
+      })
+      .then(Product);
+    console.log(Product).catch(() => {
+      setApiError(true);
+    });
+  };
   const clickEditMaitenance = (e, product) => {
     e.preventDefault();
     setEditable(product.id);
@@ -60,13 +84,20 @@ const MaintenancePage = () => {
   };
   const submitEdit = (e, product) => {
     e.preventDefault();
-    // UpdateProducts(product);
+    UpdateProducts(product);
+    console.log('Product has atempted an update');
   };
   const editRow = (product) => (
     <tr key={product.id} className="ProductCells">
-      <td className="ProductCells" contentEditable="true">
-        {product.id}
+      <td className="ProductCells editButton">
+        <button type="button" onClick={(e) => submitEdit(e, product)}>
+          Confirm
+        </button>
+        <button type="button" onClick={(e) => cancelEditing(e)}>
+          Cancel
+        </button>
       </td>
+      <td className="ProductCells">{product.id}</td>
       <td className="ProductCells" contentEditable="true">
         {product.name}
       </td>
@@ -118,18 +149,21 @@ const MaintenancePage = () => {
       <td className="ProductCells" contentEditable="true">
         {product.quantity}
       </td>
-      <td className="ProductCells editButton">
-        <button type="button" onClick={(e) => cancelEditing(e)}>
-          Cancel
-        </button>
-        <button type="button" onClick={(e) => submitEdit(e, product)}>
-          Submit
-        </button>
-      </td>
     </tr>
   );
   const readOnlyRow = (product) => (
     <tr key={product.id} className="ProductCells">
+      <td className="ProductCells">
+        <span>
+          <button
+            type="button"
+            onClick={(e) => clickEditMaitenance(e, product)}
+            icon="editButton"
+          >
+            <FaPencilAlt className="editButton" alt="editButton" />
+          </button>
+        </span>
+      </td>
       <td className="ProductCells">{product.id}</td>
       <td className="ProductCells">{product.name}</td>
       <td className="ProductCells">{product.sku}</td>
@@ -148,11 +182,6 @@ const MaintenancePage = () => {
       <td className="ProductCells">{product.material}</td>
       <td className="ProductCells">{product.price.toFixed(2)}</td>
       <td className="ProductCells">{product.quantity}</td>
-      <td className="ProductCells editButton">
-        <button type="button" onClick={(e) => clickEditMaitenance(e, product)}>
-          Edit
-        </button>
-      </td>
     </tr>
   );
   return (
@@ -190,6 +219,7 @@ const MaintenancePage = () => {
       <div className="ProductTable">
         <table className="Product">
           <thead>
+            <th>Edit</th>
             <th>Id</th>
             <th>Name</th>
             <th>SKU</th>
@@ -208,12 +238,13 @@ const MaintenancePage = () => {
             <th>Material</th>
             <th>Price</th>
             <th>Quantity</th>
-            <th>Edit</th>
           </thead>
           <tbody>
             {products.map((product) => (
               <>
-                {Editable === product.id ? editRow(product) : readOnlyRow(product) }
+                {Editable === product.id
+                  ? editRow(product)
+                  : readOnlyRow(product)}
               </>
             ))}
           </tbody>
