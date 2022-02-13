@@ -61,7 +61,12 @@ const ProductCard = ({ product }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [reviewsModal, setReviewsModal] = useState(false);
   const [reviews, setReviews] = useState([]);
-  const [apiError, setApiError] = useState(false);
+  const [setApiError] = useState(false);
+
+  // useEffect(() => {
+  //   fetchReviews(setReviews, setApiError);
+  // }, []);
+
   const onAdd = (e) => {
     dispatch(
       {
@@ -86,10 +91,8 @@ const ProductCard = ({ product }) => {
   };
   const onReview = (e) => {
     e.stopPropagation();
-    setReviewsModal(true);
-    console.log(apiError);
     fetchReviews(setReviews, setApiError);
-    console.log(reviews);
+    setReviewsModal(true);
   };
 
   return (
@@ -99,7 +102,7 @@ const ProductCard = ({ product }) => {
         document.getElementById('root')
       )}
       {reviewsModal && reactDom.createPortal(
-        <ReviewsModal product={product} closeModal={setReviewsModal} />,
+        <ReviewsModal product={product} reviews={reviews} closeModal={setReviewsModal} />,
         document.getElementById('root')
       )}
       <CardHeader

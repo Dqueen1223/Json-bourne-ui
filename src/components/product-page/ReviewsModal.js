@@ -1,24 +1,27 @@
 import React from 'react';
 import BasicRating from './ReviewsStars';
+
+/* eslint-disable */
 // import styles from './ProductPage.module.css';
-// import Constants from '../../utils/constants';
 
 /**
  * @name ReviewModal
  * @description material-ui styling for product card review modal
  * @return component
  */
-const ReviewsModal = ({ review, product, closeModal }) => {
-  // const [review, setReviews] = useState();
-  // const [apiError, setApiError] = useState(false);
-  // const [isActive, setIsActive] = useState(true);
-  // const [filter, setFilter] = useState('');
+const ReviewsModal = ({ product, reviews, closeModal }) => {
 
   const closeTheModal = (e) => {
+    console.log(reviews);
     if (e.target.className === 'reviewsModalBackground' || e.target.className === 'reviewscloseButton') {
       closeModal(false);
     }
   };
+
+  if (!reviews || !reviews.length) {
+    // return null;
+  }
+
   return (
     <div
       className="reviewsModalBackground"
@@ -47,12 +50,17 @@ const ReviewsModal = ({ review, product, closeModal }) => {
             >
               Newest First
             </button>
-            <div className="reviewsOfProduct">
-              <div className="reviewsTitle">{product.name}</div>
-              <div className="reviewsRating">{BasicRating()}</div>
-              <div className="reviewsActual">{review.Title}</div>
-              <div className="reviewsDate">Reviewed on this date </div>
-            </div>
+            {(reviews|| []).filter(r => r.productId === product.Id).map((review) => (
+              <div className="reviewsOfProduct">
+                <div className="reviewsTitle">{product.name}</div>
+                <div className="reviewsRating">{BasicRating()}</div>
+                <div className="reviewsActual">{review.title}</div>
+                <div className="reviewsDate">{review.reviewsDescription} </div>
+                <div className="reviewsDate">{review.dateCreated} </div>
+
+              </div>
+            ))}
+
             <div className="reviewsModal-footer" />
           </div>
         </div>
@@ -60,5 +68,7 @@ const ReviewsModal = ({ review, product, closeModal }) => {
     </div>
   );
 };
+
+/* eslint-enable */
 
 export default ReviewsModal;
