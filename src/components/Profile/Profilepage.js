@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './ProfilePage.css';
+import { toast } from 'react-toastify';
 import { useProfile } from './ProfileContext';
 import fetchPurchases from './ProfilePageService';
 import ProfilePurchase from './ProfilePurchase';
@@ -60,10 +61,8 @@ const ProfilePage = () => {
     setIsEditing(true);
   };
 
+  // eslint-disable-next-line arrow-body-style
   const renderShipping = () => {
-    const {
-      street2, city, state, zip
-    } = userProfile[userProfile.length - 1];
     return (
       <div className="userInfo">
         { apiError }
@@ -71,24 +70,24 @@ const ProfilePage = () => {
         <li>
           Street:
           {' '}
-          {profile.userBillingAddress && profile.userBillingAddress.BillingStreet}
+          {profile.street}
           {' '}
-          {street2}
+          {profile.street2}
         </li>
         <li>
           City:
           {' '}
-          {city}
+          {profile.city}
         </li>
         <li>
           State:
           {' '}
-          {state}
+          {profile.state}
         </li>
         <li>
           Zip:
           {' '}
-          {zip}
+          {profile.zip}
         </li>
       </div>
     );
@@ -100,10 +99,14 @@ const ProfilePage = () => {
     </div>;
   }; */
   const changeStatePurchase = () => {
-    setProfileInfo(false);
-    setPurchaseInfo(true);
-    document.getElementById('purchase').classList.add('active');
-    document.getElementById('profile').classList.remove('active');
+    if (purchases.length !== 0) {
+      setProfileInfo(false);
+      setPurchaseInfo(true);
+      document.getElementById('purchase').classList.add('active');
+      document.getElementById('profile').classList.remove('active');
+    } else {
+      toast.error('You have no purchases to view.');
+    }
   };
   const changeStateProfileInfo = () => {
     setProfileInfo(true);
@@ -117,7 +120,7 @@ const ProfilePage = () => {
         <div className="ui">
           <div className="buttons">
             <button className="profileButton active" id="profile" type="button" onClick={changeStateProfileInfo}> User Info</button>
-            {purchases.length !== 0 && <button className="profileButton purchaseHistory" id="purchase" type="button" onClick={changeStatePurchase}> Purchase History </button>}
+            <button className="profileButton purchaseHistory" id="purchase" type="button" onClick={changeStatePurchase}> Purchase History </button>
           </div>
         </div>
         <div className="content">
