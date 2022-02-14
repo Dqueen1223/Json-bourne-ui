@@ -1,0 +1,123 @@
+.reviewsProductCardButton{
+    background-color: #fb8122;
+    color: #E1E2E2;
+    position: relative;
+    left: 5%;
+    width: 40%;
+}
+.reviewsModalBackground{
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0,0,0,0.4);
+    z-index: 2;
+}
+.reviewsModal{
+    display: flex;
+    height:500px;
+    width: 500px;
+    border-radius: 0.5em;
+    background-color:white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.reviewsModal-content{
+    display:flex-end;
+    flex-direction: column;
+    flex:1;
+    position: relative;
+    max-height: 100%;
+    margin:10px;
+    color: #1d2228;
+    overflow: scroll;
+}
+.reviewscloseButton {
+    background-color: transparent;
+    position: absolute;
+    font-size: 1.5em;
+    right:10px;
+    top:10px;
+    color: #1d2228;
+    border: none;
+    border-radius: 10px;
+}
+.closeButton:hover {
+    background-color: rgba(0,0,0,0.1);
+}
+
+.reviewsModal-header{
+    flex:2 1 50%;
+    height: 50%;
+    text-align: center;
+    display: flex;
+    font-size: 120%;
+}
+.productName{
+    font-size: 200%;
+    position: relative;
+    bottom: 40%;
+    border: solid;
+    width: 91%;
+}
+.reviewsOrderButton{
+    position: relative;
+    bottom: 60%;
+    width: 20%;
+}
+.reviewsTitle{
+    font-size: 140%;
+    margin: 2%;
+}
+.reviewsOfProduct{
+    position: relative;
+    bottom: 40%;
+    text-align: left;
+}
+.reviewsRating{
+    margin: 2%;
+}
+.reviewsActual{
+    margin: 2%;
+}
+.reviewsDate{
+    margin: 2%;
+}
+.reviewsModal-body{
+    flex: 1 1 60%;
+    display: flex;
+    height: 60%;
+    flex-direction: column;
+    text-align: center;
+}
+.row{
+    display: flex;
+    flex-direction: row;
+    flex: 1 1 30%;
+}
+.reviewsModal-title{
+    width: 40%;
+    height: 30%;
+    margin-right: auto;
+    margin-top: 1em;
+}
+
+.reviewsModal-footer{
+    display:flex;
+    flex-direction: row;
+    flex: 1 1 50px;
+    margin-top: auto;
+    max-height: 50px;
+    justify-content: center;
+}
+
+
+/* remove arrows from input */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+input[type=number] {
+    -moz-appearance: textfield;
+}

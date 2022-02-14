@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import reactDom from 'react-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -20,6 +20,10 @@ import { toast } from 'react-toastify';
 import { useCart } from '../checkout-page/CartContext';
 import ProductCardModal from '../product-page/ProductCardModal';
 import getQtyInCart, { inventoryAvailable } from './ProductCardService';
+import Button from '@material-ui/core/button';
+import ReviewsModal from '../product-page/ReviewsModal';
+import '../product-page/ReviewsModal.css';
+import fetchReviews from '../product-page/ReviewService';
 
 /**
  * @name useStyles
@@ -59,6 +63,13 @@ const ProductCard = ({ product }) => {
   const classes = useStyles();
   const { dispatch } = useCart();
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [reviewsModal, setReviewsModal] = useState(false);
+  const [reviews, setReviews] = useState([]);
+  const [apiError, setApiError] = useState(false);
+
+  useEffect(() => {
+    fetchReviews(setReviews, setApiError);
+  }, []);
 
   const {
     state: { products }
@@ -107,10 +118,22 @@ const ProductCard = ({ product }) => {
   const share = (e) => {
     e.stopPropagation();
   };
+  const onReview = (e) => {
+    e.stopPropagation();
+    setReviewsModal(true);
+    console.log(apiError);
+    // fetchReviews(setReviews, setApiError);
+    console.log(reviews);
+  };
+
   return (
     <Card className={classes.root}>
       {modalIsOpen && reactDom.createPortal(
         <ProductCardModal product={product} closeModal={setModalIsOpen} />,
+        document.getElementById('root')
+      )}
+      {reviewsModal && reactDom.createPortal(
+        <ReviewsModal product={product} reviews={reviews} closeModal={setReviewsModal} />,
         document.getElementById('root')
       )}
       <CardHeader
@@ -167,6 +190,14 @@ const ProductCard = ({ product }) => {
         <IconButton aria-label="add to shopping cart" onClick={onAdd}>
           <AddShoppingCartIcon />
         </IconButton>
+        <Button
+          className="reviewsProductCardButton"
+          type="button"
+          variant="contained"
+          onClick={onReview}
+        >
+          Reviews
+        </Button>
       </CardActions>
       <Accordion
         disableSpacing
