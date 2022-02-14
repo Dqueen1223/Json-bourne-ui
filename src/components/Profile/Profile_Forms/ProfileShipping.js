@@ -1,7 +1,9 @@
 import React from 'react';
 import ProfileItem from './ProfileForm';
 
-const ProfileShipping = (onUpdateUser, updateUser, isEditing, errors) => (
+const ProfileShipping = ({
+  onUpdateUser, updateUser, isEditing, errors
+}) => (
   <div className="userInfo">
     <ul className="headerShipping">Shipping Address</ul>
     <ProfileItem
@@ -20,7 +22,7 @@ const ProfileShipping = (onUpdateUser, updateUser, isEditing, errors) => (
       id="street2"
       label="Street2"
       onChange={onUpdateUser}
-      value={updateUser.street}
+      value={updateUser.street2}
       error={errors.street2}
       editing={isEditing}
     />

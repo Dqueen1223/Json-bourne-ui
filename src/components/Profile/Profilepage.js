@@ -5,7 +5,8 @@ import { useProfile } from './ProfileContext';
 import ProfilePurchase from './ProfilePurchase';
 import loginUser from '../header/HeaderService';
 import fetchPurchases from './ProfilePageService';
-import ProfileName from './Profile_Forms/EditName';
+import ProfileName from './Profile_Forms/ProfileName';
+import ProfileShipping from './Profile_Forms/ProfileShipping';
 
 const ProfilePage = () => {
   const [profile, setProfile] = useState(null);

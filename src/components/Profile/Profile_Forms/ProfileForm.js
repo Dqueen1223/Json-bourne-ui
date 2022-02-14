@@ -10,19 +10,9 @@ const ProfileItem = ({
     {!editing && (
       { value }
     )}
-    {!error && editing && (
-    <input
-      className={styles.input}
-      id={id}
-      onChange={onChange}
-      placeholder={placeholder}
-      type={type}
-      value={value}
-    />
-    )}
-    {error && editing && (
+    {editing && (
       <input
-        className={styles.inputError}
+        className={error ? styles.inputError : styles.input}
         id={id}
         onChange={onChange}
         placeholder={placeholder}
@@ -30,8 +20,7 @@ const ProfileItem = ({
         value={value}
       />
     )}
-    {!error && (<p className={styles.paragraph} />)}
-    {error && (
+    {error ? <p className={styles.paragraph} /> : (
       <p className={styles.error_item}>
         {error}
       </p>
