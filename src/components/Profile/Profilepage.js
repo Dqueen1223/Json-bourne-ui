@@ -2,12 +2,10 @@ import React, { useState, useEffect } from 'react';
 import './ProfilePage.css';
 import { toast } from 'react-toastify';
 import { useProfile } from './ProfileContext';
-import fetchPurchases from './ProfilePageService';
 import ProfilePurchase from './ProfilePurchase';
-// import FormItem from '../create-promo/forms/FormItem';
 import loginUser from '../header/HeaderService';
-import renderEditShipping from './Profile_Forms/EditShipping';
-// import renderEditName from './Profile_Forms/EditName';
+import fetchPurchases from './ProfilePageService';
+import ProfileName from './Profile_Forms/EditName';
 
 const ProfilePage = () => {
   const [profile, setProfile] = useState(null);
@@ -15,12 +13,10 @@ const ProfilePage = () => {
     state: { userProfile }
   } = useProfile();
 
-  const [purchases, setPurchases] = useState([]);
-  const [profileInfo, setProfileInfo] = useState(true);
   // const [apiError, setApiError] = useState(false);
+  const [purchases, setPurchases] = useState([]);
   const [purchaseInfo, setPurchaseInfo] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const [tempPurchaseInfo, setTempPurchaseInfo] = useState(null);
   const [updateUser, setUpdateUser] = useState([]);
   const [errors, setErrors] = useState({});
 
@@ -29,11 +25,6 @@ const ProfilePage = () => {
   };
 
   const [apiError, setApiError] = useState('');
-  // const [tempPurchaseInfo, setTempPurchaseInfo] = useState(null);
-  // const [updateUser, setUpdateUser] = useState([]);
-  /* const onUpdateUser = (e) => {
-    setUpdateUser({ ...updateUser, [e, target.id]: e.target.value })
-  } */
   useEffect(() => {
     loginUser(userProfile[0], setProfile, setApiError);
   }, [userProfile]);
@@ -46,60 +37,59 @@ const ProfilePage = () => {
     fetchPurchases(`?email=${userProfile[0].email}`, setPurchases);
   }, [userProfile]);
   // eslint-disable-next-line arrow-body-style
-  const renderName = () => {
-    return (
-      <div className="userInfo">
-        <ul className="headerName">Name</ul>
-        <li>
-          First Name:
-          {' '}
-          {profile.firstName}
-        </li>
-        <li>
-          Last Name:
-          {' '}
-          {profile.lastName}
-        </li>
-      </div>
-    );
-  };
+  // const renderName = () => {
+  //   return (
+  //     <div className="userInfo">
+  //       <ul className="headerName">Name</ul>
+  //       <li>
+  //         First Name:
+  //         {' '}
+  //         {profile.firstName}
+  //       </li>
+  //       <li>
+  //         Last Name:
+  //         {' '}
+  //         {profile.lastName}
+  //       </li>
+  //     </div>
+  //   );
+  // };
   const startEditing = () => {
-    // setTempPurchaseInfo(purchaseInfo);
     setPurchaseInfo(false);
     setIsEditing(true);
   };
 
   // eslint-disable-next-line arrow-body-style
-  const renderShipping = () => {
-    return (
-      <div className="userInfo">
-        { apiError }
-        <ul className="headerShipping">Shipping Address</ul>
-        <li>
-          Street:
-          {' '}
-          {profile.street}
-          {' '}
-          {profile.street2}
-        </li>
-        <li>
-          City:
-          {' '}
-          {profile.city}
-        </li>
-        <li>
-          State:
-          {' '}
-          {profile.state}
-        </li>
-        <li>
-          Zip:
-          {' '}
-          {profile.zip}
-        </li>
-      </div>
-    );
-  };
+  // const renderShipping = () => {
+  //   return (
+  //     <div className="userInfo">
+  //       { apiError }
+  //       <ul className="headerShipping">Shipping Address</ul>
+  //       <li>
+  //         Street:
+  //         {' '}
+  //         {profile.street}
+  //         {' '}
+  //         {profile.street2}
+  //       </li>
+  //       <li>
+  //         City:
+  //         {' '}
+  //         {profile.city}
+  //       </li>
+  //       <li>
+  //         State:
+  //         {' '}
+  //         {profile.state}
+  //       </li>
+  //       <li>
+  //         Zip:
+  //         {' '}
+  //         {profile.zip}
+  //       </li>
+  //     </div>
+  //   );
+  // };
   /* const renderPurchase = () => {
     <div className="test">
       {console.log(purchases)}
@@ -108,7 +98,6 @@ const ProfilePage = () => {
   }; */
   const changeStatePurchase = () => {
     if (purchases.length !== 0) {
-      setProfileInfo(false);
       setPurchaseInfo(true);
       document.getElementById('purchase').classList.add('active');
       document.getElementById('profile').classList.remove('active');
@@ -117,7 +106,6 @@ const ProfilePage = () => {
     }
   };
   const changeStateProfileInfo = () => {
-    setProfileInfo(true);
     setPurchaseInfo(false);
     document.getElementById('profile').classList.add('active');
     document.getElementById('purchase').classList.remove('active');
@@ -134,17 +122,18 @@ const ProfilePage = () => {
         <div className="content">
           {!isEditing && <button className="edit" type="button" onClick={startEditing} />}
           <div className="userInfodiv">
-            <renderEditName
+            <ProfileName
               onUpdateUser={onUpdateUser}
               isEditing={isEditing}
-              updateUser={updateUser}
+              updateUser={profile}
               error={errors}
             />
-            <renderEditShipping
+            <ProfileShipping
               onUpdateUser={onUpdateUser}
               isEditing={isEditing}
               updateUser={updateUser}
               error={errors}
+              api={apiError}
             />
           </div>
           {purchaseInfo && (

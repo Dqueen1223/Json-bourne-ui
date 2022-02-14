@@ -1,7 +1,7 @@
 import React from 'react';
 import ProfileItem from './ProfileForm';
 
-const renderEditShipping = (onUpdateUser, updateUser, isEditing, errors) => (
+const ProfileShipping = (onUpdateUser, updateUser, isEditing, errors) => (
   <div className="userInfo">
     <ul className="headerShipping">Shipping Address</ul>
     <ProfileItem
@@ -57,4 +57,4 @@ const renderEditShipping = (onUpdateUser, updateUser, isEditing, errors) => (
   </div>
 );
 
-export default renderEditShipping;
+export default ProfileShipping;

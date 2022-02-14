@@ -1,7 +1,7 @@
 import React from 'react';
 import ProfileItem from './ProfileForm';
 
-const renderEditName = (onUpdateUser, isEditing, updateUser, errors) => (
+const ProfileName = (onUpdateUser, isEditing, updateUser, errors) => (
   <div className="userInfo">
     <ul className="headerName">Name</ul>
     <ProfileItem
@@ -27,4 +27,4 @@ const renderEditName = (onUpdateUser, isEditing, updateUser, errors) => (
   </div>
 );
 
-export default renderEditName;
+export default ProfileName;
