@@ -2,8 +2,6 @@ import React from 'react';
 import { FaPencilAlt } from 'react-icons/fa';
 import BasicRating from './ReviewsStars';
 
-// import styles from './ProductPage.module.css';
-
 /**
  * @name ReviewModal
  * @description material-ui styling for product card review modal
@@ -11,10 +9,13 @@ import BasicRating from './ReviewsStars';
  */
 const ReviewsModal = ({ product, reviews, closeModal }) => {
   const closeTheModal = (e) => {
-    console.log(reviews);
     if (e.target.className === 'reviewsModalBackground' || e.target.className === 'reviewscloseButton') {
       closeModal(false);
     }
+  };
+
+  const onEdit = (review) => {
+    console.log(review);
   };
 
   return (
@@ -44,14 +45,13 @@ const ReviewsModal = ({ product, reviews, closeModal }) => {
               className="reviewsOrderButton"
             >
               Newest First
-              {console.log(reviews)}
             </button>
             {reviews && reviews.filter((r) => (r.productId === product.id)).map((review) => (
               <div key={review.id}>
                 <div className="reviewsOfProduct">
                   <div className="reviewsTitle">
                     {product.name}
-                    <FaPencilAlt className="pencilIcon" />
+                    <FaPencilAlt className="pencilIcon" onClick={() => { onEdit(review); }} />
                   </div>
                   <div className="reviewsRating">{BasicRating(review.rating)}</div>
                   <div className="reviewsActual">{review.title}</div>
