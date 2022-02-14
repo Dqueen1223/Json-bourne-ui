@@ -14,7 +14,7 @@ const validateCreateProductForm = (form, idList) => {
 
   for (let i = 0; i < idList.length; i += 1) {
     const id = idList[i];
-    console.log(`idlist:${idList}`);
+    console.log(idList);
     const value = form[id];
     console.log(form);
     console.log(value);

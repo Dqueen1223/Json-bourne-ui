@@ -1,4 +1,3 @@
-/* eslint-disable import/no-duplicates */
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect, Fragment } from 'react';
 import { Link } from 'react-router-dom';
@@ -12,6 +11,7 @@ import './MaintenancePage.css';
 import styles from '../product-page/ProductPage.module.css';
 import Constants from '../../utils/constants';
 import validateCreateProductForm from '../create-product/forms/FormValidation';
+import UpdateProducts from './MaintenancePageUpdateService';
 
 /**
  * @name useStyles
@@ -59,29 +59,6 @@ const MaintenancePage = () => {
     setProductData({ ...updateProduct, [e.target.id]: e.target.value });
     // setErrors({});
   };
-  // eslint-disable-next-line no-shadow
-  // const UpdateProducts = async (Product, setApiError) => {
-  //   await HttpHelper(Constants.PRODUCTS_ENDPOINT, {
-  //     method: 'PUT',
-  //     headers: {
-  //       'Content-Type': 'application/json'
-  //       // Authorization: `Bearer${sessionStorage.getItem('token')}`
-  //     },
-  //     body: JSON.stringify(Product)
-  //   })
-  //     .then((response) => {
-  //       if (response.ok) {
-  //         console.log(response.json);
-  //         return response.json();
-  //       }
-  //       console.log(Constants.API_ERROR);
-  //       throw new Error(Constants.API_ERROR);
-  //     })
-  //     .then(Product);
-  //   console.log(Product).catch(() => {
-  //     setApiError(true);
-  //   });
-  // };
   const clickEditMaitenance = (e, product) => {
     e.preventDefault();
     setEditable(product.id);
@@ -90,9 +67,10 @@ const MaintenancePage = () => {
     e.preventDefault();
     setEditable(null);
   };
-  const submitEdit = (e) => {
+  const submitEdit = (e, product) => {
     e.preventDefault();
-    const product = updateProduct;
+    UpdateProducts(product, setApiError);
+    // const product = updateProduct;
     const idList = Object.keys(product);
     const errorList = validateCreateProductForm(product, idList);
     for (let i = 0; i < idList.length; i += 1) {
@@ -112,7 +90,7 @@ const MaintenancePage = () => {
       <td className="ProductCells">
         <button
           type="submit"
-          onClick={(e) => submitEdit(e)}
+          onClick={(e) => submitEdit(e, product)}
           className="Confirm"
         >
           Confirm
@@ -130,7 +108,7 @@ const MaintenancePage = () => {
         className="ProductCells"
         contentEditable="true"
         id="name"
-        onChange={onProductChange}
+        onProductChange={onProductChange}
       >
         {product.name}
       </td>
@@ -262,7 +240,7 @@ const MaintenancePage = () => {
         value={product.quantity}
         onChange={onProductChange}
       >
-        <input placeholder={product.quantity} />
+        {product.quantity}
       </td>
     </tr>
   );
