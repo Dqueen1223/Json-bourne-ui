@@ -49,7 +49,10 @@ const ReviewsModal = ({ product, reviews, closeModal }) => {
             {reviews && reviews.filter((r) => (r.productId === product.id)).map((review) => (
               <div key={review.id}>
                 <div className="reviewsOfProduct">
-                  <div className="reviewsTitle">{product.name}</div>
+                  <div className="reviewsTitle">
+                    {product.name}
+                    <FaPencilAlt className="pencilIcon" />
+                  </div>
                   <div className="reviewsRating">{BasicRating(review.rating)}</div>
                   <div className="reviewsActual">{review.title}</div>
                   <div className="reviewsDate">
@@ -58,7 +61,6 @@ const ReviewsModal = ({ product, reviews, closeModal }) => {
                   <div className="reviewsDate">
                     {review.dateCreated}
                   </div>
-                  <FaPencilAlt className="pencilIcon" alt="pencilIcon" />
                 </div>
               </div>
             ))}
