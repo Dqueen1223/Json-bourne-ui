@@ -49,7 +49,7 @@ const ReviewsModal = ({ product, reviews, closeModal }) => {
               <div key={review.id}>
                 <div className="reviewsOfProduct">
                   <div className="reviewsTitle">{product.name}</div>
-                  <div className="reviewsRating">{BasicRating()}</div>
+                  <div className="reviewsRating">{BasicRating(review.rating)}</div>
                   <div className="reviewsActual">{review.title}</div>
                   <div className="reviewsDate">
                     {review.reviewsDescription}
