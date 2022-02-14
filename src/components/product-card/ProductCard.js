@@ -61,7 +61,7 @@ const ProductCard = ({ product }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [reviewsModal, setReviewsModal] = useState(false);
   const [reviews, setReviews] = useState([]);
-  const [apiError, setApiError] = useState(false);
+  const [setApiError] = useState(false);
 
   // useEffect(() => {
   //   fetchReviews(setReviews, setApiError);
@@ -92,8 +92,6 @@ const ProductCard = ({ product }) => {
     e.stopPropagation();
     fetchReviews(setReviews, setApiError);
     setReviewsModal(true);
-    console.log(apiError);
-    console.log(reviews);
   };
 
   return (
