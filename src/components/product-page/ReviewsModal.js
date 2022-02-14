@@ -1,4 +1,5 @@
 import React from 'react';
+import { FaPencilAlt } from 'react-icons/fa';
 import BasicRating from './ReviewsStars';
 
 // import styles from './ProductPage.module.css';
@@ -57,6 +58,7 @@ const ReviewsModal = ({ product, reviews, closeModal }) => {
                   <div className="reviewsDate">
                     {review.dateCreated}
                   </div>
+                  <FaPencilAlt className="pencilIcon" alt="pencilIcon" />
                 </div>
               </div>
             ))}
