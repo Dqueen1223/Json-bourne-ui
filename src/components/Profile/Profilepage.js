@@ -87,7 +87,7 @@ const ProfilePage = () => {
         <li>
           Zip:
           {' '}
-          {profile.zip}
+          {profile.zip !== 0 && profile.zip}
         </li>
       </div>
     );
