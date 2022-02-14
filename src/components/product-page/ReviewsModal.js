@@ -1,5 +1,5 @@
 import React from 'react';
-import BasicRating from './ReviewsStars';
+// import BasicRating from './ReviewsStars';
 // import styles from './ProductPage.module.css';
 // import Constants from '../../utils/constants';
 
@@ -48,12 +48,18 @@ const ReviewsModal = ({ product, reviews, closeModal }) => {
               Newest First
             </button>
             <div className="reviewsOfProduct">
-            {reviews.map((review) => (
-          <div key={reviews.id}>
-            <span>{review.title} </span>
+              {reviews.map((review) => (
+                <>
+                  <div key={reviews.id}>
+                    {review.title}
+
+                    {review.reviewsDescription}
+
+                  </div>
+                  <div className="reviewsModal-footer" />
+                </>
+              ))}
             </div>
-            <div className="reviewsModal-footer" />
-            ))}
           </div>
         </div>
       </div>
