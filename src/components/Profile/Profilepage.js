@@ -18,9 +18,12 @@ const ProfilePage = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [tempPurchaseInfo, setTempPurchaseInfo] = useState(null);
   const [updateUser, setUpdateUser] = useState([]);
+  const [errors, setErrors] = useState({});
+
   const onUpdateUser = (e) => {
     setUpdateUser({ ...updateUser, [e.target.id]: e.target.value });
   };
+
   useEffect(() => {
     fetchPurchases(`?email=${userProfile[0].email}`, setPurchases);
   }, [userProfile]);
@@ -110,10 +113,18 @@ const ProfilePage = () => {
         <div className="content">
           {!isEditing && <button className="edit" type="button" onClick={startEditing} />}
           <div className="userInfodiv">
-            {profileInfo && renderName()}
-            {profileInfo && renderShipping()}
-            {isEditing && renderEditName}
-            {isEditing && renderEditShipping}
+            <renderEditName
+              onUpdateUser={onUpdateUser}
+              isEditing={isEditing}
+              updateUser={updateUser}
+              error={errors}
+            />
+            <renderEditShipping
+              onUpdateUser={onUpdateUser}
+              isEditing={isEditing}
+              updateUser={updateUser}
+              error={errors}
+            />
           </div>
           {purchaseInfo && (
             <div className="purchases">
