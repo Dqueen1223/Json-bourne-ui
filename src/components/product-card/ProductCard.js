@@ -15,11 +15,13 @@ import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import ShareIcon from '@material-ui/icons/Share';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Button from '@material-ui/core/button';
+import { toast } from 'react-toastify';
 import { useCart } from '../checkout-page/CartContext';
 import ProductCardModal from '../product-page/ProductCardModal';
 import ReviewsModal from '../product-page/ReviewsModal';
 import '../product-page/ReviewsModal.css';
 import fetchReviews from '../product-page/ReviewService';
+import getQtyInCart, { inventoryAvailable } from './ProductCardService';
 
 /**
  * @name useStyles
@@ -63,10 +65,32 @@ const ProductCard = ({ product }) => {
   const [reviews, setReviews] = useState([]);
   const [setApiError] = useState(false);
 
-  // useEffect(() => {
-  //   fetchReviews(setReviews, setApiError);
-  // }, []);
+  const {
+    state: { products }
+  } = useCart();
+
   const onAdd = (e) => {
+    e.stopPropagation();
+    const qtyInCart = getQtyInCart(products, product);
+    if (!inventoryAvailable(qtyInCart, product)) return;
+    products.forEach((element) => {
+      if (element.id === product.id) {
+        dispatch(
+          {
+            type: 'delete',
+            product: {
+              id: element.id,
+              name: element.name,
+              price: element.price,
+              description: element.description,
+              quantity: element.quantity,
+              imageSrc: element.imageSrc
+            }
+          }
+        );
+      }
+    });
+
     dispatch(
       {
         type: 'add',
@@ -75,12 +99,12 @@ const ProductCard = ({ product }) => {
           name: product.name,
           price: product.price,
           description: product.description,
-          quantity: 1,
+          quantity: 1 + qtyInCart,
           imageSrc: product.imageSrc
         }
       }
     );
-    e.stopPropagation();
+    toast.success('Product successfully added to cart.');
   };
   const favoriteAdd = (e) => {
     e.stopPropagation();

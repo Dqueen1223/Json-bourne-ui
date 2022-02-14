@@ -9,8 +9,9 @@ import Constants from '../../utils/constants';
  * @param {*} setApiError sets error if response other than 200 is returned
  * @returns sets state for products if 200 response, else sets state for apiError
  */
-export default async function fetchProducts(setProducts, setApiError, filter) {
-  await HttpHelper(Constants.ACTIVE_PRODUCTS_ENDPOINT + filter, 'GET')
+export default async function fetchProducts(setProducts, setApiError, filter, currentPage) {
+  localStorage.setItem('scrollpos', window.scrollY);
+  await HttpHelper(Constants.ACTIVE_PRODUCTS_ENDPOINT + filter + currentPage, 'GET')
     .then((response) => {
       if (response.ok) {
         return response.json();
@@ -21,4 +22,5 @@ export default async function fetchProducts(setProducts, setApiError, filter) {
     .catch(() => {
       setApiError(true);
     });
+  window.scrollTo(0, localStorage.getItem('scrollpos'));
 }
