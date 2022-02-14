@@ -2,6 +2,7 @@ import React from 'react';
 import { FaPencilAlt } from 'react-icons/fa';
 import BasicRating from './ReviewsStars';
 
+const userId = 1;
 /**
  * @name ReviewModal
  * @description material-ui styling for product card review modal
@@ -16,6 +17,7 @@ const ReviewsModal = ({ product, reviews, closeModal }) => {
 
   const onEdit = (review) => {
     console.log(review);
+    // toggle edit mode? declare state
   };
 
   return (
@@ -51,7 +53,7 @@ const ReviewsModal = ({ product, reviews, closeModal }) => {
                 <div className="reviewsOfProduct">
                   <div className="reviewsTitle">
                     {product.name}
-                    <FaPencilAlt className="pencilIcon" onClick={() => { onEdit(review); }} />
+                    {userId === 1 && <FaPencilAlt className="pencilIcon" onClick={() => { onEdit(review); }} />}
                   </div>
                   <div className="reviewsRating">{BasicRating(review.rating)}</div>
                   <div className="reviewsActual">{review.title}</div>
