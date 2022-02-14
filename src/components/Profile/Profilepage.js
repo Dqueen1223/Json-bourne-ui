@@ -5,50 +5,57 @@ import { useProfile } from './ProfileContext';
 import fetchPurchases from './ProfilePageService';
 import ProfilePurchase from './ProfilePurchase';
 import FormItem from '../create-promo/forms/FormItem';
+import loginUser from '../header/HeaderService';
 
 const ProfilePage = () => {
+  const [profile, setProfile] = useState(null);
   const {
     state: { userProfile }
   } = useProfile();
+
   const [purchases, setPurchases] = useState([]);
   const [profileInfo, setProfileInfo] = useState(true);
   // const [apiError, setApiError] = useState(false);
   const [purchaseInfo, setPurchaseInfo] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const [tempPurchaseInfo, setTempPurchaseInfo] = useState(null);
-  const [updateUser, setUpdateUser] = useState([]);
-  const onUpdateUser = (e) => {
+  const [apiError, setApiError] = useState('');
+  // const [tempPurchaseInfo, setTempPurchaseInfo] = useState(null);
+  // const [updateUser, setUpdateUser] = useState([]);
+  /* const onUpdateUser = (e) => {
     setUpdateUser({ ...updateUser, [e, target.id]: e.target.value })
-  }
+  } */
+  useEffect(() => {
+    loginUser(userProfile[0], setProfile, setApiError);
+  }, [userProfile]);
   useEffect(() => {
     fetchPurchases(`?email=${userProfile[0].email}`, setPurchases);
   }, [userProfile]);
+  // eslint-disable-next-line arrow-body-style
   const renderName = () => {
-    const { firstName, lastName } = userProfile[0];
     return (
       <div className="userInfo">
         <ul className="headerName">Name</ul>
         <li>
           First Name:
           {' '}
-          {firstName}
+          {profile.firstName}
         </li>
         <li>
           Last Name:
           {' '}
-          {lastName}
+          {profile.lastName}
         </li>
       </div>
     );
   };
   const startEditing = () => {
-    setTempPurchaseInfo(purchaseInfo);
+    // setTempPurchaseInfo(purchaseInfo);
     setPurchaseInfo(false);
     setIsEditing(true);
   };
-  const renderEditName = (onUpdateUser, errors) => {
+  // const renderEditName = (onUpdateUser, errors) => {
 
-  }
+  // }
   const renderEditShipping = (onUpdateUser, errors) => (
     <div className="userInfo">
       <ul className="headerShipping">Shipping Address</ul>
@@ -58,7 +65,7 @@ const ProfilePage = () => {
         id="street"
         label="Street"
         onChange={onUpdateUser}
-        value={updateUser.street}
+        // value={updateUser.street}
         error={errors.street}
       />
       <FormItem
@@ -67,7 +74,7 @@ const ProfilePage = () => {
         id="street2"
         label="Street2"
         onChange={onUpdateUser}
-        value={updateUser.street}
+        // value={updateUser.street}
         error={errors.street2}
       />
       <FormItem
@@ -76,7 +83,7 @@ const ProfilePage = () => {
         id="city"
         label="City"
         onChange={onUpdateUser}
-        value={updateUser.city}
+        // value={updateUser.city}
         error={errors.city}
       />
       <FormItem
@@ -85,7 +92,7 @@ const ProfilePage = () => {
         id="state"
         label="State"
         onChange={onUpdateUser}
-        value={updateUser.state}
+        // value={updateUser.state}
         error={errors.state}
       />
       <FormItem
@@ -94,7 +101,7 @@ const ProfilePage = () => {
         id="zip"
         label="zip"
         onChange={onUpdateUser}
-        value={updateUser.zip}
+        // value={updateUser.zip}
         error={errors.zip}
       />
     </div>
@@ -102,15 +109,16 @@ const ProfilePage = () => {
 
   const renderShipping = () => {
     const {
-      street, street2, city, state, zip
+      street2, city, state, zip
     } = userProfile[userProfile.length - 1];
     return (
       <div className="userInfo">
+        { apiError }
         <ul className="headerShipping">Shipping Address</ul>
         <li>
           Street:
           {' '}
-          {street}
+          {profile.userBillingAddress && profile.userBillingAddress.BillingStreet}
           {' '}
           {street2}
         </li>
@@ -164,7 +172,7 @@ const ProfilePage = () => {
           <div className="userInfodiv">
             {profileInfo && renderName()}
             {profileInfo && renderShipping()}
-            {isEditing && renderEditName}
+            {/* isEditing && renderEditName */}
             {isEditing && renderEditShipping}
           </div>
           {purchaseInfo && (
