@@ -1,7 +1,7 @@
 import React from 'react';
 import BasicRating from './ReviewsStars';
+
 // import styles from './ProductPage.module.css';
-// import Constants from '../../utils/constants';
 
 /**
  * @name ReviewModal
@@ -9,16 +9,13 @@ import BasicRating from './ReviewsStars';
  * @return component
  */
 const ReviewsModal = ({ product, reviews, closeModal }) => {
-  console.log(reviews);
-  // const [review, setReviews] = useState();
-  // const [apiError, setApiError] = useState(false);
-  // const [isActive, setIsActive] = useState(true);
-  // const [filter, setFilter] = useState('');
   const closeTheModal = (e) => {
+    console.log(reviews);
     if (e.target.className === 'reviewsModalBackground' || e.target.className === 'reviewscloseButton') {
       closeModal(false);
     }
   };
+
   return (
     <div
       className="reviewsModalBackground"
@@ -46,14 +43,24 @@ const ReviewsModal = ({ product, reviews, closeModal }) => {
               className="reviewsOrderButton"
             >
               Newest First
+              {console.log(reviews)}
             </button>
-            <div className="reviewsOfProduct">
-            {reviews.map((review) => (
-          <div key={reviews.id}>
-            <span>{review.title} </span>
-            </div>
-            <div className="reviewsModal-footer" />
+            {reviews && reviews.filter((r) => (r.productId === product.id)).map((review) => (
+              <div key={review.id}>
+                <div className="reviewsOfProduct">
+                  <div className="reviewsTitle">{product.name}</div>
+                  <div className="reviewsRating">{BasicRating(review.rating)}</div>
+                  <div className="reviewsActual">{review.title}</div>
+                  <div className="reviewsDate">
+                    {review.reviewsDescription}
+                  </div>
+                  <div className="reviewsDate">
+                    {review.dateCreated}
+                  </div>
+                </div>
+              </div>
             ))}
+            <div className="reviewsModal-footer" />
           </div>
         </div>
       </div>

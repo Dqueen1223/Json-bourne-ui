@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import reactDom from 'react-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -24,6 +24,7 @@ import Button from '@material-ui/core/button';
 import ReviewsModal from '../product-page/ReviewsModal';
 import '../product-page/ReviewsModal.css';
 import fetchReviews from '../product-page/ReviewService';
+import Button from '@material-ui/core/button';
 
 /**
  * @name useStyles
@@ -65,11 +66,7 @@ const ProductCard = ({ product }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [reviewsModal, setReviewsModal] = useState(false);
   const [reviews, setReviews] = useState([]);
-  const [apiError, setApiError] = useState(false);
-
-  useEffect(() => {
-    fetchReviews(setReviews, setApiError);
-  }, []);
+  const [setApiError] = useState(false);
 
   const {
     state: { products }
@@ -120,10 +117,8 @@ const ProductCard = ({ product }) => {
   };
   const onReview = (e) => {
     e.stopPropagation();
+    fetchReviews(setReviews, setApiError);
     setReviewsModal(true);
-    console.log(apiError);
-    // fetchReviews(setReviews, setApiError);
-    console.log(reviews);
   };
 
   return (
