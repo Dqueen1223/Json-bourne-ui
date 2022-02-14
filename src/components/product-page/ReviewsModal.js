@@ -48,20 +48,22 @@ const ReviewsModal = ({ product, reviews, closeModal }) => {
               Newest First
             </button>
             <div className="reviewsOfProduct">
-              {reviews.map((review) => (
-                <>
-                  <div key={reviews.id}>
-                    {review.title}
-
+              <>
+              {reviews && reviews.filter((r) => (r.productId === product.id)).map((review) => (
+              <div key={review.id}>
+                <div className="reviewsOfProduct">
+                  <div className="reviewsTitle">{product.name}</div>
+                  <div className="reviewsRating">{BasicRating()}</div>
+                  <div className="reviewsActual">{review.title}</div>
+                  <div className="reviewsDate">
                     {review.reviewsDescription}
-
                   </div>
-                  <div className="reviewsModal-footer" />
-                </>
-              ))}
-            </div>
-          </div>
-        </div>
+                  <div className="reviewsDate">
+                    {review.dateCreated}
+                ))}
+                  </div>
+                </div>
+              </div>
       </div>
     </div>
   );

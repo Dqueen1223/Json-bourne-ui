@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import reactDom from 'react-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -63,10 +63,9 @@ const ProductCard = ({ product }) => {
   const [reviews, setReviews] = useState([]);
   const [apiError, setApiError] = useState(false);
 
-  useEffect(() => {
-    fetchReviews(setReviews, setApiError);
-  }, []);
-
+  // useEffect(() => {
+  //   fetchReviews(setReviews, setApiError);
+  // }, []);
   const onAdd = (e) => {
     dispatch(
       {
@@ -91,9 +90,9 @@ const ProductCard = ({ product }) => {
   };
   const onReview = (e) => {
     e.stopPropagation();
+    fetchReviews(setReviews, setApiError);
     setReviewsModal(true);
     console.log(apiError);
-    // fetchReviews(setReviews, setApiError);
     console.log(reviews);
   };
 
