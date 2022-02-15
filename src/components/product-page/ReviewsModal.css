@@ -55,11 +55,13 @@
     font-size: 120%;
 }
 .productName{
-    font-size: 200%;
+    font-size: 175%;
     position: relative;
     bottom: 40%;
+    right: 24%;
     border: solid;
-    width: 91%;
+    width: inherit
+
 }
 .reviewsOrderButton{
     position: relative;

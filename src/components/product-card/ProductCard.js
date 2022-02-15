@@ -65,6 +65,8 @@ const ProductCard = ({ product }) => {
   const [reviews, setReviews] = useState([]);
   const [setApiError] = useState(false);
 
+  const showReviewButton = { reviewsModal };
+
   const {
     state: { products }
   } = useCart();
@@ -182,6 +184,7 @@ const ProductCard = ({ product }) => {
         <IconButton aria-label="add to shopping cart" onClick={onAdd}>
           <AddShoppingCartIcon />
         </IconButton>
+        {showReviewButton.title != null && (
         <Button
           className="reviewsProductCardButton"
           type="button"
@@ -190,6 +193,7 @@ const ProductCard = ({ product }) => {
         >
           Reviews
         </Button>
+        )}
       </CardActions>
     </Card>
   );

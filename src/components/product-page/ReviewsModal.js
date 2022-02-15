@@ -15,6 +15,7 @@ const ReviewsModal = ({ product, reviews, closeModal }) => {
       closeModal(false);
     }
   };
+  // const sortedReviews = reviews.slice().sort((a, b) => b.dateCreated - a.dateCreated);
 
   return (
     <div
@@ -41,21 +42,21 @@ const ReviewsModal = ({ product, reviews, closeModal }) => {
             <button
               type="button"
               className="reviewsOrderButton"
+              // onClick={sortedReviews}
             >
               Newest First
               {console.log(reviews)}
             </button>
+            {/*  mapping the reviews to each product based off of the product id. */}
             {reviews && reviews.filter((r) => (r.productId === product.id)).map((review) => (
               <div key={review.id}>
                 <div className="reviewsOfProduct">
-                  <div className="reviewsTitle">{product.name}</div>
+                  <div className="reviewsTitle">{review.title}</div>
                   <div className="reviewsRating">{BasicRating(review.rating)}</div>
-                  <div className="reviewsActual">{review.title}</div>
+                  <div className="reviewsActual">{review.reviewsDescription}</div>
                   <div className="reviewsDate">
-                    {review.reviewsDescription}
-                  </div>
-                  <div className="reviewsDate">
-                    {review.dateCreated}
+                    {/* slicing off the last few extra digits associated with the date */}
+                    {review.dateCreated.slice(0, 10)}
                   </div>
                 </div>
               </div>
