@@ -29,7 +29,7 @@ export default async function fetchReviews(setReviews, setApiError) {
  * @description Utilizes HttpHelper to make a get request to an API
  * @param {*} setReviews sets state for reviews
  * @param {*} setApiError sets error if response other than 200 is returned
- * @returns sets state for products if 200 response, else sets state for apiError
+ * @returns sets state for reviews if 200 response, else sets state for apiError
  */
 export async function updateReview(setReviews, setApiError, review) {
   await HttpHelper(`${Constants.REVIEWS_ENDPOINT}/${review.id}`, 'PUT', review)
@@ -39,7 +39,7 @@ export async function updateReview(setReviews, setApiError, review) {
       }
       throw new Error(Constants.API_ERROR);
     })
-    .then(setReviews)
+  //    .then(setReviews)
     .catch(() => {
       setApiError(true);
     });

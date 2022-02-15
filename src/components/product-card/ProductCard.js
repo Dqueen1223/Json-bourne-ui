@@ -63,7 +63,7 @@ const ProductCard = ({ product }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [reviewsModal, setReviewsModal] = useState(false);
   const [reviews, setReviews] = useState([]);
-  const [setApiError] = useState(false);
+  const [apiError, setApiError] = useState(false);
 
   const {
     state: { products }
@@ -115,6 +115,7 @@ const ProductCard = ({ product }) => {
   const onReview = (e) => {
     e.stopPropagation();
     fetchReviews(setReviews, setApiError);
+    console.log(apiError);
     setReviewsModal(true);
   };
 
@@ -125,7 +126,13 @@ const ProductCard = ({ product }) => {
         document.getElementById('root')
       )}
       {reviewsModal && reactDom.createPortal(
-        <ReviewsModal product={product} reviews={reviews} closeModal={setReviewsModal} />,
+        <ReviewsModal
+          product={product}
+          reviews={reviews}
+          closeModal={setReviewsModal}
+          setReviews={setReviews}
+          setApiError={setApiError}
+        />,
         document.getElementById('root')
       )}
       <CardHeader
