@@ -10,7 +10,7 @@ const userId = 1;
  * @return component
  */
 const ReviewsModal = ({
-  product, reviews, closeModal, setReviews, setApiError
+  product, reviews, closeModal, setReviews, setApiError, isEditMode, setIsEditMode
 }) => {
   const closeTheModal = (e) => {
     if (e.target.className === 'reviewsModalBackground' || e.target.className === 'reviewscloseButton') {
@@ -18,23 +18,27 @@ const ReviewsModal = ({
     }
   };
 
-  const onEdit = (review) => {
-    // toggle edit mode? declare state
-    // get inputs from input fields
-    // perform validation on inputs
-    // get edited changes and send in update
+  const onEdit = () => {
+    setIsEditMode(true);
+  };
+
+  const onSubmitEdit = (review) => {
     const updatedReview = {
       id: review.id,
       rating: review.rating,
-      title: 'serendipity strikes again',
-      reviewsDescription: review.reviewsDescription,
+      // rating: document.getElementById('rating'),
+      title: document.getElementById('title').innerText,
+      reviewsDescription: document.getElementById('description').innerText,
       email: review.email,
       productId: review.productId,
       // get user id
       userId: 1,
       dateCreated: review.dateCreated
     };
+    // perform validation on inputs
+    console.log(updatedReview);
     updateReview(setReviews, setApiError, updatedReview);
+    setIsEditMode(false);
   };
 
   return (
@@ -70,16 +74,21 @@ const ReviewsModal = ({
                 <div className="reviewsOfProduct">
                   <div className="reviewsTitle">
                     {product.name}
-                    {userId === 1 && <FaPencilAlt className="pencilIcon" onClick={() => { onEdit(review); }} />}
+                    {userId === 1 && <FaPencilAlt className="pencilIcon" onClick={onEdit} />}
                   </div>
                   <div className="reviewsRating">{BasicRating(review.rating)}</div>
-                  <div className="reviewsActual">{review.title}</div>
-                  <div className="reviewsDate">
+                  <div className="reviewsActual" id="title" contentEditable={isEditMode}>{review.title}</div>
+                  <div className="reviewsDescription" id="description" contentEditable={isEditMode}>
                     {review.reviewsDescription}
                   </div>
                   <div className="reviewsDate">
-                    {review.dateCreated}
+                    {review.dateCreated.slice(0, 10)}
                   </div>
+                  {isEditMode && (
+                  <button type="button" className="btnSubmitEditReview" onClick={() => { onSubmitEdit(review); }}>
+                    Submit
+                  </button>
+                  )}
                 </div>
               </div>
             ))}

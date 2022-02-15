@@ -54,6 +54,14 @@
     display: flex;
     font-size: 120%;
 }
+.pencilIcon{
+    width:20px;
+    height:20px;
+    margin-left: 20px;
+  }
+  .pencilIcon:hover{
+    color: rgb(65, 65, 65);
+  }
 .productName{
     font-size: 200%;
     position: relative;
@@ -81,7 +89,7 @@
 .reviewsActual{
     margin: 2%;
 }
-.reviewsDate{
+.reviewsDate, .reviewsDescription{
     margin: 2%;
 }
 .reviewsModal-body{

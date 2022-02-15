@@ -64,6 +64,7 @@ const ProductCard = ({ product }) => {
   const [reviewsModal, setReviewsModal] = useState(false);
   const [reviews, setReviews] = useState([]);
   const [apiError, setApiError] = useState(false);
+  const [isEditMode, setIsEditMode] = useState(false);
 
   const {
     state: { products }
@@ -132,6 +133,8 @@ const ProductCard = ({ product }) => {
           closeModal={setReviewsModal}
           setReviews={setReviews}
           setApiError={setApiError}
+          isEditMode={isEditMode}
+          setIsEditMode={setIsEditMode}
         />,
         document.getElementById('root')
       )}
