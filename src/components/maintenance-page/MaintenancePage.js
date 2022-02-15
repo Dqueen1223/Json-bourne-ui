@@ -65,11 +65,6 @@ const MaintenancePage = () => {
   const clickEditMaitenance = async (e, product) => {
     e.preventDefault();
     await setEditable(product.id);
-    const quantity = document.getElementById('quantity');
-    const price = document.getElementById('price');
-    const material = document.getElementById('material');
-    const arrays = [quantity, price, material];
-    addquantity.addEventListener('focusout', onProductChange.bind(this, quantity));
   };
   const cancelEditing = (e) => {
     e.preventDefault();
@@ -77,48 +72,63 @@ const MaintenancePage = () => {
   };
   const submitEdit = async (e, product) => {
     e.preventDefault();
-    // const quantity = document.getElementById('quantity');
-    // // await quantity.addEventListener('onfocusout', onProductChange(quantity));
-    // onProductChange(quantity);
+
+    const name = document.getElementById('name');
+    const sku = document.getElementById('sku');
+    const description = document.getElementById('description');
+    const demographic = document.getElementById('demographic');
+    const category = document.getElementById('category');
+    const type = document.getElementById('type');
+    const releaseDate = document.getElementById('releaseDate');
+    const primaryColorCode = document.getElementById('primaryColorCode');
+    const secondaryColorCode = document.getElementById('secondaryColorCode');
+    const globalProductCode = document.getElementById('globalProductCode');
+    let active = document.getElementById('active').innerHTML;
+    if (active === 'true') {
+      active = true;
+    } else active = false;
+    const brand = document.getElementById('brand');
+    const imageSrc = document.getElementById('imageSrc');
+    const price = Number(document.getElementById('price').innerHTML);
+    const material = document.getElementById('material');
+    const quantity = parseInt(document.getElementById('quantity').innerHTML, 10);
     updateProduct.quantity = parseInt(updateProduct.quantity, 10);
-    updateProduct.price = Number(updateProduct.price);
-    // product.quantity = quantity.innerHTML;
+
     const newProduct = {
       id: product.id,
-      name: product.name,
-      sku: product.sku,
-      description: product.description,
-      demographic: product.demographic,
-      category: product.category,
-      type: product.type,
-      releaseDate: product.releaseDate,
-      primaryColorCode: product.primaryColorCode,
-      secondaryColorCode: product.secondaryColorCode,
+      name: name.innerHTML,
+      sku: sku.innerHTML,
+      description: description.innerHTML,
+      demographic: demographic.innerHTML,
+      category: category.innerHTML,
+      type: type.innerHTML,
+      releaseDate: releaseDate.innerHTML,
+      primaryColorCode: primaryColorCode.innerHTML,
+      secondaryColorCode: secondaryColorCode.innerHTML,
       styleNumber: product.styleNumber,
-      globalProductCode: product.globalProductCode,
-      active: product.active,
-      brand: product.brand,
-      imageSrc: product.imageSrc,
-      material: product.material,
-      price: product.price,
-      quantity: updateProduct.quantity
+      globalProductCode: globalProductCode.innerHTML,
+      active,
+      brand: brand.innerHTML,
+      imageSrc: imageSrc.innerHTML,
+      material: material.innerHTML,
+      price,
+      quantity
     };
-    console.log(newProduct);
-    UpdateProducts(newProduct, setApiError);
-    // const idList = Object.keys(product);
-    // const errorList = validateCreateProductForm(product, idList);
-    // for (let i = 0; i < idList.length; i += 1) {
-    //   const id = idList[i];
-    //   if (errorList[id]) {
-    //     errors[id] = errorList[id];
-    //   }
-    // }
-    // if (errors > 0) {
-    //   console.log('works');
-    // // }
-    // setErrors(errors);
-    // console.log('Product has attempted an update');
-    // setEditable(null);
+    const idList = Object.keys(newProduct);
+    const errorList = validateCreateProductForm(newProduct, idList);
+    for (let i = 0; i < idList.length; i += 1) {
+      const id = idList[i];
+      if (errorList[id]) {
+        errors[id] = errorList[id];
+      }
+    }
+    setErrors(errors);
+    if (Object.keys(errors).length === 0) {
+      setUpdateProduct(newProduct);
+      UpdateProducts(newProduct, setApiError);
+      setErrors(errors);
+      setEditable(null);
+    }
   };
   const editRow = (product) => (
     <tr key={product.id} className="ProductCells">

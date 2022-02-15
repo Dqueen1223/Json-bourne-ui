@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import HttpHelper from '../../utils/HttpHelper';
 import Constants from '../../utils/constants';
 
@@ -24,10 +25,12 @@ export default async function UpdateProducts(product, setApiError) {
   })
     .then((response) => {
       if (response.ok) {
+        toast.success(`${product.name} has been successfully edited`);
         return response.json();
       }
       throw new Error(Constants.API_ERROR);
     }).catch(() => {
+      toast.error(`There is a problem connecting with the database ${product.name} has not been edited`);
       setApiError(true);
     });
 }
