@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
 const MaintenancePage = () => {
   const classes = useStyles();
   const [apiError, setApiError] = useState(false);
-  const [updateProduct, setProductData] = useState({});
+  const [updateProduct, setUpdateProduct] = useState({});
   const [products, setProducts] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [Editable, setEditable] = useState(null);
@@ -56,34 +56,69 @@ const MaintenancePage = () => {
   }, []);
 
   const onProductChange = (e) => {
-    setProductData({ ...updateProduct, [e.target.id]: e.target.value });
-    // setErrors({});
+    setUpdateProduct({ ...updateProduct, [e.id]: e.innerHTML });
+    console.log(e.id);
+    console.log(e.innerHTML);
+    console.log(updateProduct);
   };
-  const clickEditMaitenance = (e, product) => {
+
+  const clickEditMaitenance = async (e, product) => {
     e.preventDefault();
-    setEditable(product.id);
+    await setEditable(product.id);
+    const quantity = document.getElementById('quantity');
+    const price = document.getElementById('price');
+    const material = document.getElementById('material');
+    const arrays = [quantity, price, material];
+    addquantity.addEventListener('focusout', onProductChange.bind(this, quantity));
   };
   const cancelEditing = (e) => {
     e.preventDefault();
     setEditable(null);
   };
-  const submitEdit = (e, product) => {
+  const submitEdit = async (e, product) => {
     e.preventDefault();
-    UpdateProducts(product, setApiError);
-    // const product = updateProduct;
-    const idList = Object.keys(product);
-    const errorList = validateCreateProductForm(product, idList);
-    for (let i = 0; i < idList.length; i += 1) {
-      const id = idList[i];
-      if (errorList[id]) {
-        errors[id] = errorList[id];
-      }
-    }
-    if (errors > 0) {
-      console.log('works');
-    }
-    setErrors(errors);
-    console.log('Product has attempted an update');
+    // const quantity = document.getElementById('quantity');
+    // // await quantity.addEventListener('onfocusout', onProductChange(quantity));
+    // onProductChange(quantity);
+    updateProduct.quantity = parseInt(updateProduct.quantity, 10);
+    updateProduct.price = Number(updateProduct.price);
+    // product.quantity = quantity.innerHTML;
+    const newProduct = {
+      id: product.id,
+      name: product.name,
+      sku: product.sku,
+      description: product.description,
+      demographic: product.demographic,
+      category: product.category,
+      type: product.type,
+      releaseDate: product.releaseDate,
+      primaryColorCode: product.primaryColorCode,
+      secondaryColorCode: product.secondaryColorCode,
+      styleNumber: product.styleNumber,
+      globalProductCode: product.globalProductCode,
+      active: product.active,
+      brand: product.brand,
+      imageSrc: product.imageSrc,
+      material: product.material,
+      price: product.price,
+      quantity: updateProduct.quantity
+    };
+    console.log(newProduct);
+    UpdateProducts(newProduct, setApiError);
+    // const idList = Object.keys(product);
+    // const errorList = validateCreateProductForm(product, idList);
+    // for (let i = 0; i < idList.length; i += 1) {
+    //   const id = idList[i];
+    //   if (errorList[id]) {
+    //     errors[id] = errorList[id];
+    //   }
+    // }
+    // if (errors > 0) {
+    //   console.log('works');
+    // // }
+    // setErrors(errors);
+    // console.log('Product has attempted an update');
+    // setEditable(null);
   };
   const editRow = (product) => (
     <tr key={product.id} className="ProductCells">
@@ -116,7 +151,7 @@ const MaintenancePage = () => {
         className="ProductCells"
         contentEditable="true"
         id="sku"
-        onChange={onProductChange}
+
       >
         {product.sku}
       </td>
@@ -124,7 +159,7 @@ const MaintenancePage = () => {
         className="ProductCells"
         contentEditable="true"
         id="description"
-        onChange={onProductChange}
+
       >
         {product.description}
       </td>
@@ -132,7 +167,7 @@ const MaintenancePage = () => {
         className="ProductCells"
         contentEditable="true"
         id="demographic"
-        onChange={onProductChange}
+
       >
         {product.demographic}
       </td>
@@ -140,7 +175,7 @@ const MaintenancePage = () => {
         className="ProductCells"
         contentEditable="true"
         id="category"
-        onChange={onProductChange}
+
       >
         {product.category}
       </td>
@@ -148,7 +183,7 @@ const MaintenancePage = () => {
         className="ProductCells"
         contentEditable="true"
         id="type"
-        onChange={onProductChange}
+
       >
         {product.type}
       </td>
@@ -156,7 +191,7 @@ const MaintenancePage = () => {
         className="ProductCells"
         contentEditable="true"
         id="releaseDate"
-        onChange={onProductChange}
+
       >
         {product.releaseDate}
       </td>
@@ -164,7 +199,7 @@ const MaintenancePage = () => {
         className="ProductCells"
         contentEditable="true"
         id="primaryColorCode"
-        onChange={onProductChange}
+
       >
         {product.primaryColorCode}
       </td>
@@ -172,7 +207,7 @@ const MaintenancePage = () => {
         className="ProductCells"
         contentEditable="true"
         id="secondaryColorCode"
-        onChange={onProductChange}
+
       >
         {product.secondaryColorCode}
       </td>
@@ -180,7 +215,7 @@ const MaintenancePage = () => {
         className="ProductCells"
         contentEditable="true"
         id="styleNumber"
-        onChange={onProductChange}
+
       >
         {product.styleNumber}
       </td>
@@ -188,7 +223,7 @@ const MaintenancePage = () => {
         className="ProductCells"
         contentEditable="true"
         id="globalProductCode"
-        onChange={onProductChange}
+
       >
         {product.globalProductCode}
       </td>
@@ -196,7 +231,7 @@ const MaintenancePage = () => {
         className="ProductCells"
         contentEditable="true"
         id="active"
-        onChange={onProductChange}
+
       >
         {String(product.active)}
       </td>
@@ -204,7 +239,7 @@ const MaintenancePage = () => {
         className="ProductCells"
         contentEditable="true"
         id="brand"
-        onChange={onProductChange}
+
       >
         {product.brand}
       </td>
@@ -212,7 +247,7 @@ const MaintenancePage = () => {
         className="ProductCells"
         contentEditable="true"
         id="imageSrc"
-        onChange={onProductChange}
+
       >
         {product.imageSrc}
       </td>
@@ -220,7 +255,7 @@ const MaintenancePage = () => {
         className="ProductCells"
         contentEditable="true"
         id="material"
-        onChange={onProductChange}
+
       >
         {product.material}
       </td>
@@ -228,8 +263,7 @@ const MaintenancePage = () => {
         className="ProductCells"
         contentEditable="true"
         id="price"
-        value={product.price.toFixed(2)}
-        onChange={onProductChange}
+
       >
         {product.price.toFixed(2)}
       </td>
@@ -238,7 +272,6 @@ const MaintenancePage = () => {
         contentEditable="true"
         id="quantity"
         value={product.quantity}
-        onChange={onProductChange}
       >
         {product.quantity}
       </td>
