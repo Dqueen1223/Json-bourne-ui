@@ -1,68 +1,93 @@
-/* eslint-disable react/destructuring-assignment */
 import React, { useState, useEffect } from 'react';
 import './ProfilePage.css';
+import { toast } from 'react-toastify';
 import { useProfile } from './ProfileContext';
 import fetchPurchases from './ProfilePageService';
 import ProfilePurchase from './ProfilePurchase';
+// import FormItem from '../create-promo/forms/FormItem';
+import loginUser from '../header/HeaderService';
+import renderEditShipping from './Profile_Forms/EditShipping';
+// import renderEditName from './Profile_Forms/EditName';
 
 const ProfilePage = () => {
+  const [profile, setProfile] = useState(null);
   const {
     state: { userProfile }
   } = useProfile();
+
   const [purchases, setPurchases] = useState([]);
   const [profileInfo, setProfileInfo] = useState(true);
   // const [apiError, setApiError] = useState(false);
   const [purchaseInfo, setPurchaseInfo] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [apiError, setApiError] = useState('');
+  // const [tempPurchaseInfo, setTempPurchaseInfo] = useState(null);
+  // const [updateUser, setUpdateUser] = useState([]);
+  /* const onUpdateUser = (e) => {
+    setUpdateUser({ ...updateUser, [e, target.id]: e.target.value })
+  } */
+  useEffect(() => {
+    loginUser(userProfile[0], setProfile, setApiError);
+  }, [userProfile]);
+  // const [tempPurchaseInfo, setTempPurchaseInfo] = useState(null);
+  // const [updateUser, setUpdateUser] = useState([]);
+  /* const onUpdateUser = (e) => {
+    setUpdateUser({ ...updateUser, [e.target.id]: e.target.value });
+  }; */
   useEffect(() => {
     fetchPurchases(`?email=${userProfile[0].email}`, setPurchases);
   }, [userProfile]);
+  // eslint-disable-next-line arrow-body-style
   const renderName = () => {
-    const { firstName, lastName } = userProfile[0];
     return (
       <div className="userInfo">
         <ul className="headerName">Name</ul>
         <li>
           First Name:
           {' '}
-          {firstName}
+          {profile.firstName}
         </li>
         <li>
           Last Name:
           {' '}
-          {lastName}
+          {profile.lastName}
         </li>
       </div>
     );
   };
+  const startEditing = () => {
+    // setTempPurchaseInfo(purchaseInfo);
+    setPurchaseInfo(false);
+    setIsEditing(true);
+  };
 
+  // eslint-disable-next-line arrow-body-style
   const renderShipping = () => {
-    const {
-      street, street2, city, state, zip
-    } = userProfile[userProfile.length - 1];
     return (
       <div className="userInfo">
+        { apiError }
         <ul className="headerShipping">Shipping Address</ul>
         <li>
           Street:
           {' '}
-          {street}
+          {profile.street}
           {' '}
-          {street2}
+          {profile.street2}
         </li>
         <li>
           City:
           {' '}
-          {city}
+          {profile.city}
         </li>
         <li>
           State:
           {' '}
-          {state}
+          {profile.state}
         </li>
         <li>
           Zip:
           {' '}
-          {zip}
+          {profile.zip !== 0 && profile.zip}
         </li>
       </div>
     );
@@ -74,10 +99,14 @@ const ProfilePage = () => {
     </div>;
   }; */
   const changeStatePurchase = () => {
-    setProfileInfo(false);
-    setPurchaseInfo(true);
-    document.getElementById('purchase').classList.add('active');
-    document.getElementById('profile').classList.remove('active');
+    if (purchases.length !== 0) {
+      setProfileInfo(false);
+      setPurchaseInfo(true);
+      document.getElementById('purchase').classList.add('active');
+      document.getElementById('profile').classList.remove('active');
+    } else {
+      toast.error('You have no purchases to view.');
+    }
   };
   const changeStateProfileInfo = () => {
     setProfileInfo(true);
@@ -91,24 +120,27 @@ const ProfilePage = () => {
         <div className="ui">
           <div className="buttons">
             <button className="profileButton active" id="profile" type="button" onClick={changeStateProfileInfo}> User Info</button>
-            {purchases.length !== 0 && <button className="profileButton purchaseHistory" id="purchase" type="button" onClick={changeStatePurchase}> Purchase History </button>}
+            <button className="profileButton purchaseHistory" id="purchase" type="button" onClick={changeStatePurchase}> Purchase History </button>
           </div>
         </div>
         <div className="content">
+          {!isEditing && <button className="edit" type="button" onClick={startEditing} />}
           <div className="userInfodiv">
             {profileInfo && renderName()}
             {profileInfo && renderShipping()}
+            {/* isEditing && renderEditName */}
+            {isEditing && renderEditShipping}
           </div>
           {purchaseInfo && (
-          <div className="purchases">
-            {purchases.map((purchase) => (
-              <div key={purchase.id} className="purchase">
-                <ProfilePurchase
-                  purchases={purchase}
-                />
-              </div>
-            ))}
-          </div>
+            <div className="purchases">
+              {purchases.map((purchase) => (
+                <div key={purchase.id} className="purchase">
+                  <ProfilePurchase
+                    purchases={purchase}
+                  />
+                </div>
+              ))}
+            </div>
           )}
           <div className="stopOverflow" />
         </div>
