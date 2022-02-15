@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import HttpHelper from '../../utils/HttpHelper';
 import Constants from '../../utils/constants';
 
@@ -10,12 +11,14 @@ import Constants from '../../utils/constants';
  * @returns the response JSON from the server if the product was deleted or API error if not 200OK
  */
 export default async function deleteProducts(product, setApiError) {
-  await HttpHelper(Constants.PRODUCTS_ENDPOINT, 'DELETE', { id: product.id })
+  await HttpHelper(`${Constants.PRODUCTS_ENDPOINT}/${product.id}`, 'DELETE')
     .then((response) => {
       if (response.ok) {
-        return response.json();
+        toast.success('Product successfully deleted.');
       }
-      throw new Error(Constants.API_ERROR);
+      return response.statusText;
+
+      // throw new Error(Constants.API_ERROR);
     })
     .catch(() => {
       setApiError(true);
