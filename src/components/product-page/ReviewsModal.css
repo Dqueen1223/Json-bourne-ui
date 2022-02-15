@@ -1,10 +1,4 @@
-.reviewsProductCardButton{
-    background-color: #fb8122;
-    color: #E1E2E2;
-    position: relative;
-    left: 5%;
-    width: 40%;
-}
+
 .reviewsModalBackground{
     position: fixed;
     height: 100%;
@@ -67,6 +61,7 @@
     position: relative;
     bottom: 60%;
     width: 20%;
+
 }
 .reviewsTitle{
     font-size: 140%;
@@ -93,6 +88,9 @@
     flex-direction: column;
     text-align: center;
 }
+.reversed{
+    flex-direction: column;
+}
 .row{
     display: flex;
     flex-direction: row;
@@ -114,12 +112,10 @@
     justify-content: center;
 }
 
-
-/* remove arrows from input */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-}
-input[type=number] {
-    -moz-appearance: textfield;
+.reviewsProductCardButton{
+    background-color: #fb8122;
+    /* color: #E1E2E2 */
+    position: relative;
+    left: 5%;
+    width: 40%;
 }

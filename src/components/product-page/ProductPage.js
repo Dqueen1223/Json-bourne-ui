@@ -66,6 +66,8 @@ const ProductPage = () => {
         <div className={isActive ? styles.addLeftMargin : styles.app}>
           {products.map((product) => (
             <div key={product.id}>
+              {/* check for reviews here...if reviews are present then produce a review button.
+               */}
               <ProductCard product={product} />
             </div>
           ))}
