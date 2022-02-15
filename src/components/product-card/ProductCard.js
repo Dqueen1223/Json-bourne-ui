@@ -24,7 +24,6 @@ import Button from '@material-ui/core/button';
 import ReviewsModal from '../product-page/ReviewsModal';
 import '../product-page/ReviewsModal.css';
 import fetchReviews from '../product-page/ReviewService';
-import Button from '@material-ui/core/button';
 
 /**
  * @name useStyles
