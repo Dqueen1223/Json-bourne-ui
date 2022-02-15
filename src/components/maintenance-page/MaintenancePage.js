@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import reactDom from 'react-dom';
+import Delete from '@material-ui/icons/Delete';
 import CreatePromo from '../create-promo/CreatePromoModal';
 import fetchProducts from './MaintenancePageService';
 import './MaintenancePage.css';
 import styles from '../product-page/ProductPage.module.css';
 import Constants from '../../utils/constants';
-// import styles2 from '../checkout-page/CheckoutPage.module.css';
+import deleteProducts from './MaintenancePageDeleteService';
+
 /**
  * @name useStyles
  * @description Material-ui styling for ProductCard component
@@ -47,6 +49,9 @@ const MaintenancePage = () => {
     fetchProducts(setProducts, setApiError);
   }, []);
 
+  const deleteProduct = (product) => {
+    deleteProducts(product, setApiError);
+  };
   return (
     <div className="Maintenance">
       {apiError && <p className={styles.errMsg} data-testid="errMsg">{Constants.API_ERROR}</p>}
@@ -75,29 +80,34 @@ const MaintenancePage = () => {
 
         <table className="Product">
           <thead>
-            <th>Id</th>
-            <th>Name</th>
-            <th>SKU</th>
-            <th>Description</th>
-            <th>Demographic</th>
-            <th>Category</th>
-            <th>Type</th>
-            <th>Release Date</th>
-            <th>Primary Color</th>
-            <th>Secondary Color</th>
-            <th>Style Number</th>
-            <th>Global Product Code</th>
-            <th>Active</th>
-            <th>Brand</th>
-            <th>Image Source</th>
-            <th>Material</th>
-            <th>Price</th>
-            <th>Quantity</th>
+            <tr>
+              <th className="deleteButton" />
+              <th>Id</th>
+              <th>Name</th>
+              <th>SKU</th>
+              <th>Description</th>
+              <th>Demographic</th>
+              <th>Category</th>
+              <th>Type</th>
+              <th>Release Date</th>
+              <th>Primary Color</th>
+              <th>Secondary Color</th>
+              <th>Style Number</th>
+              <th>Global Product Code</th>
+              <th>Active</th>
+              <th>Brand</th>
+              <th>Image Source</th>
+              <th>Material</th>
+              <th>Price</th>
+              <th>Quantity</th>
+            </tr>
           </thead>
           <tbody>
             {products.map((product) => (
               <tr key={product.id} className="ProductCells">
-                <td className="delete"></td>
+                <td className="ProductCells">
+                  <button type="button" onClick={() => deleteProduct(product)} className="deleteButton"><Delete /></button>
+                </td>
                 <td className="ProductCells">{product.id}</td>
                 <td className="ProductCells">{product.name}</td>
                 <td className="ProductCells">{product.sku}</td>
