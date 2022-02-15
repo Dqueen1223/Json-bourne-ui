@@ -9,20 +9,21 @@ import ProfileName from './Profile_Forms/ProfileName';
 import ProfileShipping from './Profile_Forms/ProfileShipping';
 
 const ProfilePage = () => {
-  const [profile, setProfile] = useState(null);
   const {
     state: { userProfile }
   } = useProfile();
+
+  const [profile, setProfile] = useState({});
 
   // const [apiError, setApiError] = useState(false);
   const [purchases, setPurchases] = useState([]);
   const [purchaseInfo, setPurchaseInfo] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const [updateUser, setUpdateUser] = useState([]);
+
   const [errors, setErrors] = useState({});
 
-  const onUpdateUser = (e) => {
-    setUpdateUser({ ...updateUser, [e.target.id]: e.target.value });
+  const onProfileChange = (e) => {
+    setProfile({ ...profile, [e.target.id]: e.target.value });
   };
 
   const [apiError, setApiError] = useState('');
@@ -30,14 +31,9 @@ const ProfilePage = () => {
     loginUser(userProfile[0], setProfile, setApiError);
   }, [userProfile]);
   // const [tempPurchaseInfo, setTempPurchaseInfo] = useState(null);
-  // const [updateUser, setUpdateUser] = useState([]);
-  /* const onUpdateUser = (e) => {
-    setUpdateUser({ ...updateUser, [e.target.id]: e.target.value });
-  }; */
   useEffect(() => {
     fetchPurchases(`?email=${userProfile[0].email}`, setPurchases);
   }, [userProfile]);
-  // eslint-disable-next-line arrow-body-style
   // const renderName = () => {
   //   return (
   //     <div className="userInfo">
@@ -58,9 +54,9 @@ const ProfilePage = () => {
   const startEditing = () => {
     setPurchaseInfo(false);
     setIsEditing(true);
+    setErrors({});
   };
 
-  // eslint-disable-next-line arrow-body-style
   // const renderShipping = () => {
   //   return (
   //     <div className="userInfo">
@@ -111,7 +107,7 @@ const ProfilePage = () => {
     document.getElementById('profile').classList.add('active');
     document.getElementById('purchase').classList.remove('active');
   };
-  try {
+  if (!apiError) {
     return (
       <div className="profile">
         <div className="ui">
@@ -124,17 +120,16 @@ const ProfilePage = () => {
           {!isEditing && <button className="edit" type="button" onClick={startEditing} />}
           <div className="userInfodiv">
             <ProfileName
-              onUpdateUser={onUpdateUser}
+              onChange={onProfileChange}
               isEditing={isEditing}
-              updateUser={profile}
-              error={errors}
+              data={profile}
+              errors={errors}
             />
             <ProfileShipping
-              onUpdateUser={onUpdateUser}
+              onChange={onProfileChange}
               isEditing={isEditing}
-              updateUser={updateUser}
-              error={errors}
-              api={apiError}
+              data={profile}
+              errors={errors}
             />
           </div>
           {purchaseInfo && (
@@ -152,12 +147,11 @@ const ProfilePage = () => {
         </div>
       </div>
     );
-  } catch {
-    return (
-      <div>
-        <p>You must be logged in to view the profile page</p>
-      </div>
-    );
   }
+  return (
+    <div>
+      <p>You must be logged in to view the profile page</p>
+    </div>
+  );
 };
 export default ProfilePage;

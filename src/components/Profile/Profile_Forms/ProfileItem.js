@@ -20,11 +20,13 @@ const ProfileItem = ({
         value={value}
       />
     )}
-    {error ? <p className={styles.paragraph} /> : (
-      <p className={styles.error_item}>
-        {error}
-      </p>
-    )}
+    {error
+      ? (
+        <p className={styles.error_item}>
+          {error}
+        </p>
+      )
+      : <p className={styles.paragraph} />}
   </li>
 );
 
