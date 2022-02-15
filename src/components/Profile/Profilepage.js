@@ -27,7 +27,7 @@ const ProfilePage = () => {
     setUpdateUser({ ...updateUser, [e, target.id]: e.target.value })
   } */
   useEffect(() => {
-    loginUser(userProfile[0], setProfile, setApiError);
+    loginUser(userProfile[1], setProfile, setApiError);
   }, [userProfile]);
   // const [tempPurchaseInfo, setTempPurchaseInfo] = useState(null);
   // const [updateUser, setUpdateUser] = useState([]);
