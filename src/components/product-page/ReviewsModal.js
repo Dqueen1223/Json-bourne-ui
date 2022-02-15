@@ -1,5 +1,8 @@
 import React from 'react';
+import { Accordion, AccordionSummary, AccordionDetails } from '@material-ui/core';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import BasicRating from './ReviewsStars';
+import CreateReview from '../create-review/CreateReview';
 
 // import styles from './ProductPage.module.css';
 
@@ -61,6 +64,21 @@ const ReviewsModal = ({ product, reviews, closeModal }) => {
               </div>
             ))}
             <div className="reviewsModal-footer" />
+            <Accordion
+              disableSpacing
+              className="createReview"
+            >
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1a-content"
+                id="panel1a-header"
+              >
+                Create Review
+              </AccordionSummary>
+              <AccordionDetails>
+                <CreateReview />
+              </AccordionDetails>
+            </Accordion>
           </div>
         </div>
       </div>

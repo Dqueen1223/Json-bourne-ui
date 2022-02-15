@@ -10,5 +10,6 @@ module.exports = Object.freeze({
   PROMOTIONS_ENDPOINT: '/promo',
   INACTIVE_PRODUCTS_ENDPOINT: '/products?active=false',
   ACTIVE_PRODUCTS_COUNT_ENDPOINT: '/products/count?active=true',
-  REVIEWS_ENDPOINT: '/reviews'
+  REVIEWS_ENDPOINT: '/reviews',
+  USERS_ENDPOINT: '/users'
 });

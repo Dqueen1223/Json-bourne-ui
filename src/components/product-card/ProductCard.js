@@ -14,13 +14,11 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import ShareIcon from '@material-ui/icons/Share';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import { Accordion, AccordionSummary, AccordionDetails } from '@material-ui/core';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Button from '@material-ui/core/button';
 import { toast } from 'react-toastify';
 import { useCart } from '../checkout-page/CartContext';
 import ProductCardModal from '../product-page/ProductCardModal';
 import getQtyInCart, { inventoryAvailable } from './ProductCardService';
-import Button from '@material-ui/core/button';
 import ReviewsModal from '../product-page/ReviewsModal';
 import '../product-page/ReviewsModal.css';
 import fetchReviews from '../product-page/ReviewService';
@@ -193,20 +191,6 @@ const ProductCard = ({ product }) => {
           Reviews
         </Button>
       </CardActions>
-      <Accordion
-        disableSpacing
-      >
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-        >
-          Reviews
-        </AccordionSummary>
-        <AccordionDetails>
-          This is the review panel
-        </AccordionDetails>
-      </Accordion>
     </Card>
   );
 };

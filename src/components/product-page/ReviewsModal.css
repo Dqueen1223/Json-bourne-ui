@@ -46,7 +46,6 @@
 .closeButton:hover {
     background-color: rgba(0,0,0,0.1);
 }
-
 .reviewsModal-header{
     flex:2 1 50%;
     height: 50%;
@@ -111,7 +110,9 @@
     max-height: 50px;
     justify-content: center;
 }
-
+.createReview {
+    margin: 15px;
+}
 
 /* remove arrows from input */
 input::-webkit-outer-spin-button,
