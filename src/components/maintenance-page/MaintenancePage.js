@@ -1,10 +1,8 @@
-/* eslint-disable no-unused-vars */
 import React, { useState, useEffect, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import reactDom from 'react-dom';
 import { FaPencilAlt } from 'react-icons/fa';
-import HttpHelper from '../../utils/HttpHelper';
 import CreatePromo from '../create-promo/CreatePromoModal';
 import fetchProducts from './MaintenancePageService';
 import './MaintenancePage.css';
@@ -57,9 +55,6 @@ const MaintenancePage = () => {
 
   const onProductChange = (e) => {
     setUpdateProduct({ ...updateProduct, [e.id]: e.innerHTML });
-    console.log(e.id);
-    console.log(e.innerHTML);
-    console.log(updateProduct);
   };
 
   const clickEditMaitenance = async (e, product) => {

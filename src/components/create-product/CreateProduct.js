@@ -20,7 +20,6 @@ const CreateProductPage = () => {
 
   const handleErrors = (form) => {
     const idList = Object.keys(form);
-    console.log(idList);
     const errorLists = validateCreateProductForm(form, idList);
 
     for (let i = 0; i < idList.length; i += 1) {
