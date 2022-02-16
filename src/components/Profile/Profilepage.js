@@ -7,6 +7,8 @@ import loginUser from '../header/HeaderService';
 import fetchPurchases from './ProfilePageService';
 import ProfileName from './Profile_Forms/ProfileName';
 import ProfileShipping from './Profile_Forms/ProfileShipping';
+import profileValidation from './Validation';
+import { updateLanguageServiceSourceFile } from 'typescript';
 
 const ProfilePage = () => {
   const {
@@ -55,6 +57,14 @@ const ProfilePage = () => {
     setPurchaseInfo(false);
     setIsEditing(true);
     setErrors({});
+  };
+  const trySubmit = () => {
+    if (Object.keys(profileValidation(profile)).length > 0) {
+      setErrors(profileValidation(profile));
+      toast.error('There was errors in the inputs. The changes have not been submitted');
+    } else {
+      updateUser()
+    }
   };
 
   // const renderShipping = () => {
@@ -131,6 +141,8 @@ const ProfilePage = () => {
               data={profile}
               errors={errors}
             />
+            {isEditing && <button className="submit" type="button" onClick={trySubmit} />}
+            {isEditing && <button className="abortEdit" type="button" onClick={abortEdit} />}
           </div>
           {purchaseInfo && (
             <div className="purchases">
