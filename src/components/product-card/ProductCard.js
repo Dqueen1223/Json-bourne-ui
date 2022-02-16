@@ -14,9 +14,13 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import ShareIcon from '@material-ui/icons/Share';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import Button from '@material-ui/core/button';
 import { toast } from 'react-toastify';
 import { useCart } from '../checkout-page/CartContext';
 import ProductCardModal from '../product-page/ProductCardModal';
+import ReviewsModal from '../product-page/ReviewsModal';
+import '../product-page/ReviewsModal.css';
+import fetchReviews from '../product-page/ReviewService';
 import getQtyInCart, { inventoryAvailable } from './ProductCardService';
 
 /**
@@ -57,6 +61,10 @@ const ProductCard = ({ product }) => {
   const classes = useStyles();
   const { dispatch } = useCart();
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [reviewsModal, setReviewsModal] = useState(false);
+  const [reviews, setReviews] = useState([]);
+  const [apiError, setApiError] = useState(false);
+  const [isEditMode, setIsEditMode] = useState(false);
 
   const {
     state: { products }
@@ -105,10 +113,29 @@ const ProductCard = ({ product }) => {
   const share = (e) => {
     e.stopPropagation();
   };
+  const onReview = (e) => {
+    e.stopPropagation();
+    fetchReviews(setReviews, setApiError);
+    console.log(apiError);
+    setReviewsModal(true);
+  };
+
   return (
     <Card className={classes.root}>
       {modalIsOpen && reactDom.createPortal(
         <ProductCardModal product={product} closeModal={setModalIsOpen} />,
+        document.getElementById('root')
+      )}
+      {reviewsModal && reactDom.createPortal(
+        <ReviewsModal
+          product={product}
+          reviews={reviews}
+          closeModal={setReviewsModal}
+          setReviews={setReviews}
+          setApiError={setApiError}
+          isEditMode={isEditMode}
+          setIsEditMode={setIsEditMode}
+        />,
         document.getElementById('root')
       )}
       <CardHeader
@@ -165,6 +192,14 @@ const ProductCard = ({ product }) => {
         <IconButton aria-label="add to shopping cart" onClick={onAdd}>
           <AddShoppingCartIcon />
         </IconButton>
+        <Button
+          className="reviewsProductCardButton"
+          type="button"
+          variant="contained"
+          onClick={onReview}
+        >
+          Reviews
+        </Button>
       </CardActions>
     </Card>
   );
