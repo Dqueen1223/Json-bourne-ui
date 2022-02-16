@@ -42,8 +42,11 @@ const CheckoutPage = () => {
     let productsPriceAdd = 0.00;
     const subTotal = getSubtotal(products);
     const subTotalVal = Number(subTotal.substring(1));
-    if (subTotalVal > 50.00) {
+    if (subTotalVal > 0.00 && subTotalVal < 50.00) {
       productsPriceAdd = 5.00;
+    }
+    if (subTotalVal > 50.00) {
+      productsPriceAdd = 0.00;
     }
     setShippingFee(productsPriceAdd + shippingFeeState);
   }, [shippingFeeState, products]);
