@@ -9,5 +9,6 @@ module.exports = Object.freeze({
   PRODUCTS_ENDPOINT: '/products',
   PROMOTIONS_ENDPOINT: '/promo',
   USER_ENDPOINT: '/users',
-  ACTIVE_PRODUCTS_COUNT_ENDPOINT: '/products/count?active=true'
+  ACTIVE_PRODUCTS_COUNT_ENDPOINT: '/products/count?active=true',
+  BILLING_RATE_ENDPOINT: '/shipping-rate'
 });
