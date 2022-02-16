@@ -14,10 +14,7 @@ const validateCreateProductForm = (form, idList) => {
 
   for (let i = 0; i < idList.length; i += 1) {
     const id = idList[i];
-    console.log(idList);
     const value = form[id];
-    console.log(form);
-    console.log(value);
     if (!value && id !== 'active') {
       noValue.push(id);
     }
@@ -76,7 +73,6 @@ const validateCreateProductForm = (form, idList) => {
       errors[i] = 'This field must be numeric';
     });
   }
-  console.log(errors);
   return errors;
 };
 

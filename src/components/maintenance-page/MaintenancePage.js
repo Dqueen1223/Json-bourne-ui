@@ -1,4 +1,5 @@
 import React, { useState, useEffect, Fragment } from 'react';
+import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import reactDom from 'react-dom';
@@ -57,9 +58,9 @@ const MaintenancePage = () => {
     setUpdateProduct({ ...updateProduct, [e.id]: e.innerHTML });
   };
 
-  const clickEditMaitenance = async (e, product) => {
+  const clickEditMaitenance = (e, product) => {
     e.preventDefault();
-    await setEditable(product.id);
+    setEditable(product.id);
   };
   const cancelEditing = (e) => {
     e.preventDefault();
@@ -123,7 +124,8 @@ const MaintenancePage = () => {
       UpdateProducts(newProduct, setApiError);
       setErrors(errors);
       setEditable(null);
-    }
+    } else toast.error(`${JSON.stringify(errors)}`);
+    // console.log(errors);
   };
   const editRow = (product) => (
     <tr key={product.id} className="ProductCells">
@@ -156,7 +158,6 @@ const MaintenancePage = () => {
         className="ProductCells"
         contentEditable="true"
         id="sku"
-
       >
         {product.sku}
       </td>
@@ -164,7 +165,6 @@ const MaintenancePage = () => {
         className="ProductCells"
         contentEditable="true"
         id="description"
-
       >
         {product.description}
       </td>
@@ -172,7 +172,6 @@ const MaintenancePage = () => {
         className="ProductCells"
         contentEditable="true"
         id="demographic"
-
       >
         {product.demographic}
       </td>
@@ -180,7 +179,6 @@ const MaintenancePage = () => {
         className="ProductCells"
         contentEditable="true"
         id="category"
-
       >
         {product.category}
       </td>
@@ -188,7 +186,6 @@ const MaintenancePage = () => {
         className="ProductCells"
         contentEditable="true"
         id="type"
-
       >
         {product.type}
       </td>
@@ -196,7 +193,6 @@ const MaintenancePage = () => {
         className="ProductCells"
         contentEditable="true"
         id="releaseDate"
-
       >
         {product.releaseDate}
       </td>
@@ -204,7 +200,6 @@ const MaintenancePage = () => {
         className="ProductCells"
         contentEditable="true"
         id="primaryColorCode"
-
       >
         {product.primaryColorCode}
       </td>
@@ -212,7 +207,6 @@ const MaintenancePage = () => {
         className="ProductCells"
         contentEditable="true"
         id="secondaryColorCode"
-
       >
         {product.secondaryColorCode}
       </td>
@@ -220,7 +214,6 @@ const MaintenancePage = () => {
         className="ProductCells"
         contentEditable="true"
         id="styleNumber"
-
       >
         {product.styleNumber}
       </td>
@@ -228,7 +221,6 @@ const MaintenancePage = () => {
         className="ProductCells"
         contentEditable="true"
         id="globalProductCode"
-
       >
         {product.globalProductCode}
       </td>
@@ -236,7 +228,6 @@ const MaintenancePage = () => {
         className="ProductCells"
         contentEditable="true"
         id="active"
-
       >
         {String(product.active)}
       </td>
@@ -244,7 +235,6 @@ const MaintenancePage = () => {
         className="ProductCells"
         contentEditable="true"
         id="brand"
-
       >
         {product.brand}
       </td>
@@ -252,7 +242,6 @@ const MaintenancePage = () => {
         className="ProductCells"
         contentEditable="true"
         id="imageSrc"
-
       >
         {product.imageSrc}
       </td>
@@ -260,7 +249,6 @@ const MaintenancePage = () => {
         className="ProductCells"
         contentEditable="true"
         id="material"
-
       >
         {product.material}
       </td>
@@ -268,7 +256,6 @@ const MaintenancePage = () => {
         className="ProductCells"
         contentEditable="true"
         id="price"
-
       >
         {product.price.toFixed(2)}
       </td>

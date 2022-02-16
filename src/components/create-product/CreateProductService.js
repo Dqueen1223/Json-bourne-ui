@@ -1,8 +1,6 @@
 import { toast } from 'react-toastify';
 import HttpHelper from '../../utils/HttpHelper';
 import Constants from '../../utils/constants';
-// eslint-disable-next-line import/no-cycle
-// import displayToast from '../app/App';
 
 /**
  *
