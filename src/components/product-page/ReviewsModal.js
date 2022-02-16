@@ -18,11 +18,11 @@ const ReviewsModal = ({
     }
   };
 
-  const onEdit = () => {
+  const editHandler = () => {
     setIsEditMode(true);
   };
 
-  const onSubmitEdit = (review) => {
+  const submitEditHandler = (review) => {
     const updatedReview = {
       id: review.id,
       rating: review.rating,
@@ -74,9 +74,9 @@ const ReviewsModal = ({
                 <div className="reviewsOfProduct">
                   <div className="reviewsTitle">
                     {product.name}
-                    {userId === 1 && <FaPencilAlt className="pencilIcon" onClick={onEdit} />}
+                    {userId === 1 && <FaPencilAlt className="pencilIcon" onClick={editHandler} />}
                   </div>
-                  <div className="reviewsRating">{BasicRating(review.rating)}</div>
+                  <div className="reviewsRating">{BasicRating(isEditMode, review.rating)}</div>
                   <div className="reviewsActual" id="title" contentEditable={isEditMode}>{review.title}</div>
                   <div className="reviewsDescription" id="description" contentEditable={isEditMode}>
                     {review.reviewsDescription}
@@ -85,7 +85,7 @@ const ReviewsModal = ({
                     {review.dateCreated.slice(0, 10)}
                   </div>
                   {isEditMode && (
-                  <button type="button" className="btnSubmitEditReview" onClick={() => { onSubmitEdit(review); }}>
+                  <button type="button" className="btnSubmitEditReview" onClick={() => { submitEditHandler(review); }}>
                     Submit
                   </button>
                   )}
