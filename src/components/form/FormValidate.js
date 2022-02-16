@@ -10,9 +10,13 @@ export default function validateForm(deliveryData, billingData, checked) {
   const errors = {};
   if (deliveryData.firstName === undefined || deliveryData.firstName.trim() === '') {
     errors.firstName = 'The first name field is required';
+  } else {
+    // name validation
   }
   if (deliveryData.lastName === undefined || deliveryData.lastName.trim() === '') {
     errors.lastName = 'The last name field is required';
+  } else {
+    // name validation
   }
   if (deliveryData.street === undefined || deliveryData.street.trim() === '') {
     errors.street = 'The street field is required';
@@ -25,6 +29,8 @@ export default function validateForm(deliveryData, billingData, checked) {
   }
   if (deliveryData.zip === undefined || deliveryData.zip.trim() === '') {
     errors.zip = 'The zip field is required';
+  } else if (!/^\d{5}(?:[-\s]\d{4})?$/.test(deliveryData.zip)) {
+    errors.zip = 'The zip field must be in the format 12345 or 12345-6789';
   }
   if (!checked) {
     if (billingData.billingStreet === undefined || billingData.billingStreet.trim() === '') {
@@ -38,10 +44,14 @@ export default function validateForm(deliveryData, billingData, checked) {
     }
     if (billingData.billingZip === undefined || billingData.billingZip.trim() === '') {
       errors.billingZip = 'The zip field is required';
+    } else if (!/^\d{5}(?:[-\s]\d{4})?$/.test(billingData.billingZip)) {
+      errors.billingZip = 'The zip field must be in the format 12345 or 12345-6789';
     }
   }
   if (billingData.email === undefined || billingData.email.trim() === '') {
     errors.email = 'The email field is required';
+  } else if (!/[a-z0-9]+[_a-z0-9.-]*[a-z0-9]+@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]+$)/iy.test(billingData.email)) {
+    errors.email = 'The email address must be valid';
   }
   if (billingData.phone === undefined || billingData.phone.trim() === '') {
     errors.phone = 'The phone field is required';
@@ -73,6 +83,8 @@ export default function validateForm(deliveryData, billingData, checked) {
   }
   if (billingData.cardholder === undefined || billingData.cardholder.trim() === '') {
     errors.cardholder = 'The cardholder field is required';
+  } else {
+    // name validation
   }
   if (billingData.expiration === undefined || billingData.expiration.trim() === '') {
     errors.expiration = 'The expiration field is required';
