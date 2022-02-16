@@ -18,7 +18,20 @@ const ReviewsModal = ({
     }
   };
 
-  const editHandler = () => {
+  const editHandler = (e) => {
+    console.log(e.target.closest('.reviewsOfProduct'));
+    const reviewElement = e.target.closest('.reviewsOfProduct');
+    const reviewTitle = reviewElement.querySelector('.reviewsTitle');
+    const reviewRating = reviewElement.querySelector('.reviewsRating');
+    const reviewDescription = reviewElement.querySelector('.reviewsDescription');
+
+    reviewTitle.contentEditable = 'true';
+    reviewRating.contentEditable = 'true';
+    reviewDescription.contentEditable = 'true';
+
+    console.log(reviewTitle);
+    console.log(reviewRating);
+    console.log(reviewDescription);
     setIsEditMode(true);
   };
 
@@ -72,13 +85,13 @@ const ReviewsModal = ({
             {reviews && reviews.filter((r) => (r.productId === product.id)).map((review) => (
               <div key={review.id}>
                 <div className="reviewsOfProduct">
-                  <div className="reviewsTitle">
+                  <div className="reviewsProductName">
                     {product.name}
-                    {userId === 1 && <FaPencilAlt className="pencilIcon" onClick={editHandler} />}
+                    {userId === 1 && <FaPencilAlt className="pencilIcon" onClick={(e) => { editHandler(e); }} />}
                   </div>
                   <div className="reviewsRating">{BasicRating(isEditMode, review.rating)}</div>
-                  <div className="reviewsActual" id="title" contentEditable={isEditMode}>{review.title}</div>
-                  <div className="reviewsDescription" id="description" contentEditable={isEditMode}>
+                  <div className="reviewsTitle" id="title">{review.title}</div>
+                  <div className="reviewsDescription" id="description">
                     {review.reviewsDescription}
                   </div>
                   <div className="reviewsDate">
