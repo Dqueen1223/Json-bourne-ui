@@ -1,9 +1,9 @@
 import React, { useState, useEffect, Fragment } from 'react';
-import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import reactDom from 'react-dom';
 import { FaPencilAlt } from 'react-icons/fa';
+import { render } from '@testing-library/react';
 import CreatePromo from '../create-promo/CreatePromoModal';
 import fetchProducts from './MaintenancePageService';
 import './MaintenancePage.css';
@@ -57,7 +57,6 @@ const MaintenancePage = () => {
   const onProductChange = (e) => {
     setUpdateProduct({ ...updateProduct, [e.id]: e.innerHTML });
   };
-
   const clickEditMaitenance = (e, product) => {
     e.preventDefault();
     setEditable(product.id);
@@ -124,11 +123,16 @@ const MaintenancePage = () => {
       UpdateProducts(newProduct, setApiError);
       setErrors(errors);
       setEditable(null);
-    } else toast.error(`${JSON.stringify(errors)}`);
-    // console.log(errors);
+    }
+    // const td = document.createElement('td');
+    // const editable = document.getElementById('editable');
+    // const tableBody = document.getElementById('tableBody');
+    // const tr = document.createElement('tr');
+    // tr.appendChild(td, td, td, td, td, td, td, td, td, td, td);
+    // tableBody.insertBefore(tr, editable.nextSibling);
   };
   const editRow = (product) => (
-    <tr key={product.id} className="ProductCells">
+    <tr key={product.id} className="ProductCells" id="editable">
       <td className="ProductCells">
         <button
           type="submit"
@@ -269,7 +273,8 @@ const MaintenancePage = () => {
       </td>
     </tr>
   );
-  const readOnlyRow = (product) => (
+
+  const viewRow = (product) => (
     <tr key={product.id} className="ProductCells">
       <td className="ProductCells">
         <span>
@@ -357,12 +362,12 @@ const MaintenancePage = () => {
             <th>Price</th>
             <th>Quantity</th>
           </thead>
-          <tbody>
+          <tbody id="tableBody">
             {products.map((product) => (
               <>
                 {Editable === product.id
                   ? editRow(product)
-                  : readOnlyRow(product)}
+                  : viewRow(product)}
               </>
             ))}
           </tbody>
