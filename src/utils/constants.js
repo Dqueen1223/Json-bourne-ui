@@ -7,10 +7,8 @@ module.exports = Object.freeze({
   GOOGLE_CLIENT_ID: '912899852587-7996nh9mlpvpa2446q0il4f9hj5o492h.apps.googleusercontent.com', // ENTER CLIENT ID HERE
   ACTIVE_PRODUCTS_ENDPOINT: '/products?active=true',
   PRODUCTS_ENDPOINT: '/products',
-  PROMOTIONS_ENDPOINT: '/promo',
-  ACTIVE_PRODUCTS_COUNT_ENDPOINT: '/products/count?active=true',
-  BILLING_RATE_ENDPOINT: '/shipping-rate',
   INACTIVE_PRODUCTS_ENDPOINT: '/products?active=false',
   REVIEWS_ENDPOINT: '/reviews',
   PROMOTIONS_ENDPOINT: '/promo',
+  ACTIVE_PRODUCTS_COUNT_ENDPOINT: '/products/count?active=true'
 });
