@@ -25,7 +25,7 @@ const ReviewOrderWidget = ({ shippingFee }) => {
         <div className="returnProductDiv">
           <p>You have no products in your cart</p>
           <Link to="/" className={styles.returnProductLink}>
-            Click here to return to products.
+            Click here to continue shopping
           </Link>
         </div>
         )}
