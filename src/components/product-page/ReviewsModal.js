@@ -51,11 +51,13 @@ const ReviewsModal = ({
     reviewRating.contentEditable = 'true';
     reviewDescription.contentEditable = 'true';
 
-    const btnSubmit = document.createElement('button');
-    btnSubmit.innerHTML = 'Submit';
-    btnSubmit.className = 'btnSubmitEditReview';
-    btnSubmit.addEventListener('click', submitEditHandler);
-    reviewElement.appendChild(btnSubmit);
+    if (!reviewElement.querySelector('.btnSubmitEditReview')) {
+      const btnSubmit = document.createElement('button');
+      btnSubmit.innerHTML = 'Submit';
+      btnSubmit.className = 'btnSubmitEditReview';
+      btnSubmit.addEventListener('click', submitEditHandler);
+      reviewElement.appendChild(btnSubmit);
+    }
   };
 
   return (
