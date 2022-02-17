@@ -54,7 +54,7 @@ export async function updateReview(setReviews, setApiError, review) {
  * @returns sets state for reviews if 200 response, else sets state for apiError
  */
 export async function deleteReview(setReviews, setApiError, review) {
-  await HttpHelper(`${Constants.REVIEWS_ENDPOINT}/${review.id}`, 'DELETE', review)
+  await HttpHelper(`${Constants.REVIEWS_ENDPOINT}/${review.id}`, 'DELETE')
     .then((response) => {
       if (response.ok) {
         return response.json();

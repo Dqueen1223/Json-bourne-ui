@@ -1,6 +1,7 @@
 import React from 'react';
 import { FaPencilAlt } from 'react-icons/fa';
-import { updateReview } from './ReviewService';
+import Delete from '@material-ui/icons/Delete';
+import { updateReview, deleteReview } from './ReviewService';
 import BasicRating from './ReviewsStars';
 
 const userId = 1;
@@ -60,6 +61,49 @@ const ReviewsModal = ({
     }
   };
 
+  const submitDeleteHandler = (e) => {
+    const reviewElement = e.target.closest('.reviewsOfProduct');
+    const deleteId = Number(reviewElement.id);
+    const review = reviews.find((r) => r.id === deleteId);
+
+    // const updatedReview = {
+    //   id: review.id,
+    //   rating: review.rating,
+    //   // rating: document.getElementById('rating'),
+    //   title: reviewElement.querySelector('#title').innerText,
+    //   reviewsDescription: reviewElement.querySelector('#description').innerText,
+    //   email: review.email,
+    //   productId: review.productId,
+    //   // get user id
+    //   userId: 1,
+    //   dateCreated: review.dateCreated
+    // };
+
+    // perform validation on inputs
+    deleteReview(setReviews, setApiError, review);
+    reviewElement.querySelector('.btnSubmitDeleteReview').remove();
+    setIsEditMode(false);
+  };
+
+  const deleteHandler = (e) => {
+    const reviewElement = e.target.closest('.reviewsOfProduct');
+    // const reviewTitle = reviewElement.querySelector('.reviewsTitle');
+    // const reviewRating = reviewElement.querySelector('.reviewsRating');
+    // const reviewDescription = reviewElement.querySelector('.reviewsDescription');
+
+    // reviewTitle.contentEditable = 'true';
+    // reviewRating.contentEditable = 'true';
+    // reviewDescription.contentEditable = 'true';
+
+    if (!reviewElement.querySelector('.btnSubmitDeleteReview')) {
+      const btnSubmit = document.createElement('button');
+      btnSubmit.innerHTML = 'Delete';
+      btnSubmit.className = 'btnSubmitDeleteReview';
+      btnSubmit.addEventListener('click', submitDeleteHandler);
+      reviewElement.appendChild(btnSubmit);
+    }
+  };
+
   return (
     <div
       className="reviewsModalBackground"
@@ -94,6 +138,7 @@ const ReviewsModal = ({
                   <div className="reviewsProductName">
                     {product.name}
                     {userId === 1 && <FaPencilAlt className="pencilIcon" onClick={(e) => { editHandler(e, { review }); }} />}
+                    {userId === 1 && <Delete className="deleteIcon" onClick={(e) => { deleteHandler(e, { review }); }} />}
                   </div>
                   <div className="reviewsRating">{BasicRating(isEditMode, review.rating)}</div>
                   <div className="reviewsTitle" id="title">{review.title}</div>
