@@ -17,9 +17,30 @@ const ReviewsModal = ({
       closeModal(false);
     }
   };
+  const submitEditHandler = (e) => {
+    const reviewElement = e.target.closest('.reviewsOfProduct');
+    const editId = Number(reviewElement.id);
+    const review = reviews.find((r) => r.id === editId);
+
+    const updatedReview = {
+      id: review.id,
+      rating: review.rating,
+      // rating: document.getElementById('rating'),
+      title: reviewElement.querySelector('#title').innerText,
+      reviewsDescription: reviewElement.querySelector('#description').innerText,
+      email: review.email,
+      productId: review.productId,
+      // get user id
+      userId: 1,
+      dateCreated: review.dateCreated
+    };
+
+    // perform validation on inputs
+    updateReview(setReviews, setApiError, updatedReview);
+    setIsEditMode(false);
+  };
 
   const editHandler = (e) => {
-    console.log(e.target.closest('.reviewsOfProduct'));
     const reviewElement = e.target.closest('.reviewsOfProduct');
     const reviewTitle = reviewElement.querySelector('.reviewsTitle');
     const reviewRating = reviewElement.querySelector('.reviewsRating');
@@ -29,29 +50,11 @@ const ReviewsModal = ({
     reviewRating.contentEditable = 'true';
     reviewDescription.contentEditable = 'true';
 
-    console.log(reviewTitle);
-    console.log(reviewRating);
-    console.log(reviewDescription);
-    setIsEditMode(true);
-  };
-
-  const submitEditHandler = (review) => {
-    const updatedReview = {
-      id: review.id,
-      rating: review.rating,
-      // rating: document.getElementById('rating'),
-      title: document.getElementById('title').innerText,
-      reviewsDescription: document.getElementById('description').innerText,
-      email: review.email,
-      productId: review.productId,
-      // get user id
-      userId: 1,
-      dateCreated: review.dateCreated
-    };
-    // perform validation on inputs
-    console.log(updatedReview);
-    updateReview(setReviews, setApiError, updatedReview);
-    setIsEditMode(false);
+    const btnSubmit = document.createElement('button');
+    btnSubmit.innerHTML = 'Submit';
+    btnSubmit.className = 'btnSubmitEditReview';
+    btnSubmit.addEventListener('click', submitEditHandler);
+    reviewElement.appendChild(btnSubmit);
   };
 
   return (
@@ -84,10 +87,10 @@ const ReviewsModal = ({
             </button>
             {reviews && reviews.filter((r) => (r.productId === product.id)).map((review) => (
               <div key={review.id}>
-                <div className="reviewsOfProduct">
+                <div className="reviewsOfProduct" id={review.id}>
                   <div className="reviewsProductName">
                     {product.name}
-                    {userId === 1 && <FaPencilAlt className="pencilIcon" onClick={(e) => { editHandler(e); }} />}
+                    {userId === 1 && <FaPencilAlt className="pencilIcon" onClick={(e) => { editHandler(e, { review }); }} />}
                   </div>
                   <div className="reviewsRating">{BasicRating(isEditMode, review.rating)}</div>
                   <div className="reviewsTitle" id="title">{review.title}</div>
@@ -97,11 +100,6 @@ const ReviewsModal = ({
                   <div className="reviewsDate">
                     {review.dateCreated.slice(0, 10)}
                   </div>
-                  {isEditMode && (
-                  <button type="button" className="btnSubmitEditReview" onClick={() => { submitEditHandler(review); }}>
-                    Submit
-                  </button>
-                  )}
                 </div>
               </div>
             ))}
