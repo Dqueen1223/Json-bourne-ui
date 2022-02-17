@@ -8,7 +8,7 @@ import fetchPurchases from './ProfilePageService';
 import ProfileName from './Profile_Forms/ProfileName';
 import ProfileShipping from './Profile_Forms/ProfileShipping';
 import profileValidation from './Validation';
-import { updateLanguageServiceSourceFile } from 'typescript';
+import fetchUpdateUser from './ProfileUpdateService';
 
 const ProfilePage = () => {
   const {
@@ -23,6 +23,7 @@ const ProfilePage = () => {
   const [isEditing, setIsEditing] = useState(false);
 
   const [errors, setErrors] = useState({});
+  const [tempUserInfo, setTempUserInfo] = useState(null);
 
   const onProfileChange = (e) => {
     setProfile({ ...profile, [e.target.id]: e.target.value });
@@ -54,17 +55,38 @@ const ProfilePage = () => {
   //   );
   // };
   const startEditing = () => {
+    const temp = purchaseInfo;
+    setTempUserInfo(temp);
     setPurchaseInfo(false);
     setIsEditing(true);
-    setErrors({});
   };
   const trySubmit = () => {
-    if (Object.keys(profileValidation(profile)).length > 0) {
-      setErrors(profileValidation(profile));
+    const currentErrors = profileValidation(profile);
+    if (errors.length > 0) {
+      setErrors(currentErrors);
       toast.error('There was errors in the inputs. The changes have not been submitted');
     } else {
-      updateUser()
+      const user = {
+        id: profile.id,
+        dateModified: new Date(Date.now().toISOString()),
+        email: profile.email,
+        firstName: profile.firstName,
+        lastName: profile.lastName,
+        street: profile.street,
+        street2: profile.street2,
+        city: profile.city,
+        state: profile.state,
+        zip: profile.zip,
+        phone: profile.phone
+      };
+      fetchUpdateUser(user, setProfile);
     }
+  };
+  const abortEdit = () => {
+    const temp = tempUserInfo;
+    setProfile(temp);
+    setTempUserInfo(null);
+    setIsEditing(false);
   };
 
   // const renderShipping = () => {
