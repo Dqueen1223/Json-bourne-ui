@@ -37,6 +37,7 @@ const ReviewsModal = ({
 
     // perform validation on inputs
     updateReview(setReviews, setApiError, updatedReview);
+    reviewElement.querySelector('.btnSubmitEditReview').remove();
     setIsEditMode(false);
   };
 
