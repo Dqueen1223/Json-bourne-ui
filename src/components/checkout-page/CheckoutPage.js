@@ -38,7 +38,7 @@ const CheckoutPage = () => {
     if (Number(getSubtotal(products).substring(1)) > 0.00) {
       getBillingRate(deliveryData.state, setShippingFeeState);
     }
-  }, [deliveryData, products]);
+  }, [deliveryData.state, products]);
   React.useEffect(() => {
     let productsPriceAdd = 0.00;
     const subTotal = getSubtotal(products);

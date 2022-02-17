@@ -18,7 +18,7 @@ const ReviewOrderWidget = ({ setTotal, shippingFee }) => {
   const calculateTotal = () => {
     const totalVal = (Number(getSubtotal(products).substring(1))
       + Number(shippingFee)).toFixed(2);
-    setTotal(totalVal);
+    setTotal(Number(totalVal));
     return totalVal;
   };
   return (
