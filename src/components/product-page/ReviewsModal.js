@@ -1,16 +1,22 @@
 import React from 'react';
 import { FaPencilAlt } from 'react-icons/fa';
 import BasicRating from './ReviewsStars';
+import { useProfile } from '../Profile/ProfileContext';
 
-// import styles from './ProductPage.module.css';
-
+const userId = 1;
 /**
  * @name ReviewModal
  * @description material-ui styling for product card review modal
  * @return component
  */
 const ReviewsModal = ({ product, reviews, closeModal }) => {
+  const {
+    state: { userProfile }
+  } = useProfile();
+  console.log(userProfile);
+
   const closeTheModal = (e) => {
+    console.log(userProfile);
     if (e.target.className === 'reviewsModalBackground' || e.target.className === 'reviewscloseButton') {
       closeModal(false);
     }
@@ -51,7 +57,7 @@ const ReviewsModal = ({ product, reviews, closeModal }) => {
                   <div className="reviewsTitle">{product.name}</div>
                   <div className="reviewsActual">
                     {review.title}
-                    <FaPencilAlt className="pencilIcon" alt="pencilIcon" />
+                    {(userId === 1) && <FaPencilAlt className="pencilIcon" alt="pencilIcon" />}
                   </div>
                   <div className="reviewsRating">{BasicRating(review.rating)}</div>
                   <div className="reviewsDate">
