@@ -21,9 +21,8 @@ const ProfilePage = () => {
   const [purchases, setPurchases] = useState([]);
   const [purchaseInfo, setPurchaseInfo] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-
+  const [tempProfile, setTempProfile] = useState(null);
   const [errors, setErrors] = useState({});
-  const [tempUserInfo, setTempUserInfo] = useState(null);
 
   const onProfileChange = (e) => {
     setProfile({ ...profile, [e.target.id]: e.target.value });
@@ -33,42 +32,22 @@ const ProfilePage = () => {
   useEffect(() => {
     loginUser(userProfile[0], setProfile, setApiError);
   }, [userProfile]);
-  // const [tempPurchaseInfo, setTempPurchaseInfo] = useState(null);
   useEffect(() => {
     fetchPurchases(`?email=${userProfile[0].email}`, setPurchases);
   }, [userProfile]);
-  // const renderName = () => {
-  //   return (
-  //     <div className="userInfo">
-  //       <ul className="headerName">Name</ul>
-  //       <li>
-  //         First Name:
-  //         {' '}
-  //         {profile.firstName}
-  //       </li>
-  //       <li>
-  //         Last Name:
-  //         {' '}
-  //         {profile.lastName}
-  //       </li>
-  //     </div>
-  //   );
-  // };
   const startEditing = () => {
-    const temp = purchaseInfo;
-    setTempUserInfo(temp);
-    setPurchaseInfo(false);
     setIsEditing(true);
+    setTempProfile(profile);
   };
   const trySubmit = () => {
     const currentErrors = profileValidation(profile);
-    if (errors.length > 0) {
+    if (Object.keys(currentErrors).length > 0) {
       setErrors(currentErrors);
       toast.error('There was errors in the inputs. The changes have not been submitted');
     } else {
       const user = {
         id: profile.id,
-        dateModified: new Date(Date.now().toISOString()),
+        dateModified: new Date().toISOString(),
         email: profile.email,
         firstName: profile.firstName,
         lastName: profile.lastName,
@@ -77,48 +56,19 @@ const ProfilePage = () => {
         city: profile.city,
         state: profile.state,
         zip: profile.zip,
-        phone: profile.phone
+        phone: profile.phone,
+        role: profile.role
       };
       fetchUpdateUser(user, setProfile);
+      setIsEditing(false);
     }
   };
   const abortEdit = () => {
-    const temp = tempUserInfo;
-    setProfile(temp);
-    setTempUserInfo(null);
+    const transfer = tempProfile;
+    setProfile(transfer);
     setIsEditing(false);
+    setErrors({});
   };
-
-  // const renderShipping = () => {
-  //   return (
-  //     <div className="userInfo">
-  //       { apiError }
-  //       <ul className="headerShipping">Shipping Address</ul>
-  //       <li>
-  //         Street:
-  //         {' '}
-  //         {profile.street}
-  //         {' '}
-  //         {profile.street2}
-  //       </li>
-  //       <li>
-  //         City:
-  //         {' '}
-  //         {profile.city}
-  //       </li>
-  //       <li>
-  //         State:
-  //         {' '}
-  //         {profile.state}
-  //       </li>
-  //       <li>
-  //         Zip:
-  //         {' '}
-  //         {profile.zip}
-  //       </li>
-  //     </div>
-  //   );
-  // };
   /* const renderPurchase = () => {
     <div className="test">
       {console.log(purchases)}
@@ -163,8 +113,10 @@ const ProfilePage = () => {
               data={profile}
               errors={errors}
             />
-            {isEditing && <button className="submit" type="button" onClick={trySubmit} />}
-            {isEditing && <button className="abortEdit" type="button" onClick={abortEdit} />}
+            <div className="submitAbort">
+              {isEditing && <button className="abortEdit" type="button" onClick={abortEdit} />}
+              {isEditing && <button className="submit" type="button" onClick={trySubmit} />}
+            </div>
           </div>
           {purchaseInfo && (
             <div className="purchases">

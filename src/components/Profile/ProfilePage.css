@@ -1,9 +1,21 @@
+.error_item{
+  color:red;
+  margin:3px 0px 0px 0px;
+}
+
+.inputError {
+  border: 1px solid red;
+}
+
+.paragraph {
+    margin:22px 0px 0px 0px;
+}
 
 li{
-    margin: 1.5em 0;
     flex-direction: row;
     width: 400px;
 }
+
 .headerShipping{
 position: relative;
 text-align: justify;
@@ -22,6 +34,7 @@ width: 150px;
     border-bottom: 5px solid #FB8122;
     width: 150px;
 }
+
 .userInfo{
     margin-bottom: 4em;
     font-size: large;
@@ -32,6 +45,7 @@ width: 150px;
     height: 6em;
     text-align: left;
 }
+
 .profile{
     position:relative;
     flex: 1 1 5%;
@@ -40,6 +54,7 @@ width: 150px;
     top: 70px;
     display: flex;
 }
+
 .tabs{
     background-color: #1d2228;
     border: 1px solid;
@@ -49,6 +64,7 @@ width: 150px;
     height: 2.5em;
     width: 8em;
 }
+
 .ui {
     flex: 1 1 20%;
     max-height: 8em;
@@ -57,15 +73,18 @@ width: 150px;
     align-items: center;
     justify-content: center;
 }
+
 .content{
     flex: 1 1 70%;
     overflow: auto;
     margin-bottom:2em;
 }
+
 .buttons {
     display:flex;
     min-width:30em;
 }
+
 .profileButton{
     flex: 1 1 40%;
     font-size:large;
@@ -76,18 +95,23 @@ width: 150px;
     border-bottom: 2px solid black;
     border-top:none;
 }
+
 .purchaseHistory{
     border-left:none;
 }
+
 .profileButton:hover{
     background-color: rgba(0,0,0,0.1);
 }
+
 .active:hover{
     background-color:rgba(251, 129, 34, 0.9)
 }
+
 .active{
     background-color: #FB8122;
 }
+
 .userInfodiv{
     position: absolute;
     top: 7em;
@@ -95,6 +119,7 @@ width: 150px;
     width: 15%;
     height: 8em;
 }
+
 .purchases{
     position: relative;
     flex-direction: column;
@@ -106,6 +131,7 @@ width: 150px;
     color:#e1e2e2;
     min-width: 25em;
 }
+
 .purchase{
     flex: 1;
     flex-direction: column;
@@ -113,6 +139,7 @@ width: 150px;
     border-right: 4px solid black;
     border-bottom: 4px solid black;;
 }
+
 .purchaseOpen{
     display: flex;
     flex-direction: row;
@@ -120,19 +147,23 @@ width: 150px;
     padding-top: 0.75em;
     padding-bottom: 0.75em;
 }
+
 .orderInfo{
     flex: 1 1 75%;
     display: flex;
 }
+
 .orderId{
     flex: 1 1 20%;
     text-align: center;
     margin-left: 0.7em;
 }
+
 .purchaseTotal{
     text-align: center;
     flex: 1 1 35%;
 }
+
 .orderDate{
     text-align: center;
     flex: 1 1 40%;
@@ -144,14 +175,17 @@ width: 150px;
     background-color: #1d2228;
     color:#e1e2e2;
 }
+
 .productsCollapsibleBtn:hover{
     background-color: rgba(0,0,0,0.1);
 }
+
 .productsCollapsible{
     flex: 1 1 40%;
     display: flex;
     flex-direction: column;
 }
+
 .closed{
     display: none;
 }
@@ -163,11 +197,13 @@ width: 150px;
     padding-top: 0.5em;
     padding-bottom: 0.5em;
 }
+
 .productName{
     flex: 1 1 40%;
     margin-left: 4em;
     font-weight: 100;
 }
+
 .productQuantity{
     flex: 1 1 5%;
     text-align: center;
@@ -181,6 +217,7 @@ width: 150px;
     text-align: center;
     font-weight: 100;
 }
+
 .stopOverflow{
     margin-top: 2em;
     margin-bottom: 2em;

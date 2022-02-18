@@ -41,7 +41,6 @@ const ProfileName = ({
         error={error.email}
         editing={false}
       />
-      {isEditing && <p className="error">Sorry, you can not edit your email</p>}
     </div>
   );
 };
