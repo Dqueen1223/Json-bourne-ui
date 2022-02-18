@@ -11,7 +11,8 @@ const userId = 1;
  * @return component
  */
 const ReviewsModal = ({
-  product, reviews, closeModal, setReviews, setApiError, isEditMode, setIsEditMode
+  product, reviews, closeModal, setReviews, setApiError,
+  isEditMode, setIsEditMode, starRating, setStarRating
 }) => {
   const closeTheModal = (e) => {
     if (e.target.className === 'reviewsModalBackground' || e.target.className === 'reviewscloseButton') {
@@ -22,11 +23,10 @@ const ReviewsModal = ({
     const reviewElement = e.target.closest('.reviewsOfProduct');
     const editId = Number(reviewElement.id);
     const review = reviews.find((r) => r.id === editId);
-
+    console.log(`star rating before update value is ${starRating}`);
     const updatedReview = {
       id: review.id,
-      rating: review.rating,
-      // rating: document.getElementById('rating'),
+      rating: (starRating || review.rating),
       title: reviewElement.querySelector('#title').innerText,
       reviewsDescription: reviewElement.querySelector('#description').innerText,
       email: review.email,
@@ -40,16 +40,17 @@ const ReviewsModal = ({
     updateReview(setReviews, setApiError, updatedReview);
     reviewElement.querySelector('.btnSubmitEditReview').remove();
     setIsEditMode(false);
+    console.log(starRating);
   };
 
   const editHandler = (e) => {
     const reviewElement = e.target.closest('.reviewsOfProduct');
     const reviewTitle = reviewElement.querySelector('.reviewsTitle');
-    const reviewRating = reviewElement.querySelector('.reviewsRating');
+    // const reviewRating = reviewElement.querySelector('.reviewsRating');
     const reviewDescription = reviewElement.querySelector('.reviewsDescription');
 
     reviewTitle.contentEditable = 'true';
-    reviewRating.contentEditable = 'true';
+    // reviewRating.contentEditable = 'true';
     reviewDescription.contentEditable = 'true';
 
     if (!reviewElement.querySelector('.btnSubmitEditReview')) {
@@ -59,6 +60,7 @@ const ReviewsModal = ({
       btnSubmit.addEventListener('click', submitEditHandler);
       reviewElement.appendChild(btnSubmit);
     }
+    setIsEditMode(true);
   };
 
   const submitDeleteHandler = (e) => {
@@ -140,7 +142,7 @@ const ReviewsModal = ({
                     {userId === 1 && <FaPencilAlt className="pencilIcon" onClick={(e) => { editHandler(e, { review }); }} />}
                     {userId === 1 && <Delete className="deleteIcon" onClick={(e) => { deleteHandler(e, { review }); }} />}
                   </div>
-                  <div className="reviewsRating">{BasicRating(isEditMode, review.rating)}</div>
+                  <div className="reviewsRating">{BasicRating(isEditMode, review.rating, setStarRating)}</div>
                   <div className="reviewsTitle" id="title">{review.title}</div>
                   <div className="reviewsDescription" id="description">
                     {review.reviewsDescription}

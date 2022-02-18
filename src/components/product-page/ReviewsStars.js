@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Rating from '@mui/material/Rating';
 import Typography from '@mui/material/Typography';
 
-export default function BasicRating(isEditMode, rating) {
+export default function BasicRating(isEditMode, rating, setStarRating) {
   const [value, setValue] = React.useState(rating);
 
   return (
@@ -29,6 +29,7 @@ export default function BasicRating(isEditMode, rating) {
         value={value}
         onChange={(event, newValue) => {
           setValue(newValue);
+          setStarRating(newValue);
         }}
       />
       )}
