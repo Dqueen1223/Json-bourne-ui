@@ -39,7 +39,7 @@ export async function updateReview(setReviews, setApiError, review) {
       }
       throw new Error(Constants.API_ERROR);
     })
-  //    .then(setReviews)
+    .then(setReviews)
     .catch(() => {
       setApiError(true);
     });

@@ -1,9 +1,9 @@
 import React from 'react';
-import { FaPencilAlt } from 'react-icons/fa';
-import BasicRating from './ReviewsStars';
+// import { FaPencilAlt } from 'react-icons/fa';
+// import BasicRating from './ReviewsStars';
 import { useProfile } from '../Profile/ProfileContext';
+import Review from './Review';
 
-const userId = 1;
 /**
  * @name ReviewModal
  * @description material-ui styling for product card review modal
@@ -16,7 +16,6 @@ const ReviewsModal = ({ product, reviews, closeModal }) => {
   console.log(userProfile);
 
   const closeTheModal = (e) => {
-    console.log(userProfile);
     if (e.target.className === 'reviewsModalBackground' || e.target.className === 'reviewscloseButton') {
       closeModal(false);
     }
@@ -53,21 +52,7 @@ const ReviewsModal = ({ product, reviews, closeModal }) => {
             </button>
             {reviews && reviews.filter((r) => (r.productId === product.id)).map((review) => (
               <div key={review.id}>
-                <div className="reviewsOfProduct">
-                  <div className="reviewsTitle">{product.name}</div>
-                  <div className="reviewsActual">
-                    {review.title}
-                    {(userId === 1) && <FaPencilAlt className="pencilIcon" alt="pencilIcon" />}
-                  </div>
-                  <div className="reviewsRating">{BasicRating(review.rating)}</div>
-                  <div className="reviewsDate">
-                    {review.reviewsDescription}
-                  </div>
-                  <div className="reviewsDate">
-                    {review.dateCreated.slice(0, 10)}
-                  </div>
-
-                </div>
+                <Review review={review} name={product.name} />
               </div>
             ))}
             <div className="reviewsModal-footer" />
