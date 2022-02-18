@@ -65,6 +65,7 @@ const ProductCard = ({ product }) => {
   const [reviews, setReviews] = useState([]);
   const [apiError, setApiError] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
+  const [starRating, setStarRating] = useState();
 
   const {
     state: { products }
@@ -135,6 +136,8 @@ const ProductCard = ({ product }) => {
           setApiError={setApiError}
           isEditMode={isEditMode}
           setIsEditMode={setIsEditMode}
+          starRating={starRating}
+          setStarRating={setStarRating}
         />,
         document.getElementById('root')
       )}
