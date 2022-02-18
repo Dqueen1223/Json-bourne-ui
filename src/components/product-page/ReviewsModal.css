@@ -54,6 +54,17 @@
     display: flex;
     font-size: 120%;
 }
+.btnSubmitEditReview{
+    margin:2%;
+}
+.pencilIcon{
+    width:20px;
+    height:20px;
+    margin-left: 20px;
+  }
+  .pencilIcon:hover{
+    color: rgb(65, 65, 65);
+  }
 .productName{
     font-size: 200%;
     position: relative;
@@ -70,6 +81,10 @@
     font-size: 140%;
     margin: 2%;
 }
+.reviewsProductName{
+    font-size: 140%;
+    margin: 2%;
+}
 .reviewsOfProduct{
     position: relative;
     bottom: 40%;
@@ -83,6 +98,11 @@
 }
 .reviewsDate{
     margin: 2%;
+    padding: 2px;
+}
+.reviewsDescription{
+    margin: 2%;
+    padding-left:2px;
 }
 .reviewsModal-body{
     flex: 1 1 60%;
