@@ -47,7 +47,6 @@ const MaintenancePage = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [Editable, setEditable] = useState(null);
   const [errors, setErrors] = useState({});
-  // const [displayErrors, setDisplayErrors] = useState(false);
 
   useEffect(() => {
     fetchProducts(setProducts, setApiError);
@@ -57,16 +56,37 @@ const MaintenancePage = () => {
     e.preventDefault();
     setEditable(product.id);
   };
-  const cancelEditing = (e) => {
-    e.preventDefault();
-    setEditable(null);
-  };
-
-  const submitEdit = async (e, product) => {
+  const cancelEditing = (e, product) => {
     e.preventDefault();
     if (document.getElementById('errors')) {
       document.getElementById('errors').remove();
     }
+    document.getElementById('name').innerHTML = product.name;
+    document.getElementById('sku').innerHTML = product.sku;
+    document.getElementById('description').innerHTML = product.description;
+    document.getElementById('demographic').innerHTML = product.demographic;
+    document.getElementById('category').innerHTML = product.category;
+    document.getElementById('type').innerHTML = product.type;
+    document.getElementById('releaseDate').innerHTML = product.releaseDate;
+    document.getElementById('primaryColorCode').innerHTML = product.primaryColorCode;
+    document.getElementById('secondaryColorCode').innerHTML = product.secondaryColorCode;
+    document.getElementById('styleNumber').innerHTML = product.styleNumber;
+    document.getElementById('globalProductCode').innerHTML = product.globalProductCode;
+    document.getElementById('active').innerHTML = product.active;
+    document.getElementById('brand').innerHTML = product.brand;
+    document.getElementById('imageSrc').innerHTML = product.imageSrc;
+    document.getElementById('price').innerHTML = product.price;
+    document.getElementById('material').innerHTML = product.material;
+    document.getElementById('quantity').innerHTML = product.quantity;
+    setEditable(null);
+  };
+
+  const submitEdit = (e, product) => {
+    e.preventDefault();
+    if (document.getElementById('errors')) {
+      document.getElementById('errors').remove();
+    }
+    setErrors({});
     const name = document.getElementById('name');
     const sku = document.getElementById('sku');
     const description = document.getElementById('description');
@@ -76,9 +96,9 @@ const MaintenancePage = () => {
     const releaseDate = document.getElementById('releaseDate');
     const primaryColorCode = document.getElementById('primaryColorCode');
     const secondaryColorCode = document.getElementById('secondaryColorCode');
-    const styleNumber = document.getElementById('stylenumber');
+    const styleNumber = document.getElementById('styleNumber');
     const globalProductCode = document.getElementById('globalProductCode');
-    let active = document.getElementById('active');
+    const active = document.getElementById('active');
     const brand = document.getElementById('brand');
     const imageSrc = document.getElementById('imageSrc');
     const price = document.getElementById('price');
@@ -113,9 +133,10 @@ const MaintenancePage = () => {
         errors[id] = errorList[id];
       }
     }
-    if (active === 'true') {
-      active = true;
-    } else active = false;
+    setErrors(errors);
+    // if (active.innerHTML === 'true') {
+    //   active = true;
+    // } else active = false;
     const newProduct = {
       id: product.id,
       name: name.innerHTML,
@@ -136,11 +157,11 @@ const MaintenancePage = () => {
       price: Number(price.innerHTML),
       quantity: Number(quantity.innerHTML)
     };
-    setErrors(errors);
     if (Object.keys(errors).length === 0) {
       UpdateProducts(newProduct, setApiError);
-      setErrors(errors);
+      // document.getElementById('active').innerHTML = newProduct.active.toString();
       setEditable(null);
+      setErrors(errors);
     } else GenerateErrorMessages(errors);
   };
   const editRow = (product) => (
@@ -155,68 +176,35 @@ const MaintenancePage = () => {
         </button>
         <button
           type="button"
-          onClick={(e) => cancelEditing(e)}
+          onClick={(e) => cancelEditing(e, product)}
           className="Cancel"
         >
           Cancel
         </button>
       </td>
       <td className="ProductCells">{product.id}</td>
-      <td
-        className="ProductCells"
-        contentEditable="true"
-        id="name"
-
-      >
+      <td className="ProductCells" contentEditable="true" id="name">
         {product.name}
       </td>
-      <td
-        className="ProductCells"
-        contentEditable="true"
-        id="sku"
-      >
+      <td className="ProductCells" contentEditable="true" id="sku">
         {product.sku}
       </td>
-      <td
-        className="ProductCells"
-        contentEditable="true"
-        id="description"
-      >
+      <td className="ProductCells" contentEditable="true" id="description">
         {product.description}
       </td>
-      <td
-        className="ProductCells"
-        contentEditable="true"
-        id="demographic"
-      >
+      <td className="ProductCells" contentEditable="true" id="demographic">
         {product.demographic}
       </td>
-      <td
-        className="ProductCells"
-        contentEditable="true"
-        id="category"
-      >
+      <td className="ProductCells" contentEditable="true" id="category">
         {product.category}
       </td>
-      <td
-        className="ProductCells"
-        contentEditable="true"
-        id="type"
-      >
+      <td className="ProductCells" contentEditable="true" id="type">
         {product.type}
       </td>
-      <td
-        className="ProductCells"
-        contentEditable="true"
-        id="releaseDate"
-      >
+      <td className="ProductCells" contentEditable="true" id="releaseDate">
         {product.releaseDate}
       </td>
-      <td
-        className="ProductCells"
-        contentEditable="true"
-        id="primaryColorCode"
-      >
+      <td className="ProductCells" contentEditable="true" id="primaryColorCode">
         {product.primaryColorCode}
       </td>
       <td
@@ -226,11 +214,7 @@ const MaintenancePage = () => {
       >
         {product.secondaryColorCode}
       </td>
-      <td
-        className="ProductCells"
-        contentEditable="true"
-        id="styleNumber"
-      >
+      <td className="ProductCells" contentEditable="true" id="styleNumber">
         {product.styleNumber}
       </td>
       <td
@@ -240,39 +224,19 @@ const MaintenancePage = () => {
       >
         {product.globalProductCode}
       </td>
-      <td
-        className="ProductCells"
-        contentEditable="true"
-        id="active"
-      >
-        {String(product.active)}
+      <td className="ProductCells" contentEditable="true" id="active">
+        {product.active.toString()}
       </td>
-      <td
-        className="ProductCells"
-        contentEditable="true"
-        id="brand"
-      >
+      <td className="ProductCells" contentEditable="true" id="brand">
         {product.brand}
       </td>
-      <td
-        className="ProductCells"
-        contentEditable="true"
-        id="imageSrc"
-      >
+      <td className="ProductCells" contentEditable="true" id="imageSrc">
         {product.imageSrc}
       </td>
-      <td
-        className="ProductCells"
-        contentEditable="true"
-        id="material"
-      >
+      <td className="ProductCells" contentEditable="true" id="material">
         {product.material}
       </td>
-      <td
-        className="ProductCells"
-        contentEditable="true"
-        id="price"
-      >
+      <td className="ProductCells" contentEditable="true" id="price">
         {product.price.toFixed(2)}
       </td>
       <td
