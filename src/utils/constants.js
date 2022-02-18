@@ -10,5 +10,6 @@ module.exports = Object.freeze({
   INACTIVE_PRODUCTS_ENDPOINT: '/products?active=false',
   REVIEWS_ENDPOINT: '/reviews',
   PROMOTIONS_ENDPOINT: '/promo',
-  ACTIVE_PRODUCTS_COUNT_ENDPOINT: '/products/count?active=true'
+  ACTIVE_PRODUCTS_COUNT_ENDPOINT: '/products/count?active=true',
+  BILLING_RATE_ENDPOINT: '/shipping-rate'
 });
