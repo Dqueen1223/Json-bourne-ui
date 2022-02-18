@@ -2,7 +2,7 @@ import React, { useState, useEffect, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import reactDom from 'react-dom';
-import { FaPencilAlt } from 'react-icons/fa';
+import { FaPencilAlt, FaCheck } from 'react-icons/fa';
 import CreatePromo from '../create-promo/CreatePromoModal';
 import fetchProducts from './MaintenancePageService';
 import './MaintenancePage.css';
@@ -86,7 +86,6 @@ const MaintenancePage = () => {
     if (document.getElementById('errors')) {
       document.getElementById('errors').remove();
     }
-    setErrors({});
     const name = document.getElementById('name');
     const sku = document.getElementById('sku');
     const description = document.getElementById('description');
@@ -98,7 +97,7 @@ const MaintenancePage = () => {
     const secondaryColorCode = document.getElementById('secondaryColorCode');
     const styleNumber = document.getElementById('styleNumber');
     const globalProductCode = document.getElementById('globalProductCode');
-    const active = document.getElementById('active');
+    let active = document.getElementById('active');
     const brand = document.getElementById('brand');
     const imageSrc = document.getElementById('imageSrc');
     const price = document.getElementById('price');
@@ -127,16 +126,21 @@ const MaintenancePage = () => {
     };
     const idList = Object.keys(submitedProduct);
     const errorList = validateCreateProductForm(submitedProduct, idList);
+    if (active.innerHTML === 'true' || active.innerHTML === 'false');
+    else { errorList.active = 'Activity must be true of false'; }
     for (let i = 0; i < idList.length; i += 1) {
       const id = idList[i];
       if (errorList[id]) {
         errors[id] = errorList[id];
       }
     }
+
     setErrors(errors);
-    // if (active.innerHTML === 'true') {
-    //   active = true;
-    // } else active = false;
+    if (active.innerHTML === 'true') {
+      active = true;
+    } if (active.innerHTML === 'false') {
+      active = false;
+    }
     const newProduct = {
       id: product.id,
       name: name.innerHTML,
@@ -159,11 +163,12 @@ const MaintenancePage = () => {
     };
     if (Object.keys(errors).length === 0) {
       UpdateProducts(newProduct, setApiError);
-      // document.getElementById('active').innerHTML = newProduct.active.toString();
       setEditable(null);
       setErrors(errors);
     } else GenerateErrorMessages(errors);
+    setErrors({});
   };
+
   const editRow = (product) => (
     <tr key={product.id} className="ProductCells" id="editable">
       <td className="ProductCells">
@@ -171,15 +176,17 @@ const MaintenancePage = () => {
           type="submit"
           onClick={(e) => submitEdit(e, product)}
           className="Confirm"
+          id="checkButton"
         >
-          Confirm
+          <FaCheck id="check" />
         </button>
         <button
           type="button"
           onClick={(e) => cancelEditing(e, product)}
           className="Cancel"
+          id="X"
         >
-          Cancel
+          X
         </button>
       </td>
       <td className="ProductCells">{product.id}</td>

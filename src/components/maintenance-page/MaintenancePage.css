@@ -53,6 +53,30 @@ height: 100%;
 .Cancel{
 height:100%;
 }
+#check{
+    width: 20px;
+    height: 100%;
+}
+#checkButton{
+    position: relative;
+    width: 50%;
+    top: 2.2px;
+    height: 100%;
+    border: none;
+    color: green;
+    background:none;
+    outline: none;
+}
+#X{
+    font-weight: bold;
+    width: 50%;
+    height: 100%;
+    font-size: 20px;
+    border:none;
+    color: red;
+    background: none;
+    outline:none;
+}
 .editbutton{
 width: 100%;
   border: none;
