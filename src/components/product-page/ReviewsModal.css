@@ -1,10 +1,4 @@
-.reviewsProductCardButton{
-    background-color: #fb8122;
-    color: #E1E2E2;
-    position: relative;
-    left: 5%;
-    width: 40%;
-}
+
 .reviewsModalBackground{
     position: fixed;
     height: 100%;
@@ -54,16 +48,19 @@
     font-size: 120%;
 }
 .productName{
-    font-size: 200%;
+    font-size: 175%;
     position: relative;
     bottom: 40%;
+    right: 24%;
     border: solid;
-    width: 91%;
+    width: inherit
+
 }
 .reviewsOrderButton{
     position: relative;
     bottom: 60%;
     width: 20%;
+
 }
 .reviewsTitle{
     font-size: 140%;
@@ -89,6 +86,9 @@
     height: 60%;
     flex-direction: column;
     text-align: center;
+}
+.reversed{
+    flex-direction: column;
 }
 .row{
     display: flex;
@@ -121,4 +121,12 @@ input::-webkit-inner-spin-button {
 }
 input[type=number] {
     -moz-appearance: textfield;
+}
+
+.reviewsProductCardButton{
+    background-color: #fb8122;
+    /* color: #E1E2E2 */
+    position: relative;
+    left: 5%;
+    width: 40%;
 }

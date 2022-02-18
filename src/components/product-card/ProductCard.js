@@ -14,7 +14,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import ShareIcon from '@material-ui/icons/Share';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import Button from '@material-ui/core/button';
+// import Button from '@material-ui/core/button';
 import { toast } from 'react-toastify';
 import { useCart } from '../checkout-page/CartContext';
 import ProductCardModal from '../product-page/ProductCardModal';
@@ -64,6 +64,10 @@ const ProductCard = ({ product }) => {
   const [reviewsModal, setReviewsModal] = useState(false);
   const [reviews, setReviews] = useState([]);
   const [setApiError] = useState(false);
+
+  // const showReviewButton = { reviewsModal };
+  // make fetch call for reviews
+  // useEffect - whenever reviews get changed if filter returns true
 
   const {
     state: { products }
@@ -185,14 +189,16 @@ const ProductCard = ({ product }) => {
         <IconButton aria-label="add to shopping cart" onClick={onAdd}>
           <AddShoppingCartIcon />
         </IconButton>
-        <Button
+        {ReviewsModal !== false && (
+        <button
           className="reviewsProductCardButton"
           type="button"
           variant="contained"
           onClick={onReview}
         >
           Reviews
-        </Button>
+        </button>
+        )}
       </CardActions>
     </Card>
   );
