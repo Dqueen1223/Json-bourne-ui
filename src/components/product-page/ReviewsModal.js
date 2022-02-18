@@ -22,11 +22,10 @@ const ReviewsModal = ({
     const reviewElement = e.target.closest('.reviewsOfProduct');
     const editId = Number(reviewElement.id);
     const review = reviews.find((r) => r.id === editId);
-
+    console.log(`star rating before update value is ${starRating}`);
     const updatedReview = {
       id: review.id,
-      rating: review.rating,
-      // rating: document.getElementById('rating'),
+      rating: (starRating || review.rating),
       title: reviewElement.querySelector('#title').innerText,
       reviewsDescription: reviewElement.querySelector('#description').innerText,
       email: review.email,
