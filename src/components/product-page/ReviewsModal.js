@@ -23,7 +23,6 @@ const ReviewsModal = ({
     const reviewElement = e.target.closest('.reviewsOfProduct');
     const editId = Number(reviewElement.id);
     const review = reviews.find((r) => r.id === editId);
-    console.log(`star rating before update value is ${starRating}`);
     const updatedReview = {
       id: review.id,
       rating: (starRating || review.rating),
@@ -40,7 +39,6 @@ const ReviewsModal = ({
     updateReview(setReviews, setApiError, updatedReview);
     reviewElement.querySelector('.btnSubmitEditReview').remove();
     setIsEditMode(false);
-    console.log(starRating);
   };
 
   const editHandler = (e) => {
@@ -68,19 +66,6 @@ const ReviewsModal = ({
     const deleteId = Number(reviewElement.id);
     const review = reviews.find((r) => r.id === deleteId);
 
-    // const updatedReview = {
-    //   id: review.id,
-    //   rating: review.rating,
-    //   // rating: document.getElementById('rating'),
-    //   title: reviewElement.querySelector('#title').innerText,
-    //   reviewsDescription: reviewElement.querySelector('#description').innerText,
-    //   email: review.email,
-    //   productId: review.productId,
-    //   // get user id
-    //   userId: 1,
-    //   dateCreated: review.dateCreated
-    // };
-
     // perform validation on inputs
     deleteReview(setReviews, setApiError, review);
     reviewElement.querySelector('.btnSubmitDeleteReview').remove();
@@ -89,13 +74,6 @@ const ReviewsModal = ({
 
   const deleteHandler = (e) => {
     const reviewElement = e.target.closest('.reviewsOfProduct');
-    // const reviewTitle = reviewElement.querySelector('.reviewsTitle');
-    // const reviewRating = reviewElement.querySelector('.reviewsRating');
-    // const reviewDescription = reviewElement.querySelector('.reviewsDescription');
-
-    // reviewTitle.contentEditable = 'true';
-    // reviewRating.contentEditable = 'true';
-    // reviewDescription.contentEditable = 'true';
 
     if (!reviewElement.querySelector('.btnSubmitDeleteReview')) {
       const btnSubmit = document.createElement('button');
