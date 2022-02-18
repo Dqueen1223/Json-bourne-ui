@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import reactDom from 'react-dom';
 import { FaPencilAlt } from 'react-icons/fa';
-import { render } from '@testing-library/react';
 import CreatePromo from '../create-promo/CreatePromoModal';
 import fetchProducts from './MaintenancePageService';
 import './MaintenancePage.css';
@@ -11,7 +10,7 @@ import styles from '../product-page/ProductPage.module.css';
 import Constants from '../../utils/constants';
 import validateCreateProductForm from '../create-product/forms/FormValidation';
 import UpdateProducts from './MaintenancePageUpdateService';
-
+import GenerateErrorMessages from './MaintenancePageGenerateErrors';
 /**
  * @name useStyles
  * @description Material-ui styling for ProductCard component
@@ -44,19 +43,16 @@ const useStyles = makeStyles((theme) => ({
 const MaintenancePage = () => {
   const classes = useStyles();
   const [apiError, setApiError] = useState(false);
-  const [updateProduct, setUpdateProduct] = useState({});
   const [products, setProducts] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [Editable, setEditable] = useState(null);
   const [errors, setErrors] = useState({});
+  // const [displayErrors, setDisplayErrors] = useState(false);
 
   useEffect(() => {
     fetchProducts(setProducts, setApiError);
   }, []);
 
-  const onProductChange = (e) => {
-    setUpdateProduct({ ...updateProduct, [e.id]: e.innerHTML });
-  };
   const clickEditMaitenance = (e, product) => {
     e.preventDefault();
     setEditable(product.id);
@@ -65,9 +61,12 @@ const MaintenancePage = () => {
     e.preventDefault();
     setEditable(null);
   };
+
   const submitEdit = async (e, product) => {
     e.preventDefault();
-
+    if (document.getElementById('errors')) {
+      document.getElementById('errors').remove();
+    }
     const name = document.getElementById('name');
     const sku = document.getElementById('sku');
     const description = document.getElementById('description');
@@ -77,18 +76,46 @@ const MaintenancePage = () => {
     const releaseDate = document.getElementById('releaseDate');
     const primaryColorCode = document.getElementById('primaryColorCode');
     const secondaryColorCode = document.getElementById('secondaryColorCode');
+    const styleNumber = document.getElementById('stylenumber');
     const globalProductCode = document.getElementById('globalProductCode');
-    let active = document.getElementById('active').innerHTML;
+    let active = document.getElementById('active');
+    const brand = document.getElementById('brand');
+    const imageSrc = document.getElementById('imageSrc');
+    const price = document.getElementById('price');
+    const material = document.getElementById('material');
+    const quantity = document.getElementById('quantity');
+
+    const submitedProduct = {
+      id: product.id,
+      name: name.innerHTML,
+      sku: sku.innerHTML,
+      description: description.innerHTML,
+      demographic: demographic.innerHTML,
+      category: category.innerHTML,
+      type: type.innerHTML,
+      releaseDate: releaseDate.innerHTML,
+      primaryColorCode: primaryColorCode.innerHTML,
+      secondaryColorCode: secondaryColorCode.innerHTML,
+      styleNumber: styleNumber.innerHTML,
+      globalProductCode: globalProductCode.innerHTML,
+      active: active.innerHTML,
+      brand: brand.innerHTML,
+      imageSrc: imageSrc.innerHTML,
+      material: material.innerHTML,
+      price: price.innerHTML,
+      quantity: quantity.innerHTML
+    };
+    const idList = Object.keys(submitedProduct);
+    const errorList = validateCreateProductForm(submitedProduct, idList);
+    for (let i = 0; i < idList.length; i += 1) {
+      const id = idList[i];
+      if (errorList[id]) {
+        errors[id] = errorList[id];
+      }
+    }
     if (active === 'true') {
       active = true;
     } else active = false;
-    const brand = document.getElementById('brand');
-    const imageSrc = document.getElementById('imageSrc');
-    const price = Number(document.getElementById('price').innerHTML);
-    const material = document.getElementById('material');
-    const quantity = parseInt(document.getElementById('quantity').innerHTML, 10);
-    updateProduct.quantity = parseInt(updateProduct.quantity, 10);
-
     const newProduct = {
       id: product.id,
       name: name.innerHTML,
@@ -100,36 +127,21 @@ const MaintenancePage = () => {
       releaseDate: releaseDate.innerHTML,
       primaryColorCode: primaryColorCode.innerHTML,
       secondaryColorCode: secondaryColorCode.innerHTML,
-      styleNumber: product.styleNumber,
+      styleNumber: styleNumber.innerHTML,
       globalProductCode: globalProductCode.innerHTML,
       active,
       brand: brand.innerHTML,
       imageSrc: imageSrc.innerHTML,
       material: material.innerHTML,
-      price,
-      quantity
+      price: Number(price.innerHTML),
+      quantity: Number(quantity.innerHTML)
     };
-    const idList = Object.keys(newProduct);
-    const errorList = validateCreateProductForm(newProduct, idList);
-    for (let i = 0; i < idList.length; i += 1) {
-      const id = idList[i];
-      if (errorList[id]) {
-        errors[id] = errorList[id];
-      }
-    }
     setErrors(errors);
     if (Object.keys(errors).length === 0) {
-      setUpdateProduct(newProduct);
       UpdateProducts(newProduct, setApiError);
       setErrors(errors);
       setEditable(null);
-    }
-    // const td = document.createElement('td');
-    // const editable = document.getElementById('editable');
-    // const tableBody = document.getElementById('tableBody');
-    // const tr = document.createElement('tr');
-    // tr.appendChild(td, td, td, td, td, td, td, td, td, td, td);
-    // tableBody.insertBefore(tr, editable.nextSibling);
+    } else GenerateErrorMessages(errors);
   };
   const editRow = (product) => (
     <tr key={product.id} className="ProductCells" id="editable">
@@ -154,7 +166,7 @@ const MaintenancePage = () => {
         className="ProductCells"
         contentEditable="true"
         id="name"
-        onProductChange={onProductChange}
+
       >
         {product.name}
       </td>

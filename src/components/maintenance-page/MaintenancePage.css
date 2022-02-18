@@ -84,3 +84,7 @@ width: 100%;
 .Maintenance{
     margin-top: 100px;
 }
+#errors{
+    color: red;
+    font-size: 14px;
+}
