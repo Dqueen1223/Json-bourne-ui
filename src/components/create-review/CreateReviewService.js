@@ -3,24 +3,23 @@ import Constants from '../../utils/constants';
 
 /**
  *
- * @name fetchPurchases
- * @description Utilizes HttpHelper to make a get request to an API
- * @param {*} setProducts sets state for purchases
- * @param {string} email email for get request
- * @param {*} setApiError sets error if response other than 200 is returned
- * @returns sets state for purchases if 200 response, else sets state for apiError
+ * @name makeReview
+ * @description sends a create review request
+ * @param {*}
+ * @returns
  */
-export default async function fetchUserByEmail(email) {
-  await HttpHelper(Constants.USERS_ENDPOINT + email, 'GET')
+export default async function makeReview(review) {
+  let status = 'waiting';
+  await HttpHelper(Constants.REVIEWS_ENDPOINT, 'POST', review)
     .then((response) => {
       if (response.ok) {
-        return response.json();
+        response.json();
+      } else {
+        status = response.statusText;
+        throw new Error(response.statusText);
       }
-      throw new Error(Constants.API_ERROR);
     })
     .catch(() => {
-    /* eslint-disable no-console */
-      console.log('Failed to load');
-    /* eslint-enable no-console */
     });
+  return status;
 }

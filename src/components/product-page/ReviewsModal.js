@@ -76,7 +76,9 @@ const ReviewsModal = ({ product, reviews, closeModal }) => {
                 Create Review
               </AccordionSummary>
               <AccordionDetails>
-                <CreateReview />
+                <CreateReview
+                  productId={product.id}
+                />
               </AccordionDetails>
             </Accordion>
           </div>

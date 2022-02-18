@@ -1,33 +1,57 @@
 import React, { useState } from 'react';
+import { toast } from 'react-toastify';
 import ReviewForm from './CreateReviewForm';
 import styles from './CreateReview.module.css';
 import { useProfile } from '../Profile/ProfileContext';
-// import fetchUserByEmail from './CreateReviewService';
+import makeReview from './CreateReviewService';
+import fetchProducts from '../product-page/ProductPageService';
 
 const CreateReview = ({ productId }) => {
   const [review, setReviewData] = useState({});
+  const [rating, setRating] = useState(2);
   // const [errors, setErrors] = useState({});
   const {
     state: { userProfile }
   } = useProfile();
-  console.log(userProfile);
+
   const onReviewChange = (e) => {
     setReviewData({ ...review, [e.target.id]: e.target.value });
     // setErrors({});
   };
 
-  const handleCreate = async () => {
-    // const userData = await fetchUserByEmail(userProfile[0].email);
+  const handleCreate = () => {
     const newReview = {
-      Rating: review.rating,
+      Rating: rating,
       Title: review.title,
       ReviewDescription: review.reviewDescription,
       Email: userProfile[0].email,
-      ProductId: productId
+      ProductId: productId,
+      DateCreated: new Date().toISOString(),
+      UserId: 1
     };
-    console.log(newReview);
-    // setReviewData(newReview);
+    console.log(fetchProducts(userProfile[0].email));
+    if (userProfile[0].email) {
+      makeReview(newReview);
+    } else {
+      toast.error('Must be signed in to create a review');
+    }
   };
+
+  // const handleSubmit = async () => {
+  //   handleCreate();
+  //   if (await makeReview(review) !== 'Bad Request') {
+  //     await makeReview(review);
+  //   }
+  //   // if (Object.keys(errors).length === 0) {
+  //   //   if (await makePromo(review) !== 'Bad Request') {
+  //   //     await makeReview(review);
+  //   //   } else {
+  //   //     toast.error('Bad Request');
+  //   //   }
+  //   // } else {
+  //   //   toast.error('Some fields contain invalid inputs.');
+  //   // }
+  // };
 
   return (
     <>
@@ -36,6 +60,8 @@ const CreateReview = ({ productId }) => {
           // errors={errors}
           onChange={onReviewChange}
           onClick={handleCreate}
+          rating={rating}
+          setRating={setRating}
         />
       </div>
     </>

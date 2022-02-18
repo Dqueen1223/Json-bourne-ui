@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import reactDom from 'react-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -118,6 +118,9 @@ const ProductCard = ({ product }) => {
     setReviewsModal(true);
   };
 
+  useEffect(() => {
+    fetchReviews(setReviews, setApiError);
+  }, [reviews, setApiError]);
   return (
     <Card className={classes.root}>
       {modalIsOpen && reactDom.createPortal(
