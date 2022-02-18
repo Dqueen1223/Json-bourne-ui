@@ -9,20 +9,30 @@ import BasicRating from './ReviewsStars';
  * @description material-ui styling for product card review modal
  * @return component
  */
-// const [review, setReview] = useState([]);
 
 const ReviewsModal = ({ product, reviews, closeModal }) => {
+  // eslint-disable-next-line max-len
+  const [activeReviews] = React.useState(reviews.filter((r) => (r.productId === product.id)));
+  // const [toggleDate, setToggle] = React.useState(true);
+
+  const sortedReviews = () => {
+    console.log('ive been clicked!');
+    if (!document.getElementsByClassName('reviewsModal-body')[0].classList.contains('reversed')) {
+      // setActiveReviews(activeReviews.sort((a, b) => b.dateCreated - a.dateCreated));
+      document.getElementsByClassName('reviewsModal-body')[0].classList.add('reversed');
+    } else {
+      document.getElementsByClassName('reviewsModal-body')[0].classList.remove('reversed');
+      // setActiveReviews(activeReviews.sort((a, b) => a.dateCreated - b.dateCreated));
+    }
+    // setToggle(!toggleDate);
+    // return activeReviews;
+  };
+
   const closeTheModal = (e) => {
     if (e.target.className === 'reviewsModalBackground' || e.target.className === 'reviewscloseButton') {
       closeModal(false);
     }
   };
-  // const sortedReviews = () => {
-  //   reviews.sort((a, b) => b.dateCreated - a.dateCreated);
-  //   {
-  //     return b.dateCreated - a.dateCreated;
-  //   };
-  // };
   // const toggleSortDate = () => {
   //   const { postList } = toggleSortDate;
   //   const newPostList = postList.reverse();
@@ -30,10 +40,11 @@ const ReviewsModal = ({ product, reviews, closeModal }) => {
   //     postList: newPostList.sort((a, b) => a.dateCreated > b.dateCreated)
   //   });
   // };
-  const toggleReviews = (a, b) => {
-    const sortReviews = new Date(b) - new Date(a);
-    return sortReviews;
-  };
+  // const toggleReviews = (e) => {
+  //   console.log(e.target);
+  //   const sortReviews = new Date(r) - new Date(e.target.value);
+  //   return sortReviews;
+  // };
 
   return (
     <div
@@ -55,23 +66,20 @@ const ReviewsModal = ({ product, reviews, closeModal }) => {
           </div>
           <div className="productName">
             {product.name}
+            <button
+              type="button"
+              className="reviewsOrderButton"
+              onClick={sortedReviews}
+            >
+              Order by Date
+            </button>
+
           </div>
           <div className="reviewsModal-body">
             {/*  mapping the reviews to each product based off of the product id. */}
-            {reviews && reviews.filter((r) => (r.productId === product.id)).map((review) => (
+            {reviews && activeReviews.map((review) => (
 
               <div key={review.id}>
-                <button
-                  type="button"
-                  className="reviewsOrderButton"
-                  onClick={() => {
-                    console.log(review.dateCreated.slice(0, 10));
-                    // document.getElementsByClassName('reviewsDate');
-                    toggleReviews();
-                  }}
-                >
-                  Order by Date
-                </button>
                 <div className="reviewsOfProduct">
                   <div className="reviewsTitle">{review.title}</div>
                   <div className="reviewsRating">{BasicRating(review.rating)}</div>
@@ -83,8 +91,8 @@ const ReviewsModal = ({ product, reviews, closeModal }) => {
                 </div>
               </div>
             ))}
-            <div className="reviewsModal-footer" />
           </div>
+          <div className="reviewsModal-footer" />
         </div>
       </div>
     </div>

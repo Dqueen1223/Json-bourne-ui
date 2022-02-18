@@ -20,7 +20,7 @@ import { useCart } from '../checkout-page/CartContext';
 import ProductCardModal from '../product-page/ProductCardModal';
 import ReviewsModal from '../product-page/ReviewsModal';
 import '../product-page/ReviewsModal.css';
-import fetchReviews from '../product-page/ReviewService';
+// import fetchReviews from '../product-page/ReviewService';
 import getQtyInCart, { inventoryAvailable } from './ProductCardService';
 
 /**
@@ -57,13 +57,13 @@ const useStyles = makeStyles((theme) => ({
  * @param {*} props product
  * @return component
  */
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, reviews }) => {
   const classes = useStyles();
   const { dispatch } = useCart();
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [reviewsModal, setReviewsModal] = useState(false);
-  const [reviews, setReviews] = useState([]);
-  const [setApiError] = useState(false);
+  // const [reviews, setReviews] = useState([]);
+  // const [setApiError] = useState(false);
 
   // const showReviewButton = { reviewsModal };
   // make fetch call for reviews
@@ -118,7 +118,7 @@ const ProductCard = ({ product }) => {
   };
   const onReview = (e) => {
     e.stopPropagation();
-    fetchReviews(setReviews, setApiError);
+    // fetchReviews(setReviews, setApiError);
     setReviewsModal(true);
   };
 
