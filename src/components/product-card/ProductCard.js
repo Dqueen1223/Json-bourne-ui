@@ -186,7 +186,7 @@ const ProductCard = ({ product }) => {
         <IconButton aria-label="add to shopping cart" onClick={onAdd}>
           <AddShoppingCartIcon />
         </IconButton>
-        {ReviewsModal.id !== true && (
+        {ReviewsModal !== false && (
         <button
           className="reviewsProductCardButton"
           type="button"

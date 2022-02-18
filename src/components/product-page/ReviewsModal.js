@@ -1,4 +1,5 @@
-import React from 'react';
+import * as React from 'react';
+// import fetchReviews from './ReviewService';
 import BasicRating from './ReviewsStars';
 
 // import styles from './ProductPage.module.css';
@@ -8,14 +9,31 @@ import BasicRating from './ReviewsStars';
  * @description material-ui styling for product card review modal
  * @return component
  */
+// const [review, setReview] = useState([]);
+
 const ReviewsModal = ({ product, reviews, closeModal }) => {
   const closeTheModal = (e) => {
-    console.log(reviews);
     if (e.target.className === 'reviewsModalBackground' || e.target.className === 'reviewscloseButton') {
       closeModal(false);
     }
   };
-  // const sortedReviews = reviews.slice().sort((a, b) => b.dateCreated - a.dateCreated);
+  // const sortedReviews = () => {
+  //   reviews.sort((a, b) => b.dateCreated - a.dateCreated);
+  //   {
+  //     return b.dateCreated - a.dateCreated;
+  //   };
+  // };
+  // const toggleSortDate = () => {
+  //   const { postList } = toggleSortDate;
+  //   const newPostList = postList.reverse();
+  //   toggleSortDate({
+  //     postList: newPostList.sort((a, b) => a.dateCreated > b.dateCreated)
+  //   });
+  // };
+  const toggleReviews = (a, b) => {
+    const sortReviews = new Date(b) - new Date(a);
+    return sortReviews;
+  };
 
   return (
     <div
@@ -39,17 +57,21 @@ const ReviewsModal = ({ product, reviews, closeModal }) => {
             {product.name}
           </div>
           <div className="reviewsModal-body">
-            <button
-              type="button"
-              className="reviewsOrderButton"
-              // onClick={sortedReviews}
-            >
-              Newest First
-              {console.log(reviews)}
-            </button>
             {/*  mapping the reviews to each product based off of the product id. */}
             {reviews && reviews.filter((r) => (r.productId === product.id)).map((review) => (
+
               <div key={review.id}>
+                <button
+                  type="button"
+                  className="reviewsOrderButton"
+                  onClick={() => {
+                    console.log(review.dateCreated.slice(0, 10));
+                    // document.getElementsByClassName('reviewsDate');
+                    toggleReviews();
+                  }}
+                >
+                  Order by Date
+                </button>
                 <div className="reviewsOfProduct">
                   <div className="reviewsTitle">{review.title}</div>
                   <div className="reviewsRating">{BasicRating(review.rating)}</div>
