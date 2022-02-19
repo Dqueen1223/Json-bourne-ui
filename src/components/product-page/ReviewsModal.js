@@ -48,7 +48,6 @@ const ReviewsModal = ({ product, reviews, closeModal }) => {
               className="reviewsOrderButton"
             >
               Newest First
-              {console.log(reviews)}
             </button>
             {reviews && reviews.filter((r) => (r.productId === product.id)).map((review) => (
               <div key={review.id}>
