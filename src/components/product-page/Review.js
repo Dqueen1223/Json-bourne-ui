@@ -32,7 +32,7 @@ const Review = ({ review }, setReviews, setApiError) => {
     // perform validation on inputs
     updateReview(setReviews, setApiError, updatedReview);
     // reviewElement.querySelector('.btnSubmitEditReview').remove();
-    setIsEdit(!isEdit);
+    setIsEdit(false);
   };
 
   return (
@@ -54,7 +54,7 @@ const Review = ({ review }, setReviews, setApiError) => {
       )}
       {isEdit && (
       <div className="reviewsOfProduct">
-        <div className="reviewsActual" contentEditable="true">
+        <div className="reviewsTitle" contentEditable="true">
           {review.title}
           <FaPencilAlt className="pencilIcon" alt="pencilIcon" onClick={editHandler} />
         </div>
