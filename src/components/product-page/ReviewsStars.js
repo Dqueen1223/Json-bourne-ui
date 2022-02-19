@@ -2,8 +2,8 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Rating from '@mui/material/Rating';
 
-export default function BasicRating() {
-  const [value, setValue] = React.useState(2);
+export default function BasicRating(rating, isEdit) {
+  const [value, setValue] = React.useState(rating);
 
   return (
     <Box
@@ -11,6 +11,7 @@ export default function BasicRating() {
         '& > legend': { mt: 2 }
       }}
     >
+      {isEdit && (
       <Rating
         name="simple-controlled"
         value={value}
@@ -18,6 +19,18 @@ export default function BasicRating() {
           setValue(newValue);
         }}
       />
+      )}
+
+      {!isEdit && (
+      <Rating
+        name="simple-controlled"
+        readOnly
+        value={value}
+        onChange={(event, newValue) => {
+          setValue(newValue);
+        }}
+      />
+      )}
     </Box>
   );
 }

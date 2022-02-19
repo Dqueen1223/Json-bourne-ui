@@ -1,7 +1,7 @@
 import React from 'react';
 // import { FaPencilAlt } from 'react-icons/fa';
 // import BasicRating from './ReviewsStars';
-import { useProfile } from '../Profile/ProfileContext';
+// import { useProfile } from '../Profile/ProfileContext';
 import Review from './Review';
 
 /**
@@ -10,11 +10,10 @@ import Review from './Review';
  * @return component
  */
 const ReviewsModal = ({ product, reviews, closeModal }) => {
-  const {
-    state: { userProfile }
-  } = useProfile();
-  console.log(userProfile);
-
+  // const {
+  //   state: { userProfile }
+  // } = useProfile();
+  // console.log(userProfile);
   const closeTheModal = (e) => {
     if (e.target.className === 'reviewsModalBackground' || e.target.className === 'reviewscloseButton') {
       closeModal(false);
@@ -52,7 +51,7 @@ const ReviewsModal = ({ product, reviews, closeModal }) => {
             </button>
             {reviews && reviews.filter((r) => (r.productId === product.id)).map((review) => (
               <div key={review.id}>
-                <Review review={review} name={product.name} />
+                <Review review={review} />
               </div>
             ))}
             <div className="reviewsModal-footer" />
