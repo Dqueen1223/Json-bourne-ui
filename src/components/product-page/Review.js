@@ -9,6 +9,7 @@ import BasicRating from './ReviewsStars';
  */
 const Review = ({ review }) => {
   const [isEdit, setIsEdit] = React.useState(false);
+  const [value, setValue] = React.useState(review.rating);
 
   const editHandler = () => {
     console.log(isEdit);
@@ -27,7 +28,7 @@ const Review = ({ review }) => {
             {review.title}
             <FaPencilAlt className="pencilIcon" alt="pencilIcon" onClick={editHandler} />
           </div>
-          <div className="reviewsRating" readOnly>{BasicRating(review.rating, isEdit)}</div>
+          <div className="reviewsRating" readOnly>{BasicRating(review.rating, isEdit, value, setValue)}</div>
           <div className="reviewsDescription">
             {review.reviewsDescription}
           </div>
@@ -42,7 +43,7 @@ const Review = ({ review }) => {
           {review.title}
           <FaPencilAlt className="pencilIcon" alt="pencilIcon" onClick={editHandler} />
         </div>
-        <div className="reviewsRating">{BasicRating(review.rating, isEdit)}</div>
+        <div className="reviewsRating">{BasicRating(review.rating, isEdit, value, setValue)}</div>
         <div className="reviewsDescription">
           {review.reviewsDescription}
         </div>

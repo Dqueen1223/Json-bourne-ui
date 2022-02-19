@@ -2,9 +2,7 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Rating from '@mui/material/Rating';
 
-export default function BasicRating(rating, isEdit) {
-  const [value, setValue] = React.useState(rating);
-
+export default function BasicRating(rating, isEdit, value, setValue) {
   return (
     <Box
       sx={{

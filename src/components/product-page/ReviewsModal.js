@@ -14,6 +14,7 @@ const ReviewsModal = ({ product, reviews, closeModal }) => {
   //   state: { userProfile }
   // } = useProfile();
   // console.log(userProfile);
+
   const closeTheModal = (e) => {
     if (e.target.className === 'reviewsModalBackground' || e.target.className === 'reviewscloseButton') {
       closeModal(false);
