@@ -52,7 +52,11 @@ const ReviewsModal = ({
             </button>
             {reviews && reviews.filter((r) => (r.productId === product.id)).map((review) => (
               <div key={review.id}>
-                <Review review={review} setReviews={setReviews} setApiError={setApiError} />
+                <Review
+                  review={review}
+                  setReviews={setReviews}
+                  setApiError={setApiError}
+                />
               </div>
             ))}
             <div className="reviewsModal-footer" />

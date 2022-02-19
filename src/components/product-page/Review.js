@@ -2,7 +2,6 @@ import React from 'react';
 import { FaPencilAlt } from 'react-icons/fa';
 import BasicRating from './ReviewsStars';
 import { updateReview } from './ReviewService';
-
 /**
  * @name Review
  * @description Displays the review
@@ -10,10 +9,12 @@ import { updateReview } from './ReviewService';
  */
 const Review = ({ review }, setReviews, setApiError) => {
   const [isEdit, setIsEdit] = React.useState(false);
-  const [value, setValue] = React.useState(review.rating);
+  // const [value, setValue] = React.useState(review.rating);
+  const [value, setValue] = React.useState();
+
   const [desc, setDesc] = React.useState();
   const [title, setTitle] = React.useState();
-  // const [stars, setStars] = React.useState();
+  const [stars, setStars] = React.useState();
 
   const editHandler = () => {
     setIsEdit(!isEdit);
@@ -23,9 +24,10 @@ const Review = ({ review }, setReviews, setApiError) => {
     const reviewElement = e.target.closest('.reviewsOfProduct');
     const reviewTitle = reviewElement.querySelector('.reviewsTitle').innerText;
     const description = reviewElement.querySelector('.reviewsDescription').innerText;
+    const starRating = Number(reviewElement.querySelector('.starRating').innerText);
     const updatedReview = {
       id: review.id,
-      rating: value,
+      rating: starRating,
       title: reviewTitle,
       reviewsDescription: description,
       email: review.email,
@@ -36,6 +38,9 @@ const Review = ({ review }, setReviews, setApiError) => {
     };
     setTitle(reviewTitle);
     setDesc(description);
+    setStars(starRating);
+    console.log(`star rating state is ${description} stars is ${stars} starRating is ${starRating}`);
+    console.log(value);
     // perform validation on inputs use external validation service
     updateReview(setReviews, setApiError, updatedReview);
     setIsEdit(false);
@@ -60,7 +65,8 @@ const Review = ({ review }, setReviews, setApiError) => {
             <FaPencilAlt className="pencilIcon" alt="pencilIcon" onClick={editHandler} />
           </div>
           )}
-          <div className="reviewsRating">{BasicRating(isEdit, value, setValue)}</div>
+          {!stars && (<div className="reviewsRating">{BasicRating(isEdit, review.rating, setValue)}</div>)}
+          {stars && (<div className="reviewsRating">{BasicRating(isEdit, stars, setStars)}</div>)}
           {!desc && (
           <div className="reviewsDescription">
             {review.reviewsDescription}
@@ -92,7 +98,8 @@ const Review = ({ review }, setReviews, setApiError) => {
             <FaPencilAlt className="pencilIcon" alt="pencilIcon" onClick={editHandler} />
           </div>
           )}
-          <div className="reviewsRating">{BasicRating(isEdit, value, setValue)}</div>
+          {!stars && (<div className="reviewsRating">{BasicRating(isEdit, value, setValue, review.rating)}</div>)}
+          {stars && (<div className="reviewsRating">{BasicRating(isEdit, stars, setStars)}</div>)}
           {!desc && (
           <div className="reviewsDescription" contentEditable suppressContentEditableWarning>
             {review.reviewsDescription}
