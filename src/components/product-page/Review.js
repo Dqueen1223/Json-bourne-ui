@@ -12,12 +12,10 @@ const Review = ({ review }) => {
   const [value, setValue] = React.useState(review.rating);
 
   const editHandler = () => {
-    console.log(isEdit);
     setIsEdit(!isEdit);
   };
 
   const submitEditHandler = () => {
-    console.log(isEdit);
     setIsEdit(!isEdit);
   };
   return (
@@ -28,12 +26,12 @@ const Review = ({ review }) => {
             {review.title}
             <FaPencilAlt className="pencilIcon" alt="pencilIcon" onClick={editHandler} />
           </div>
-          <div className="reviewsRating" readOnly>{BasicRating(review.rating, isEdit, value, setValue)}</div>
+          <div className="reviewsRating" readOnly>{BasicRating(isEdit, value, setValue)}</div>
           <div className="reviewsDescription">
             {review.reviewsDescription}
           </div>
           <div className="reviewsDate">
-            {review.dateCreated}
+            {review.dateCreated.slice(0, 10)}
           </div>
         </div>
       )}
@@ -43,14 +41,14 @@ const Review = ({ review }) => {
           {review.title}
           <FaPencilAlt className="pencilIcon" alt="pencilIcon" onClick={editHandler} />
         </div>
-        <div className="reviewsRating">{BasicRating(review.rating, isEdit, value, setValue)}</div>
+        <div className="reviewsRating">{BasicRating(isEdit, value, setValue)}</div>
         <div className="reviewsDescription">
           {review.reviewsDescription}
         </div>
         <div className="reviewsDate">
-          {review.dateCreated}
+          {review.dateCreated.slice(0, 10)}
         </div>
-        <button type="button" className="btnSubmitEdit" onClick={submitEditHandler}>Submit</button>
+        <button type="button" className="btnSubmitEditReview" onClick={submitEditHandler}>Submit</button>
       </div>
       )}
     </>
