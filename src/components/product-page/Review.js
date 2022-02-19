@@ -21,7 +21,7 @@ const Review = ({ review }, setReviews, setApiError) => {
     const updatedReview = {
       id: review.id,
       rating: value,
-      title: reviewElement.querySelector('.reviewsActual').innerText,
+      title: reviewElement.querySelector('.reviewsTitle').innerText,
       reviewsDescription: reviewElement.querySelector('.reviewsDescription').innerText,
       email: review.email,
       productId: review.productId,
