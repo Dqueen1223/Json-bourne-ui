@@ -11,6 +11,9 @@ import { updateReview } from './ReviewService';
 const Review = ({ review }, setReviews, setApiError) => {
   const [isEdit, setIsEdit] = React.useState(false);
   const [value, setValue] = React.useState(review.rating);
+  const [desc, setDesc] = React.useState();
+  const [title, setTitle] = React.useState();
+  // const [stars, setStars] = React.useState();
 
   const editHandler = () => {
     setIsEdit(!isEdit);
@@ -18,55 +21,93 @@ const Review = ({ review }, setReviews, setApiError) => {
 
   const submitEditHandler = (e) => {
     const reviewElement = e.target.closest('.reviewsOfProduct');
+    const reviewTitle = reviewElement.querySelector('.reviewsTitle').innerText;
+    const description = reviewElement.querySelector('.reviewsDescription').innerText;
     const updatedReview = {
       id: review.id,
       rating: value,
-      title: reviewElement.querySelector('.reviewsTitle').innerText,
-      reviewsDescription: reviewElement.querySelector('.reviewsDescription').innerText,
+      title: reviewTitle,
+      reviewsDescription: description,
       email: review.email,
       productId: review.productId,
       // get user id
       userId: 1,
       dateCreated: review.dateCreated
     };
-    // perform validation on inputs
+    setTitle(reviewTitle);
+    setDesc(description);
+    // perform validation on inputs use external validation service
     updateReview(setReviews, setApiError, updatedReview);
-    // reviewElement.querySelector('.btnSubmitEditReview').remove();
     setIsEdit(false);
+    // get submit edit button   set visibile to false
+    const btnSubmit = reviewElement.querySelector('.btnSubmitEditReview');
+    btnSubmit.style.visibility = 'hidden';
   };
 
   return (
     <>
       {!isEdit && (
         <div className="reviewsOfProduct">
+          {!title && (
           <div className="reviewsTitle">
-            {review.title}
+            { review.title }
             <FaPencilAlt className="pencilIcon" alt="pencilIcon" onClick={editHandler} />
           </div>
-          <div className="reviewsRating" readOnly>{BasicRating(isEdit, value, setValue)}</div>
+          )}
+          {title && (
+          <div className="reviewsTitle">
+            { title }
+            <FaPencilAlt className="pencilIcon" alt="pencilIcon" onClick={editHandler} />
+          </div>
+          )}
+          <div className="reviewsRating">{BasicRating(isEdit, value, setValue)}</div>
+          {!desc && (
           <div className="reviewsDescription">
             {review.reviewsDescription}
           </div>
+          )}
+          {desc && (
+          <div className="reviewsDescription">
+            {desc}
+          </div>
+          )}
           <div className="reviewsDate">
             {review.dateCreated.slice(0, 10)}
           </div>
+          <button type="button" className="btnDummy">Submit</button>
+
         </div>
       )}
       {isEdit && (
-      <div className="reviewsOfProduct">
-        <div className="reviewsTitle" contentEditable="true">
-          {review.title}
-          <FaPencilAlt className="pencilIcon" alt="pencilIcon" onClick={editHandler} />
+        <div className="reviewsOfProduct">
+          {!title && (
+          <div className="reviewsTitle" contentEditable suppressContentEditableWarning>
+            { review.title }
+            <FaPencilAlt className="pencilIcon" alt="pencilIcon" onClick={editHandler} />
+          </div>
+          )}
+          {title && (
+          <div className="reviewsTitle" contentEditable suppressContentEditableWarning>
+            { title }
+            <FaPencilAlt className="pencilIcon" alt="pencilIcon" onClick={editHandler} />
+          </div>
+          )}
+          <div className="reviewsRating">{BasicRating(isEdit, value, setValue)}</div>
+          {!desc && (
+          <div className="reviewsDescription" contentEditable suppressContentEditableWarning>
+            {review.reviewsDescription}
+          </div>
+          )}
+          {desc && (
+          <div className="reviewsDescription" contentEditable suppressContentEditableWarning>
+            {desc}
+          </div>
+          )}
+          <div className="reviewsDate">
+            {review.dateCreated.slice(0, 10)}
+          </div>
+          <button type="button" className="btnSubmitEditReview" onClick={(e) => (submitEditHandler(e))}>Submit</button>
         </div>
-        <div className="reviewsRating">{BasicRating(isEdit, value, setValue)}</div>
-        <div className="reviewsDescription" contentEditable="true">
-          {review.reviewsDescription}
-        </div>
-        <div className="reviewsDate">
-          {review.dateCreated.slice(0, 10)}
-        </div>
-        <button type="button" className="btnSubmitEditReview" onClick={(e) => (submitEditHandler(e))}>Submit</button>
-      </div>
       )}
     </>
 
