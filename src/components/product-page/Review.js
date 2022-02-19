@@ -1,14 +1,14 @@
 import React from 'react';
 import { FaPencilAlt } from 'react-icons/fa';
 import BasicRating from './ReviewsStars';
-// import { updateReview } from './ReviewService';
+import { updateReview } from './ReviewService';
 
 /**
  * @name Review
  * @description Displays the review
  * @return component
  */
-const Review = ({ review }) => {
+const Review = ({ review }, setReviews, setApiError) => {
   const [isEdit, setIsEdit] = React.useState(false);
   const [value, setValue] = React.useState(review.rating);
 
@@ -16,16 +16,30 @@ const Review = ({ review }) => {
     setIsEdit(!isEdit);
   };
 
-  const submitEditHandler = () => {
-    // get values from dom? or set values to state
-    console.log(value);
+  const submitEditHandler = (e) => {
+    const reviewElement = e.target.closest('.reviewsOfProduct');
+    const updatedReview = {
+      id: review.id,
+      rating: value,
+      title: reviewElement.querySelector('.reviewsActual').innerText,
+      reviewsDescription: reviewElement.querySelector('.reviewsDescription').innerText,
+      email: review.email,
+      productId: review.productId,
+      // get user id
+      userId: 1,
+      dateCreated: review.dateCreated
+    };
+    // perform validation on inputs
+    updateReview(setReviews, setApiError, updatedReview);
+    // reviewElement.querySelector('.btnSubmitEditReview').remove();
     setIsEdit(!isEdit);
   };
+
   return (
     <>
       {!isEdit && (
         <div className="reviewsOfProduct">
-          <div className="reviewsActual">
+          <div className="reviewsTitle">
             {review.title}
             <FaPencilAlt className="pencilIcon" alt="pencilIcon" onClick={editHandler} />
           </div>
@@ -51,7 +65,7 @@ const Review = ({ review }) => {
         <div className="reviewsDate">
           {review.dateCreated.slice(0, 10)}
         </div>
-        <button type="button" className="btnSubmitEditReview" onClick={submitEditHandler}>Submit</button>
+        <button type="button" className="btnSubmitEditReview" onClick={(e) => (submitEditHandler(e))}>Submit</button>
       </div>
       )}
     </>

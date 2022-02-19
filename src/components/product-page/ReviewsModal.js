@@ -3,13 +3,16 @@ import React from 'react';
 // import BasicRating from './ReviewsStars';
 // import { useProfile } from '../Profile/ProfileContext';
 import Review from './Review';
+import './ReviewsModal.css';
 
 /**
  * @name ReviewModal
  * @description material-ui styling for product card review modal
  * @return component
  */
-const ReviewsModal = ({ product, reviews, closeModal }) => {
+const ReviewsModal = ({
+  product, reviews, closeModal, setReviews, setApiError
+}) => {
   // const {
   //   state: { userProfile }
   // } = useProfile();
@@ -30,16 +33,14 @@ const ReviewsModal = ({ product, reviews, closeModal }) => {
       <div className="reviewsModal">
         <div className="reviewsModal-content">
 
-          <div className="reviewsModal-header">
-            <button
-              type="button"
-              className="reviewscloseButton"
-              onClick={closeTheModal}
-            >
-              &times;
-            </button>
-          </div>
-          <div className="productName">
+          <button
+            type="button"
+            className="reviewscloseButton"
+            onClick={closeTheModal}
+          >
+            &times;
+          </button>
+          <div className="reviewsProductName">
             {product.name}
           </div>
           <div className="reviewsModal-body">
@@ -51,7 +52,7 @@ const ReviewsModal = ({ product, reviews, closeModal }) => {
             </button>
             {reviews && reviews.filter((r) => (r.productId === product.id)).map((review) => (
               <div key={review.id}>
-                <Review review={review} />
+                <Review review={review} setReviews={setReviews} setApiError={setApiError} />
               </div>
             ))}
             <div className="reviewsModal-footer" />

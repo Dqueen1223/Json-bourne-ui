@@ -62,33 +62,33 @@
     height:20px;
     margin-left: 20px;
   }
-  .pencilIcon:hover{
-    color: rgb(65, 65, 65);
-  }
+.pencilIcon:hover{
+   color: rgb(65, 65, 65);
+}
 .productName{
     font-size: 200%;
-    position: relative;
-    bottom: 40%;
-    border: solid;
+    border: none;
     width: 91%;
+    text-align:left;
 }
 .reviewsOrderButton{
-    position: relative;
-    bottom: 60%;
     width: 20%;
+    margin: 1% 2%;
 }
 .reviewsTitle{
     font-size: 140%;
     margin: 2%;
 }
 .reviewsProductName{
-    font-size: 140%;
-    margin: 2%;
+    font-size: 180%;
+    margin: 2% 3%;
+    text-align:left;
 }
 .reviewsOfProduct{
-    position: relative;
     bottom: 40%;
     text-align: left;
+    margin-bottom: 4%;
+
 }
 .reviewsRating{
     margin: 2%;
