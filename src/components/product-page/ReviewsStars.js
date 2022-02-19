@@ -19,7 +19,7 @@ export default function BasicRating(isEdit, value, setValue, currRating) {
               setValue(newValue);
             }}
           />
-          <span className="starRating">{value}</span>
+          <span className="starRating">{value || currRating}</span>
         </>
       )}
 
