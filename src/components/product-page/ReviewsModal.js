@@ -3,6 +3,7 @@ import { FaPencilAlt } from 'react-icons/fa';
 import Delete from '@material-ui/icons/Delete';
 import { updateReview, deleteReview } from './ReviewService';
 import BasicRating from './ReviewsStars';
+// import Constants from '../../utils/constants';
 
 const userId = 1;
 /**
@@ -14,6 +15,7 @@ const ReviewsModal = ({
   product, reviews, closeModal, setReviews, setApiError,
   isEditMode, setIsEditMode, starRating, setStarRating
 }) => {
+  // const [remainingReviews] = React.useState();
   const closeTheModal = (e) => {
     if (e.target.className === 'reviewsModalBackground' || e.target.className === 'reviewscloseButton') {
       closeModal(false);
@@ -66,7 +68,6 @@ const ReviewsModal = ({
     const deleteId = Number(reviewElement.id);
     const review = reviews.find((r) => r.id === deleteId);
 
-    // perform validation on inputs
     deleteReview(setReviews, setApiError, review);
     reviewElement.querySelector('.btnSubmitDeleteReview').remove();
     setIsEditMode(false);
@@ -82,6 +83,7 @@ const ReviewsModal = ({
       btnSubmit.addEventListener('click', submitDeleteHandler);
       reviewElement.appendChild(btnSubmit);
     }
+    // setIsEditMode(true);
   };
 
   return (
