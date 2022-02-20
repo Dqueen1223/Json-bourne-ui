@@ -9,6 +9,7 @@ import './MaintenancePage.css';
 import styles from '../product-page/ProductPage.module.css';
 import Constants from '../../utils/constants';
 import deleteProducts from './MaintenancePageDeleteService';
+import MaintenanceDeleteModal from './MaintenanceDeleteModal';
 
 /**
  * @name useStyles
@@ -45,9 +46,10 @@ const MaintenancePage = () => {
   const [products, setProducts] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [deletedProduct, setDeletedProduct] = useState(products);
+  const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
 
   const deleteProduct = (product) => {
-    deleteProducts(product, setApiError);
+    deleteProducts(product, setApiError, setDeleteModalIsOpen);
   };
   useEffect(() => {
     fetchProducts(setProducts, setApiError);
@@ -78,7 +80,6 @@ const MaintenancePage = () => {
         </button>
       </div>
       <div className="ProductTable">
-
         <table className="Product">
           <thead>
             <tr>
@@ -107,6 +108,10 @@ const MaintenancePage = () => {
             {products.map((product) => (
               <tr key={product.id} className="ProductCells">
                 <td className="ProductCells">
+                  {deleteModalIsOpen && reactDom.createPortal(
+                    <MaintenanceDeleteModal product={product} closeModal={setDeleteModalIsOpen} />,
+                    document.getElementById('root')
+                  )}
                   <button
                     type="button"
                     onClick={() => {
