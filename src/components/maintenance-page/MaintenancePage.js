@@ -44,13 +44,14 @@ const MaintenancePage = () => {
   const [apiError, setApiError] = useState(false);
   const [products, setProducts] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [deletedProduct, setDeletedProduct] = useState(products);
 
   const deleteProduct = (product) => {
     deleteProducts(product, setApiError);
   };
   useEffect(() => {
     fetchProducts(setProducts, setApiError);
-  }, [products]);
+  }, [deletedProduct]);
 
   return (
     <div className="Maintenance">
@@ -106,7 +107,17 @@ const MaintenancePage = () => {
             {products.map((product) => (
               <tr key={product.id} className="ProductCells">
                 <td className="ProductCells">
-                  <button type="button" onClick={() => deleteProduct(product)} className="deleteButton"><Delete /></button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      deleteProduct(product);
+                      setDeletedProduct(products);
+                    }}
+                    className="deleteButton"
+                  >
+                    <Delete />
+
+                  </button>
                 </td>
                 <td className="ProductCells">{product.id}</td>
                 <td className="ProductCells">{product.name}</td>
