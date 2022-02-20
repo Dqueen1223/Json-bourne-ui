@@ -10,9 +10,7 @@ import { updateReview } from './ReviewService';
  */
 const Review = ({ review }, setReviews, setApiError) => {
   const [isEdit, setIsEdit] = React.useState(false);
-  // const [value, setValue] = React.useState(review.rating);
   const [value, setValue] = React.useState();
-
   const [desc, setDesc] = React.useState();
   const [title, setTitle] = React.useState();
   const [stars, setStars] = React.useState();
@@ -37,30 +35,34 @@ const Review = ({ review }, setReviews, setApiError) => {
       userId: 1,
       dateCreated: review.dateCreated
     };
-    // perform validation on inputs use external validation service
+    // perform validation on inputs
     if (reviewTitle === '') {
       toast.info('title cannot be empty');
+      return;
+    }
+    if (reviewTitle.length > 50) {
+      toast.info('title must be 50 characters or less');
       return;
     }
     if (description === '') {
       toast.info('description cannot be empty');
       return;
     }
+    if (description.length > 200) {
+      toast.info('description must be 200 characters or less');
+      return;
+    }
     setTitle(reviewTitle);
     setDesc(description);
     setStars(starRating);
-    console.log(`star rating state is ${description} stars is ${stars} starRating is ${starRating}`);
-
     updateReview(setReviews, setApiError, updatedReview);
     setIsEdit(false);
-    // get submit edit button   set visibile to false
     const btnSubmit = reviewElement.querySelector('.btnSubmitEditReview');
     btnSubmit.style.visibility = 'hidden';
   };
 
   const preventCursorDisappearHandler = (e) => {
     const input = e.target.innerText;
-    console.log(e);
     if (input === '') e.target.innerText = ' ';
   };
 
