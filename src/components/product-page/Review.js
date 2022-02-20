@@ -3,6 +3,8 @@ import { FaPencilAlt } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import BasicRating from './ReviewsStars';
 import { updateReview } from './ReviewService';
+
+const userId = 1;
 /**
  * @name Review
  * @description Displays the review
@@ -31,11 +33,9 @@ const Review = ({ review }, setReviews, setApiError) => {
       reviewsDescription: description,
       email: review.email,
       productId: review.productId,
-      // get user id
-      userId: 1,
+      uerId: review.userId,
       dateCreated: review.dateCreated
     };
-    // perform validation on inputs
     if (reviewTitle === '') {
       toast.info('title cannot be empty');
       return;
@@ -56,9 +56,9 @@ const Review = ({ review }, setReviews, setApiError) => {
     setDesc(description);
     setStars(starRating);
     updateReview(setReviews, setApiError, updatedReview);
-    setIsEdit(false);
     const btnSubmit = reviewElement.querySelector('.btnSubmitEditReview');
     btnSubmit.style.visibility = 'hidden';
+    setIsEdit(false);
   };
 
   const preventCursorDisappearHandler = (e) => {
@@ -68,7 +68,7 @@ const Review = ({ review }, setReviews, setApiError) => {
 
   return (
     <>
-      {!isEdit && (
+      {(userId === 1) && !isEdit && (
         <div className="reviewsOfProduct">
           {!title && (
           <div className="reviewsTitle">
@@ -101,7 +101,7 @@ const Review = ({ review }, setReviews, setApiError) => {
 
         </div>
       )}
-      {isEdit && (
+      {(userId === 1) && isEdit && (
         <div className="reviewsOfProduct">
           {!title && (
           <div className="reviewsTitle" contentEditable suppressContentEditableWarning onInput={preventCursorDisappearHandler}>
@@ -133,8 +133,21 @@ const Review = ({ review }, setReviews, setApiError) => {
           <button type="button" className="btnSubmitEditReview" onClick={(e) => (submitEditHandler(e))}>Submit</button>
         </div>
       )}
+      {(userId !== 1) && (
+      <div className="reviewsOfProduct">
+        <div className="reviewsTitle">
+          {review.title}
+        </div>
+        <div className="reviewsRating">{BasicRating(isEdit, review.rating, setValue)}</div>
+        <div className="reviewsDescription">
+          {review.reviewsDescription}
+        </div>
+        <div className="reviewsDate">
+          {review.dateCreated.slice(0, 10)}
+        </div>
+      </div>
+      )}
     </>
-
   );
 };
 
