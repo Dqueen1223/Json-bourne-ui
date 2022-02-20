@@ -54,34 +54,45 @@
     display: flex;
     font-size: 120%;
 }
+.btnSubmitEditReview{
+    margin:0 2%;
+}
+.btnDummy{
+    margin:0 2%;
+    visibility: hidden;
+}
 .pencilIcon{
     width:20px;
     height:20px;
     margin-left: 20px;
   }
-  .pencilIcon:hover{
-    color: rgb(65, 65, 65);
-  }
+.pencilIcon:hover{
+   color: rgb(65, 65, 65);
+}
 .productName{
     font-size: 200%;
-    position: relative;
-    bottom: 40%;
-    border: solid;
+    border: none;
     width: 91%;
+    text-align:left;
 }
 .reviewsOrderButton{
-    position: relative;
-    bottom: 60%;
     width: 20%;
+    margin: 1% 2%;
 }
 .reviewsTitle, .reviewsProductName{
     font-size: 140%;
     margin: 2%;
 }
+.reviewsProductName{
+    font-size: 170%;
+    margin: 2% 0;
+    text-align:left;
+}
 .reviewsOfProduct{
-    position: relative;
     bottom: 40%;
     text-align: left;
+    margin-bottom: none;
+
 }
 .reviewsRating{
     margin: 2%;
@@ -89,7 +100,11 @@
 .reviewsActual{
     margin: 2%;
 }
-.reviewsDate, .reviewsDescription{
+.reviewsDate{
+    margin: 1% 2%;
+    padding: 2px;
+}
+.reviewsDescription{
     margin: 2%;
 }
 .reviewsModal-body{

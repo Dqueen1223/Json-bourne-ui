@@ -35,9 +35,10 @@ const CheckoutPage = () => {
     setDeliveryData({ ...deliveryData, [e.target.id]: e.target.value });
   };
   React.useEffect(() => {
-    getBillingRate(deliveryData.state, setShippingFeeState);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [deliveryData]);
+    if (Number(getSubtotal(products).substring(1)) > 0.00) {
+      getBillingRate(deliveryData.state, setShippingFeeState);
+    }
+  }, [deliveryData, products]);
   React.useEffect(() => {
     let productsPriceAdd = 0.00;
     const subTotal = getSubtotal(products);
@@ -48,7 +49,7 @@ const CheckoutPage = () => {
     if (subTotalVal > 50.00) {
       productsPriceAdd = 0.00;
     }
-    setShippingFee(productsPriceAdd + shippingFeeState);
+    setShippingFee(Number(productsPriceAdd + shippingFeeState).toFixed(2));
   }, [shippingFeeState, products]);
 
   const onBillingChange = (e) => {

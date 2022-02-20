@@ -15,7 +15,8 @@ const ReviewOrderWidget = ({ shippingFee }) => {
     state: { products }
   } = useCart();
   cartLogic();
-  const calculateTotal = () => Number(getSubtotal(products).substring(1)) + shippingFee;
+  const calculateTotal = () => (Number(getSubtotal(products).substring(1))
+    + Number(shippingFee)).toFixed(2);
   return (
     <>
       {products.map(({
@@ -45,7 +46,7 @@ const ReviewOrderWidget = ({ shippingFee }) => {
         <div className={styles.price}>
           <p>
             $
-            { shippingFee.toFixed(2) }
+            { shippingFee }
           </p>
         </div>
         <div>

@@ -1,37 +1,37 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Rating from '@mui/material/Rating';
-import Typography from '@mui/material/Typography';
 
-export default function BasicRating(isEditMode, rating, setStarRating) {
-  const [value, setValue] = React.useState(rating);
-
+export default function BasicRating(isEdit, value, setValue, currRating) {
   return (
     <Box
       sx={{
         '& > legend': { mt: 2 }
       }}
     >
-      <Typography component="legend">Rating</Typography>
-      {!isEditMode && (
-      <Rating
-        name="read-only"
-        value={value}
-        onChange={(event, newValue) => {
-          setValue(newValue);
-        }}
-        readOnly
-      />
+      {isEdit && (
+        <>
+          <Rating
+            name="simple-controlled"
+            defaultValue={currRating}
+            value={value}
+            onChange={(event, newValue) => {
+              setValue(newValue);
+            }}
+          />
+          <span className="starRating">{value || currRating}</span>
+        </>
       )}
-      {isEditMode && (
-      <Rating
-        name="simple-controlled"
-        value={value}
-        onChange={(event, newValue) => {
-          setValue(newValue);
-          setStarRating(newValue);
-        }}
-      />
+
+      {!isEdit && (
+        <>
+          <Rating
+            name="simple-controlled"
+            readOnly
+            value={value}
+          />
+          <span className="starRating">{value}</span>
+        </>
       )}
     </Box>
   );
