@@ -82,6 +82,7 @@
 .reviewsTitle{
     font-size: 140%;
     margin: 2%;
+    padding:5px;
 }
 .reviewsProductName{
     font-size: 170%;
@@ -99,13 +100,15 @@
 }
 .reviewsActual{
     margin: 2%;
+    padding:5px;
 }
 .reviewsDate{
     margin: 1% 2%;
-    padding: 2px;
+    padding: 5px;
 }
 .reviewsDescription{
     margin: 2%;
+    padding:5px;
 }
 .reviewsModal-body{
     flex: 1 1 60%;

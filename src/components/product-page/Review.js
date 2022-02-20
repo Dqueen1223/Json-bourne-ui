@@ -1,5 +1,6 @@
 import React from 'react';
 import { FaPencilAlt } from 'react-icons/fa';
+import { toast } from 'react-toastify';
 import BasicRating from './ReviewsStars';
 import { updateReview } from './ReviewService';
 /**
@@ -22,9 +23,9 @@ const Review = ({ review }, setReviews, setApiError) => {
 
   const submitEditHandler = (e) => {
     const reviewElement = e.target.closest('.reviewsOfProduct');
-    const reviewTitle = reviewElement.querySelector('.reviewsTitle').innerText;
-    const description = reviewElement.querySelector('.reviewsDescription').innerText;
-    const starRating = Number(reviewElement.querySelector('.starRating').innerText);
+    const reviewTitle = reviewElement.querySelector('.reviewsTitle').innerText.trim();
+    const description = reviewElement.querySelector('.reviewsDescription').innerText.trim();
+    const starRating = Number(reviewElement.querySelector('.starRating').innerText.trim());
     const updatedReview = {
       id: review.id,
       rating: starRating,
@@ -36,20 +37,31 @@ const Review = ({ review }, setReviews, setApiError) => {
       userId: 1,
       dateCreated: review.dateCreated
     };
+    // perform validation on inputs use external validation service
+    if (reviewTitle === '') {
+      toast.info('title cannot be empty');
+      return;
+    }
+    if (description === '') {
+      toast.info('description cannot be empty');
+      return;
+    }
     setTitle(reviewTitle);
     setDesc(description);
     setStars(starRating);
     console.log(`star rating state is ${description} stars is ${stars} starRating is ${starRating}`);
-    // perform validation on inputs use external validation service
-    // if (!value) {
-    //   alert('value must not be zero');
-    //   return;
-    // }
+
     updateReview(setReviews, setApiError, updatedReview);
     setIsEdit(false);
     // get submit edit button   set visibile to false
     const btnSubmit = reviewElement.querySelector('.btnSubmitEditReview');
     btnSubmit.style.visibility = 'hidden';
+  };
+
+  const preventCursorDisappearHandler = (e) => {
+    const input = e.target.innerText;
+    console.log(e);
+    if (input === '') e.target.innerText = ' ';
   };
 
   return (
@@ -90,13 +102,13 @@ const Review = ({ review }, setReviews, setApiError) => {
       {isEdit && (
         <div className="reviewsOfProduct">
           {!title && (
-          <div className="reviewsTitle" contentEditable suppressContentEditableWarning>
+          <div className="reviewsTitle" contentEditable suppressContentEditableWarning onInput={preventCursorDisappearHandler}>
             { review.title }
             <FaPencilAlt className="pencilIcon" alt="pencilIcon" onClick={editHandler} />
           </div>
           )}
           {title && (
-          <div className="reviewsTitle" contentEditable suppressContentEditableWarning>
+          <div className="reviewsTitle" contentEditable suppressContentEditableWarning onInput={preventCursorDisappearHandler}>
             { title }
             <FaPencilAlt className="pencilIcon" alt="pencilIcon" onClick={editHandler} />
           </div>
@@ -104,12 +116,12 @@ const Review = ({ review }, setReviews, setApiError) => {
           {!stars && (<div className="reviewsRating">{BasicRating(isEdit, value, setValue, review.rating)}</div>)}
           {stars && (<div className="reviewsRating">{BasicRating(isEdit, stars, setStars)}</div>)}
           {!desc && (
-          <div className="reviewsDescription" contentEditable suppressContentEditableWarning>
+          <div className="reviewsDescription" contentEditable suppressContentEditableWarning onInput={preventCursorDisappearHandler}>
             {review.reviewsDescription}
           </div>
           )}
           {desc && (
-          <div className="reviewsDescription" contentEditable suppressContentEditableWarning>
+          <div className="reviewsDescription" contentEditable suppressContentEditableWarning onInput={preventCursorDisappearHandler}>
             {desc}
           </div>
           )}
