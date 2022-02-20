@@ -45,13 +45,13 @@ const MaintenancePage = () => {
   const [products, setProducts] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
-  useEffect(() => {
-    fetchProducts(setProducts, setApiError);
-  }, []);
-
   const deleteProduct = (product) => {
     deleteProducts(product, setApiError);
   };
+  useEffect(() => {
+    fetchProducts(setProducts, setApiError);
+  }, [products]);
+
   return (
     <div className="Maintenance">
       {apiError && <p className={styles.errMsg} data-testid="errMsg">{Constants.API_ERROR}</p>}
