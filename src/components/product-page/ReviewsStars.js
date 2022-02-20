@@ -13,8 +13,7 @@ export default function BasicRating(isEdit, value, setValue, currRating) {
         <>
           <Rating
             name="simple-controlled"
-            defaultValue={currRating}
-            value={value}
+            value={value || currRating}
             onChange={(event, newValue) => {
               setValue(newValue);
             }}

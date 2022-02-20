@@ -40,8 +40,11 @@ const Review = ({ review }, setReviews, setApiError) => {
     setDesc(description);
     setStars(starRating);
     console.log(`star rating state is ${description} stars is ${stars} starRating is ${starRating}`);
-    console.log(value);
     // perform validation on inputs use external validation service
+    // if (!value) {
+    //   alert('value must not be zero');
+    //   return;
+    // }
     updateReview(setReviews, setApiError, updatedReview);
     setIsEdit(false);
     // get submit edit button   set visibile to false
