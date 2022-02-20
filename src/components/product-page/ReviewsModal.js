@@ -1,7 +1,4 @@
 import React from 'react';
-// import { FaPencilAlt } from 'react-icons/fa';
-// import BasicRating from './ReviewsStars';
-// import { useProfile } from '../Profile/ProfileContext';
 import Review from './Review';
 import './ReviewsModal.css';
 
@@ -13,11 +10,6 @@ import './ReviewsModal.css';
 const ReviewsModal = ({
   product, reviews, closeModal, setReviews, setApiError
 }) => {
-  // const {
-  //   state: { userProfile }
-  // } = useProfile();
-  // console.log(userProfile);
-
   const closeTheModal = (e) => {
     if (e.target.className === 'reviewsModalBackground' || e.target.className === 'reviewscloseButton') {
       closeModal(false);

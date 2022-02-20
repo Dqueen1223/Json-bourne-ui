@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FaPencilAlt } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import BasicRating from './ReviewsStars';
 import { updateReview } from './ReviewService';
+import { useProfile } from '../Profile/ProfileContext';
 
-const userId = 1;
 /**
  * @name Review
  * @description Displays the review
@@ -16,6 +16,17 @@ const Review = ({ review }, setReviews, setApiError) => {
   const [desc, setDesc] = React.useState();
   const [title, setTitle] = React.useState();
   const [stars, setStars] = React.useState();
+  const [email, setEmail] = React.useState('');
+
+  const {
+    state: { userProfile }
+  } = useProfile();
+
+  useEffect(() => {
+    if (userProfile.length > 0) {
+      setEmail(userProfile[0].email);
+    }
+  }, [userProfile, setEmail]);
 
   const editHandler = () => {
     setIsEdit(!isEdit);
@@ -68,7 +79,7 @@ const Review = ({ review }, setReviews, setApiError) => {
 
   return (
     <>
-      {(userId === 1) && !isEdit && (
+      {(review.email === email) && !isEdit && (
         <div className="reviewsOfProduct">
           {!title && (
           <div className="reviewsTitle">
@@ -101,7 +112,7 @@ const Review = ({ review }, setReviews, setApiError) => {
 
         </div>
       )}
-      {(userId === 1) && isEdit && (
+      {(review.email === email) && isEdit && (
         <div className="reviewsOfProduct">
           {!title && (
           <div className="reviewsTitle" contentEditable suppressContentEditableWarning onInput={preventCursorDisappearHandler}>
@@ -133,7 +144,7 @@ const Review = ({ review }, setReviews, setApiError) => {
           <button type="button" className="btnSubmitEditReview" onClick={(e) => (submitEditHandler(e))}>Submit</button>
         </div>
       )}
-      {(userId !== 1) && (
+      {(review.email !== email) && (
       <div className="reviewsOfProduct">
         <div className="reviewsTitle">
           {review.title}
