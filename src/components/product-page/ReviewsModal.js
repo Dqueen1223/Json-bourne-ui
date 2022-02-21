@@ -1,7 +1,8 @@
 import React from 'react';
-import { AccordionDetails, Button } from '@material-ui/core';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+// import { AccordionDetails, Button } from '@material-ui/core';
+// import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 // import * as React from 'react';
+import Button from '@mui/material/Button';
 import BasicRating from './ReviewsStars';
 import CreateReview from '../create-review/CreateReview';
 import DropDownButton from './DropDownButton';
@@ -14,11 +15,12 @@ import DropDownButton from './DropDownButton';
  * @return component
  */
 
-const ReviewsModal = ({ product, reviews, closeModal }) => {
+const ReviewsModal = ({
+  product, reviews, closeModal, showCreateReview, setReviewFormToggle
+}) => {
   // eslint-disable-next-line max-len
   const [activeReviews] = React.useState(reviews.filter((r) => (r.productId === product.id)));
   // const [toggleDate, setToggle] = React.useState(true);
-
   const sortedReviews = () => {
     console.log('ive been clicked!');
     if (!document.getElementsByClassName('reviewsModal-body')[0].classList.contains('reversed')) {
@@ -35,6 +37,7 @@ const ReviewsModal = ({ product, reviews, closeModal }) => {
   const closeTheModal = (e) => {
     if (e.target.className === 'reviewsModalBackground' || e.target.className === 'reviewscloseButton') {
       closeModal(false);
+      setReviewFormToggle(false);
     }
   };
 
@@ -55,18 +58,29 @@ const ReviewsModal = ({ product, reviews, closeModal }) => {
             >
               &times;
             </button>
+            <div className="productNameReviewModal">
+              {product.name}
+            </div>
+            <div className="reviewModalButtons">
+              <DropDownButton />
+              <Button
+                type="button"
+                className="reviewsOrderButton"
+                onClick={sortedReviews}
+              >
+                Order by Date
+              </Button>
+              <Button
+                type="button"
+                onClick={() => setReviewFormToggle(!showCreateReview)}
+                className="createReview"
+              >
+                Add Review
+              </Button>
+            </div>
           </div>
-          <div className="productName">
-            {product.name}
-            <DropDownButton />
-            <button
-              type="button"
-              className="reviewsOrderButton"
-              onClick={sortedReviews}
-            >
-              Order by Date
-            </button>
-
+          <div className="createReview">
+            {showCreateReview ? <CreateReview productId={product.id} /> : null}
           </div>
           <div className="reviewsModal-body">
             {/*  mapping the reviews to each product based off of the product id. */}
@@ -85,13 +99,7 @@ const ReviewsModal = ({ product, reviews, closeModal }) => {
               </div>
             ))}
             <div className="reviewsModal-footer" />
-              <Button
-                disableSpacing
-                className="createReview"
-              >
-                Add Review
-              </Button>
-            </div>
+          </div>
           <div className="reviewsModal-footer" />
         </div>
       </div>

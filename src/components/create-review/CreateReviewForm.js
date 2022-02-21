@@ -1,11 +1,11 @@
 import React from 'react';
-import FormItemTextArea from '../form/FormItemTextArea';
-import FormItem from '../form/FormItem';
+import FormItemTextArea from './forms/FormItemTextArea';
+import FormItem from './forms/FormItem';
 import BasicRating from './forms/ReviewsStars';
 import styles from './CreateReview.module.css';
 
 const ReviewForm = ({
-  onClick, onChange, rating, setRating
+  onClick, onChange, rating, setRating, review
 }) => (
   <>
     <div className={styles.createReview}>
@@ -14,23 +14,24 @@ const ReviewForm = ({
         onChange={onChange}
         rating={rating}
         setRating={setRating}
-        // value={review.rating}
+      // value={review.rating}
       />
       <FormItem
         id="title"
         label="Add Title"
-        className={styles.review}
+        className={styles.title}
         onChange={onChange}
-        // value={review.code}
-        // error={errors.code}
+        value={review.title}
+      // error={errors.code}
       />
       <FormItemTextArea
         id="reviewDescription"
         label="Add Review"
-        className={styles.review}
+        className={styles.reviewDescription}
         onChange={onChange}
-        // value={review.code}
-        // error={errors.code}
+        value={review.reviewDescription}
+        reviewLength={review.reviewDescription ? review.reviewDescription.length : 0}
+      // error={errors.code}
       />
       <button
         type="button"

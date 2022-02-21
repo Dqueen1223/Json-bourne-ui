@@ -14,7 +14,7 @@ export default function DropDownButton() {
   };
 
   return (
-    <div>
+    <div className="reviewModalDashboard">
       <Button
         id="basic-button"
         aria-controls={open ? 'basic-menu' : undefined}

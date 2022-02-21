@@ -4,7 +4,7 @@ import ReviewForm from './CreateReviewForm';
 import styles from './CreateReview.module.css';
 import { useProfile } from '../Profile/ProfileContext';
 import makeReview from './CreateReviewService';
-import fetchProducts from '../product-page/ProductPageService';
+// import fetchProducts from '../product-page/ProductPageService';
 
 const CreateReview = ({ productId }) => {
   const [review, setReviewData] = useState({});
@@ -20,17 +20,18 @@ const CreateReview = ({ productId }) => {
   };
 
   const handleCreate = () => {
-    const newReview = {
-      Rating: rating,
-      Title: review.title,
-      ReviewDescription: review.reviewDescription,
-      Email: userProfile[0].email,
-      ProductId: productId,
-      DateCreated: new Date().toISOString(),
-      UserId: 1
-    };
-    console.log(fetchProducts(userProfile[0].email));
-    if (userProfile[0].email) {
+    if (userProfile[0]) {
+      const newReview = {
+        Rating: rating,
+        Title: review.title,
+        ReviewsDescription: review.reviewDescription,
+        Email: userProfile[0].email,
+        ProductId: productId,
+        DateCreated: new Date().toISOString(),
+        UserId: 1
+      };
+      // console.log(fetchProducts(userProfile[0].email));
+
       makeReview(newReview);
     } else {
       toast.error('Must be signed in to create a review');
@@ -62,6 +63,7 @@ const CreateReview = ({ productId }) => {
           onClick={handleCreate}
           rating={rating}
           setRating={setRating}
+          review={review}
         />
       </div>
     </>

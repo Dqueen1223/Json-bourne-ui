@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import reactDom from 'react-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -21,9 +21,7 @@ import ProductCardModal from '../product-page/ProductCardModal';
 import getQtyInCart, { inventoryAvailable } from './ProductCardService';
 import ReviewsModal from '../product-page/ReviewsModal';
 import '../product-page/ReviewsModal.css';
-import fetchReviews from '../product-page/ReviewService';
 import BasicRating from '../product-page/ReviewsStars';
-import getQtyInCart, { inventoryAvailable } from './ProductCardService';
 
 /**
  * @name useStyles
@@ -64,8 +62,10 @@ const ProductCard = ({ product, reviews }) => {
   const { dispatch } = useCart();
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [reviewsModal, setReviewsModal] = useState(false);
+  const [showCreateReview, setReviewFormToggle] = useState(false);
   // const [reviews, setReviews] = useState([]);
   // const [setApiError] = useState(false);
+  // const reviews = [];
 
   // const showReviewButton = { reviewsModal };
   // make fetch call for reviews
@@ -121,13 +121,21 @@ const ProductCard = ({ product, reviews }) => {
   const onReview = (e) => {
     e.stopPropagation();
     setReviewsModal(true);
+    if (reviews.length === 0) {
+      setReviewFormToggle(true);
+    }
+  };
+  const addReview = (e) => {
+    e.stopPropagation();
+    setReviewsModal(true);
+    setReviewFormToggle(true);
   };
   // eslint-disable-next-line max-len
   // const reviewAvg = () => reviews.reduce((a, b) => a.review.rating + b.review.rating, 0) / reviews.length;
 
-  useEffect(() => {
-    fetchReviews(setReviews, setApiError);
-  }, [reviews, setApiError]);
+  // useEffect(() => {
+  //   fetchReviews(setReviews, setApiError);
+  // }, [reviews, setApiError]);
   return (
     <Card className={classes.root}>
       {modalIsOpen && reactDom.createPortal(
@@ -135,7 +143,13 @@ const ProductCard = ({ product, reviews }) => {
         document.getElementById('root')
       )}
       {reviewsModal && reactDom.createPortal(
-        <ReviewsModal product={product} reviews={reviews} closeModal={setReviewsModal} />,
+        <ReviewsModal
+          product={product}
+          reviews={reviews}
+          closeModal={setReviewsModal}
+          showCreateReview={showCreateReview}
+          setReviewFormToggle={setReviewFormToggle}
+        />,
         document.getElementById('root')
       )}
       <CardHeader
@@ -194,15 +208,26 @@ const ProductCard = ({ product, reviews }) => {
         </IconButton>
         <div>
           {ReviewsModal !== false && (
-          // <button
-          //   className="reviewsProductCardButton"
-          //   type="button"
-          //   variant="contained"
-          //   onClick={onReview}
-          // >
-          //   Reviews
-          // </button>
-          <BasicRating type="button" className="reviewsProductCardButton" onClick={onReview} />
+            <>
+              <button
+                className="reviewsProductCardButton"
+                type="button"
+                variant="contained"
+                onClick={onReview}
+              >
+                Reviews
+              </button>
+              <button
+                className="addReviewsProductCardButton"
+                type="button"
+                label="Add Review"
+                variant="contained"
+                onClick={addReview}
+              >
+                +
+              </button>
+              <BasicRating type="button" className="reviewsProductCardButton" onClick={onReview} />
+            </>
           )}
         </div>
       </CardActions>

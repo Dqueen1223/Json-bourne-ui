@@ -35,7 +35,7 @@ const ProductPage = () => {
 
   useEffect(() => {
     fetchReviews(setReviews, setApiError);
-  }, [setReviews]);
+  }, [reviews, setReviews]);
   useEffect(() => {
     setCurrentPage(1);
   }, [filter]);
