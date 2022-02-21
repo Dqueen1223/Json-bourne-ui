@@ -54,6 +54,9 @@
     display: flex;
     font-size: 120%;
 }
+.btnSubmitDeleteReview{
+    margin:0 2%;
+}
 .btnSubmitEditReview{
     margin:0 2%;
 }

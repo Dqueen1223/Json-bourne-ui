@@ -72,25 +72,20 @@ const Review = ({ review }, setReviews, setApiError) => {
       dateCreated: review.dateCreated
     };
     deleteReview(setReviews, setApiError, deletedReview);
-    setIsDeleted(false);
+    setIsDeleted(true);
     const btnSubmit = reviewElement.querySelector('.btnSubmitDeleteReview');
     btnSubmit.style.visibility = 'hidden';
   };
 
   return (
     <>
-      {(!isEdit) && (
+      {(!isDeleted) && (
         <div className="reviewsOfProduct">
           {!title && (
           <div className="reviewsTitle">
             { review.title }
-            <FaPencilAlt className="pencilIcon" alt="pencilIcon" onClick={editHandler} />
-          </div>
-          )}
-          {title && (
-          <div className="reviewsTitle">
-            { title }
-            <FaPencilAlt className="pencilIcon" alt="pencilIcon" onClick={editHandler} />
+              {/* <FaPencilAlt className="pencilIcon" alt="pencilIcon" onClick={editHandler} /> */}
+              <Delete className="pencilIcon" alt="pencilIcon" onClick={deleteHandler} />
           </div>
           )}
           {!stars && (<div className="reviewsRating">{BasicRating(isEdit, review.rating, setValue)}</div>)}
@@ -109,21 +104,23 @@ const Review = ({ review }, setReviews, setApiError) => {
             {review.dateCreated.slice(0, 10)}
           </div>
           <button type="button" className="btnDummy">Submit</button>
-
+          <button type="button" className="btnSubmitDeleteReview" onClick={(e) => (submitDeleteHandler(e))}>Delete</button>
         </div>
       )}
-      {(isEdit) && (
+      {/* {(isEdit && !isDeleted) && (
         <div className="reviewsOfProduct">
           {!title && (
           <div className="reviewsTitle" contentEditable suppressContentEditableWarning>
             { review.title }
-            <FaPencilAlt className="pencilIcon" alt="pencilIcon" onClick={editHandler} />
+              <FaPencilAlt className="pencilIcon" alt="pencilIcon" onClick={editHandler} />
+              <Delete className="pencilIcon" alt="pencilIcon" onClick={deleteHandler} />
           </div>
           )}
           {title && (
           <div className="reviewsTitle" contentEditable suppressContentEditableWarning>
             { title }
-            <FaPencilAlt className="pencilIcon" alt="pencilIcon" onClick={editHandler} />
+              <FaPencilAlt className="pencilIcon" alt="pencilIcon" onClick={editHandler} />
+              <Delete className="pencilIcon" alt="pencilIcon" onClick={deleteHandler} />
           </div>
           )}
           {!stars && (<div className="reviewsRating">{BasicRating(isEdit, value, setValue, review.rating)}</div>)}
@@ -142,72 +139,12 @@ const Review = ({ review }, setReviews, setApiError) => {
             {review.dateCreated.slice(0, 10)}
           </div>
           <button type="button" className="btnSubmitEditReview" onClick={(e) => (submitEditHandler(e))}>Submit</button>
+          <button type="button" className="btnSubmitDeleteReview" onClick={(e) => (submitDeleteHandler(e))}>Delete</button>
         </div>
-      )}
-
-      {(!isDeleted) && (
+      )} */}
+      {isDeleted && (
         <div className="reviewsOfProduct">
-          {!title && (
-          <div className="reviewsTitle">
-            { review.title }
-            <Delete className="pencilIcon" alt="pencilIcon" onClick={deleteHandler} />
-          </div>
-          )}
-          {title && (
-          <div className="reviewsTitle">
-            { title }
-            <Delete className="pencilIcon" alt="pencilIcon" onClick={deleteHandler} />
-          </div>
-          )}
-          {!stars && (<div className="reviewsRating">{BasicRating(isEdit, review.rating, setValue)}</div>)}
-          {stars && (<div className="reviewsRating">{BasicRating(isEdit, stars, setStars)}</div>)}
-          {!desc && (
-          <div className="reviewsDescription">
-            {review.reviewsDescription}
-          </div>
-          )}
-          {desc && (
-          <div className="reviewsDescription">
-            {desc}
-          </div>
-          )}
-          <div className="reviewsDate">
-            {review.dateCreated.slice(0, 10)}
-          </div>
-          <button type="button" className="btnDummy">Submit</button>
-
-        </div>
-      )}
-      {(isDeleted) && (
-        <div className="reviewsOfProduct">
-          {!title && (
-          <div className="reviewsTitle" contentEditable suppressContentEditableWarning>
-            { review.title }
-            <Delete className="pencilIcon" alt="pencilIcon" onClick={deleteHandler} />
-          </div>
-          )}
-          {title && (
-          <div className="reviewsTitle" contentEditable suppressContentEditableWarning>
-            { title }
-            <Delete className="pencilIcon" alt="pencilIcon" onClick={deleteHandler} />
-          </div>
-          )}
-          {!stars && (<div className="reviewsRating">{BasicRating(isEdit, value, setValue, review.rating)}</div>)}
-          {stars && (<div className="reviewsRating">{BasicRating(isEdit, stars, setStars)}</div>)}
-          {!desc && (
-          <div className="reviewsDescription" contentEditable suppressContentEditableWarning>
-            {review.reviewsDescription}
-          </div>
-          )}
-          {desc && (
-          <div className="reviewsDescription" contentEditable suppressContentEditableWarning>
-            {desc}
-          </div>
-          )}
-          <div className="reviewsDate">
-            {review.dateCreated.slice(0, 10)}
-          </div>
-          <button type="button" className="btnSubmitEditReview" onClick={(e) => (submitDeleteHandler(e))}>Delete</button>
+          {/* <button type="button" className="btnSubmitDeleteReview" onClick={(e) => (submitDeleteHandler(e))}>Delete</button> */}
         </div>
       )}
     </>
