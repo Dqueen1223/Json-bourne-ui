@@ -2,6 +2,7 @@ import React from 'react';
 // import { FaPencilAlt } from 'react-icons/fa';
 // import BasicRating from './ReviewsStars';
 // import { useProfile } from '../Profile/ProfileContext';
+import { ConfirmProvider } from 'material-ui-confirm';
 import Review from './Review';
 import './ReviewsModal.css';
 
@@ -52,11 +53,13 @@ const ReviewsModal = ({
             </button>
             {reviews && reviews.filter((r) => (r.productId === product.id)).map((review) => (
               <div key={review.id}>
-                <Review
-                  review={review}
-                  setReviews={setReviews}
-                  setApiError={setApiError}
-                />
+                <ConfirmProvider>
+                  <Review
+                    review={review}
+                    setReviews={setReviews}
+                    setApiError={setApiError}
+                  />
+                </ConfirmProvider>
               </div>
             ))}
             <div className="reviewsModal-footer" />
