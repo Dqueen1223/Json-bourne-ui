@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { FaPencilAlt } from 'react-icons/fa';
-// import { toast } from 'react-toastify';
 import BasicRating from './ReviewsStars';
 import { updateReview, validateReview } from './ReviewService';
 import { useProfile } from '../Profile/ProfileContext';
@@ -26,10 +25,11 @@ const Review = ({ review }, setReviews, setApiError, fetchReviews) => {
   }, [userProfile, setEmail]);
 
   const editHandler = (e) => {
-    setIsEdit(true);
+    setIsEdit(!isEdit);
     const reviewElement = e.target.closest('.reviewsOfProduct');
     const btnSubmit = reviewElement.querySelector('.btnSubmitEditReview');
     btnSubmit.style.visibility = 'visible';
+    // fetchReviews(setReviews, setApiError);
   };
 
   const submitEditHandler = (e) => {
@@ -50,9 +50,9 @@ const Review = ({ review }, setReviews, setApiError, fetchReviews) => {
     if (!validateReview(value, reviewTitle, description)) return;
     const btnSubmit = reviewElement.querySelector('.btnSubmitEditReview');
     btnSubmit.style.visibility = 'hidden';
+    setIsEdit(false);
     updateReview(setReviews, setApiError, updatedReview);
     fetchReviews(setReviews, setApiError);
-    setIsEdit(false);
   };
 
   const preventCursorDisappearHandler = (e) => {
@@ -68,7 +68,7 @@ const Review = ({ review }, setReviews, setApiError, fetchReviews) => {
             { review.title }
             <FaPencilAlt className="pencilIcon" alt="pencilIcon" onClick={editHandler} />
           </div>
-          <div className="reviewsRating">{BasicRating(isEdit, review.rating)}</div>
+          <div className="reviewsRating">{BasicRating(isEdit, value, setValue, review.rating)}</div>
           <div className="reviewsDescription">
             {review.reviewsDescription}
           </div>
@@ -76,7 +76,6 @@ const Review = ({ review }, setReviews, setApiError, fetchReviews) => {
             {review.dateCreated.slice(0, 10)}
           </div>
           <button type="button" className="btnDummy">Submit</button>
-
         </div>
       )}
       {(review.email === email) && isEdit && (
