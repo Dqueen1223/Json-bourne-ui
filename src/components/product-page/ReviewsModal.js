@@ -1,6 +1,7 @@
 import * as React from 'react';
 // import fetchReviews from './ReviewService';
 import BasicRating from './ReviewsStars';
+import DropDownButton from './DropDownButton';
 
 // import styles from './ProductPage.module.css';
 
@@ -33,18 +34,6 @@ const ReviewsModal = ({ product, reviews, closeModal }) => {
       closeModal(false);
     }
   };
-  // const toggleSortDate = () => {
-  //   const { postList } = toggleSortDate;
-  //   const newPostList = postList.reverse();
-  //   toggleSortDate({
-  //     postList: newPostList.sort((a, b) => a.dateCreated > b.dateCreated)
-  //   });
-  // };
-  // const toggleReviews = (e) => {
-  //   console.log(e.target);
-  //   const sortReviews = new Date(r) - new Date(e.target.value);
-  //   return sortReviews;
-  // };
 
   return (
     <div
@@ -66,6 +55,7 @@ const ReviewsModal = ({ product, reviews, closeModal }) => {
           </div>
           <div className="productName">
             {product.name}
+            <DropDownButton />
             <button
               type="button"
               className="reviewsOrderButton"
