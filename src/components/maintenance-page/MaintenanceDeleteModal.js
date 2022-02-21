@@ -8,7 +8,7 @@ import './MaintenanceDeleteModal.css';
  */
 const MaintenanceDeleteModal = ({ product, closeModal }) => {
   const closeTheModal = (e) => {
-    if (e.target.className === 'maintenanceModalBackground' || e.target.className === 'maintenanceCloseButton') {
+    if (e.target.className === 'maintenanceModalBackground' || e.target.className === 'maintenanceCloseButton' || e.target.className === 'maintenanceNoButton') {
       closeModal(false);
     }
   };
@@ -36,8 +36,8 @@ const MaintenanceDeleteModal = ({ product, closeModal }) => {
             {' has purchases associate with it, would you like to mark it inactive instead?'}
           </div>
           <div className="maintenanceModalButtons">
-            <button type="button" className="maintenanceConfirmButton" onClick={handleInactive}>Yes</button>
-            <button type="button" className="maintenanceNoButton" onClick={closeTheModal}>No</button>
+            <button type="button" className="maintenanceConfirmButton" onClick={!closeTheModal}>Yes</button>
+            <button type="button" className="maintenanceNoButton" onClick={!closeTheModal}>No</button>
 
           </div>
         </div>

@@ -8,7 +8,8 @@ import fetchProducts from './MaintenancePageService';
 import './MaintenancePage.css';
 import styles from '../product-page/ProductPage.module.css';
 import Constants from '../../utils/constants';
-import deleteProducts from './MaintenancePageDeleteService';
+// eslint-disable-next-line import/named
+import deleteProducts, { checkForReviews } from './MaintenancePageDeleteService';
 import MaintenanceDeleteModal from './MaintenanceDeleteModal';
 
 /**
@@ -47,13 +48,20 @@ const MaintenancePage = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [deletedProduct, setDeletedProduct] = useState(products);
   const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
+  const [deleteButton, setDeleteButton] = useState(true);
 
   const deleteProduct = (product) => {
     deleteProducts(product, setApiError, setDeleteModalIsOpen);
   };
+
   useEffect(() => {
     fetchProducts(setProducts, setApiError);
   }, [deletedProduct]);
+
+  const hideDelete = (product) => {
+    checkForReviews(product, setDeleteButton);
+    return deleteButton;
+  };
 
   return (
     <div className="Maintenance">
@@ -106,7 +114,7 @@ const MaintenancePage = () => {
           </thead>
           <tbody>
             {products.map((product) => (
-              <tr key={product.id} className="ProductCells">
+              <tr key={product.id} className="ProductCells" onLoad={hideDelete}>
                 <td className="ProductCells">
                   {deleteModalIsOpen && reactDom.createPortal(
                     <MaintenanceDeleteModal product={product} closeModal={setDeleteModalIsOpen} />,
@@ -119,10 +127,12 @@ const MaintenancePage = () => {
                       setDeletedProduct(products);
                     }}
                     className="deleteButton"
+                    hidden={!deleteButton}
                   >
                     <Delete />
 
                   </button>
+
                 </td>
                 <td className="ProductCells">{product.id}</td>
                 <td className="ProductCells">{product.name}</td>

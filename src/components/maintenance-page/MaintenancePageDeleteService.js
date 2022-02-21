@@ -29,3 +29,20 @@ export default async function deleteProducts(product, setApiError, setDeleteModa
       setApiError(true);
     });
 }
+
+/**
+ * @name checkForReviews
+ * @description Utilizes HttpHelper to make a get request to an API
+ * @param {*} product is the produce that we are checking for reviews
+ * @param {*} setDeleteButton sets the delete button to true if reviews do not exist,
+ *            and false if reviews do exist
+ */
+export async function checkForReviews(product) {
+  await HttpHelper(`/reviews/product/${product.id}`, 'GET')
+    .then((response) => {
+      if (response.ok) {
+        return false;
+      }
+      return true;
+    });
+}
