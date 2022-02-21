@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { FaPencilAlt } from 'react-icons/fa';
-import { toast } from 'react-toastify';
+// import { toast } from 'react-toastify';
 import BasicRating from './ReviewsStars';
-import { updateReview } from './ReviewService';
+import { updateReview, validateReview } from './ReviewService';
 import { useProfile } from '../Profile/ProfileContext';
 
 /**
@@ -25,8 +25,11 @@ const Review = ({ review }, setReviews, setApiError, fetchReviews) => {
     }
   }, [userProfile, setEmail]);
 
-  const editHandler = () => {
-    setIsEdit(!isEdit);
+  const editHandler = (e) => {
+    setIsEdit(true);
+    const reviewElement = e.target.closest('.reviewsOfProduct');
+    const btnSubmit = reviewElement.querySelector('.btnSubmitEditReview');
+    btnSubmit.style.visibility = 'visible';
   };
 
   const submitEditHandler = (e) => {
@@ -43,27 +46,8 @@ const Review = ({ review }, setReviews, setApiError, fetchReviews) => {
       uerId: review.userId,
       dateCreated: review.dateCreated
     };
-    if (!value) {
-      toast.info('star rating cannot be zero');
-      return;
-    }
-    if (reviewTitle === '') {
-      toast.info('title cannot be empty');
-      return;
-    }
-    if (reviewTitle.length > 50) {
-      toast.info('title must be 50 characters or less');
-      return;
-    }
-    if (description === '') {
-      toast.info('description cannot be empty');
-      return;
-    }
-    if (description.length > 200) {
-      toast.info('description must be 200 characters or less');
-      return;
-    }
 
+    if (!validateReview(value, reviewTitle, description)) return;
     const btnSubmit = reviewElement.querySelector('.btnSubmitEditReview');
     btnSubmit.style.visibility = 'hidden';
     updateReview(setReviews, setApiError, updatedReview);
