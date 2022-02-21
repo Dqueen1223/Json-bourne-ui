@@ -17,7 +17,7 @@ const Review = ({ review }, setReviews, setApiError) => {
   const [title, setTitle] = React.useState();
   const [stars, setStars] = React.useState();
   const [email, setEmail] = React.useState('');
-
+  console.log(`review id ${review.id} product id {review.productId}`);
   const {
     state: { userProfile }
   } = useProfile();
