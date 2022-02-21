@@ -22,6 +22,8 @@ import getQtyInCart, { inventoryAvailable } from './ProductCardService';
 import ReviewsModal from '../product-page/ReviewsModal';
 import '../product-page/ReviewsModal.css';
 import fetchReviews from '../product-page/ReviewService';
+import BasicRating from '../product-page/ReviewsStars';
+import getQtyInCart, { inventoryAvailable } from './ProductCardService';
 
 /**
  * @name useStyles
@@ -57,13 +59,13 @@ const useStyles = makeStyles((theme) => ({
  * @param {*} props product
  * @return component
  */
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, reviews }) => {
   const classes = useStyles();
   const { dispatch } = useCart();
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [reviewsModal, setReviewsModal] = useState(false);
-  const [reviews, setReviews] = useState([]);
-  const [setApiError] = useState(false);
+  // const [reviews, setReviews] = useState([]);
+  // const [setApiError] = useState(false);
 
   // const showReviewButton = { reviewsModal };
   // make fetch call for reviews
@@ -118,9 +120,10 @@ const ProductCard = ({ product }) => {
   };
   const onReview = (e) => {
     e.stopPropagation();
-    fetchReviews(setReviews, setApiError);
     setReviewsModal(true);
   };
+  // eslint-disable-next-line max-len
+  // const reviewAvg = () => reviews.reduce((a, b) => a.review.rating + b.review.rating, 0) / reviews.length;
 
   useEffect(() => {
     fetchReviews(setReviews, setApiError);
@@ -189,16 +192,19 @@ const ProductCard = ({ product }) => {
         <IconButton aria-label="add to shopping cart" onClick={onAdd}>
           <AddShoppingCartIcon />
         </IconButton>
-        {ReviewsModal !== false && (
-        <button
-          className="reviewsProductCardButton"
-          type="button"
-          variant="contained"
-          onClick={onReview}
-        >
-          Reviews
-        </button>
-        )}
+        <div>
+          {ReviewsModal !== false && (
+          // <button
+          //   className="reviewsProductCardButton"
+          //   type="button"
+          //   variant="contained"
+          //   onClick={onReview}
+          // >
+          //   Reviews
+          // </button>
+          <BasicRating type="button" className="reviewsProductCardButton" onClick={onReview} />
+          )}
+        </div>
       </CardActions>
     </Card>
   );
