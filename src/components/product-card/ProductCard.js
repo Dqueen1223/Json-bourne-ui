@@ -20,7 +20,7 @@ import { useCart } from '../checkout-page/CartContext';
 import ProductCardModal from '../product-page/ProductCardModal';
 import ReviewsModal from '../product-page/ReviewsModal';
 import '../product-page/ReviewsModal.css';
-// import fetchReviews from '../product-page/ReviewService';
+import BasicRating from '../product-page/ReviewsStars';
 import getQtyInCart, { inventoryAvailable } from './ProductCardService';
 
 /**
@@ -118,9 +118,10 @@ const ProductCard = ({ product, reviews }) => {
   };
   const onReview = (e) => {
     e.stopPropagation();
-    // fetchReviews(setReviews, setApiError);
     setReviewsModal(true);
   };
+  // eslint-disable-next-line max-len
+  // const reviewAvg = () => reviews.reduce((a, b) => a.review.rating + b.review.rating, 0) / reviews.length;
 
   return (
     <Card className={classes.root}>
@@ -186,16 +187,19 @@ const ProductCard = ({ product, reviews }) => {
         <IconButton aria-label="add to shopping cart" onClick={onAdd}>
           <AddShoppingCartIcon />
         </IconButton>
-        {ReviewsModal !== false && (
-        <button
-          className="reviewsProductCardButton"
-          type="button"
-          variant="contained"
-          onClick={onReview}
-        >
-          Reviews
-        </button>
-        )}
+        <div>
+          {ReviewsModal !== false && (
+          // <button
+          //   className="reviewsProductCardButton"
+          //   type="button"
+          //   variant="contained"
+          //   onClick={onReview}
+          // >
+          //   Reviews
+          // </button>
+          <BasicRating type="button" className="reviewsProductCardButton" onClick={onReview} />
+          )}
+        </div>
       </CardActions>
     </Card>
   );

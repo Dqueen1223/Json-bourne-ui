@@ -31,8 +31,8 @@ import Stack from '@mui/material/Stack';
 export default function BasicRating(reviewsRating) {
   const [setValue] = React.useState(reviewsRating);
   return (
-    <Stack spacing={1}>
-      <Rating name="half-rating-read" defaultValue={setValue} precision={setValue} readOnly />
+    <Stack spacing={2}>
+      <Rating name="half-rating-read" defaultValue={setValue} precision={setValue} />
     </Stack>
   );
 }
