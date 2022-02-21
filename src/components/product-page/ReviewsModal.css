@@ -1,3 +1,7 @@
+.reviewsApiError{
+    color: red;
+    font-size: 1.5em;
+}
 .reviewsProductCardButton{
     background-color: #fb8122;
     color: #E1E2E2;

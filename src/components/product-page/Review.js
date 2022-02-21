@@ -4,20 +4,22 @@ import { toast } from 'react-toastify';
 import BasicRating from './ReviewsStars';
 import { updateReview } from './ReviewService';
 import { useProfile } from '../Profile/ProfileContext';
+import Constants from '../../utils/constants';
 
 /**
  * @name Review
  * @description Displays the review
  * @return component
  */
-const Review = ({ review }, setReviews, setApiError) => {
+const Review = ({ review }, setReviews) => {
   const [isEdit, setIsEdit] = React.useState(false);
   const [value, setValue] = React.useState();
   const [desc, setDesc] = React.useState();
   const [title, setTitle] = React.useState();
   const [stars, setStars] = React.useState();
   const [email, setEmail] = React.useState('');
-  console.log(`review id ${review.id} product id {review.productId}`);
+  const [apiError, setApiError] = React.useState(false);
+  console.log(`review id ${review.id} product id ${review.productId}`);
   const {
     state: { userProfile }
   } = useProfile();
@@ -79,46 +81,47 @@ const Review = ({ review }, setReviews, setApiError) => {
 
   return (
     <>
-      {(review.email === email) && !isEdit && (
-        <div className="reviewsOfProduct">
-          <div className="reviewsTitle">
-            { title || review.title }
-            <FaPencilAlt className="pencilIcon" alt="pencilIcon" onClick={editHandler} />
-          </div>
-
-          {!stars && (<div className="reviewsRating">{BasicRating(isEdit, review.rating, setValue)}</div>)}
-          {stars && (<div className="reviewsRating">{BasicRating(isEdit, stars, setStars)}</div>)}
-
-          <div className="reviewsDescription">
-            {desc || review.reviewsDescription}
-          </div>
-          <div className="reviewsDate">
-            {review.dateCreated.slice(0, 10)}
-          </div>
-          <button type="button" className="btnDummy">Submit</button>
-
+      {apiError && <span className="reviewsApiError" data-testid="errMsg">{Constants.API_ERROR}</span>}
+      {!apiError && (review.email === email) && !isEdit && (
+      <div className="reviewsOfProduct">
+        <div className="reviewsTitle">
+          { title || review.title }
+          <FaPencilAlt className="pencilIcon" alt="pencilIcon" onClick={editHandler} />
         </div>
-      )}
-      {(review.email === email) && isEdit && (
-        <div className="reviewsOfProduct">
-          <div className="reviewsTitle" contentEditable suppressContentEditableWarning onInput={preventCursorDisappearHandler}>
-            { title || review.title }
-            <FaPencilAlt className="pencilIcon" alt="pencilIcon" onClick={editHandler} />
-          </div>
-          {!stars && (<div className="reviewsRating">{BasicRating(isEdit, value, setValue, review.rating)}</div>)}
-          {stars && (<div className="reviewsRating">{BasicRating(isEdit, stars, setStars)}</div>)}
 
-          <div className="reviewsDescription" contentEditable suppressContentEditableWarning onInput={preventCursorDisappearHandler}>
-            {desc || review.reviewsDescription}
-          </div>
+        {!stars && (<div className="reviewsRating">{BasicRating(isEdit, review.rating, setValue)}</div>)}
+        {stars && (<div className="reviewsRating">{BasicRating(isEdit, stars, setStars)}</div>)}
 
-          <div className="reviewsDate">
-            {review.dateCreated.slice(0, 10)}
-          </div>
-          <button type="button" className="btnSubmitEditReview" onClick={(e) => (submitEditHandler(e))}>Submit</button>
+        <div className="reviewsDescription">
+          {desc || review.reviewsDescription}
         </div>
+        <div className="reviewsDate">
+          {review.dateCreated.slice(0, 10)}
+        </div>
+        <button type="button" className="btnDummy">Submit</button>
+
+      </div>
       )}
-      {(review.email !== email) && (
+      {!apiError && (review.email === email) && isEdit && (
+      <div className="reviewsOfProduct">
+        <div className="reviewsTitle" contentEditable suppressContentEditableWarning onInput={preventCursorDisappearHandler}>
+          { title || review.title }
+          <FaPencilAlt className="pencilIcon" alt="pencilIcon" onClick={editHandler} />
+        </div>
+        {!stars && (<div className="reviewsRating">{BasicRating(isEdit, value, setValue, review.rating)}</div>)}
+        {stars && (<div className="reviewsRating">{BasicRating(isEdit, stars, setStars)}</div>)}
+
+        <div className="reviewsDescription" contentEditable suppressContentEditableWarning onInput={preventCursorDisappearHandler}>
+          {desc || review.reviewsDescription}
+        </div>
+
+        <div className="reviewsDate">
+          {review.dateCreated.slice(0, 10)}
+        </div>
+        <button type="button" className="btnSubmitEditReview" onClick={(e) => (submitEditHandler(e))}>Submit</button>
+      </div>
+      )}
+      {!apiError && (review.email !== email) && (
       <div className="reviewsOfProduct">
         <div className="reviewsTitle">
           {review.title}
