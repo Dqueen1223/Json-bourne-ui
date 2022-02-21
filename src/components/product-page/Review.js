@@ -81,30 +81,17 @@ const Review = ({ review }, setReviews, setApiError) => {
     <>
       {(review.email === email) && !isEdit && (
         <div className="reviewsOfProduct">
-          {!title && (
           <div className="reviewsTitle">
-            { review.title }
+            { title || review.title }
             <FaPencilAlt className="pencilIcon" alt="pencilIcon" onClick={editHandler} />
           </div>
-          )}
-          {title && (
-          <div className="reviewsTitle">
-            { title }
-            <FaPencilAlt className="pencilIcon" alt="pencilIcon" onClick={editHandler} />
-          </div>
-          )}
+
           {!stars && (<div className="reviewsRating">{BasicRating(isEdit, review.rating, setValue)}</div>)}
           {stars && (<div className="reviewsRating">{BasicRating(isEdit, stars, setStars)}</div>)}
-          {!desc && (
+
           <div className="reviewsDescription">
-            {review.reviewsDescription}
+            {desc || review.reviewsDescription}
           </div>
-          )}
-          {desc && (
-          <div className="reviewsDescription">
-            {desc}
-          </div>
-          )}
           <div className="reviewsDate">
             {review.dateCreated.slice(0, 10)}
           </div>
@@ -114,30 +101,17 @@ const Review = ({ review }, setReviews, setApiError) => {
       )}
       {(review.email === email) && isEdit && (
         <div className="reviewsOfProduct">
-          {!title && (
           <div className="reviewsTitle" contentEditable suppressContentEditableWarning onInput={preventCursorDisappearHandler}>
-            { review.title }
+            { title || review.title }
             <FaPencilAlt className="pencilIcon" alt="pencilIcon" onClick={editHandler} />
           </div>
-          )}
-          {title && (
-          <div className="reviewsTitle" contentEditable suppressContentEditableWarning onInput={preventCursorDisappearHandler}>
-            { title }
-            <FaPencilAlt className="pencilIcon" alt="pencilIcon" onClick={editHandler} />
-          </div>
-          )}
           {!stars && (<div className="reviewsRating">{BasicRating(isEdit, value, setValue, review.rating)}</div>)}
           {stars && (<div className="reviewsRating">{BasicRating(isEdit, stars, setStars)}</div>)}
-          {!desc && (
+
           <div className="reviewsDescription" contentEditable suppressContentEditableWarning onInput={preventCursorDisappearHandler}>
-            {review.reviewsDescription}
+            {desc || review.reviewsDescription}
           </div>
-          )}
-          {desc && (
-          <div className="reviewsDescription" contentEditable suppressContentEditableWarning onInput={preventCursorDisappearHandler}>
-            {desc}
-          </div>
-          )}
+
           <div className="reviewsDate">
             {review.dateCreated.slice(0, 10)}
           </div>
