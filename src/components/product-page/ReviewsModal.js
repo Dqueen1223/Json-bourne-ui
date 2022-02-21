@@ -62,7 +62,7 @@ const ReviewsModal = ({
           aria-expanded={open ? 'true' : undefined}
           onClick={handleClick}
         >
-          Dashboard
+          Review Dashboard
         </Button>
         <Menu
           id="basic-menu"

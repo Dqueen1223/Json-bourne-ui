@@ -226,7 +226,17 @@ const ProductCard = ({ product, reviews }) => {
               >
                 +
               </button>
-              <BasicRating type="button" className="reviewsProductCardButton" onClick={onReview} />
+              <button
+                type="button"
+              >
+                <BasicRating
+                  variant="contained"
+                  className="reviewsProductCardButton"
+                  onClick={() => {
+                    onReview(setReviewsModal(false));
+                  }}
+                />
+              </button>
             </>
           )}
         </div>
