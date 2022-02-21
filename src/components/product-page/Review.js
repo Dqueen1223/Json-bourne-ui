@@ -10,12 +10,9 @@ import { useProfile } from '../Profile/ProfileContext';
  * @description Displays the review
  * @return component
  */
-const Review = ({ review }, setReviews, setApiError) => {
+const Review = ({ review }, setReviews, setApiError, fetchReviews) => {
   const [isEdit, setIsEdit] = React.useState(false);
   const [value, setValue] = React.useState();
-  const [desc, setDesc] = React.useState();
-  const [title, setTitle] = React.useState();
-  const [stars, setStars] = React.useState();
   const [email, setEmail] = React.useState('');
 
   const {
@@ -36,10 +33,9 @@ const Review = ({ review }, setReviews, setApiError) => {
     const reviewElement = e.target.closest('.reviewsOfProduct');
     const reviewTitle = reviewElement.querySelector('.reviewsTitle').innerText.trim();
     const description = reviewElement.querySelector('.reviewsDescription').innerText.trim();
-    const starRating = Number(reviewElement.querySelector('.starRating').innerText.trim());
     const updatedReview = {
       id: review.id,
-      rating: starRating,
+      rating: value,
       title: reviewTitle,
       reviewsDescription: description,
       email: review.email,
@@ -47,6 +43,10 @@ const Review = ({ review }, setReviews, setApiError) => {
       uerId: review.userId,
       dateCreated: review.dateCreated
     };
+    if (!value) {
+      toast.info('star rating cannot be zero');
+      return;
+    }
     if (reviewTitle === '') {
       toast.info('title cannot be empty');
       return;
@@ -63,12 +63,11 @@ const Review = ({ review }, setReviews, setApiError) => {
       toast.info('description must be 200 characters or less');
       return;
     }
-    setTitle(reviewTitle);
-    setDesc(description);
-    setStars(starRating);
-    updateReview(setReviews, setApiError, updatedReview);
+
     const btnSubmit = reviewElement.querySelector('.btnSubmitEditReview');
     btnSubmit.style.visibility = 'hidden';
+    updateReview(setReviews, setApiError, updatedReview);
+    fetchReviews(setReviews, setApiError);
     setIsEdit(false);
   };
 
@@ -82,15 +81,12 @@ const Review = ({ review }, setReviews, setApiError) => {
       {(review.email === email) && !isEdit && (
         <div className="reviewsOfProduct">
           <div className="reviewsTitle">
-            { title || review.title }
+            { review.title }
             <FaPencilAlt className="pencilIcon" alt="pencilIcon" onClick={editHandler} />
           </div>
-
-          {!stars && (<div className="reviewsRating">{BasicRating(isEdit, review.rating, setValue)}</div>)}
-          {stars && (<div className="reviewsRating">{BasicRating(isEdit, stars, setStars)}</div>)}
-
+          <div className="reviewsRating">{BasicRating(isEdit, review.rating)}</div>
           <div className="reviewsDescription">
-            {desc || review.reviewsDescription}
+            {review.reviewsDescription}
           </div>
           <div className="reviewsDate">
             {review.dateCreated.slice(0, 10)}
@@ -102,16 +98,13 @@ const Review = ({ review }, setReviews, setApiError) => {
       {(review.email === email) && isEdit && (
         <div className="reviewsOfProduct">
           <div className="reviewsTitle" contentEditable suppressContentEditableWarning onInput={preventCursorDisappearHandler}>
-            { title || review.title }
+            { review.title }
             <FaPencilAlt className="pencilIcon" alt="pencilIcon" onClick={editHandler} />
           </div>
-          {!stars && (<div className="reviewsRating">{BasicRating(isEdit, value, setValue, review.rating)}</div>)}
-          {stars && (<div className="reviewsRating">{BasicRating(isEdit, stars, setStars)}</div>)}
-
+          <div className="reviewsRating">{BasicRating(isEdit, value, setValue)}</div>
           <div className="reviewsDescription" contentEditable suppressContentEditableWarning onInput={preventCursorDisappearHandler}>
-            {desc || review.reviewsDescription}
+            {review.reviewsDescription}
           </div>
-
           <div className="reviewsDate">
             {review.dateCreated.slice(0, 10)}
           </div>
@@ -123,7 +116,7 @@ const Review = ({ review }, setReviews, setApiError) => {
         <div className="reviewsTitle">
           {review.title}
         </div>
-        <div className="reviewsRating">{BasicRating(isEdit, review.rating, setValue)}</div>
+        <div className="reviewsRating">{BasicRating(isEdit, review.rating)}</div>
         <div className="reviewsDescription">
           {review.reviewsDescription}
         </div>

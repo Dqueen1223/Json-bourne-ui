@@ -8,7 +8,7 @@ import './ReviewsModal.css';
  * @return component
  */
 const ReviewsModal = ({
-  product, reviews, closeModal, setReviews, setApiError
+  product, reviews, closeModal, setReviews, setApiError, fetchReviews
 }) => {
   const closeTheModal = (e) => {
     if (e.target.className === 'reviewsModalBackground' || e.target.className === 'reviewscloseButton') {
@@ -48,6 +48,7 @@ const ReviewsModal = ({
                   review={review}
                   setReviews={setReviews}
                   setApiError={setApiError}
+                  fetchReviews={fetchReviews}
                 />
               </div>
             ))}

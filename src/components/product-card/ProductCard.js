@@ -125,7 +125,12 @@ const ProductCard = ({ product }) => {
         document.getElementById('root')
       )}
       {reviewsModal && reactDom.createPortal(
-        <ReviewsModal product={product} reviews={reviews} closeModal={setReviewsModal} />,
+        <ReviewsModal
+          product={product}
+          reviews={reviews}
+          closeModal={setReviewsModal}
+          fetchReviews={fetchReviews}
+        />,
         document.getElementById('root')
       )}
       <CardHeader

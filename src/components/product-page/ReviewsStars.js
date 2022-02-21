@@ -2,7 +2,7 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Rating from '@mui/material/Rating';
 
-export default function BasicRating(isEdit, value, setValue, currRating) {
+export default function BasicRating(isEdit, value, setValue) {
   return (
     <Box
       sx={{
@@ -13,12 +13,11 @@ export default function BasicRating(isEdit, value, setValue, currRating) {
         <>
           <Rating
             name="simple-controlled"
-            value={value || currRating}
+            value={value}
             onChange={(event, newValue) => {
               setValue(newValue);
             }}
           />
-          <span className="starRating">{value || currRating}</span>
         </>
       )}
 
@@ -29,7 +28,6 @@ export default function BasicRating(isEdit, value, setValue, currRating) {
             readOnly
             value={value}
           />
-          <span className="starRating">{value}</span>
         </>
       )}
     </Box>
