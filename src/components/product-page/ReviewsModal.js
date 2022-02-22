@@ -1,3 +1,4 @@
+import { ConfirmProvider } from 'material-ui-confirm';
 import React from 'react';
 import Review from './Review';
 import './ReviewsModal.css';
@@ -44,10 +45,13 @@ const ReviewsModal = ({
             </button>
             {reviews && reviews.filter((r) => (r.productId === product.id)).map((review) => (
               <div key={review.id}>
-                <Review
-                  review={review}
-                  setReviews={setReviews}
-                />
+                <ConfirmProvider>
+
+                  <Review
+                    review={review}
+                    setReviews={setReviews}
+                  />
+                </ConfirmProvider>
               </div>
             ))}
             <div className="reviewsModal-footer" />

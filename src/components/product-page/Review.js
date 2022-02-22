@@ -6,7 +6,6 @@ import { useConfirm } from 'material-ui-confirm';
 import { updateReview, deleteReview } from './ReviewService';
 import { useProfile } from '../Profile/ProfileContext';
 import BasicRating from './ReviewsStars';
-import Constants from '../../utils/constants';
 
 /**
  * @name Review
@@ -20,9 +19,9 @@ const Review = ({ review }, setReviews) => {
   const [desc, setDesc] = React.useState();
   const [title, setTitle] = React.useState();
   const [stars, setStars] = React.useState();
-  const confirm = useConfirm();
   const [email, setEmail] = React.useState('');
   const [apiError, setApiError] = React.useState(false);
+  const confirm = useConfirm();
   console.log(`review id ${review.id} product id ${review.productId}`);
   const {
     state: { userProfile }
@@ -33,6 +32,12 @@ const Review = ({ review }, setReviews) => {
       setEmail(userProfile[0].email);
     }
   }, [userProfile, setEmail]);
+
+  useEffect(() => {
+    if (apiError) {
+      toast.error('cannot connect to the database');
+    }
+  }, [apiError]);
 
   const editHandler = () => {
     setIsEdit(!isEdit);
@@ -55,18 +60,22 @@ const Review = ({ review }, setReviews) => {
     };
     if (reviewTitle === '') {
       toast.info('title cannot be empty');
+      reviewElement.querySelector('.reviewsTitle').focus();
       return;
     }
     if (reviewTitle.length > 50) {
       toast.info('title must be 50 characters or less');
+      reviewElement.querySelector('.reviewsTitle').focus();
       return;
     }
     if (description === '') {
       toast.info('description cannot be empty');
+      reviewElement.querySelector('.reviewsDescription').focus();
       return;
     }
-    if (description.length > 200) {
-      toast.info('description must be 200 characters or less');
+    if (description.length > 500) {
+      toast.info('description must be 500 characters or less');
+      reviewElement.querySelector('.reviewsDescription').focus();
       return;
     }
     setTitle(reviewTitle);
@@ -107,23 +116,26 @@ const Review = ({ review }, setReviews) => {
       description: 'This action cannot be undone.',
       confirmationText: 'Delete'
     })
-      .then(() => deleteReview(setReviews, setApiError, deletedReview))
-      .catch(() => console.log('Deletion cancelled.')).finally(() => deleteHandler(true));
-    setIsDeleted(true);
+      .then(() => deleteReview(setIsDeleted, setApiError, deletedReview))
+      .catch(() => console.log('Deletion cancelled.'));
     const btnSubmit = reviewElement.querySelector('.btnSubmitDeleteReview');
     btnSubmit.style.visibility = 'hidden';
-    setIsEdit(false);
   };
 
   return (
     <>
-      {apiError && <span className="reviewsApiError" data-testid="errMsg">{Constants.API_ERROR}</span>}
-      {!apiError && (review.email === email) && !isEdit && (
+      {(review.email === email) && !isEdit && (
       <div className="reviewsOfProduct">
-        <div className="reviewsTitle">
-          { title || review.title }
-          <FaPencilAlt className="pencilIcon" alt="pencilIcon" onClick={editHandler} />
-          <Delete className="pencilIcon" alt="pencilIcon" onClick={(e) => (submitDeleteHandler(e))} />
+        <div className="titleContainer">
+          <div className="reviewsTitle">
+            { title || review.title }
+          </div>
+          <div>
+              <span>
+                <FaPencilAlt className="pencilIcon" alt="pencilIcon" onClick={editHandler} />
+                <Delete className="pencilIcon" alt="pencilIcon" onClick={(e) => (submitDeleteHandler(e))} />
+              </span>
+          </div>
         </div>
 
         {!stars && (<div className="reviewsRating">{BasicRating(isEdit, review.rating, setValue)}</div>)}
@@ -139,27 +151,30 @@ const Review = ({ review }, setReviews) => {
 
       </div>
       )}
-      {!apiError && (review.email === email) && isEdit && (
-      <div className="reviewsOfProduct">
-        <div className="reviewsTitle" contentEditable suppressContentEditableWarning onInput={preventCursorDisappearHandler}>
-          { title || review.title }
-          <FaPencilAlt className="pencilIcon" alt="pencilIcon" onClick={editHandler} />
-          <Delete className="pencilIcon" alt="pencilIcon" onClick={(e) => (submitDeleteHandler(e))} />
-        </div>
-        {!stars && (<div className="reviewsRating">{BasicRating(isEdit, value, setValue, review.rating)}</div>)}
-        {stars && (<div className="reviewsRating">{BasicRating(isEdit, stars, setStars)}</div>)}
+      {(review.email === email) && isEdit && (
+        <div className="reviewsOfProduct">
+          <div className="titleContainer">
+            <div className="reviewsTitle" contentEditable suppressContentEditableWarning onInput={preventCursorDisappearHandler}>
+              { title || review.title }
+            </div>
+            <div>
+              <span><FaPencilAlt className="pencilIcon" alt="pencilIcon" onClick={editHandler} /></span>
+            </div>
+          </div>
+          {!stars && (<div className="reviewsRating">{BasicRating(isEdit, value, setValue, review.rating)}</div>)}
+          {stars && (<div className="reviewsRating">{BasicRating(isEdit, stars, setStars)}</div>)}
 
-        <div className="reviewsDescription" contentEditable suppressContentEditableWarning onInput={preventCursorDisappearHandler}>
-          {desc || review.reviewsDescription}
-        </div>
+          <div className="reviewsDescription" contentEditable suppressContentEditableWarning onInput={preventCursorDisappearHandler}>
+            {desc || review.reviewsDescription}
+          </div>
 
-        <div className="reviewsDate">
-          {review.dateCreated.slice(0, 10)}
+          <div className="reviewsDate">
+            {review.dateCreated.slice(0, 10)}
+          </div>
+          <button type="button" className="btnSubmitEditReview" onClick={(e) => (submitEditHandler(e))}>Submit</button>
         </div>
-        <button type="button" className="btnSubmitEditReview" onClick={(e) => (submitEditHandler(e))}>Submit</button>
-      </div>
       )}
-      {!apiError && (review.email !== email) && (
+      {(review.email !== email) && (
       <div className="reviewsOfProduct">
         <div className="reviewsTitle">
           {review.title}
@@ -171,6 +186,7 @@ const Review = ({ review }, setReviews) => {
         <div className="reviewsDate">
           {review.dateCreated.slice(0, 10)}
         </div>
+        <button type="button" className="btnDummy" onClick={(e) => (submitEditHandler(e))}>Submit</button>
       </div>
       )}
     </>

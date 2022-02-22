@@ -124,19 +124,10 @@ const ProductCard = ({ product }) => {
         document.getElementById('root')
       )}
       {reviewsModal && reactDom.createPortal(
-        <ReviewsModal
-          product={product}
-          reviews={reviews}
-          closeModal={setReviewsModal}
-          setReviews={setReviews}
-          setApiError={setApiError}
-          isEditMode={isEditMode}
-          setIsEditMode={setIsEditMode}
-          starRating={starRating}
-          setStarRating={setStarRating}
-        />,
+        <ReviewsModal product={product} reviews={reviews} closeModal={setReviewsModal} />,
         document.getElementById('root')
       )}
+
       <CardHeader
         onClick={() => {
           setModalIsOpen(true);

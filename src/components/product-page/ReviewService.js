@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import HttpHelper from '../../utils/HttpHelper';
 import Constants from '../../utils/constants';
 
@@ -53,15 +54,16 @@ export async function updateReview(setReviews, setApiError, review) {
  * @param {*} setApiError sets error if response other than 200 is returned
  * @returns sets state for reviews if 200 response, else sets state for apiError
  */
-export async function deleteReview(setReviews, setApiError, review) {
+export async function deleteReview(setIsDeleted, setApiError, review) {
   await HttpHelper(`${Constants.REVIEWS_ENDPOINT}/${review.id}`, 'DELETE')
     .then((response) => {
       if (response.ok) {
+        toast.success('Review deleted');
+        setIsDeleted(true);
         return response.json();
       }
       throw new Error(Constants.API_ERROR);
     })
-  //    .then(setReviews)
     .catch(() => {
       setApiError(true);
     });
