@@ -1,12 +1,13 @@
 import React from 'react';
 import './MaintenanceDeleteModal.css';
+import deleteProducts from './MaintenancePageDeleteService';
 
 /**
  * @name MaintenanceDeleteModal
  * @description material-ui styling for product card review modal
  * @return component
  */
-const MaintenanceDeleteModal = ({ product, closeModal }) => {
+export default function MaintenanceDeleteModal({ product, closeModal }) {
   const closeTheModal = (e) => {
     if (e.target.className === 'maintenanceModalBackground' || e.target.className === 'maintenanceCloseButton' || e.target.className === 'maintenanceNoButton') {
       closeModal(false);
@@ -35,6 +36,31 @@ const MaintenanceDeleteModal = ({ product, closeModal }) => {
       </div>
     </div>
   );
-};
+}
 
-export default MaintenanceDeleteModal;
+export function MaintenanceDeleteConfirmModal({ product, closeModal }) {
+  const closeTheModal = (e) => {
+    if (e.target.className === 'maintenanceModalBackground' || e.target.className === 'maintenanceCloseButton' || e.target.className === 'maintenanceNoButton') {
+      closeModal(false);
+    }
+  };
+
+  return (
+    <div className="maintenanceModalBackground" onClick={closeTheModal} aria-hidden="true">
+      <div className="maintenanceDeleteModal">
+        <div className="maintenanceDeleteModal-content">
+          <div className="maintenanceDeleteModal-header">
+            <button type="button" className="maintenanceCloseButton" onClick={closeTheModal}>&times;</button>
+          </div>
+          <div className="maintenanceModal-body">
+            Are you sure you would like to delete this item? It can not be undone.
+            <div className="maintenanceModalButtons">
+              <button type="button" className="maintenanceConfirmButton" onClick={deleteProducts(product)}>Yes</button>
+              <button type="button" className="maintenanceNoButton" onClick={closeTheModal}>No</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

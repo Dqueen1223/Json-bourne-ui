@@ -1,7 +1,6 @@
 import { toast } from 'react-toastify';
 import HttpHelper from '../../utils/HttpHelper';
 import Constants from '../../utils/constants';
-
 /**
  *
  * @name deleteProduct
@@ -10,10 +9,12 @@ import Constants from '../../utils/constants';
  * @param {*} setApiError sets error if response other than 200 is returned
  * @returns the response JSON from the server if the product was deleted or API error if not 200OK
  */
-export default async function deleteProducts(product, setApiError, setDeleteModalIsOpen) {
+export default async function deleteProducts(product, setApiError, setDeleteModalIsOpen,
+  setConfirmModal) {
   await HttpHelper(`${Constants.PRODUCTS_ENDPOINT}/${product.id}`, 'DELETE')
     .then((response) => {
       if (response.ok) {
+        setConfirmModal(true);
         toast.success('Product successfully deleted.');
       }
       return response.json();
@@ -37,14 +38,16 @@ export default async function deleteProducts(product, setApiError, setDeleteModa
  * @param {*} setDeleteButton sets the delete button to true if reviews do not exist,
  *            and false if reviews do exist
  */
-export async function checkForReviews(product, setDeleteButton) {
-  await HttpHelper(`/reviews/product/${product.id}`, 'GET')
+export async function checkForReviews(setDeleteButton, setApiError) {
+  await HttpHelper('/reviews/product', 'GET')
     .then((response) => {
       if (response.ok) {
-        setDeleteButton(false);
+        return response.json();
       }
-      if (response.status === '404') {
-        setDeleteButton(true);
-      }
+      throw new Error(Constants.API_ERROR);
+    })
+    .then(setDeleteButton)
+    .catch(() => {
+      setApiError(true);
     });
 }

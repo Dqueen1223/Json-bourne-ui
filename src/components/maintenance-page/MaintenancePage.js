@@ -8,9 +8,8 @@ import fetchProducts from './MaintenancePageService';
 import './MaintenancePage.css';
 import styles from '../product-page/ProductPage.module.css';
 import Constants from '../../utils/constants';
-// eslint-disable-next-line import/named
-import deleteProducts, { checkForReviews } from './MaintenancePageDeleteService';
-import MaintenanceDeleteModal from './MaintenanceDeleteModal';
+import { checkForReviews } from './MaintenancePageDeleteService';
+import MaintenanceDeleteModal, { MaintenanceDeleteConfirmModal } from './MaintenanceDeleteModal';
 
 /**
  * @name useStyles
@@ -48,26 +47,20 @@ const MaintenancePage = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [deletedProduct, setDeletedProduct] = useState(products);
   const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
-  const [activeReviews, setActiveReviews] = useState(reviews.filter(reviews.filter((r) =>
-    (r.productId === product.id))));
+  const [deleteButton, setDeleteButton] = useState([]);
+  const [confirmModal, setConfirmModal] = useState(false);
 
-  const deleteProduct = (product) => {
-    deleteProducts(product, setApiError, setDeleteModalIsOpen);
-  };
+  // const deleteProduct = (product) => {
+  //   deleteProducts(product, setApiError, setDeleteModalIsOpen);
+  // };
 
   useEffect(() => {
     fetchProducts(setProducts, setApiError);
   }, [deletedProduct]);
 
-  const hideDelete = (product) => {
-    const button = document.getElementsByClassName(deleteButton);
-    checkForReviews(product, setDeleteButton);
-    if (deleteButton.includes(product.id)) {
-      button.style.visibility = 'hidden';
-    } else {
-      button.style.visibility = 'visible';
-    }
-  };
+  useEffect(() => {
+    checkForReviews(setDeleteButton, setApiError);
+  }, []);
 
   return (
     <div className="Maintenance">
@@ -97,7 +90,7 @@ const MaintenancePage = () => {
         <table className="Product">
           <thead>
             <tr>
-              <th className="deleteS" />
+              <th className="deleteButton" />
               <th>Id</th>
               <th>Name</th>
               <th>SKU</th>
@@ -120,7 +113,7 @@ const MaintenancePage = () => {
           </thead>
           <tbody>
             {products.map((product) => (
-              <tr key={product.id} className="ProductCells" onLoad={hideDelete}>
+              <tr key={product.id} className="ProductCells">
                 <td className="ProductCells">
                   {deleteModalIsOpen && reactDom.createPortal(
                     <MaintenanceDeleteModal
@@ -129,20 +122,28 @@ const MaintenancePage = () => {
                     />,
                     document.getElementById('root')
                   )}
+                  {confirmModal && reactDom.createPortal(
+                    <MaintenanceDeleteConfirmModal
+                      product={product}
+                      closeModal={setConfirmModal}
+                    />,
+                    document.getElementById('root')
+                  )}
+                  {!deleteButton.includes(product.id)
+
+                  && (
                   <button
                     type="button"
                     onClick={() => {
-                      deleteProduct(product);
+                      setConfirmModal(true);
                       setDeletedProduct(products);
                     }}
                     className="deleteButton"
-                    onLoad={() => {
-                      hideDelete(product);
-                    }}
                   >
                     <Delete />
 
                   </button>
+                  )}
 
                 </td>
                 <td className="ProductCells">{product.id}</td>

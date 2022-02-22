@@ -10,21 +10,13 @@ import cartLogic from './cartLogic';
  * @description Displays order items and subtotal
  * @return component
  */
-<<<<<<< HEAD
 const ReviewOrderWidget = ({ shippingFee }) => {
-=======
-const ReviewOrderWidget = ({ setTotal }) => {
->>>>>>> 58a9b3b1ce0b055ad236031baf92d3284bf28d58
   const {
     state: { products }
   } = useCart();
   cartLogic();
-<<<<<<< HEAD
   const calculateTotal = () => (Number(getSubtotal(products).substring(1))
     + Number(shippingFee)).toFixed(2);
-=======
-  setTotal(Number(getSubtotal(products).substring(1)));
->>>>>>> 58a9b3b1ce0b055ad236031baf92d3284bf28d58
   return (
     <>
       {products.map(({

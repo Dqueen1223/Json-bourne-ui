@@ -8,7 +8,7 @@ import DeliveryAddress from './forms/DeliveryAddress';
 import BillingDetails from './forms/BillingDetails';
 import makePurchase from './CheckoutService';
 import validateForm from '../form/FormValidate';
-import { useProfile } from '../Profile/ProfileContext';
+// import { useProfile } from '../Profile/ProfileContext';
 import { getSubtotal } from './ReviewOrderWidgetService';
 import getBillingRate from './BillingRateService';
 /**
