@@ -45,19 +45,14 @@ const MaintenancePage = () => {
   const [apiError, setApiError] = useState(false);
   const [products, setProducts] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [Editable, setEditable] = useState(null);
+  const [editable, setEditable] = useState(null);
+  const [releaseEditable, setReleaseEdtiable] = useState('false');
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
     fetchProducts(setProducts, setApiError);
   }, []);
-
-  const clickEditMaitenance = (e, product) => {
-    e.preventDefault();
-    setEditable(product.id);
-  };
-  const cancelEditing = (e, product) => {
-    e.preventDefault();
+  const resetToDefaultTableData = (product) => {
     if (document.getElementById('errors')) {
       document.getElementById('errors').remove();
     }
@@ -78,6 +73,25 @@ const MaintenancePage = () => {
     document.getElementById('price').innerHTML = product.price;
     document.getElementById('material').innerHTML = product.material;
     document.getElementById('quantity').innerHTML = product.quantity;
+  };
+  const clickEditMaitenance = (e, product) => {
+    e.preventDefault();
+    if (editable != null) {
+      resetToDefaultTableData(product);
+    }
+    setEditable(product.id);
+    const today = new Date();
+    const releaseDate = new Date(
+      product.releaseDate
+    );
+    if (releaseDate.getTime() > today.getTime()) {
+      setReleaseEdtiable(null);
+      setReleaseEdtiable('true');
+    }
+  };
+  const cancelEditing = (e, product) => {
+    e.preventDefault();
+    resetToDefaultTableData(product);
     setEditable(null);
   };
 
@@ -126,8 +140,15 @@ const MaintenancePage = () => {
     };
     const idList = Object.keys(submitedProduct);
     const errorList = validateCreateProductForm(submitedProduct, idList);
+    if (
+      releaseDate.innerHTML !== /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])T\d{2}:\d{2}:\d{2}$/
+    ) {
+      errorList.releaseDate = 'Release Date must match the format of YYYY/MM/DDT00:00:00';
+    }
     if (active.innerHTML === 'true' || active.innerHTML === 'false');
-    else { errorList.active = 'Activity must be true of false'; }
+    else {
+      errorList.active = 'Activity must be true of false';
+    }
     for (let i = 0; i < idList.length; i += 1) {
       const id = idList[i];
       if (errorList[id]) {
@@ -168,95 +189,103 @@ const MaintenancePage = () => {
     } else GenerateErrorMessages(errors);
     setErrors({});
   };
-
   const editRow = (product) => (
-    <tr key={product.id} className="ProductCells" id="editable">
-      <td className="ProductCells">
-        <button
-          type="submit"
-          onClick={(e) => submitEdit(e, product)}
-          className="Confirm"
-          id="checkButton"
+    <>
+      <tr key={product.id} className="ProductCells" id="editable">
+        <td className="ProductCells">
+          <button
+            type="submit"
+            onClick={(e) => submitEdit(e, product)}
+            className="Confirm"
+            id="checkButton"
+          >
+            <FaCheck id="check" />
+          </button>
+          <button
+            type="button"
+            onClick={(e) => cancelEditing(e, product)}
+            className="Cancel"
+            id="X"
+          >
+            X
+          </button>
+        </td>
+        <td className="ProductCells">{product.id}</td>
+        <td className="ProductCells" contentEditable="true" id="name">
+          {product.name}
+        </td>
+        <td className="ProductCells" contentEditable="true" id="sku">
+          {product.sku}
+        </td>
+        <td className="ProductCells" contentEditable="true" id="description">
+          {product.description}
+        </td>
+        <td className="ProductCells" contentEditable="true" id="demographic">
+          {product.demographic}
+        </td>
+        <td className="ProductCells" contentEditable="true" id="category">
+          {product.category}
+        </td>
+        <td className="ProductCells" contentEditable="true" id="type">
+          {product.type}
+        </td>
+        <td
+          className="ProductCells"
+          contentEditable={releaseEditable}
+          id="releaseDate"
         >
-          <FaCheck id="check" />
-        </button>
-        <button
-          type="button"
-          onClick={(e) => cancelEditing(e, product)}
-          className="Cancel"
-          id="X"
+          {product.releaseDate}
+        </td>
+        <td
+          className="ProductCells"
+          contentEditable="true"
+          id="primaryColorCode"
         >
-          X
-        </button>
-      </td>
-      <td className="ProductCells">{product.id}</td>
-      <td className="ProductCells" contentEditable="true" id="name">
-        {product.name}
-      </td>
-      <td className="ProductCells" contentEditable="true" id="sku">
-        {product.sku}
-      </td>
-      <td className="ProductCells" contentEditable="true" id="description">
-        {product.description}
-      </td>
-      <td className="ProductCells" contentEditable="true" id="demographic">
-        {product.demographic}
-      </td>
-      <td className="ProductCells" contentEditable="true" id="category">
-        {product.category}
-      </td>
-      <td className="ProductCells" contentEditable="true" id="type">
-        {product.type}
-      </td>
-      <td className="ProductCells" contentEditable="true" id="releaseDate">
-        {product.releaseDate}
-      </td>
-      <td className="ProductCells" contentEditable="true" id="primaryColorCode">
-        {product.primaryColorCode}
-      </td>
-      <td
-        className="ProductCells"
-        contentEditable="true"
-        id="secondaryColorCode"
-      >
-        {product.secondaryColorCode}
-      </td>
-      <td className="ProductCells" contentEditable="true" id="styleNumber">
-        {product.styleNumber}
-      </td>
-      <td
-        className="ProductCells"
-        contentEditable="true"
-        id="globalProductCode"
-      >
-        {product.globalProductCode}
-      </td>
-      <td className="ProductCells" contentEditable="true" id="active">
-        {product.active.toString()}
-      </td>
-      <td className="ProductCells" contentEditable="true" id="brand">
-        {product.brand}
-      </td>
-      <td className="ProductCells" contentEditable="true" id="imageSrc">
-        {product.imageSrc}
-      </td>
-      <td className="ProductCells" contentEditable="true" id="material">
-        {product.material}
-      </td>
-      <td className="ProductCells" contentEditable="true" id="price">
-        {product.price.toFixed(2)}
-      </td>
-      <td
-        className="ProductCells"
-        contentEditable="true"
-        id="quantity"
-        value={product.quantity}
-      >
-        {product.quantity}
-      </td>
-    </tr>
+          {product.primaryColorCode}
+        </td>
+        <td
+          className="ProductCells"
+          contentEditable="true"
+          id="secondaryColorCode"
+        >
+          {product.secondaryColorCode}
+        </td>
+        <td className="ProductCells" contentEditable="true" id="styleNumber">
+          {product.styleNumber}
+        </td>
+        <td
+          className="ProductCells"
+          contentEditable="true"
+          id="globalProductCode"
+        >
+          {product.globalProductCode}
+        </td>
+        <td className="ProductCells" contentEditable="true" id="active">
+          {product.active.toString()}
+        </td>
+        <td className="ProductCells" contentEditable="true" id="brand">
+          {product.brand}
+        </td>
+        <td className="ProductCells" contentEditable="true" id="imageSrc">
+          {product.imageSrc}
+        </td>
+        <td className="ProductCells" contentEditable="true" id="material">
+          {product.material}
+        </td>
+        <td className="ProductCells" contentEditable="true" id="price">
+          {product.price.toFixed(2)}
+        </td>
+        <td
+          className="ProductCells"
+          contentEditable="true"
+          id="quantity"
+          value={product.quantity}
+        >
+          {product.quantity}
+        </td>
+      </tr>
+    </>
   );
-
   const viewRow = (product) => (
     <tr key={product.id} className="ProductCells">
       <td className="ProductCells">
@@ -348,7 +377,7 @@ const MaintenancePage = () => {
           <tbody id="tableBody">
             {products.map((product) => (
               <>
-                {Editable === product.id
+                {editable === product.id
                   ? editRow(product)
                   : viewRow(product)}
               </>
