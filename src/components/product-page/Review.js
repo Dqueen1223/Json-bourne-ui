@@ -110,7 +110,7 @@ const Review = ({ review }, setReviews) => {
       <div className="reviewsOfProduct">
         <div className="reviewsTitle" contentEditable suppressContentEditableWarning onInput={preventCursorDisappearHandler}>
           { title || review.title }
-          <FaPencilAlt className="pencilIcon" alt="pencilIcon" onClick={editHandler} />
+          <FaPencilAlt className="pencilIcon" alt="pencilIcon" onClick={editHandler} contentEditable="false" suppressContentEditableWarning />
         </div>
         {!stars && (<div className="reviewsRating">{BasicRating(isEdit, value, setValue, review.rating)}</div>)}
         {stars && (<div className="reviewsRating">{BasicRating(isEdit, stars, setStars)}</div>)}
@@ -137,6 +137,7 @@ const Review = ({ review }, setReviews) => {
         <div className="reviewsDate">
           {review.dateCreated.slice(0, 10)}
         </div>
+        <button type="button" className="btnDummy" onClick={(e) => (submitEditHandler(e))}>Submit</button>
       </div>
       )}
     </>
