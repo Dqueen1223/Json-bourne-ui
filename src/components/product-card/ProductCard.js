@@ -63,14 +63,7 @@ const ProductCard = ({ product, reviews }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [reviewsModal, setReviewsModal] = useState(false);
   const [showCreateReview, setReviewFormToggle] = useState(false);
-  // const [reviews, setReviews] = useState([]);
-  // const [setApiError] = useState(false);
-  // const reviews = [];
-
-  // const showReviewButton = { reviewsModal };
-  // make fetch call for reviews
-  // useEffect - whenever reviews get changed if filter returns true
-
+  const [activeReviews] = React.useState(reviews.filter((r) => (r.productId === product.id)));
   const {
     state: { products }
   } = useCart();
@@ -123,6 +116,11 @@ const ProductCard = ({ product, reviews }) => {
     setReviewsModal(true);
     if (reviews.length === 0) {
       setReviewFormToggle(true);
+    }
+    if (activeReviews.length > 0) {
+      e.target.style.display = 'none';
+    } else {
+      e.target.style.display = 'inherit';
     }
   };
   const addReview = (e) => {
@@ -237,6 +235,7 @@ const ProductCard = ({ product, reviews }) => {
                   }}
                 />
               </button>
+              {/* getting a count of reviews that are already on product */}
             </>
           )}
         </div>
