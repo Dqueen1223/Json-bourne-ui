@@ -3,7 +3,6 @@ import './ProfilePage.css';
 import { toast } from 'react-toastify';
 import SettingsIcon from '@mui/icons-material/Settings';
 import CheckIcon from '@mui/icons-material/Check';
-import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import { IconButton } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import { useProfile } from './ProfileContext';
@@ -41,8 +40,15 @@ const ProfilePage = () => {
     fetchPurchases(`?email=${userProfile[0].email}`, setPurchases);
   }, [userProfile]);
   const startEditing = () => {
-    setIsEditing(true);
-    setTempProfile(profile);
+    if (isEditing === false) {
+      setIsEditing(true);
+      setTempProfile(profile);
+    } else {
+      const transfer = tempProfile;
+      setProfile(transfer);
+      setIsEditing(false);
+      setErrors({});
+    }
   };
   const trySubmit = () => {
     const currentErrors = profileValidation(profile);
@@ -50,10 +56,6 @@ const ProfilePage = () => {
       setErrors(currentErrors);
       toast.error('There was errors in the inputs. The changes have not been submitted');
     } else {
-      const tProfile = profile;
-      if (tProfile.street2 === null || tProfile.street2.trim() === '') {
-        tProfile.street2 = tempProfile.street2;
-      }
       const user = {
         id: profile.id,
         dateModified: new Date().toISOString(),
@@ -61,7 +63,7 @@ const ProfilePage = () => {
         firstName: profile.firstName,
         lastName: profile.lastName,
         street: profile.street,
-        street2: tProfile.street2,
+        street2: profile.street2,
         city: profile.city,
         state: profile.state,
         zip: profile.zip,
@@ -71,12 +73,6 @@ const ProfilePage = () => {
       fetchUpdateUser(user, setProfile);
       setIsEditing(false);
     }
-  };
-  const abortEdit = () => {
-    const transfer = tempProfile;
-    setProfile(transfer);
-    setIsEditing(false);
-    setErrors({});
   };
   /* const renderPurchase = () => {
     <div className="test">
@@ -99,53 +95,62 @@ const ProfilePage = () => {
     document.getElementById('purchase').classList.remove('active');
   };
   if (!apiError) {
-    return (
-      <div className="profile">
-        <div className="ui">
-          <div className="buttons">
-            <button className="profileButton active" id="profile" type="button" onClick={changeStateProfileInfo}> User Info</button>
-            <button className="profileButton purchaseHistory" id="purchase" type="button" onClick={changeStatePurchase}> Purchase History </button>
-          </div>
-        </div>
-        <div className="content">
-          {!isEditing && <IconButton className="edit" size="large" onClick={startEditing}><SettingsIcon /></IconButton>}
-          <div className="userInfodiv">
-            <ProfileName
-              onChange={onProfileChange}
-              isEditing={isEditing}
-              data={profile}
-              errors={errors}
-            />
-            <ProfileShipping
-              onChange={onProfileChange}
-              isEditing={isEditing}
-              data={profile}
-              errors={errors}
-            />
-            <div className="submitAbort">
-              {isEditing && <Button className="abortEdit" size="large" startIcon={<CancelOutlinedIcon />} onClick={abortEdit} />}
-              {isEditing && <Button className="submit" size="large" startIcon={<CheckIcon />} onClick={trySubmit} />}
+    try {
+      return (
+        <div className="profile">
+          <div className="ui">
+            <div className="buttons">
+              <button className="profileButton active" id="profile" type="button" onClick={changeStateProfileInfo}> User Info</button>
+              <button className="profileButton purchaseHistory" id="purchase" type="button" onClick={changeStatePurchase}> Purchase History </button>
             </div>
           </div>
-          {purchaseInfo && (
-            <div className="purchases">
-              {purchases.map((purchase) => (
-                <div key={purchase.id} className="purchase">
-                  <ProfilePurchase
-                    purchases={purchase}
-                  />
+          <div className="content">
+            <IconButton className="edit" size="large" onClick={startEditing}><SettingsIcon /></IconButton>
+            {!purchaseInfo && (
+              <div className="userInfodiv">
+                <ProfileName
+                  onChange={onProfileChange}
+                  isEditing={isEditing}
+                  data={profile}
+                  errors={errors}
+                />
+                <ProfileShipping
+                  onChange={onProfileChange}
+                  isEditing={isEditing}
+                  data={profile}
+                  errors={errors}
+                />
+                <div className="submitAbort">
+                  {isEditing && <Button className="submit" size="large" startIcon={<CheckIcon />} onClick={trySubmit} />}
                 </div>
-              ))}
-            </div>
-          )}
-          <div className="stopOverflow" />
+              </div>
+            )}
+            {purchaseInfo && (
+              <div className="purchases">
+                {purchases.map((purchase) => (
+                  <div key={purchase.id} className="purchase">
+                    <ProfilePurchase
+                      purchases={purchase}
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
+            <div className="stopOverflow" />
+          </div>
         </div>
-      </div>
-    );
+      );
+    } catch {
+      return (
+        <div>
+          <p>You must be logged in to view the profile page</p>
+        </div>
+      );
+    }
   }
   return (
     <div>
-      <p>You must be logged in to view the profile page</p>
+      <p> There was a problem logging into your profile</p>
     </div>
   );
 };
