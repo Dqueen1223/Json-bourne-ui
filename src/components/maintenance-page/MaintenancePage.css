@@ -47,6 +47,53 @@ tbody {
 .Buttons{
     margin-left: 2vw;
 }
+.Confirm{
+height: 100%;
+}
+.Cancel{
+height:100%;
+}
+#check{
+    width: 20px;
+    height: 100%;
+}
+#checkButton{
+    position: relative;
+    width: 50%;
+    top: 2.2px;
+    height: 100%;
+    border: none;
+    color: green;
+    background:none;
+    outline: none;
+}
+#X{
+    font-weight: bold;
+    width: 50%;
+    height: 100%;
+    font-size: 20px;
+    border:none;
+    color: red;
+    background: none;
+    outline:none;
+}
+.editbutton{
+width: 100%;
+  border: none;
+    padding: 0;
+    background:none;
+    outline: none;
+}
+.editIcon{
+    border: none;
+    padding: 0;
+    background:none;
+    outline: none;
+   width: 33px;
+   height: 30px; 
+
+}
+
 .createButton, .promoButton{
     background: #666666;
     border-radius: 20px;
@@ -60,4 +107,8 @@ tbody {
 }
 .Maintenance{
     margin-top: 100px;
+}
+#errors{
+    color: red;
+    font-size: 14px;
 }
