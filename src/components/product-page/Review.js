@@ -94,9 +94,13 @@ const Review = ({ review }, setReviews) => {
     <>
       {(review.email === email) && !isEdit && (
       <div className="reviewsOfProduct">
-        <div className="reviewsTitle">
-          { title || review.title }
-          <FaPencilAlt className="pencilIcon" alt="pencilIcon" onClick={editHandler} />
+        <div className="titleContainer">
+          <div className="reviewsTitle">
+            { title || review.title }
+          </div>
+          <div>
+            <span><FaPencilAlt className="pencilIcon" alt="pencilIcon" onClick={editHandler} /></span>
+          </div>
         </div>
 
         {!stars && (<div className="reviewsRating">{BasicRating(isEdit, review.rating, setValue)}</div>)}
@@ -113,23 +117,27 @@ const Review = ({ review }, setReviews) => {
       </div>
       )}
       {(review.email === email) && isEdit && (
-      <div className="reviewsOfProduct">
-        <div className="reviewsTitle" contentEditable suppressContentEditableWarning onInput={preventCursorDisappearHandler}>
-          { title || review.title }
-          <FaPencilAlt className="pencilIcon" alt="pencilIcon" onClick={editHandler} contentEditable="false" suppressContentEditableWarning />
-        </div>
-        {!stars && (<div className="reviewsRating">{BasicRating(isEdit, value, setValue, review.rating)}</div>)}
-        {stars && (<div className="reviewsRating">{BasicRating(isEdit, stars, setStars)}</div>)}
+        <div className="reviewsOfProduct">
+          <div className="titleContainer">
+            <div className="reviewsTitle" contentEditable suppressContentEditableWarning onInput={preventCursorDisappearHandler}>
+              { title || review.title }
+            </div>
+            <div>
+              <span><FaPencilAlt className="pencilIcon" alt="pencilIcon" onClick={editHandler} /></span>
+            </div>
+          </div>
+          {!stars && (<div className="reviewsRating">{BasicRating(isEdit, value, setValue, review.rating)}</div>)}
+          {stars && (<div className="reviewsRating">{BasicRating(isEdit, stars, setStars)}</div>)}
 
-        <div className="reviewsDescription" contentEditable suppressContentEditableWarning onInput={preventCursorDisappearHandler}>
-          {desc || review.reviewsDescription}
-        </div>
+          <div className="reviewsDescription" contentEditable suppressContentEditableWarning onInput={preventCursorDisappearHandler}>
+            {desc || review.reviewsDescription}
+          </div>
 
-        <div className="reviewsDate">
-          {review.dateCreated.slice(0, 10)}
+          <div className="reviewsDate">
+            {review.dateCreated.slice(0, 10)}
+          </div>
+          <button type="button" className="btnSubmitEditReview" onClick={(e) => (submitEditHandler(e))}>Submit</button>
         </div>
-        <button type="button" className="btnSubmitEditReview" onClick={(e) => (submitEditHandler(e))}>Submit</button>
-      </div>
       )}
       {(review.email !== email) && (
       <div className="reviewsOfProduct">
