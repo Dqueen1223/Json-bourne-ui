@@ -66,8 +66,8 @@ const Review = ({ review }, setReviews) => {
       toast.info('description cannot be empty');
       return;
     }
-    if (description.length > 200) {
-      toast.info('description must be 200 characters or less');
+    if (description.length > 500) {
+      toast.info('description must be 500 characters or less');
       return;
     }
     setTitle(reviewTitle);
@@ -77,7 +77,6 @@ const Review = ({ review }, setReviews) => {
     const btnSubmit = reviewElement.querySelector('.btnSubmitEditReview');
     btnSubmit.style.visibility = 'hidden';
     setIsEdit(false);
-    // if (!apiError) toast.success('review has been updated');
   };
 
   const preventCursorDisappearHandler = (e) => {
