@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import './ProfilePage.css';
 import { toast } from 'react-toastify';
+import SettingsIcon from '@mui/icons-material/Settings';
+import CheckIcon from '@mui/icons-material/Check';
+import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
+import { IconButton } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
 import { useProfile } from './ProfileContext';
 import ProfilePurchase from './ProfilePurchase';
 import loginUser from '../header/HeaderService';
@@ -45,6 +50,10 @@ const ProfilePage = () => {
       setErrors(currentErrors);
       toast.error('There was errors in the inputs. The changes have not been submitted');
     } else {
+      const tProfile = profile;
+      if (tProfile.street2 === null || tProfile.street2.trim() === '') {
+        tProfile.street2 = tempProfile.street2;
+      }
       const user = {
         id: profile.id,
         dateModified: new Date().toISOString(),
@@ -52,7 +61,7 @@ const ProfilePage = () => {
         firstName: profile.firstName,
         lastName: profile.lastName,
         street: profile.street,
-        street2: profile.street2,
+        street2: tProfile.street2,
         city: profile.city,
         state: profile.state,
         zip: profile.zip,
@@ -99,7 +108,7 @@ const ProfilePage = () => {
           </div>
         </div>
         <div className="content">
-          {!isEditing && <button className="edit" type="button" onClick={startEditing} />}
+          {!isEditing && <IconButton className="edit" size="large" onClick={startEditing}><SettingsIcon /></IconButton>}
           <div className="userInfodiv">
             <ProfileName
               onChange={onProfileChange}
@@ -114,8 +123,8 @@ const ProfilePage = () => {
               errors={errors}
             />
             <div className="submitAbort">
-              {isEditing && <button className="abortEdit" type="button" onClick={abortEdit} />}
-              {isEditing && <button className="submit" type="button" onClick={trySubmit} />}
+              {isEditing && <Button className="abortEdit" size="large" startIcon={<CancelOutlinedIcon />} onClick={abortEdit} />}
+              {isEditing && <Button className="submit" size="large" startIcon={<CheckIcon />} onClick={trySubmit} />}
             </div>
           </div>
           {purchaseInfo && (
