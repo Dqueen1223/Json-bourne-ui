@@ -21,7 +21,8 @@ const ReviewsModal = ({
   product, reviews, closeModal, showCreateReview, setReviewFormToggle
 }) => {
   // eslint-disable-next-line max-len
-  const [activeReviews, setActiveReviews] = React.useState(reviews.filter((r) => (r.productId === product.id)));
+  const [activeReviews] = React.useState(reviews.filter((r) => (r.productId === product.id)));
+  const [newReview, setReviewData] = React.useState({});
   // const [toggleDate, setToggle] = React.useState(true);
   const sortedReviews = () => {
     console.log('ive been clicked!');
@@ -35,7 +36,7 @@ const ReviewsModal = ({
     // setToggle(!toggleDate);
     // return activeReviews;
   };
-  console.log(activeReviews);
+
   const closeTheModal = (e) => {
     if (e.target.className === 'reviewsModalBackground' || e.target.className === 'reviewscloseButton') {
       closeModal(false);
@@ -143,8 +144,8 @@ const ReviewsModal = ({
               ? (
                 <CreateReview
                   productId={product.id}
-                  setReviews={setActiveReviews}
-                  activeReviews={activeReviews}
+                  setReviewData={setReviewData}
+                  newReview={newReview}
                   reviewFormToggle={setReviewFormToggle}
                 />
               )
@@ -153,7 +154,6 @@ const ReviewsModal = ({
           <div className="reviewsModal-body">
             {/*  mapping the reviews to each product based off of the product id. */}
             {reviews && activeReviews.map((review) => (
-
               <div key={review.id}>
                 <div className="reviewsOfProduct">
                   <div className="reviewsTitle">{review.title}</div>
@@ -166,6 +166,19 @@ const ReviewsModal = ({
                 </div>
               </div>
             ))}
+            {Object.keys(newReview).length !== 0 && (
+              <div key={newReview.id}>
+                <div className="reviewsOfProduct">
+                  <div className="reviewsTitle">{newReview.title}</div>
+                  <div className="reviewsRating">{BasicRating(newReview.rating)}</div>
+                  <div className="reviewsActual">{newReview.reviewsDescription}</div>
+                  <div className="reviewsDate">
+                    {/* slicing off the last few extra digits associated with the date */}
+                    {newReview.dateCreated.slice(0, 10)}
+                  </div>
+                </div>
+              </div>
+            )}
             <div className="reviewsModal-footer" />
           </div>
           <div className="reviewsModal-footer" />

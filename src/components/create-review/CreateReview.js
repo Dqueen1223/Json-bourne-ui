@@ -40,13 +40,13 @@ const CreateReview = ({ productId, reviewFormToggle }) => {
   const handleCreate = () => {
     if (userProfile[1]) {
       const newReview = {
-        Rating: rating,
-        Title: review.title,
-        ReviewsDescription: review.reviewDescription,
-        Email: userProfile[1].email,
-        ProductId: productId,
-        DateCreated: new Date().toISOString(),
-        UserId: userProfile[1].id
+        rating,
+        title: review.title,
+        reviewsDescription: review.reviewsDescription,
+        email: userProfile[1].email,
+        productId,
+        dateCreated: new Date().toISOString(),
+        userId: userProfile[1].id
       };
 
       handleErrors(newReview);
@@ -75,7 +75,7 @@ const CreateReview = ({ productId, reviewFormToggle }) => {
     <>
       <div className={styles.review}>
         <ReviewForm
-          // errors={errors}
+          errors={errors}
           onChange={onReviewChange}
           onClick={handleSubmit}
           rating={rating}
