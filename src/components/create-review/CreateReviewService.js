@@ -10,10 +10,11 @@ import Constants from '../../utils/constants';
  */
 export default async function makeReview(review) {
   let status = 'waiting';
+  console.log(review);
   await HttpHelper(Constants.REVIEWS_ENDPOINT, 'POST', {
     Rating: review.rating,
     Title: review.title,
-    ReviewsDescription: review.reviewDescription,
+    ReviewsDescription: review.reviewsDescription,
     Email: review.email,
     ProductId: review.productId,
     DateCreated: review.dateCreated,

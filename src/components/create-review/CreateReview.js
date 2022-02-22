@@ -11,10 +11,27 @@ const CreateReview = ({ productId, reviewFormToggle }) => {
   const [review, setReviewData] = useState({});
   const [rating, setRating] = useState(2);
   const [errors, setErrors] = useState({});
+  let email;
+  let userId;
 
   const {
     state: { userProfile }
   } = useProfile();
+
+  if (userProfile[1]) {
+    email = userProfile[1].email;
+    userId = userProfile[1].id;
+  }
+
+  const newReview = {
+    rating,
+    title: review.title,
+    reviewsDescription: review.reviewsDescription,
+    email,
+    productId,
+    dateCreated: new Date().toISOString(),
+    userId
+  };
 
   const onReviewChange = (e) => {
     setReviewData({ ...review, [e.target.id]: e.target.value });
@@ -38,30 +55,17 @@ const CreateReview = ({ productId, reviewFormToggle }) => {
   };
 
   const handleCreate = () => {
-    if (userProfile[1]) {
-      const newReview = {
-        rating,
-        title: review.title,
-        reviewsDescription: review.reviewsDescription,
-        email: userProfile[1].email,
-        productId,
-        dateCreated: new Date().toISOString(),
-        userId: userProfile[1].id
-      };
-
-      handleErrors(newReview);
-      setReviewData(newReview);
-    } else {
-      toast.error('Must be signed in to create a review');
-    }
+    console.log('here i am here I am how do you do');
+    handleErrors(newReview);
+    setReviewData(newReview);
   };
 
   const handleSubmit = async () => {
     handleCreate();
 
     if (Object.keys(errors).length === 0) {
-      if (await makeReview(review) !== 'Bad Request') {
-        await makeReview(review);
+      if (await makeReview(newReview) !== 'Bad Request') {
+        await makeReview(newReview).then((res) => console.log(res));
         reviewFormToggle(false);
       } else {
         toast.error('Bad Request');

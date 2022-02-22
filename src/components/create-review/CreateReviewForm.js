@@ -14,7 +14,7 @@ const ReviewForm = ({
         onChange={onChange}
         rating={rating}
         setRating={setRating}
-      // value={review.rating}
+        value={review.rating}
       />
       <FormItem
         id="title"
