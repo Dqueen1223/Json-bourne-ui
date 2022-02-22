@@ -4,7 +4,6 @@ import { toast } from 'react-toastify';
 import BasicRating from './ReviewsStars';
 import { updateReview } from './ReviewService';
 import { useProfile } from '../Profile/ProfileContext';
-import Constants from '../../utils/constants';
 
 /**
  * @name Review
@@ -87,8 +86,7 @@ const Review = ({ review }, setReviews) => {
 
   return (
     <>
-
-      {!apiError && (review.email === email) && !isEdit && (
+      {(review.email === email) && !isEdit && (
       <div className="reviewsOfProduct">
         <div className="reviewsTitle">
           { title || review.title }
@@ -108,7 +106,7 @@ const Review = ({ review }, setReviews) => {
 
       </div>
       )}
-      {!apiError && (review.email === email) && isEdit && (
+      {(review.email === email) && isEdit && (
       <div className="reviewsOfProduct">
         <div className="reviewsTitle" contentEditable suppressContentEditableWarning onInput={preventCursorDisappearHandler}>
           { title || review.title }
@@ -127,7 +125,7 @@ const Review = ({ review }, setReviews) => {
         <button type="button" className="btnSubmitEditReview" onClick={(e) => (submitEditHandler(e))}>Submit</button>
       </div>
       )}
-      {!apiError && (review.email !== email) && (
+      {(review.email !== email) && (
       <div className="reviewsOfProduct">
         <div className="reviewsTitle">
           {review.title}
