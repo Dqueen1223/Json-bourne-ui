@@ -48,6 +48,7 @@ const MaintenancePage = () => {
   const [editable, setEditable] = useState(null);
   const [releaseEditable, setReleaseEdtiable] = useState('false');
   const [errors, setErrors] = useState({});
+  const [previousProduct, setPreviousProduct] = useState({});
 
   useEffect(() => {
     fetchProducts(setProducts, setApiError);
@@ -77,8 +78,10 @@ const MaintenancePage = () => {
   const clickEditMaitenance = (e, product) => {
     e.preventDefault();
     if (editable != null) {
-      resetToDefaultTableData(product);
+      resetToDefaultTableData(previousProduct);
     }
+    setReleaseEdtiable('false');
+    setPreviousProduct(product);
     setEditable(product.id);
     const today = new Date();
     const releaseDate = new Date(
@@ -141,9 +144,11 @@ const MaintenancePage = () => {
     const idList = Object.keys(submitedProduct);
     const errorList = validateCreateProductForm(submitedProduct, idList);
     if (
-      releaseDate.innerHTML !== /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])T\d{2}:\d{2}:\d{2}$/
+      !releaseDate.innerHTML.match(
+        /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])T\d{2}:\d{2}:\d{2}(.\d{3})?$/
+      )
     ) {
-      errorList.releaseDate = 'Release Date must match the format of YYYY/MM/DDT00:00:00';
+      errorList.releaseDate = 'Release Date must match the format of YYYY-MM-DDT00:00:00';
     }
     if (active.innerHTML === 'true' || active.innerHTML === 'false');
     else {

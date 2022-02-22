@@ -8,7 +8,7 @@ import Constants from '../../utils/constants';
  * @param {*} setApiError sets error if response other than 200 is returned
  * @returns update for products if 200 response, else throws an apiError
  */
-export default async function UpdateProducts(product, setApiError) {
+export default async function UpdateProducts(product) {
   await HttpHelper(Constants.PRODUCTS_ENDPOINT, 'PUT', {
     id: product.id,
     name: product.name,
@@ -37,6 +37,5 @@ export default async function UpdateProducts(product, setApiError) {
       throw new Error(Constants.API_ERROR);
     }).catch(() => {
       toast.error(`There is a problem connecting with the database ${product.name} has not been edited`);
-      setApiError(true);
     });
 }
