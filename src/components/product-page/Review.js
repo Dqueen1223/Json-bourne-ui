@@ -56,18 +56,22 @@ const Review = ({ review }, setReviews) => {
     };
     if (reviewTitle === '') {
       toast.info('title cannot be empty');
+      reviewElement.querySelector('.reviewsTitle').focus();
       return;
     }
     if (reviewTitle.length > 50) {
       toast.info('title must be 50 characters or less');
+      reviewElement.querySelector('.reviewsTitle').focus();
       return;
     }
     if (description === '') {
       toast.info('description cannot be empty');
+      reviewElement.querySelector('.reviewsDescription').focus();
       return;
     }
     if (description.length > 500) {
       toast.info('description must be 500 characters or less');
+      reviewElement.querySelector('.reviewsDescription').focus();
       return;
     }
     setTitle(reviewTitle);
@@ -81,7 +85,9 @@ const Review = ({ review }, setReviews) => {
 
   const preventCursorDisappearHandler = (e) => {
     const input = e.target.innerText;
-    if (input === '') e.target.innerText = ' ';
+    if (input === '') {
+      e.target.innerText = ' ';
+    }
   };
 
   return (
