@@ -1,8 +1,8 @@
 import React from 'react';
 import Delete from '@material-ui/icons/Delete';
+import { useConfirm } from 'material-ui-confirm';
 import BasicRating from './ReviewsStars';
 import { deleteReview } from './ReviewService';
-import { useConfirm } from 'material-ui-confirm';
 
 /**
  * @name Review
@@ -41,11 +41,11 @@ const Review = ({ review }, setReviews, setApiError) => {
     };
     confirm({
       title: 'Are you sure you would like to delete this review?',
-      description: 'This action can not be undone.',
-      confirmationText: 'Delete',
-      confirmationButtonProps: { primary: 'success' }
+      description: 'This action cannot be undone.',
+      confirmationText: 'Delete'
     })
-      .then(() => deleteReview(setReviews, setApiError, deletedReview));
+      .then(() => deleteReview(setReviews, setApiError, deletedReview))
+      .catch(() => console.log('Deletion cancelled.')).finally(() => deleteHandler(true));
     setIsDeleted(true);
     const btnSubmit = reviewElement.querySelector('.btnSubmitDeleteReview');
     btnSubmit.style.visibility = 'hidden';
