@@ -77,6 +77,7 @@ const Review = ({ review }, setReviews) => {
     const btnSubmit = reviewElement.querySelector('.btnSubmitEditReview');
     btnSubmit.style.visibility = 'hidden';
     setIsEdit(false);
+    // if (!apiError) toast.success('review has been updated');
   };
 
   const preventCursorDisappearHandler = (e) => {

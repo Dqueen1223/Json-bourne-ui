@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import HttpHelper from '../../utils/HttpHelper';
 import Constants from '../../utils/constants';
 
@@ -35,6 +36,7 @@ export async function updateReview(setReviews, setApiError, review) {
   await HttpHelper(`${Constants.REVIEWS_ENDPOINT}/${review.id}`, 'PUT', review)
     .then((response) => {
       if (response.ok) {
+        toast.success('review updated successfully');
         return response.json();
       }
       throw new Error(Constants.API_ERROR);
