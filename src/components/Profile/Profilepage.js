@@ -105,9 +105,9 @@ const ProfilePage = () => {
             </div>
           </div>
           <div className="content">
-            <IconButton className="edit" size="large" onClick={startEditing}><SettingsIcon /></IconButton>
             {!purchaseInfo && (
               <div className="userInfodiv">
+                <IconButton className="edit" size="large" onClick={startEditing}><SettingsIcon /></IconButton>
                 <ProfileName
                   onChange={onProfileChange}
                   isEditing={isEditing}
@@ -120,9 +120,7 @@ const ProfilePage = () => {
                   data={profile}
                   errors={errors}
                 />
-                <div className="submitAbort">
-                  {isEditing && <Button className="submit" size="large" startIcon={<CheckIcon />} onClick={trySubmit} />}
-                </div>
+                  {isEditing && <Button className="submit" size="large" color="green" startIcon={<CheckIcon />} onClick={trySubmit} />}
               </div>
             )}
             {purchaseInfo && (

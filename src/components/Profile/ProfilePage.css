@@ -3,6 +3,24 @@
   margin:3px 0px 0px 0px;
 }
 
+.edit {
+        display: block;
+    padding:2px 1.25em 0px;
+    position: relative;
+    margin:3px 0px 0px 0px;
+    left: 10em;
+    top: 1em;
+}
+.submit{
+    display: block;
+    padding:2px 1.25em 0px;
+    position: relative;
+    margin:3px 0px 0px 0px;
+    top: 10em;
+    left: 12em;
+    color: green
+}
+
 .inputError {
   border: 1px solid red;
 }
