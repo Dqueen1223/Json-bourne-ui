@@ -63,14 +63,7 @@ const ProductCard = ({ product, reviews }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [reviewsModal, setReviewsModal] = useState(false);
   const [showCreateReview, setReviewFormToggle] = useState(false);
-  // const [reviews, setReviews] = useState([]);
-  // const [setApiError] = useState(false);
-  // const reviews = [];
-
-  // const showReviewButton = { reviewsModal };
-  // make fetch call for reviews
-  // useEffect - whenever reviews get changed if filter returns true
-
+  // const { activeReviews } = React.useState(reviews.filter((r) => (r.productId === product.id)));
   const {
     state: { products }
   } = useCart();
@@ -121,8 +114,15 @@ const ProductCard = ({ product, reviews }) => {
   const onReview = (e) => {
     e.stopPropagation();
     setReviewsModal(true);
+  };
+  const hideReviewButton = (e) => {
     if (reviews.length === 0) {
       setReviewFormToggle(true);
+    }
+    if (reviews.length === 0) {
+      e.target.style.display = 'inline-block';
+    } else {
+      e.target.style.display = 'none';
     }
   };
   const addReview = (e) => {
@@ -130,14 +130,18 @@ const ProductCard = ({ product, reviews }) => {
     setReviewsModal(true);
     setReviewFormToggle(true);
   };
-  // eslint-disable-next-line max-len
-  // const reviewAvg = () => reviews.reduce((a, b) => a.review.rating + b.review.rating, 0) / reviews.length;
+    // eslint-disable-next-line max-len
+    // const reviewAvg = () => reviews.reduce((a, b) => a.review.rating + b.review.rating, 0) / reviews.length;
 
   // useEffect(() => {
   //   fetchReviews(setReviews, setApiError);
   // }, [reviews, setApiError]);
+  // React.useEffect((e) => {
+  //   hideReviewButton(e);
+  // }, [hideReviewButton]);
+
   return (
-    <Card className={classes.root}>
+    <Card className={classes.root} onLoad={hideReviewButton}>
       {modalIsOpen && reactDom.createPortal(
         <ProductCardModal product={product} closeModal={setModalIsOpen} />,
         document.getElementById('root')
@@ -160,12 +164,12 @@ const ProductCard = ({ product, reviews }) => {
           <Avatar aria-label="demographics" className={classes.avatar}>
             {product.demographic.charAt(0)}
           </Avatar>
-        )}
+          )}
         action={(
           <IconButton aria-label="settings">
             <MoreVertIcon />
           </IconButton>
-        )}
+          )}
         title={product.name}
         subheader={`${product.demographic} ${product.category} ${product.type}`}
       />
@@ -208,31 +212,41 @@ const ProductCard = ({ product, reviews }) => {
         </IconButton>
         <div>
           {ReviewsModal !== false && (
-            <>
-              <button
+          <>
+            <button
+              className="reviewsProductCardButton"
+              type="button"
+              variant="contained"
+              onClick={onReview}
+            >
+              Reviews
+            </button>
+            <button
+              className="addReviewsProductCardButton"
+              type="button"
+              label="Add Review"
+              variant="contained"
+              onClick={addReview}
+            >
+              +
+            </button>
+            <button
+              type="button"
+            >
+              <BasicRating
+                variant="contained"
                 className="reviewsProductCardButton"
-                type="button"
-                variant="contained"
-                onClick={onReview}
-              >
-                Reviews
-              </button>
-              <button
-                className="addReviewsProductCardButton"
-                type="button"
-                label="Add Review"
-                variant="contained"
-                onClick={addReview}
-              >
-                +
-              </button>
-              <BasicRating type="button" className="reviewsProductCardButton" onClick={onReview} />
-            </>
+                onClick={() => {
+                  onReview(setReviewsModal(false));
+                }}
+              />
+            </button>
+            {/* getting a count of reviews that are already on product */}
+          </>
           )}
         </div>
       </CardActions>
     </Card>
   );
 };
-
 export default ProductCard;

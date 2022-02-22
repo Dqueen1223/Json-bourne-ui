@@ -3,9 +3,11 @@ import React from 'react';
 // import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 // import * as React from 'react';
 import Button from '@mui/material/Button';
+import MenuItem from '@mui/material/MenuItem';
+import Menu from '@mui/material/Menu';
 import BasicRating from './ReviewsStars';
 import CreateReview from '../create-review/CreateReview';
-import DropDownButton from './DropDownButton';
+// import DropDownButton from './DropDownButton';
 
 // import styles from './ProductPage.module.css';
 
@@ -41,6 +43,60 @@ const ReviewsModal = ({
     }
   };
 
+  const DropDownButton = () => {
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (event) => {
+      setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+      setAnchorEl(null);
+    };
+
+    return (
+      <div className="reviewModalDashboard">
+        <Button
+          id="basic-button"
+          aria-controls={open ? 'basic-menu' : undefined}
+          aria-haspopup="true"
+          aria-expanded={open ? 'true' : undefined}
+          onClick={handleClick}
+        >
+          Review Dashboard
+        </Button>
+        <Menu
+          id="basic-menu"
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          MenuListProps={{
+            'aria-labelledby': 'basic-button'
+          }}
+        >
+          {/* <div className="reviewModalButtons"> */}
+          <MenuItem
+            // type="button"
+            className="reviewsOrderButton"
+            onClick={sortedReviews}
+          >
+            Order by Date
+          </MenuItem>
+          <MenuItem
+            // type="button"
+            onClick={() => setReviewFormToggle(!showCreateReview)}
+            className="createReview"
+          >
+            Add Review
+          </MenuItem>
+          {/* </div> */}
+          {/* <MenuItem onClick={handleClose}>Profile</MenuItem>
+          <MenuItem onClick={handleClose}>My account</MenuItem>
+          <MenuItem onClick={handleClose}>Logout</MenuItem> */}
+        </Menu>
+      </div>
+    );
+  };
+
   return (
     <div
       className="reviewsModalBackground"
@@ -61,8 +117,11 @@ const ReviewsModal = ({
             <div className="productNameReviewModal">
               {product.name}
             </div>
-            <div className="reviewModalButtons">
-              <DropDownButton />
+            <div className="dropdown-menu">
+              {DropDownButton()}
+            </div>
+
+            {/* <div className="reviewModalButtons">
               <Button
                 type="button"
                 className="reviewsOrderButton"
@@ -77,7 +136,7 @@ const ReviewsModal = ({
               >
                 Add Review
               </Button>
-            </div>
+            </div> */}
           </div>
           <div className="createReview">
             {showCreateReview
