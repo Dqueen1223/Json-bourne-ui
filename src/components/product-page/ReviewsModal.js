@@ -1,8 +1,4 @@
 import React from 'react';
-// import { FaPencilAlt } from 'react-icons/fa';
-// import BasicRating from './ReviewsStars';
-// import { useProfile } from '../Profile/ProfileContext';
-import { ConfirmProvider } from 'material-ui-confirm';
 import Review from './Review';
 import './ReviewsModal.css';
 
@@ -12,13 +8,8 @@ import './ReviewsModal.css';
  * @return component
  */
 const ReviewsModal = ({
-  product, reviews, closeModal, setReviews, setApiError
+  product, reviews, closeModal, setReviews
 }) => {
-  // const {
-  //   state: { userProfile }
-  // } = useProfile();
-  // console.log(userProfile);
-
   const closeTheModal = (e) => {
     if (e.target.className === 'reviewsModalBackground' || e.target.className === 'reviewscloseButton') {
       closeModal(false);
@@ -53,13 +44,10 @@ const ReviewsModal = ({
             </button>
             {reviews && reviews.filter((r) => (r.productId === product.id)).map((review) => (
               <div key={review.id}>
-                <ConfirmProvider>
-                  <Review
-                    review={review}
-                    setReviews={setReviews}
-                    setApiError={setApiError}
-                  />
-                </ConfirmProvider>
+                <Review
+                  review={review}
+                  setReviews={setReviews}
+                />
               </div>
             ))}
             <div className="reviewsModal-footer" />
