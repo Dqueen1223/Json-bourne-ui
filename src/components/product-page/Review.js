@@ -30,6 +30,12 @@ const Review = ({ review }, setReviews) => {
     }
   }, [userProfile, setEmail]);
 
+  useEffect(() => {
+    if (apiError) {
+      toast.error('cannot connect to the database');
+    }
+  }, [apiError]);
+
   const editHandler = () => {
     setIsEdit(!isEdit);
   };
@@ -81,7 +87,7 @@ const Review = ({ review }, setReviews) => {
 
   return (
     <>
-      {apiError && <span className="reviewsApiError" data-testid="errMsg">{Constants.API_ERROR}</span>}
+
       {!apiError && (review.email === email) && !isEdit && (
       <div className="reviewsOfProduct">
         <div className="reviewsTitle">
