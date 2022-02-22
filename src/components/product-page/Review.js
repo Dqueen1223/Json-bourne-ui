@@ -122,8 +122,8 @@ const Review = ({ review }, setReviews) => {
       <div className="reviewsOfProduct">
         <div className="reviewsTitle">
           { title || review.title }
-            <FaPencilAlt className="pencilIcon" alt="pencilIcon" onClick={editHandler} />
-            <Delete className="pencilIcon" alt="pencilIcon" onClick={(e) => (submitDeleteHandler(e))} />
+          <FaPencilAlt className="pencilIcon" alt="pencilIcon" onClick={editHandler} />
+          <Delete className="pencilIcon" alt="pencilIcon" onClick={(e) => (submitDeleteHandler(e))} />
         </div>
 
         {!stars && (<div className="reviewsRating">{BasicRating(isEdit, review.rating, setValue)}</div>)}
@@ -143,8 +143,8 @@ const Review = ({ review }, setReviews) => {
       <div className="reviewsOfProduct">
         <div className="reviewsTitle" contentEditable suppressContentEditableWarning onInput={preventCursorDisappearHandler}>
           { title || review.title }
-            <FaPencilAlt className="pencilIcon" alt="pencilIcon" onClick={editHandler} />
-            <Delete className="pencilIcon" alt="pencilIcon" onClick={(e) => (submitDeleteHandler(e))} />
+          <FaPencilAlt className="pencilIcon" alt="pencilIcon" onClick={editHandler} />
+          <Delete className="pencilIcon" alt="pencilIcon" onClick={(e) => (submitDeleteHandler(e))} />
         </div>
         {!stars && (<div className="reviewsRating">{BasicRating(isEdit, value, setValue, review.rating)}</div>)}
         {stars && (<div className="reviewsRating">{BasicRating(isEdit, stars, setStars)}</div>)}
