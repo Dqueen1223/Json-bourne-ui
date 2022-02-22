@@ -14,7 +14,6 @@ export default async function makeReview(review) {
     .then((response) => {
       if (response.ok) {
         status = response.json();
-        console.log(status);
       } else {
         status = response.statusText;
         throw new Error(response.statusText);

@@ -22,6 +22,9 @@ const FormItemTextArea = ({
     <div className={className}>
       <label className={styles.label} htmlFor={id}>
         {label}
+        <div className={styles.count}>
+          {300 - count}
+        </div>
         <div>
           <textarea
             className={styles.inputTextArea}
@@ -42,9 +45,7 @@ const FormItemTextArea = ({
             />
           )} */}
           {!error && (
-            <p className={styles.paragraph}>
-              {`${300 - count} characters remaining`}
-            </p>
+            <p className={styles.paragraph} />
           )}
           {error && (
             <p className={styles.error_item}>

@@ -4,35 +4,53 @@ import ReviewForm from './CreateReviewForm';
 import styles from './CreateReview.module.css';
 import { useProfile } from '../Profile/ProfileContext';
 import makeReview from './CreateReviewService';
+import generateErrors from './forms/FormValidation';
 // import fetchProducts from '../product-page/ProductPageService';
 
-const CreateReview = ({ productId }) => {
+const CreateReview = ({ productId, reviewFormToggle }) => {
   const [review, setReviewData] = useState({});
   const [rating, setRating] = useState(2);
-  // const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState({});
+
   const {
     state: { userProfile }
   } = useProfile();
 
   const onReviewChange = (e) => {
     setReviewData({ ...review, [e.target.id]: e.target.value });
-    // setErrors({});
+    setErrors({});
+  };
+
+  const handleErrors = (form) => {
+    const idList = Object.keys(form);
+    const errorLists = generateErrors(form, idList);
+
+    for (let i = 0; i < idList.length; i += 1) {
+      const id = idList[i];
+      if (errorLists[id]) {
+        errors[id] = errorLists[id];
+      }
+      if (errorLists.date) {
+        errors.date = errorLists.date;
+      }
+    }
+    setErrors(errors);
   };
 
   const handleCreate = () => {
-    if (userProfile[0]) {
+    if (userProfile[1]) {
       const newReview = {
         Rating: rating,
         Title: review.title,
         ReviewsDescription: review.reviewDescription,
-        Email: userProfile[0].email,
+        Email: userProfile[1].email,
         ProductId: productId,
         DateCreated: new Date().toISOString(),
-        UserId: 1
+        UserId: userProfile[1].id
       };
-      // console.log(fetchProducts(userProfile[0].email));
 
-      makeReview(newReview);
+      handleErrors(newReview);
+      setReviewData(newReview);
     } else {
       toast.error('Must be signed in to create a review');
     }
@@ -40,15 +58,17 @@ const CreateReview = ({ productId }) => {
 
   const handleSubmit = async () => {
     handleCreate();
-    // if (Object.keys(errors).length === 0) {
-    //   if (await makePromo(review) !== 'Bad Request') {
-    //     await makeReview(review);
-    //   } else {
-    //     toast.error('Bad Request');
-    //   }
-    // } else {
-    //   toast.error('Some fields contain invalid inputs.');
-    // }
+
+    if (Object.keys(errors).length === 0) {
+      if (await makeReview(review) !== 'Bad Request') {
+        await makeReview(review);
+        reviewFormToggle(false);
+      } else {
+        toast.error('Bad Request');
+      }
+    } else {
+      toast.error('Some fields contain invalid inputs.');
+    }
   };
 
   return (

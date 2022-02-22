@@ -86,6 +86,7 @@ const ReviewsModal = ({
                   productId={product.id}
                   setReviews={setActiveReviews}
                   activeReviews={activeReviews}
+                  reviewFormToggle={setReviewFormToggle}
                 />
               )
               : null}
