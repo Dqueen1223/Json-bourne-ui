@@ -145,7 +145,7 @@ const MaintenancePage = () => {
     const errorList = validateCreateProductForm(submitedProduct, idList);
     if (
       !releaseDate.innerHTML.match(
-        /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])T\d{2}:\d{2}:\d{2}(.\d{3})?$/
+        /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])T\d{2}:\d{2}:\d{2}(\.\d{3})?$/
       )
     ) {
       errorList.releaseDate = 'Release Date must match the format of YYYY-MM-DDT00:00:00';
