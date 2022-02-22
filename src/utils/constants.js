@@ -11,5 +11,6 @@ module.exports = Object.freeze({
   INACTIVE_PRODUCTS_ENDPOINT: '/products?active=false',
   ACTIVE_PRODUCTS_COUNT_ENDPOINT: '/products/count?active=true',
   REVIEWS_ENDPOINT: '/reviews',
-  USERS_ENDPOINT: '/users'
+  USER_ENDPOINT: '/users',
+  BILLING_RATE_ENDPOINT: '/shipping-rate'
 });

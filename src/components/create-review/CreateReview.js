@@ -38,21 +38,18 @@ const CreateReview = ({ productId }) => {
     }
   };
 
-  // const handleSubmit = async () => {
-  //   handleCreate();
-  //   if (await makeReview(review) !== 'Bad Request') {
-  //     await makeReview(review);
-  //   }
-  //   // if (Object.keys(errors).length === 0) {
-  //   //   if (await makePromo(review) !== 'Bad Request') {
-  //   //     await makeReview(review);
-  //   //   } else {
-  //   //     toast.error('Bad Request');
-  //   //   }
-  //   // } else {
-  //   //   toast.error('Some fields contain invalid inputs.');
-  //   // }
-  // };
+  const handleSubmit = async () => {
+    handleCreate();
+    // if (Object.keys(errors).length === 0) {
+    //   if (await makePromo(review) !== 'Bad Request') {
+    //     await makeReview(review);
+    //   } else {
+    //     toast.error('Bad Request');
+    //   }
+    // } else {
+    //   toast.error('Some fields contain invalid inputs.');
+    // }
+  };
 
   return (
     <>
@@ -60,7 +57,7 @@ const CreateReview = ({ productId }) => {
         <ReviewForm
           // errors={errors}
           onChange={onReviewChange}
-          onClick={handleCreate}
+          onClick={handleSubmit}
           rating={rating}
           setRating={setRating}
           review={review}

@@ -19,7 +19,7 @@ const ReviewsModal = ({
   product, reviews, closeModal, showCreateReview, setReviewFormToggle
 }) => {
   // eslint-disable-next-line max-len
-  const [activeReviews] = React.useState(reviews.filter((r) => (r.productId === product.id)));
+  const [activeReviews, setActiveReviews] = React.useState(reviews.filter((r) => (r.productId === product.id)));
   // const [toggleDate, setToggle] = React.useState(true);
   const sortedReviews = () => {
     console.log('ive been clicked!');
@@ -33,7 +33,7 @@ const ReviewsModal = ({
     // setToggle(!toggleDate);
     // return activeReviews;
   };
-
+  console.log(activeReviews);
   const closeTheModal = (e) => {
     if (e.target.className === 'reviewsModalBackground' || e.target.className === 'reviewscloseButton') {
       closeModal(false);
@@ -80,7 +80,15 @@ const ReviewsModal = ({
             </div>
           </div>
           <div className="createReview">
-            {showCreateReview ? <CreateReview productId={product.id} /> : null}
+            {showCreateReview
+              ? (
+                <CreateReview
+                  productId={product.id}
+                  setReviews={setActiveReviews}
+                  activeReviews={activeReviews}
+                />
+              )
+              : null}
           </div>
           <div className="reviewsModal-body">
             {/*  mapping the reviews to each product based off of the product id. */}

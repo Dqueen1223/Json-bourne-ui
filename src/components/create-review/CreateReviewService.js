@@ -13,8 +13,8 @@ export default async function makeReview(review) {
   await HttpHelper(Constants.REVIEWS_ENDPOINT, 'POST', review)
     .then((response) => {
       if (response.ok) {
-        const res = response.json();
-        console.log(res);
+        status = response.json();
+        console.log(status);
       } else {
         status = response.statusText;
         throw new Error(response.statusText);
