@@ -48,7 +48,8 @@ const MaintenancePage = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [deletedProduct, setDeletedProduct] = useState(products);
   const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
-  const [deleteButton, setDeleteButton] = useState(true);
+  const [activeReviews, setActiveReviews] = useState(reviews.filter(reviews.filter((r) =>
+    (r.productId === product.id))));
 
   const deleteProduct = (product) => {
     deleteProducts(product, setApiError, setDeleteModalIsOpen);
@@ -59,8 +60,13 @@ const MaintenancePage = () => {
   }, [deletedProduct]);
 
   const hideDelete = (product) => {
+    const button = document.getElementsByClassName(deleteButton);
     checkForReviews(product, setDeleteButton);
-    return deleteButton;
+    if (deleteButton.includes(product.id)) {
+      button.style.visibility = 'hidden';
+    } else {
+      button.style.visibility = 'visible';
+    }
   };
 
   return (
@@ -91,7 +97,7 @@ const MaintenancePage = () => {
         <table className="Product">
           <thead>
             <tr>
-              <th className="deleteButton" />
+              <th className="deleteS" />
               <th>Id</th>
               <th>Name</th>
               <th>SKU</th>
@@ -117,7 +123,10 @@ const MaintenancePage = () => {
               <tr key={product.id} className="ProductCells" onLoad={hideDelete}>
                 <td className="ProductCells">
                   {deleteModalIsOpen && reactDom.createPortal(
-                    <MaintenanceDeleteModal product={product} closeModal={setDeleteModalIsOpen} />,
+                    <MaintenanceDeleteModal
+                      product={product}
+                      closeModal={setDeleteModalIsOpen}
+                    />,
                     document.getElementById('root')
                   )}
                   <button
@@ -127,7 +136,9 @@ const MaintenancePage = () => {
                       setDeletedProduct(products);
                     }}
                     className="deleteButton"
-                    hidden={!deleteButton}
+                    onLoad={() => {
+                      hideDelete(product);
+                    }}
                   >
                     <Delete />
 

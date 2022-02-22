@@ -14,10 +14,14 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import ShareIcon from '@material-ui/icons/Share';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+// import Button from '@material-ui/core/button';
 import { toast } from 'react-toastify';
 import { useCart } from '../checkout-page/CartContext';
 import ProductCardModal from '../product-page/ProductCardModal';
 import getQtyInCart, { inventoryAvailable } from './ProductCardService';
+import ReviewsModal from '../product-page/ReviewsModal';
+import '../product-page/ReviewsModal.css';
+import BasicRating from '../product-page/ReviewsStars';
 
 /**
  * @name useStyles
@@ -53,10 +57,19 @@ const useStyles = makeStyles((theme) => ({
  * @param {*} props product
  * @return component
  */
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, reviews }) => {
   const classes = useStyles();
   const { dispatch } = useCart();
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [reviewsModal, setReviewsModal] = useState(false);
+  const [showCreateReview, setReviewFormToggle] = useState(false);
+  // const [reviews, setReviews] = useState([]);
+  // const [setApiError] = useState(false);
+  // const reviews = [];
+
+  // const showReviewButton = { reviewsModal };
+  // make fetch call for reviews
+  // useEffect - whenever reviews get changed if filter returns true
 
   const {
     state: { products }
@@ -105,10 +118,38 @@ const ProductCard = ({ product }) => {
   const share = (e) => {
     e.stopPropagation();
   };
+  const onReview = (e) => {
+    e.stopPropagation();
+    setReviewsModal(true);
+    if (reviews.length === 0) {
+      setReviewFormToggle(true);
+    }
+  };
+  const addReview = (e) => {
+    e.stopPropagation();
+    setReviewsModal(true);
+    setReviewFormToggle(true);
+  };
+  // eslint-disable-next-line max-len
+  // const reviewAvg = () => reviews.reduce((a, b) => a.review.rating + b.review.rating, 0) / reviews.length;
+
+  // useEffect(() => {
+  //   fetchReviews(setReviews, setApiError);
+  // }, [reviews, setApiError]);
   return (
     <Card className={classes.root}>
       {modalIsOpen && reactDom.createPortal(
         <ProductCardModal product={product} closeModal={setModalIsOpen} />,
+        document.getElementById('root')
+      )}
+      {reviewsModal && reactDom.createPortal(
+        <ReviewsModal
+          product={product}
+          reviews={reviews}
+          closeModal={setReviewsModal}
+          showCreateReview={showCreateReview}
+          setReviewFormToggle={setReviewFormToggle}
+        />,
         document.getElementById('root')
       )}
       <CardHeader
@@ -165,6 +206,40 @@ const ProductCard = ({ product }) => {
         <IconButton aria-label="add to shopping cart" onClick={onAdd}>
           <AddShoppingCartIcon />
         </IconButton>
+        <div>
+          {ReviewsModal !== false && (
+            <>
+              <button
+                className="reviewsProductCardButton"
+                type="button"
+                variant="contained"
+                onClick={onReview}
+              >
+                Reviews
+              </button>
+              <button
+                className="addReviewsProductCardButton"
+                type="button"
+                label="Add Review"
+                variant="contained"
+                onClick={addReview}
+              >
+                +
+              </button>
+              <button
+                type="button"
+              >
+                <BasicRating
+                  variant="contained"
+                  className="reviewsProductCardButton"
+                  onClick={() => {
+                    onReview(setReviewsModal(false));
+                  }}
+                />
+              </button>
+            </>
+          )}
+        </div>
       </CardActions>
     </Card>
   );

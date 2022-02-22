@@ -8,6 +8,8 @@ module.exports = Object.freeze({
   ACTIVE_PRODUCTS_ENDPOINT: '/products?active=true',
   PRODUCTS_ENDPOINT: '/products',
   PROMOTIONS_ENDPOINT: '/promo',
-  ACTIVE_PRODUCTS_COUNT_ENDPOINT: '/products/count?active=true',
+  INACTIVE_PRODUCTS_ENDPOINT: '/products?active=false',
+  REVIEWS_ENDPOINT: '/reviews',
+  USERS_ENDPOINT: '/users',
   BILLING_RATE_ENDPOINT: '/shipping-rate'
 });

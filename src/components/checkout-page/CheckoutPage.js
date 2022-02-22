@@ -18,7 +18,8 @@ import getBillingRate from './BillingRateService';
  */
 const CheckoutPage = () => {
   const history = useHistory();
-  const { dispatch } = useProfile();
+  const [totalPrice, setTotalPrice] = React.useState(0);
+  // const { dispatch } = useProfile();
   const {
     state: { products }
   } = useCart();
@@ -68,6 +69,12 @@ const CheckoutPage = () => {
   const handlePay = () => {
     if (Object.keys(validateForm(deliveryData, billingData, checked)).length === 0) {
       const productData = products.map(({ id, quantity }) => ({ id, quantity }));
+      const productDataSend = [];
+      for (let i = 0; i < productData.length; i += 1) {
+        productDataSend.push({});
+        productDataSend[i].productId = productData[i].id;
+        productDataSend[i].quantity = productData[i].quantity;
+      }
       const deliveryAddress = {
         firstName: deliveryData.firstName,
         lastName: deliveryData.lastName,
@@ -100,8 +107,8 @@ const CheckoutPage = () => {
         expiration: billingData.expiration,
         cardholder: billingData.cardholder
       };
-      makePurchase(productData, deliveryAddress, billingAddress, creditCard).then(() => history.push('/confirmation'));
-      dispatch({
+      makePurchase(productDataSend, deliveryAddress, billingAddress, creditCard, totalPrice).then(() => history.push('/confirmation'));
+      /* dispatch({
         type: 'login',
         userProfile: {
           street: deliveryData.street,
@@ -110,7 +117,7 @@ const CheckoutPage = () => {
           state: deliveryData.state,
           zip: deliveryData.zip
         }
-      });
+      }); */
     } else {
       toast.error('Some fields contain invalid inputs. You have not been charged');
       setErrors(validateForm(deliveryData, billingData, checked));
@@ -122,6 +129,7 @@ const CheckoutPage = () => {
       <div className={`${styles.step} ${styles.order}`}>
         <h3 className={styles.title}>1. Review Order</h3>
         <ReviewOrderWidget shippingFee={shippingFee} />
+        <ReviewOrderWidget setTotal={setTotalPrice} />
       </div>
       <div className={`${styles.step} ${styles.delivery}`}>
         <h3 className={styles.title}>2. Delivery Address</h3>

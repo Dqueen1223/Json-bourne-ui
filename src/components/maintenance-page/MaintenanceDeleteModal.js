@@ -14,31 +14,22 @@ const MaintenanceDeleteModal = ({ product, closeModal }) => {
   };
 
   return (
-    <div
-      className="maintenanceModalBackground"
-      onClick={closeTheModal}
-      aria-hidden="true"
-    >
+    <div className="maintenanceModalBackground" onClick={closeTheModal} aria-hidden="true">
       <div className="maintenanceDeleteModal">
         <div className="maintenanceDeleteModal-content">
-
           <div className="maintenanceDeleteModal-header">
-            <button
-              type="button"
-              className="maintenanceCloseButton"
-              onClick={closeTheModal}
-            >
-              &times;
-            </button>
+            <button type="button" className="maintenanceCloseButton" onClick={closeTheModal}>&times;</button>
           </div>
           <div className="maintenanceModal-body">
+            {' '}
             {product.name}
+            {' '}
             {' has purchases associate with it, would you like to mark it inactive instead?'}
-          </div>
-          <div className="maintenanceModalButtons">
-            <button type="button" className="maintenanceConfirmButton" onClick={!closeTheModal}>Yes</button>
-            <button type="button" className="maintenanceNoButton" onClick={!closeTheModal}>No</button>
 
+            <div className="maintenanceModalButtons">
+              <button type="button" className="maintenanceConfirmButton" onClick={!closeTheModal}>Yes</button>
+              <button type="button" className="maintenanceNoButton" onClick={!closeTheModal}>No</button>
+            </div>
           </div>
         </div>
       </div>

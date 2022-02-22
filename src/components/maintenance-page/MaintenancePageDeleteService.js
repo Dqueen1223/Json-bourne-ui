@@ -37,12 +37,14 @@ export default async function deleteProducts(product, setApiError, setDeleteModa
  * @param {*} setDeleteButton sets the delete button to true if reviews do not exist,
  *            and false if reviews do exist
  */
-export async function checkForReviews(product) {
+export async function checkForReviews(product, setDeleteButton) {
   await HttpHelper(`/reviews/product/${product.id}`, 'GET')
     .then((response) => {
       if (response.ok) {
-        return false;
+        setDeleteButton(false);
       }
-      return true;
+      if (response.status === '404') {
+        setDeleteButton(true);
+      }
     });
 }
