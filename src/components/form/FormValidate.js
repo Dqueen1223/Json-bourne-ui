@@ -50,7 +50,7 @@ export default function validateForm(deliveryData, billingData, checked) {
   }
   if (billingData.email === undefined || billingData.email.trim() === '') {
     errors.email = 'The email field is required';
-  } else if (!/[a-z0-9]+[_a-z0-9.-]*[a-z0-9]+@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]+$)/iy.test(billingData.email)) {
+  } else if (!/[a-z0-9]+[_a-z0-9.-]*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]+$)/iy.test(billingData.email)) {
     errors.email = 'The email address must be valid';
   }
   if (billingData.phone === undefined || billingData.phone.trim() === '') {
