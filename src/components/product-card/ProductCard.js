@@ -14,7 +14,6 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import ShareIcon from '@material-ui/icons/Share';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-// import Button from '@material-ui/core/button';
 import { toast } from 'react-toastify';
 import { useCart } from '../checkout-page/CartContext';
 import ProductCardModal from '../product-page/ProductCardModal';
@@ -114,13 +113,7 @@ const ProductCard = ({ product, reviews }) => {
     e.stopPropagation();
     setReviewsModal(true);
   };
-  // const hideReviewButton = (e) => {
-  //   if (activeReviews.length === 0) {
-  //     e.target.style.visibility = 'hidden';
-  //   } else {
-  //     e.target.style.visibility = 'visible';
-  //   }
-  // };
+
   const addReview = (e) => {
     e.stopPropagation();
     setReviewsModal(true);
@@ -220,18 +213,6 @@ const ProductCard = ({ product, reviews }) => {
             >
               +
             </button>
-            {/* <button
-              type="button"
-            >
-              <BasicRating
-                variant="contained"
-                className="reviewsProductCardButton"
-                onClick={() => {
-                  onReview(setReviewsModal(false));
-                }}
-              />
-            </button>
-            {/* getting a count of reviews that are already on product */}
           </>
           )}
         </div>
