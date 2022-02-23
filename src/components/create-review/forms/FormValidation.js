@@ -20,12 +20,14 @@ const generateErrors = (form, idList) => {
       console.log(value);
       noValue.push(id);
     }
-    if (id === 'reviewDescription' && (value.length > 300)) {
-      console.log(value);
-      exceedMax300.push(id);
-    }
-    if (id === 'title' && (value.length > 50)) {
-      exceedMax50.push(id);
+    if (value) {
+      if (id === 'reviewsDescription' && (value.length > 300)) {
+        console.log(value);
+        exceedMax300.push(id);
+      }
+      if (id === 'title' && (value.length > 50)) {
+        exceedMax50.push(id);
+      }
     }
     if (id === 'email' && !value) {
       signIn.push(id);

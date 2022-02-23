@@ -19,9 +19,6 @@ const FormItemTextArea = ({
       <label className={styles.label} htmlFor={id}>
         <div className={styles.labelContents}>
           {label}
-          {/* <div className={styles.count}>
-            {`Count: ${300 - count}`}
-          </div> */}
         </div>
         <div>
           {!error && (

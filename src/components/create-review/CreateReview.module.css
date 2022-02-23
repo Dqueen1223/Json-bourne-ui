@@ -8,7 +8,7 @@
 .input {
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New";
     margin-top: .5em;
-    width: 100%;
+    width: 95%;
     height: 30px;
     padding: .5em;
     box-sizing: border-box;
@@ -16,8 +16,8 @@
 .inputTextArea{
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New";
     margin-top: .5em;
-    width: 100%;
-    height: 30px;
+    width: 95%;
+    height: 90px;
     padding: .5em;
     box-sizing: border-box;
 }
@@ -45,7 +45,7 @@ Errors
 .inputError {
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New";
     margin-top: .5em;
-    width: 100%;
+    width: 95%;
     height: 30px;
     padding: .5em;
     box-sizing: border-box;
@@ -55,8 +55,8 @@ Errors
 .inputErrorTA {
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New";
     margin-top: .5em;
-    width: 100%;
-    height: 30px;
+    width: 95%;
+    height: 90px;
     padding: .5em;
     box-sizing: border-box;
     border: 1px solid red;

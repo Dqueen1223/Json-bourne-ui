@@ -18,7 +18,7 @@ const ReviewForm = ({
       />
       <FormItem
         id="title"
-        label="Add Title"
+        label="Title"
         className={styles.title}
         onChange={onChange}
         value={review.title}
@@ -27,7 +27,7 @@ const ReviewForm = ({
       />
       <FormItemTextArea
         id="reviewsDescription"
-        label="Add Review"
+        label="Comment"
         className={styles.reviewDescription}
         onChange={onChange}
         value={review.reviewsDescription}
