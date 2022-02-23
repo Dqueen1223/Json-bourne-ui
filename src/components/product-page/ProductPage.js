@@ -73,7 +73,7 @@ const ProductPage = () => {
             <div key={product.id}>
               {/* check for reviews here...if reviews are present then produce a review button.
                */}
-              <ProductCard product={product} reviews={reviews} />
+              <ProductCard product={product} reviews={reviews} setReviews={setReviews} />
             </div>
           ))}
         </div>

@@ -1,9 +1,5 @@
 import React from 'react';
-import Button from '@mui/material/Button';
-import MenuItem from '@mui/material/MenuItem';
-import Menu from '@mui/material/Menu';
-import BasicRating from './ReviewsStars';
-import CreateReview from '../create-review/CreateReview';
+import Review from './Review';
 import './ReviewsModal.css';
 
 /**
@@ -11,24 +7,20 @@ import './ReviewsModal.css';
  * @description material-ui styling for product card review modal
  * @return component
  */
-
 const ReviewsModal = ({
-  product, reviews, closeModal, showCreateReview, setReviewFormToggle
+  product, reviews, closeModal, setReviews
 }) => {
-  const [activeReviews] = React.useState(reviews.filter((r) => (r.productId === product.id)));
-
+  const closeTheModal = (e) => {
+    if (e.target.className === 'reviewsModalBackground' || e.target.className === 'reviewscloseButton') {
+      closeModal(false);
+      setReviewFormToggle(false);
+    }
+  };
   const sortedReviews = () => {
     if (!document.getElementsByClassName('reviewsModal-body')[0].classList.contains('reversed')) {
       document.getElementsByClassName('reviewsModal-body')[0].classList.add('reversed');
     } else {
       document.getElementsByClassName('reviewsModal-body')[0].classList.remove('reversed');
-    }
-  };
-
-  const closeTheModal = (e) => {
-    if (e.target.className === 'reviewsModalBackground' || e.target.className === 'reviewscloseButton') {
-      closeModal(false);
-      setReviewFormToggle(false);
     }
   };
 
@@ -110,7 +102,7 @@ const ReviewsModal = ({
           </div>
           <div className="reviewsModal-body">
             {/*  mapping the reviews to each product based off of the product id. */}
-            {reviews && activeReviews.map((review) => (
+            {/* {reviews && activeReviews.map((review) => (
 
               <div key={review.id}>
                 <div className="reviewsOfProduct">
@@ -120,9 +112,32 @@ const ReviewsModal = ({
                   <div className="reviewsActual">{review.reviewsDescription}</div>
                   <div className="reviewsDate">
                     {/* slicing off the last few extra digits associated with the date */}
-                    {review.dateCreated.slice(0, 10)}
-                  </div>
-                </div>
+                    {/* {review.dateCreated.slice(0, 10)} */}
+                  {/* </div> */}
+                {/* </div>  */}
+          <button
+            type="button"
+            className="reviewscloseButton"
+            onClick={closeTheModal}
+          >
+            &times;
+          </button>
+          <div className="reviewsProductName">
+            {product.name}
+          </div>
+          <div className="reviewsModal-body">
+            <button
+              type="button"
+              className="reviewsOrderButton"
+            >
+              Newest First
+            </button>
+            {reviews && reviews.filter((r) => (r.productId === product.id)).map((review) => (
+              <div key={review.id}>
+                <Review
+                  review={review}
+                  setReviews={setReviews}
+                />
               </div>
             ))}
             <div className="reviewsModal-footer" />
