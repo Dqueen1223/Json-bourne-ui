@@ -13,9 +13,30 @@ import './ReviewsModal.css';
  */
 
 const ReviewsModal = ({
-  product, reviews, closeModal, showCreateReview, setReviewFormToggle
+  product, closeModal, reviews, showCreateReview, setReviewFormToggle
 }) => {
+  // eslint-disable-next-line max-len
+  const [newReview, setReviewData] = React.useState('empty');
   const [activeReviews] = React.useState(reviews.filter((r) => (r.productId === product.id)));
+
+  const UpdateReview = () => {
+    if (newReview !== 'empty') {
+      return (
+        <div key={newReview.id}>
+          <div className="reviewsOfProduct">
+            <div className="reviewsTitle">{newReview.title}</div>
+            <div className="reviewsRating">{BasicRating(newReview.rating)}</div>
+            <div className="reviewsActual">{newReview.reviewsDescription}</div>
+            <div className="reviewsDate">
+              {/* slicing off the last few extra digits associated with the date */}
+              {newReview.dateCreated.slice(0, 10)}
+            </div>
+          </div>
+        </div>
+      );
+    }
+    return null;
+  };
 
   const sortedReviews = () => {
     if (!document.getElementsByClassName('reviewsModal-body')[0].classList.contains('reversed')) {
@@ -106,12 +127,20 @@ const ReviewsModal = ({
             </div>
           </div>
           <div className="createReview">
-            {showCreateReview ? <CreateReview productId={product.id} /> : null}
+            {showCreateReview
+              ? (
+                <CreateReview
+                  productId={product.id}
+                  setNewReview={setReviewData}
+                  newReview={newReview}
+                  reviewFormToggle={setReviewFormToggle}
+                />
+              )
+              : null}
           </div>
           <div className="reviewsModal-body">
             {/*  mapping the reviews to each product based off of the product id. */}
             {reviews && activeReviews.map((review) => (
-
               <div key={review.id}>
                 <div className="reviewsOfProduct">
                   <div className="reviewsTitle">{review.title}</div>
@@ -125,6 +154,7 @@ const ReviewsModal = ({
                 </div>
               </div>
             ))}
+            <UpdateReview />
             <div className="reviewsModal-footer" />
           </div>
           <div className="reviewsModal-footer" />

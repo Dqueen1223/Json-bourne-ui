@@ -211,7 +211,7 @@ const ProductCard = ({ product, reviews }) => {
               variant="contained"
               onClick={addReview}
             >
-              +
+              Add Review
             </button>
           </>
           )}

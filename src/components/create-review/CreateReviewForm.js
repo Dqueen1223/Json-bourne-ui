@@ -5,7 +5,7 @@ import BasicRating from './forms/ReviewsStars';
 import styles from './CreateReview.module.css';
 
 const ReviewForm = ({
-  onClick, onChange, rating, setRating, review
+  onClick, onChange, rating, setRating, review, errors
 }) => (
   <>
     <div className={styles.createReview}>
@@ -14,24 +14,25 @@ const ReviewForm = ({
         onChange={onChange}
         rating={rating}
         setRating={setRating}
-      // value={review.rating}
+        value={review.rating}
       />
       <FormItem
         id="title"
-        label="Add Title"
+        label="Title"
         className={styles.title}
         onChange={onChange}
         value={review.title}
-      // error={errors.code}
+        titleLength={review.title ? review.title.length : 0}
+        error={errors.title}
       />
       <FormItemTextArea
-        id="reviewDescription"
-        label="Add Review"
+        id="reviewsDescription"
+        label="Comment"
         className={styles.reviewDescription}
         onChange={onChange}
-        value={review.reviewDescription}
-        reviewLength={review.reviewDescription ? review.reviewDescription.length : 0}
-      // error={errors.code}
+        value={review.reviewsDescription}
+        reviewLength={review.reviewsDescription ? review.reviewsDescription.length : 0}
+        error={errors.reviewsDescription}
       />
       <button
         type="button"

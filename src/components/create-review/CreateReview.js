@@ -4,63 +4,80 @@ import ReviewForm from './CreateReviewForm';
 import styles from './CreateReview.module.css';
 import { useProfile } from '../Profile/ProfileContext';
 import makeReview from './CreateReviewService';
-// import fetchProducts from '../product-page/ProductPageService';
+import generateErrors from './forms/FormValidation';
 
-const CreateReview = ({ productId }) => {
-  const [review, setReviewData] = useState({});
+const CreateReview = ({
+  productId, reviewFormToggle, setNewReview
+}) => {
   const [rating, setRating] = useState(2);
-  // const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState({});
+  const [review, setReviewData] = useState({});
+  let email;
+  let userId;
+
   const {
     state: { userProfile }
   } = useProfile();
 
+  if (userProfile[1]) {
+    email = userProfile[1].email;
+    userId = userProfile[1].id;
+  }
+
+  const newReview = {
+    rating,
+    title: review.title,
+    reviewsDescription: review.reviewsDescription,
+    email,
+    productId,
+    dateCreated: new Date().toISOString(),
+    userId
+  };
+
   const onReviewChange = (e) => {
     setReviewData({ ...review, [e.target.id]: e.target.value });
-    // setErrors({});
+    setErrors({});
+  };
+
+  const handleErrors = (form) => {
+    const idList = Object.keys(form);
+    const errorLists = generateErrors(form, idList);
+
+    for (let i = 0; i < idList.length; i += 1) {
+      const id = idList[i];
+      if (errorLists[id]) {
+        errors[id] = errorLists[id];
+      }
+      if (errorLists.date) {
+        errors.date = errorLists.date;
+      }
+    }
+    setErrors(errors);
   };
 
   const handleCreate = () => {
-    if (userProfile[0]) {
-      const newReview = {
-        Rating: rating,
-        Title: review.title,
-        ReviewsDescription: review.reviewDescription,
-        Email: userProfile[0].email,
-        ProductId: productId,
-        DateCreated: new Date().toISOString(),
-        UserId: 1
-      };
-      // console.log(fetchProducts(userProfile[0].email));
+    handleErrors(newReview);
+    setReviewData(newReview);
+  };
+  const handleSubmit = async () => {
+    handleCreate();
 
-      makeReview(newReview);
+    if (Object.keys(errors).length === 0) {
+      setNewReview(newReview);
+      await makeReview(newReview);
+      reviewFormToggle(false);
     } else {
-      toast.error('Must be signed in to create a review');
+      toast.error('Some fields contain invalid inputs.');
     }
   };
-
-  // const handleSubmit = async () => {
-  //   handleCreate();
-  //   if (await makeReview(review) !== 'Bad Request') {
-  //     await makeReview(review);
-  //   }
-  //   // if (Object.keys(errors).length === 0) {
-  //   //   if (await makePromo(review) !== 'Bad Request') {
-  //   //     await makeReview(review);
-  //   //   } else {
-  //   //     toast.error('Bad Request');
-  //   //   }
-  //   // } else {
-  //   //   toast.error('Some fields contain invalid inputs.');
-  //   // }
-  // };
 
   return (
     <>
       <div className={styles.review}>
         <ReviewForm
-          // errors={errors}
+          errors={errors}
           onChange={onReviewChange}
-          onClick={handleCreate}
+          onClick={handleSubmit}
           rating={rating}
           setRating={setRating}
           review={review}

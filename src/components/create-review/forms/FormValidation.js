@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 /**
  * @param {*} form //single form from document
  * @returns //error div to append to errors ul
@@ -6,6 +7,9 @@
  */
 const generateErrors = (form, idList) => {
   const noValue = [];
+  const exceedMax300 = [];
+  const exceedMax50 = [];
+  const signIn = [];
   const errors = {};
 
   for (let i = 0; i < idList.length; i += 1) {
@@ -13,14 +17,42 @@ const generateErrors = (form, idList) => {
     const value = form[id];
 
     if (!value) {
+      console.log(value);
       noValue.push(id);
     }
+    if (value) {
+      if (id === 'reviewsDescription' && (value.length > 300)) {
+        console.log(value);
+        exceedMax300.push(id);
+      }
+      if (id === 'title' && (value.length > 50)) {
+        exceedMax50.push(id);
+      }
+    }
+    if (id === 'email' && !value) {
+      signIn.push(id);
+    }
   }
-
   if (noValue.length) {
     noValue.forEach((i) => {
       errors[i] = 'Required';
     });
+  }
+  if (exceedMax300.length) {
+    exceedMax300.forEach((i) => {
+      errors[i] = 'Cannot exceed 300 characters';
+    });
+  }
+  if (exceedMax50.length) {
+    exceedMax50.forEach((i) => {
+      errors[i] = 'Cannot exceed 50 characters';
+    });
+  }
+  if (signIn.length) {
+    signIn.forEach((i) => {
+      errors[i] = 'Must Be signed In';
+    });
+    toast.error('Must be signed in to create a review');
   }
 
   return errors;
