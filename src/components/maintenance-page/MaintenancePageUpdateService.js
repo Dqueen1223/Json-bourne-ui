@@ -1,17 +1,16 @@
 import { toast } from 'react-toastify';
 import HttpHelper from '../../utils/HttpHelper';
 import Constants from '../../utils/constants';
-
 /**
- *
- * @name makeProduct
- * @description sends a create product request
- * @param {*}
- * @returns
+ * @name UpdateProducts
+ * @description Utilizes HttpHelper to make a PUT request to an API
+ * @param {*} product updates specified product with the given product object
+ * @param {*} setApiError sets error if response other than 200 is returned
+ * @returns update for products if 200 response, else throws an apiError
  */
-export default async function MakeProduct(product) {
-  let checkValid = 'invalid';
-  await HttpHelper(Constants.PRODUCTS_ENDPOINT, 'POST', {
+export default async function UpdateProducts(product) {
+  await HttpHelper(Constants.PRODUCTS_ENDPOINT, 'PUT', {
+    id: product.id,
     name: product.name,
     sku: product.sku,
     description: product.description,
@@ -32,15 +31,11 @@ export default async function MakeProduct(product) {
   })
     .then((response) => {
       if (response.ok) {
-        toast.success('Your product has been successfully made!');
-        checkValid = 'valid';
-        response.json();
-      } else {
-        throw new Error(response.statusText);
+        toast.success(`${product.name} has been successfully edited`);
+        return response.json();
       }
-    })
-    .catch(() => {
-      toast.error('There is a problem connecting to the database');
+      throw new Error(Constants.API_ERROR);
+    }).catch(() => {
+      toast.error(`There is a problem connecting with the database ${product.name} has not been edited`);
     });
-  return checkValid;
 }

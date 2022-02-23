@@ -7,9 +7,21 @@ p {
   grid-template-columns: 2fr 3fr 1fr;
   grid-template-rows: 1fr;
   gap: 0px 1em;
+  margin-bottom: 5px;
   align-items: center;
 }
-
+.image {
+  display:flex;
+  margin:auto;
+  width: 70px;
+  height: 90px;
+}
+.imageSrc {
+  display: block;
+  margin:auto;
+  max-width: 100%;
+  max-height: 100%;
+}
 .itemTitle {
   font-weight: 700;
 }
