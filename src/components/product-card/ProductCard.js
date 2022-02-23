@@ -21,7 +21,6 @@ import ProductCardModal from '../product-page/ProductCardModal';
 import getQtyInCart, { inventoryAvailable } from './ProductCardService';
 import ReviewsModal from '../product-page/ReviewsModal';
 import '../product-page/ReviewsModal.css';
-import BasicRating from '../product-page/ReviewsStars';
 
 /**
  * @name useStyles
@@ -115,33 +114,24 @@ const ProductCard = ({ product, reviews }) => {
     e.stopPropagation();
     setReviewsModal(true);
   };
-  const hideReviewButton = (e) => {
-    if (reviews.length === 0) {
-      setReviewFormToggle(true);
-    }
-    if (reviews.length === 0) {
-      e.target.style.display = 'inline-block';
-    } else {
-      e.target.style.display = 'none';
-    }
-  };
+  // const hideReviewButton = (e) => {
+  //   if (activeReviews.length === 0) {
+  //     e.target.style.visibility = 'hidden';
+  //   } else {
+  //     e.target.style.visibility = 'visible';
+  //   }
+  // };
   const addReview = (e) => {
     e.stopPropagation();
     setReviewsModal(true);
     setReviewFormToggle(true);
+    if (reviews.length === 0) {
+      setReviewFormToggle(true);
+    }
   };
-    // eslint-disable-next-line max-len
-    // const reviewAvg = () => reviews.reduce((a, b) => a.review.rating + b.review.rating, 0) / reviews.length;
-
-  // useEffect(() => {
-  //   fetchReviews(setReviews, setApiError);
-  // }, [reviews, setApiError]);
-  // React.useEffect((e) => {
-  //   hideReviewButton(e);
-  // }, [hideReviewButton]);
 
   return (
-    <Card className={classes.root} onLoad={hideReviewButton}>
+    <Card className={classes.root}>
       {modalIsOpen && reactDom.createPortal(
         <ProductCardModal product={product} closeModal={setModalIsOpen} />,
         document.getElementById('root')
@@ -230,7 +220,7 @@ const ProductCard = ({ product, reviews }) => {
             >
               +
             </button>
-            <button
+            {/* <button
               type="button"
             >
               <BasicRating
