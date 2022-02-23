@@ -66,7 +66,9 @@ const CheckoutPage = () => {
   const [errors, setErrors] = React.useState({});
 
   const handlePay = () => {
-    if (Object.keys(validateForm(deliveryData, billingData, checked)).length === 0) {
+    if (products.length === 0) {
+      toast.error('Purchase could not be completed. You currently have no items in your cart.');
+    } else if (Object.keys(validateForm(deliveryData, billingData, checked)).length === 0) {
       const productData = products.map(({ id, quantity }) => ({ id, quantity }));
       const productDataSend = [];
       for (let i = 0; i < productData.length; i += 1) {

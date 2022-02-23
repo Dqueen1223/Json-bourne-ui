@@ -1,17 +1,10 @@
 import React from 'react';
-// import { AccordionDetails, Button } from '@material-ui/core';
-// import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-// import * as React from 'react';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import BasicRating from './ReviewsStars';
 import CreateReview from '../create-review/CreateReview';
-// import { useReviews } from '../create-review/forms/ReviewsContext';
-
-// import DropDownButton from './DropDownButton';
-
-// import styles from './ProductPage.module.css';
+import './ReviewsModal.css';
 
 /**
  * @name ReviewModal
@@ -47,11 +40,9 @@ const ReviewsModal = ({
 
   const sortedReviews = () => {
     if (!document.getElementsByClassName('reviewsModal-body')[0].classList.contains('reversed')) {
-      // setActiveReviews(activeReviews.sort((a, b) => b.dateCreated - a.dateCreated));
       document.getElementsByClassName('reviewsModal-body')[0].classList.add('reversed');
     } else {
       document.getElementsByClassName('reviewsModal-body')[0].classList.remove('reversed');
-      // setActiveReviews(activeReviews.sort((a, b) => a.dateCreated - b.dateCreated));
     }
   };
 
@@ -92,7 +83,6 @@ const ReviewsModal = ({
             'aria-labelledby': 'basic-button'
           }}
         >
-          {/* <div className="reviewModalButtons"> */}
           <MenuItem
             // type="button"
             className="reviewsOrderButton"
@@ -107,10 +97,6 @@ const ReviewsModal = ({
           >
             Add Review
           </MenuItem>
-          {/* </div> */}
-          {/* <MenuItem onClick={handleClose}>Profile</MenuItem>
-          <MenuItem onClick={handleClose}>My account</MenuItem>
-          <MenuItem onClick={handleClose}>Logout</MenuItem> */}
         </Menu>
       </div>
     );
@@ -139,23 +125,6 @@ const ReviewsModal = ({
             <div className="dropdown-menu">
               {DropDownButton()}
             </div>
-
-            {/* <div className="reviewModalButtons">
-              <Button
-                type="button"
-                className="reviewsOrderButton"
-                onClick={sortedReviews}
-              >
-                Order by Date
-              </Button>
-              <Button
-                type="button"
-                onClick={() => setReviewFormToggle(!showCreateReview)}
-                className="createReview"
-              >
-                Add Review
-              </Button>
-            </div> */}
           </div>
           <div className="createReview">
             {showCreateReview
@@ -175,6 +144,7 @@ const ReviewsModal = ({
               <div key={review.id}>
                 <div className="reviewsOfProduct">
                   <div className="reviewsTitle">{review.title}</div>
+                  <div className="reviewsEmail">{review.email}</div>
                   <div className="reviewsRating">{BasicRating(review.rating)}</div>
                   <div className="reviewsActual">{review.reviewsDescription}</div>
                   <div className="reviewsDate">

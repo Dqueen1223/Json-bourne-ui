@@ -14,14 +14,12 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import ShareIcon from '@material-ui/icons/Share';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-// import Button from '@material-ui/core/button';
 import { toast } from 'react-toastify';
 import { useCart } from '../checkout-page/CartContext';
 import ProductCardModal from '../product-page/ProductCardModal';
 import getQtyInCart, { inventoryAvailable } from './ProductCardService';
 import ReviewsModal from '../product-page/ReviewsModal';
 import '../product-page/ReviewsModal.css';
-import BasicRating from '../product-page/ReviewsStars';
 
 /**
  * @name useStyles
@@ -115,33 +113,18 @@ const ProductCard = ({ product, reviews }) => {
     e.stopPropagation();
     setReviewsModal(true);
   };
-  const hideReviewButton = (e) => {
-    if (reviews.length === 0) {
-      setReviewFormToggle(true);
-    }
-    if (reviews.length === 0) {
-      e.target.style.display = 'inline-block';
-    } else {
-      e.target.style.display = 'none';
-    }
-  };
+
   const addReview = (e) => {
     e.stopPropagation();
     setReviewsModal(true);
     setReviewFormToggle(true);
+    if (reviews.length === 0) {
+      setReviewFormToggle(true);
+    }
   };
-    // eslint-disable-next-line max-len
-    // const reviewAvg = () => reviews.reduce((a, b) => a.review.rating + b.review.rating, 0) / reviews.length;
-
-  // useEffect(() => {
-  //   fetchReviews(setReviews, setApiError);
-  // }, [reviews, setApiError]);
-  // React.useEffect((e) => {
-  //   hideReviewButton(e);
-  // }, [hideReviewButton]);
 
   return (
-    <Card className={classes.root} onLoad={hideReviewButton}>
+    <Card className={classes.root}>
       {modalIsOpen && reactDom.createPortal(
         <ProductCardModal product={product} closeModal={setModalIsOpen} />,
         document.getElementById('root')
@@ -230,18 +213,6 @@ const ProductCard = ({ product, reviews }) => {
             >
               Add Review
             </button>
-            <button
-              type="button"
-            >
-              <BasicRating
-                variant="contained"
-                className="reviewsProductCardButton"
-                onClick={() => {
-                  onReview(setReviewsModal(false));
-                }}
-              />
-            </button>
-            {/* getting a count of reviews that are already on product */}
           </>
           )}
         </div>
