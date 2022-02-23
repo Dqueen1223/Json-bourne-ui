@@ -35,7 +35,7 @@ const Review = ({ review }, setReviews) => {
 
   useEffect(() => {
     if (apiError) {
-      toast.error('cannot connect to the database');
+      toast.error('Cannot connect to the database');
     }
   }, [apiError]);
 
@@ -120,13 +120,14 @@ const Review = ({ review }, setReviews) => {
     })
       .then(() => deleteReview(setIsDeleted, setApiError, deletedReview))
       .catch(() => console.log('Deletion cancelled.'));
-    const btnSubmit = reviewElement.querySelector('.btnSubmitDeleteReview');
-    btnSubmit.style.visibility = 'hidden';
+    // setIsDeleted(true);
+    // const btnSubmit = reviewElement.querySelector('.btnSubmitDeleteReview');
+    // btnSubmit.style.visibility = 'hidden';
   };
 
   return (
     <>
-      {(review.email === email) && !isEdit && (
+      {(review.email === email) && !isEdit && !isDeleted && (
       <div className="reviewsOfProduct">
         <div className="titleContainer">
           <div className="reviewsTitle">
@@ -153,7 +154,7 @@ const Review = ({ review }, setReviews) => {
 
       </div>
       )}
-      {(review.email === email) && isEdit && (
+      {(review.email === email) && isEdit && !isDeleted && (
         <div className="reviewsOfProduct">
           <div className="titleContainer">
             <div className="reviewsTitle" contentEditable suppressContentEditableWarning onInput={preventCursorDisappearHandler}>
@@ -175,6 +176,9 @@ const Review = ({ review }, setReviews) => {
           </div>
           <button type="button" className="btnSubmitEditReview" onClick={(e) => (submitEditHandler(e))}>Submit</button>
         </div>
+      )}
+      {(review.email === email) && isDeleted && (
+        <div className="reviewsOfProduct" />
       )}
       {(review.email !== email) && (
       <div className="reviewsOfProduct">
