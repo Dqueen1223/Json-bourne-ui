@@ -8,7 +8,6 @@ import DeliveryAddress from './forms/DeliveryAddress';
 import BillingDetails from './forms/BillingDetails';
 import makePurchase from './CheckoutService';
 import validateForm from '../form/FormValidate';
-// import { useProfile } from '../Profile/ProfileContext';
 import { getSubtotal } from './ReviewOrderWidgetService';
 import getBillingRate from './BillingRateService';
 /**
@@ -39,7 +38,7 @@ const CheckoutPage = () => {
     if (Number(getSubtotal(products).substring(1)) > 0.00) {
       getBillingRate(deliveryData.state, setShippingFeeState);
     }
-  }, [deliveryData, products]);
+  }, [deliveryData.state, products]);
   React.useEffect(() => {
     let productsPriceAdd = 0.00;
     const subTotal = getSubtotal(products);
@@ -67,7 +66,9 @@ const CheckoutPage = () => {
   const [errors, setErrors] = React.useState({});
 
   const handlePay = () => {
-    if (Object.keys(validateForm(deliveryData, billingData, checked)).length === 0) {
+    if (products.length === 0) {
+      toast.error('Purchase could not be completed. You currently have no items in your cart.');
+    } else if (Object.keys(validateForm(deliveryData, billingData, checked)).length === 0) {
       const productData = products.map(({ id, quantity }) => ({ id, quantity }));
       const productDataSend = [];
       for (let i = 0; i < productData.length; i += 1) {
@@ -128,8 +129,7 @@ const CheckoutPage = () => {
     <div className={styles.checkoutContainer}>
       <div className={`${styles.step} ${styles.order}`}>
         <h3 className={styles.title}>1. Review Order</h3>
-        <ReviewOrderWidget setTotal={setTotalPrice} />
-        <ReviewOrderWidget shippingFee={shippingFee} />
+        <ReviewOrderWidget shippingFee={shippingFee} setTotal={setTotalPrice} />
       </div>
       <div className={`${styles.step} ${styles.delivery}`}>
         <h3 className={styles.title}>2. Delivery Address</h3>

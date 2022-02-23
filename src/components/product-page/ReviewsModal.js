@@ -4,6 +4,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import BasicRating from './ReviewsStars';
 import CreateReview from '../create-review/CreateReview';
+import './ReviewsModal.css';
 
 /**
  * @name ReviewModal

@@ -12,10 +12,6 @@ export default async function makePurchase(products, deliveryAddress, billingAdd
   totalCost) {
   await HttpHelper(Constants.PURCHASE_ENDPOINT, 'POST', {
     totalCost,
-    /* lineItems: {
-      productId: products.id,
-      quantity: products.quantity
-    }, */
     lineItems: products,
     deliveryAddress: {
       deliveryFirstName: deliveryAddress.firstName,

@@ -1,4 +1,14 @@
-
+.reviewsApiError{
+    color: red;
+    font-size: 1.5em;
+}
+.reviewsProductCardButton{
+    background-color: #fb8122;
+    color: #E1E2E2;
+    position: relative;
+    left: 5%;
+    width: 40%;
+}
 .reviewsModalBackground{
     position: fixed;
     height: 100%;
@@ -59,16 +69,54 @@
 }
 .reviewModalButtons{
     text-align: left;
- 
+}
+.btnSubmitEditReview{
+    margin:0 2%;
+}
+.btnDummy{
+    margin:0 2%;
+    visibility: hidden;
+}
+.deleteIcon{
+    width:1em;
+    height:1em;
+    margin-left:1em;
+}
+.pencilIcon{
+    width:20px;
+    height:20px;
+    margin-left:1em;
+  }
+  .pencilIcon:hover, .deleteIcon:hover{
+    color: rgb(65, 65, 65);
+  }
+.productName{
+    font-size: 200%;
+    border: none;
+    width: 91%;
+    text-align:left;
+}
+.reviewsOrderButton{
+    width: 20%;
+    margin: 1% 2%;
 }
 .reviewsTitle{
     font-size: 140%;
     margin: 2%;
+    padding:5px;
+    min-width:80px;
+}
+.reviewsProductName{
+    font-size: 170%;
+    margin: 2% 0;
+    text-align:left;
+    padding: 0 7% 0 2%;
 }
 .reviewsOfProduct{
-    position: relative;
     bottom: 40%;
     text-align: left;
+    margin-bottom: none;
+
 }
 .reviewsEmail{
     margin: 2%;
@@ -78,9 +126,15 @@
 }
 .reviewsActual{
     margin: 2%;
+    padding:5px;
 }
 .reviewsDate{
+    margin: 1% 2%;
+    padding: 5px;
+}
+.reviewsDescription{
     margin: 2%;
+    padding:5px;
 }
 .reviewsModal-body{
     /* flex: 1 1 60%; */
@@ -123,6 +177,15 @@
 .createReview {
     margin-top: 125px;
 }
+.starRating{
+    color:white;
+}
+.titleContainer{
+    display:flex;
+    flex-direction: row;
+    align-items:center;
+}
+
 
 /* remove arrows from input */
 input::-webkit-outer-spin-button,
