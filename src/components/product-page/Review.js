@@ -18,14 +18,13 @@ const Review = ({ review }, setReviews) => {
   const [stars, setStars] = React.useState();
   const [email, setEmail] = React.useState('');
   const [apiError, setApiError] = React.useState(false);
-  console.log(`review id ${review.id} product id ${review.productId}`);
   const {
     state: { userProfile }
   } = useProfile();
 
   useEffect(() => {
     if (userProfile.length > 0) {
-      setEmail(userProfile[0].email);
+      setEmail(userProfile[1].email);
     }
   }, [userProfile, setEmail]);
 
