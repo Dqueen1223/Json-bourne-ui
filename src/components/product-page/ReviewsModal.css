@@ -140,6 +140,7 @@ input[type=number] {
 }
 
 .addReviewsProductCardButton{
+    color: white;
     background-color: #fb8122;
     /* color: #E1E2E2 */
     /* position: relative; */
