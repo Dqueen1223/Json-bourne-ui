@@ -4,7 +4,7 @@ import '../ProfilePage.css';
 const ProfileForm = ({
   onChange, value, id, label, placeholder, type, error, editing
 }) => (
-  <div>
+  <div className="listDiv">
     <li>
       {label}
       :

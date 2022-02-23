@@ -72,6 +72,7 @@ const ProfilePage = () => {
       };
       fetchUpdateUser(user, setProfile);
       setIsEditing(false);
+      setErrors(currentErrors);
     }
   };
   /* const renderPurchase = () => {
