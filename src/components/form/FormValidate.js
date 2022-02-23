@@ -10,13 +10,13 @@ export default function validateForm(deliveryData, billingData, checked) {
   const errors = {};
   if (deliveryData.firstName === undefined || deliveryData.firstName.trim() === '') {
     errors.firstName = 'The first name field is required';
-  } else {
-    // name validation
+  } else if (!/^[a-zA-Z0-9]+[a-zA-Z0-9- ']*$/i.test(deliveryData.firstName)) {
+    errors.firstName = 'Name fields may only contain letters, numbers, spaces, hyphens, and apostrophes';
   }
   if (deliveryData.lastName === undefined || deliveryData.lastName.trim() === '') {
     errors.lastName = 'The last name field is required';
-  } else {
-    // name validation
+  } else if (!/^[a-zA-Z0-9]+[a-zA-Z0-9- ']*$/i.test(deliveryData.lastName)) {
+    errors.lastName = 'Name fields may only contain letters, numbers, spaces, hyphens, and apostrophes';
   }
   if (deliveryData.street === undefined || deliveryData.street.trim() === '') {
     errors.street = 'The street field is required';
@@ -83,8 +83,8 @@ export default function validateForm(deliveryData, billingData, checked) {
   }
   if (billingData.cardholder === undefined || billingData.cardholder.trim() === '') {
     errors.cardholder = 'The cardholder field is required';
-  } else {
-    // name validation
+  } else if (!/^[a-zA-Z0-9]+[a-zA-Z0-9- ']*$/i.test(billingData.cardholder)) {
+    errors.cardholder = 'Name fields may only contain letters, numbers, spaces, hyphens, and apostrophes';
   }
   if (billingData.expiration === undefined || billingData.expiration.trim() === '') {
     errors.expiration = 'The expiration field is required';
