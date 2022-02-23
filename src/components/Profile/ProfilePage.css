@@ -1,28 +1,24 @@
+
 .error_item{
   color:red;
   margin:3px 0px 0px 0px;
 }
 
 .edit {
-        display: block;
-    padding:2px 1.25em 0px;
-    position: relative;
-    margin:3px 0px 0px 0px;
     left: 10em;
     top: 1em;
 }
 .submit{
-    display: block;
-    padding:2px 1.25em 0px;
-    position: relative;
-    margin:3px 0px 0px 0px;
     bottom: 26em;
     left: 12em;
-    color: green
 }
 
+.input{
+    margin:auto
+}
 .inputError {
   border: 1px solid red;
+  margin:auto
 }
 
 .paragraph {
@@ -35,8 +31,9 @@ li{
 }
 
 .headerShipping{
+display: inline-block;
 position: relative;
-text-align: justify;
+text-align: center;
 padding:2px 1.25em 0px;
 border-bottom: 5px solid #FB8122;
 border-radius: 5%;
@@ -44,7 +41,7 @@ width: 150px;
 }
 
 .headerName{
-    display: block;
+    display: inline-block;
     text-align: center;
     padding:2px 1.25em 0px;
     position: relative;
@@ -54,18 +51,18 @@ width: 150px;
 }
 
 .userInfo{
+    position: relative;
     margin-bottom: 4em;
     font-size: large;
     flex: 1 1 90%;
     color: #1d2228;
     width: 400px;
-    flex-direction: row;
     height: 6em;
-    text-align: left;
 }
 
 .profile{
     position:relative;
+    overflow: auto;
     flex: 1 1 5%;
     flex-direction: column;
     height: 80%;
@@ -94,8 +91,8 @@ width: 150px;
 
 .content{
     flex: 1 1 70%;
-    overflow: auto;
-    margin-bottom:2em;
+    margin-bottom:20em;
+    padding-bottom: 8em;
 }
 
 .buttons {
@@ -131,10 +128,10 @@ width: 150px;
 }
 
 .userInfodiv{
-    position: absolute;
-    top: 7em;
-    left: 43%;
-    width: 15%;
+flex-direction: column;
+    display: flex;
+    align-self: center;
+    align-items: center;
     height: 8em;
 }
 

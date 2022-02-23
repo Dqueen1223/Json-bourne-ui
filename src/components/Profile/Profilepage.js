@@ -120,7 +120,7 @@ const ProfilePage = () => {
                   data={profile}
                   errors={errors}
                 />
-                  {isEditing && <Button className="submit" size="large" color="green" startIcon={<CheckIcon />} onClick={trySubmit} />}
+                  {isEditing && <Button className="submit" size="large" startIcon={<CheckIcon />} onClick={trySubmit} />}
               </div>
             )}
             {purchaseInfo && (
