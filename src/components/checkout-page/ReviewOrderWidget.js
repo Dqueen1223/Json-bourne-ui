@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { useCart } from './CartContext';
 import OrderItem from './OrderItem';
 import { getSubtotal } from './ReviewOrderWidgetService';
@@ -10,17 +11,30 @@ import cartLogic from './cartLogic';
  * @description Displays order items and subtotal
  * @return component
  */
-const ReviewOrderWidget = ({ shippingFee }) => {
+const ReviewOrderWidget = ({ setTotal, shippingFee }) => {
   const {
     state: { products }
   } = useCart();
   cartLogic();
-  const calculateTotal = () => (Number(getSubtotal(products).substring(1))
-    + Number(shippingFee)).toFixed(2);
+  const calculateTotal = () => {
+    const totalVal = (Number(getSubtotal(products).substring(1))
+      + Number(shippingFee)).toFixed(2);
+    setTotal(Number(totalVal));
+    return totalVal;
+  };
   return (
     <>
+      {products.length === 0
+        && (
+        <div className="returnProductDiv">
+          <p>You have no products in your cart</p>
+          <Link to="/" className={styles.returnProductLink}>
+            Click here to continue shopping
+          </Link>
+        </div>
+        )}
       {products.map(({
-        price, title, description, quantity
+        price, title, description, quantity, imageSrc
       }) => (
         <OrderItem
           key={title}
@@ -28,6 +42,7 @@ const ReviewOrderWidget = ({ shippingFee }) => {
           title={title}
           description={description}
           quantity={quantity}
+          image={imageSrc}
         />
       ))}
       <hr />

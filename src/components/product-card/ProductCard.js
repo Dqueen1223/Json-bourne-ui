@@ -18,6 +18,8 @@ import { toast } from 'react-toastify';
 import { useCart } from '../checkout-page/CartContext';
 import ProductCardModal from '../product-page/ProductCardModal';
 import getQtyInCart, { inventoryAvailable } from './ProductCardService';
+import ReviewsModal from '../product-page/ReviewsModal';
+import '../product-page/ReviewsModal.css';
 
 /**
  * @name useStyles
@@ -53,11 +55,13 @@ const useStyles = makeStyles((theme) => ({
  * @param {*} props product
  * @return component
  */
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, reviews }) => {
   const classes = useStyles();
   const { dispatch } = useCart();
   const [modalIsOpen, setModalIsOpen] = useState(false);
-
+  const [reviewsModal, setReviewsModal] = useState(false);
+  const [showCreateReview, setReviewFormToggle] = useState(false);
+  // const { activeReviews } = React.useState(reviews.filter((r) => (r.productId === product.id)));
   const {
     state: { products }
   } = useCart();
@@ -105,10 +109,34 @@ const ProductCard = ({ product }) => {
   const share = (e) => {
     e.stopPropagation();
   };
+  const onReview = (e) => {
+    e.stopPropagation();
+    setReviewsModal(true);
+  };
+
+  const addReview = (e) => {
+    e.stopPropagation();
+    setReviewsModal(true);
+    setReviewFormToggle(true);
+    if (reviews.length === 0) {
+      setReviewFormToggle(true);
+    }
+  };
+
   return (
     <Card className={classes.root}>
       {modalIsOpen && reactDom.createPortal(
         <ProductCardModal product={product} closeModal={setModalIsOpen} />,
+        document.getElementById('root')
+      )}
+      {reviewsModal && reactDom.createPortal(
+        <ReviewsModal
+          product={product}
+          reviews={reviews}
+          closeModal={setReviewsModal}
+          showCreateReview={showCreateReview}
+          setReviewFormToggle={setReviewFormToggle}
+        />,
         document.getElementById('root')
       )}
       <CardHeader
@@ -119,12 +147,12 @@ const ProductCard = ({ product }) => {
           <Avatar aria-label="demographics" className={classes.avatar}>
             {product.demographic.charAt(0)}
           </Avatar>
-        )}
+          )}
         action={(
           <IconButton aria-label="settings">
             <MoreVertIcon />
           </IconButton>
-        )}
+          )}
         title={product.name}
         subheader={`${product.demographic} ${product.category} ${product.type}`}
       />
@@ -165,9 +193,31 @@ const ProductCard = ({ product }) => {
         <IconButton aria-label="add to shopping cart" onClick={onAdd}>
           <AddShoppingCartIcon />
         </IconButton>
+        <div>
+          {ReviewsModal !== false && (
+          <>
+            <button
+              className="reviewsProductCardButton"
+              type="button"
+              variant="contained"
+              onClick={onReview}
+            >
+              Reviews
+            </button>
+            <button
+              className="addReviewsProductCardButton"
+              type="button"
+              label="Add Review"
+              variant="contained"
+              onClick={addReview}
+            >
+              Add Review
+            </button>
+          </>
+          )}
+        </div>
       </CardActions>
     </Card>
   );
 };
-
 export default ProductCard;
