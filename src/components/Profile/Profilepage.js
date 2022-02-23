@@ -38,7 +38,7 @@ const ProfilePage = () => {
   }, [userProfile]);
   useEffect(() => {
     fetchPurchases(`?email=${profile.email}`, setPurchases);
-  }, [profile]);
+  }, [profile.email]);
   const startEditing = () => {
     if (isEditing === false) {
       setIsEditing(true);
