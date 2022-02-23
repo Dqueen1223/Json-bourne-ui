@@ -1,0 +1,168 @@
+.reviewsApiError{
+    color: red;
+    font-size: 1.5em;
+}
+.reviewsProductCardButton{
+    background-color: #fb8122;
+    color: #E1E2E2;
+    position: relative;
+    left: 5%;
+    width: 40%;
+}
+.reviewsModalBackground{
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0,0,0,0.4);
+    z-index: 2;
+}
+.reviewsModal{
+    display: flex;
+    height:500px;
+    width: 500px;
+    border-radius: 0.5em;
+    background-color:white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.reviewsModal-content{
+    display:flex-end;
+    flex-direction: column;
+    flex:1;
+    position: relative;
+    max-height: 100%;
+    margin:10px;
+    color: #1d2228;
+    overflow: scroll;
+}
+.reviewscloseButton {
+    background-color: transparent;
+    position: absolute;
+    font-size: 1.5em;
+    right:10px;
+    top:10px;
+    color: #1d2228;
+    border: none;
+    border-radius: 10px;
+}
+.closeButton:hover {
+    background-color: rgba(0,0,0,0.1);
+}
+
+.reviewsModal-header{
+    flex:2 1 50%;
+    height: 50%;
+    text-align: center;
+    display: flex;
+    font-size: 120%;
+}
+.btnSubmitEditReview{
+    margin:0 2%;
+}
+.btnDummy{
+    margin:0 2%;
+    visibility: hidden;
+}
+.deleteIcon{
+    width:1em;
+    height:1em;
+    margin-left:1em;
+}
+.pencilIcon{
+    width:20px;
+    height:20px;
+    margin-left:1em;
+  }
+  .pencilIcon:hover, .deleteIcon:hover{
+    color: rgb(65, 65, 65);
+  }
+.productName{
+    font-size: 200%;
+    border: none;
+    width: 91%;
+    text-align:left;
+}
+.reviewsOrderButton{
+    width: 20%;
+    margin: 1% 2%;
+}
+.reviewsTitle{
+    font-size: 140%;
+    margin: 2%;
+    padding:5px;
+    min-width:80px;
+}
+.reviewsProductName{
+    font-size: 170%;
+    margin: 2% 0;
+    text-align:left;
+    padding: 0 7% 0 2%;
+}
+.reviewsOfProduct{
+    bottom: 40%;
+    text-align: left;
+    margin-bottom: none;
+
+}
+.reviewsRating{
+    margin: 2%;
+}
+.reviewsActual{
+    margin: 2%;
+    padding:5px;
+}
+.reviewsDate{
+    margin: 1% 2%;
+    padding: 5px;
+}
+.reviewsDescription{
+    margin: 2%;
+    padding:5px;
+}
+.reviewsModal-body{
+    flex: 1 1 60%;
+    display: flex;
+    height: 60%;
+    flex-direction: column;
+    text-align: center;
+}
+.row{
+    display: flex;
+    flex-direction: row;
+    flex: 1 1 30%;
+}
+.reviewsModal-title{
+    width: 40%;
+    height: 30%;
+    margin-right: auto;
+    margin-top: 1em;
+}
+
+.reviewsModal-footer{
+    display:flex;
+    flex-direction: row;
+    flex: 1 1 50px;
+    margin-top: auto;
+    max-height: 50px;
+    justify-content: center;
+}
+.starRating{
+    color:white;
+}
+.titleContainer{
+    display:flex;
+    flex-direction: row;
+    align-items:center;
+}
+
+
+/* remove arrows from input */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+input[type=number] {
+    -moz-appearance: textfield;
+}
