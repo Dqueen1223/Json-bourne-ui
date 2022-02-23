@@ -9,7 +9,8 @@ import BillingDetails from './forms/BillingDetails';
 import makePurchase from './CheckoutService';
 import validateForm from '../form/FormValidate';
 // import { useProfile } from '../Profile/ProfileContext';
-
+import { getSubtotal } from './ReviewOrderWidgetService';
+import getBillingRate from './BillingRateService';
 /**
  * @name CheckoutPage
  * @description A view that contains details needed to process a transaction for items
@@ -25,16 +26,36 @@ const CheckoutPage = () => {
 
   const [billingData, setBillingData] = React.useState({});
 
-  const onBillingChange = (e) => {
-    setBillingData({ ...billingData, [e.target.id]: e.target.value });
-  };
-
   const [deliveryData, setDeliveryData] = React.useState({});
+
+  const [shippingFee, setShippingFee] = React.useState(0.00);
+
+  const [shippingFeeState, setShippingFeeState] = React.useState(0.00);
 
   const onDeliveryChange = (e) => {
     setDeliveryData({ ...deliveryData, [e.target.id]: e.target.value });
   };
+  React.useEffect(() => {
+    if (Number(getSubtotal(products).substring(1)) > 0.00) {
+      getBillingRate(deliveryData.state, setShippingFeeState);
+    }
+  }, [deliveryData, products]);
+  React.useEffect(() => {
+    let productsPriceAdd = 0.00;
+    const subTotal = getSubtotal(products);
+    const subTotalVal = Number(subTotal.substring(1));
+    if (subTotalVal > 0.00 && subTotalVal < 50.00) {
+      productsPriceAdd = 5.00;
+    }
+    if (subTotalVal > 50.00) {
+      productsPriceAdd = 0.00;
+    }
+    setShippingFee(Number(productsPriceAdd + shippingFeeState).toFixed(2));
+  }, [shippingFeeState, products]);
 
+  const onBillingChange = (e) => {
+    setBillingData({ ...billingData, [e.target.id]: e.target.value });
+  };
   const [checked, setChecked] = React.useState(false);
   const handleCheck = () => {
     if (checked === true) {
@@ -108,6 +129,7 @@ const CheckoutPage = () => {
       <div className={`${styles.step} ${styles.order}`}>
         <h3 className={styles.title}>1. Review Order</h3>
         <ReviewOrderWidget setTotal={setTotalPrice} />
+        <ReviewOrderWidget shippingFee={shippingFee} />
       </div>
       <div className={`${styles.step} ${styles.delivery}`}>
         <h3 className={styles.title}>2. Delivery Address</h3>
