@@ -1,5 +1,5 @@
 /* eslint-disable import/no-named-as-default-member */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import GoogleLogin, { GoogleLogout } from 'react-google-login';
 // eslint-disable-next-line import/no-unresolved
@@ -22,9 +22,19 @@ const Header = () => {
   const {
     state: { products }
   } = useCart();
-
-  const [isLoggedIn, setisLoggedIn] = useState(false);
   const { dispatch } = useProfile();
+  useEffect(() => {
+    dispatch({
+      type: 'login',
+      userProfile: {
+        id: user.id,
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName
+      }
+    });
+  }, [dispatch, user]);
+  const [isLoggedIn, setisLoggedIn] = useState(false);
   // const { state: { userProfile } } = useProfile();
   const history = useHistory();
   /**
@@ -40,14 +50,6 @@ const Header = () => {
       lastName: response.profileObj.familyName
     };
     loginUser(googleUser, setUser, setApiError);
-    dispatch({
-      type: 'login',
-      userProfile: {
-        email: response.profileObj.email,
-        firstName: response.profileObj.givenName,
-        lastName: response.profileObj.familyName
-      }
-    });
     setisLoggedIn(true);
     setGoogleError('');
   };

@@ -8,7 +8,6 @@ import DeliveryAddress from './forms/DeliveryAddress';
 import BillingDetails from './forms/BillingDetails';
 import makePurchase from './CheckoutService';
 import validateForm from '../form/FormValidate';
-import { useProfile } from '../Profile/ProfileContext';
 import { getSubtotal } from './ReviewOrderWidgetService';
 import getBillingRate from './BillingRateService';
 /**
@@ -18,7 +17,8 @@ import getBillingRate from './BillingRateService';
  */
 const CheckoutPage = () => {
   const history = useHistory();
-  const { dispatch } = useProfile();
+  const [totalPrice, setTotalPrice] = React.useState(0);
+  // const { dispatch } = useProfile();
   const {
     state: { products }
   } = useCart();
@@ -38,7 +38,7 @@ const CheckoutPage = () => {
     if (Number(getSubtotal(products).substring(1)) > 0.00) {
       getBillingRate(deliveryData.state, setShippingFeeState);
     }
-  }, [deliveryData, products]);
+  }, [deliveryData.state, products]);
   React.useEffect(() => {
     let productsPriceAdd = 0.00;
     const subTotal = getSubtotal(products);
@@ -70,6 +70,12 @@ const CheckoutPage = () => {
       toast.error('Purchase could not be completed. You currently have no items in your cart.');
     } else if (Object.keys(validateForm(deliveryData, billingData, checked)).length === 0) {
       const productData = products.map(({ id, quantity }) => ({ id, quantity }));
+      const productDataSend = [];
+      for (let i = 0; i < productData.length; i += 1) {
+        productDataSend.push({});
+        productDataSend[i].productId = productData[i].id;
+        productDataSend[i].quantity = productData[i].quantity;
+      }
       const deliveryAddress = {
         firstName: deliveryData.firstName,
         lastName: deliveryData.lastName,
@@ -102,8 +108,8 @@ const CheckoutPage = () => {
         expiration: billingData.expiration,
         cardholder: billingData.cardholder
       };
-      makePurchase(productData, deliveryAddress, billingAddress, creditCard).then(() => history.push('/confirmation'));
-      dispatch({
+      makePurchase(productDataSend, deliveryAddress, billingAddress, creditCard, totalPrice).then(() => history.push('/confirmation'));
+      /* dispatch({
         type: 'login',
         userProfile: {
           street: deliveryData.street,
@@ -112,7 +118,7 @@ const CheckoutPage = () => {
           state: deliveryData.state,
           zip: deliveryData.zip
         }
-      });
+      }); */
     } else {
       toast.error('Some fields contain invalid inputs. You have not been charged');
       setErrors(validateForm(deliveryData, billingData, checked));
@@ -123,7 +129,7 @@ const CheckoutPage = () => {
     <div className={styles.checkoutContainer}>
       <div className={`${styles.step} ${styles.order}`}>
         <h3 className={styles.title}>1. Review Order</h3>
-        <ReviewOrderWidget shippingFee={shippingFee} />
+        <ReviewOrderWidget shippingFee={shippingFee} setTotal={setTotalPrice} />
       </div>
       <div className={`${styles.step} ${styles.delivery}`}>
         <h3 className={styles.title}>2. Delivery Address</h3>

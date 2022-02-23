@@ -29,6 +29,8 @@ export default function validateForm(deliveryData, billingData, checked) {
   }
   if (deliveryData.zip === undefined || deliveryData.zip.trim() === '') {
     errors.zip = 'The zip field is required';
+  } else if (!/^\d{5}(?:[-\s]\d{4})?$/.test(deliveryData.zip)) {
+    errors.zip = 'The zip field must be in the format 12345 or 12345-6789';
   }
   if (!checked) {
     if (billingData.billingStreet === undefined || billingData.billingStreet.trim() === '') {
@@ -48,7 +50,7 @@ export default function validateForm(deliveryData, billingData, checked) {
   }
   if (billingData.email === undefined || billingData.email.trim() === '') {
     errors.email = 'The email field is required';
-  } else if (!/[a-z0-9]+[_a-z0-9.-]*[a-z0-9]+@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]+$)/iy.test(billingData.email)) {
+  } else if (!/[a-z0-9]+([_a-z0-9.-]*[a-z0-9]+)?@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]+$)/iy.test(billingData.email)) {
     errors.email = 'The email address must be valid';
   }
   if (billingData.phone === undefined || billingData.phone.trim() === '') {
@@ -58,22 +60,22 @@ export default function validateForm(deliveryData, billingData, checked) {
     errors.creditCard = 'The credit card field is required';
   } else {
     if (/[^0-9]/.test(billingData.creditCard)) {
-      errors.creditCard = 'credit card numbers may not contain non-numbers';
+      errors.creditCard = 'Credit card numbers may not contain non-numbers';
     }
     const CCN = billingData.creditCard.trim().charAt(0);
     if (CCN !== '4'
       && CCN !== '5') {
-      errors.creditCard = 'this credit card provider is not supported';
+      errors.creditCard = 'This credit card provider is not supported';
     }
     if (billingData.creditCard.trim().length < 16 || billingData.creditCard.trim().length > 19) {
-      errors.creditCard = 'the credit card number must be between 16 and 19 digits';
+      errors.creditCard = 'The credit card number must be between 16 and 19 digits';
     }
   }
   if (billingData.cvv === undefined || billingData.cvv.trim() === '') {
     errors.cvv = 'The cvv field is required';
   } else {
     if (/[^0-9]/.test(billingData.cvv)) {
-      errors.cvv = 'the cvv must be only numbers';
+      errors.cvv = 'The cvv must be only numbers';
     }
     if (billingData.cvv.trim().length !== 3) {
       errors.cvv = 'The cvv field must be exactly 3 digits long';
@@ -103,7 +105,7 @@ export default function validateForm(deliveryData, billingData, checked) {
       errors.expiration = 'This card is expired';
     }
     if (expiryMonth > 12) {
-      errors.expiration = 'this month does not exist';
+      errors.expiration = 'This month does not exist';
     }
     if ((todayYY + 50) < expiryYear) {
       errors.expiration = 'This card is expired';
