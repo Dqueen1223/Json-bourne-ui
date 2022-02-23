@@ -134,10 +134,10 @@ const Review = ({ review }, setReviews) => {
             { title || review.title }
           </div>
           <div>
-              <span>
-                <FaPencilAlt className="pencilIcon" alt="pencilIcon" onClick={editHandler} />
-                <Delete className="pencilIcon" alt="pencilIcon" onClick={(e) => (submitDeleteHandler(e))} />
-              </span>
+            <span>
+              <FaPencilAlt className="pencilIcon" alt="pencilIcon" onClick={editHandler} />
+              <Delete className="pencilIcon" alt="pencilIcon" onClick={(e) => (submitDeleteHandler(e))} />
+            </span>
           </div>
         </div>
 
@@ -161,7 +161,10 @@ const Review = ({ review }, setReviews) => {
               { title || review.title }
             </div>
             <div>
-              <span><FaPencilAlt className="pencilIcon" alt="pencilIcon" onClick={editHandler} /></span>
+              <span>
+                <FaPencilAlt className="pencilIcon" alt="pencilIcon" onClick={editHandler} />
+                <Delete className="pencilIcon" alt="pencilIcon" />
+              </span>
             </div>
           </div>
           {!stars && (<div className="reviewsRating">{BasicRating(isEdit, value, setValue, review.rating)}</div>)}
