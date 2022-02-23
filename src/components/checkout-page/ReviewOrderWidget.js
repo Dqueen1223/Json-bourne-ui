@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { useCart } from './CartContext';
 import OrderItem from './OrderItem';
 import { getSubtotal } from './ReviewOrderWidgetService';
@@ -19,6 +20,15 @@ const ReviewOrderWidget = ({ shippingFee }) => {
     + Number(shippingFee)).toFixed(2);
   return (
     <>
+      {products.length === 0
+        && (
+        <div className="returnProductDiv">
+          <p>You have no products in your cart</p>
+          <Link to="/" className={styles.returnProductLink}>
+            Click here to continue shopping
+          </Link>
+        </div>
+        )}
       {products.map(({
         price, title, description, quantity, imageSrc
       }) => (
