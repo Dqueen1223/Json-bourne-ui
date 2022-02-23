@@ -34,7 +34,7 @@ const ProfilePage = () => {
 
   const [apiError, setApiError] = useState('');
   useEffect(() => {
-    loginUser(userProfile[0], setProfile, setApiError);
+    loginUser(userProfile[1], setProfile, setApiError);
   }, [userProfile]);
   useEffect(() => {
     fetchPurchases(`?email=${userProfile[0].email}`, setPurchases);

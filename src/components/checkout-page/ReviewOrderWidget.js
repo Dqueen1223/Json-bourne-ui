@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { useCart } from './CartContext';
 import OrderItem from './OrderItem';
 import { getSubtotal } from './ReviewOrderWidgetService';
@@ -10,15 +11,30 @@ import cartLogic from './cartLogic';
  * @description Displays order items and subtotal
  * @return component
  */
-const ReviewOrderWidget = () => {
+const ReviewOrderWidget = ({ setTotal, shippingFee }) => {
   const {
     state: { products }
   } = useCart();
   cartLogic();
+  const calculateTotal = () => {
+    const totalVal = (Number(getSubtotal(products).substring(1))
+      + Number(shippingFee)).toFixed(2);
+    setTotal(Number(totalVal));
+    return totalVal;
+  };
   return (
     <>
+      {products.length === 0
+        && (
+        <div className="returnProductDiv">
+          <p>You have no products in your cart</p>
+          <Link to="/" className={styles.returnProductLink}>
+            Click here to continue shopping
+          </Link>
+        </div>
+        )}
       {products.map(({
-        price, title, description, quantity
+        price, title, description, quantity, imageSrc
       }) => (
         <OrderItem
           key={title}
@@ -26,6 +42,7 @@ const ReviewOrderWidget = () => {
           title={title}
           description={description}
           quantity={quantity}
+          image={imageSrc}
         />
       ))}
       <hr />
@@ -34,7 +51,28 @@ const ReviewOrderWidget = () => {
           <p>Subtotal</p>
         </div>
         <div className={styles.price}>
-          <p>{getSubtotal(products)}</p>
+          <p>{getSubtotal(products) }</p>
+        </div>
+        <div>
+          <p>
+            Shipping Fee
+          </p>
+        </div>
+        <div className={styles.price}>
+          <p>
+            $
+            { shippingFee }
+          </p>
+        </div>
+        <div>
+          <p>Total</p>
+        </div>
+        <div className={styles.price}>
+          <p>
+            $
+            {calculateTotal()}
+          </p>
+
         </div>
       </div>
     </>

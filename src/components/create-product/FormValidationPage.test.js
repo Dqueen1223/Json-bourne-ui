@@ -1,10 +1,8 @@
-/* eslint-disable import/no-duplicates */
 import React from 'react';
 import { unmountComponentAtNode } from 'react-dom';
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import user from '@testing-library/user-event';
-// mport { act } from 'react-dom/test-utils';
 import CreateProductPage from './CreateProduct';
 import MakeProduct from './CreateProductService';
 
