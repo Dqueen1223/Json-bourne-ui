@@ -5,12 +5,13 @@ import styles from './CreateReview.module.css';
 import { useProfile } from '../Profile/ProfileContext';
 import makeReview from './CreateReviewService';
 import generateErrors from './forms/FormValidation';
-// import fetchProducts from '../product-page/ProductPageService';
 
-const CreateReview = ({ productId, reviewFormToggle }) => {
-  const [review, setReviewData] = useState({});
+const CreateReview = ({
+  productId, reviewFormToggle, setNewReview
+}) => {
   const [rating, setRating] = useState(2);
   const [errors, setErrors] = useState({});
+  const [review, setReviewData] = useState({});
   let email;
   let userId;
 
@@ -55,21 +56,16 @@ const CreateReview = ({ productId, reviewFormToggle }) => {
   };
 
   const handleCreate = () => {
-    console.log('here i am here I am how do you do');
     handleErrors(newReview);
     setReviewData(newReview);
   };
-
   const handleSubmit = async () => {
     handleCreate();
 
     if (Object.keys(errors).length === 0) {
-      if (await makeReview(newReview) !== 'Bad Request') {
-        await makeReview(newReview).then((res) => console.log(res));
-        reviewFormToggle(false);
-      } else {
-        toast.error('Bad Request');
-      }
+      setNewReview(newReview);
+      await makeReview(newReview);
+      reviewFormToggle(false);
     } else {
       toast.error('Some fields contain invalid inputs.');
     }

@@ -7,6 +7,8 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import BasicRating from './ReviewsStars';
 import CreateReview from '../create-review/CreateReview';
+// import { useReviews } from '../create-review/forms/ReviewsContext';
+
 // import DropDownButton from './DropDownButton';
 
 // import styles from './ProductPage.module.css';
@@ -18,14 +20,32 @@ import CreateReview from '../create-review/CreateReview';
  */
 
 const ReviewsModal = ({
-  product, reviews, closeModal, showCreateReview, setReviewFormToggle
+  product, closeModal, reviews, showCreateReview, setReviewFormToggle
 }) => {
   // eslint-disable-next-line max-len
+  const [newReview, setReviewData] = React.useState('empty');
   const [activeReviews] = React.useState(reviews.filter((r) => (r.productId === product.id)));
-  const [newReview, setReviewData] = React.useState({});
-  // const [toggleDate, setToggle] = React.useState(true);
+
+  const UpdateReview = () => {
+    if (newReview !== 'empty') {
+      return (
+        <div key={newReview.id}>
+          <div className="reviewsOfProduct">
+            <div className="reviewsTitle">{newReview.title}</div>
+            <div className="reviewsRating">{BasicRating(newReview.rating)}</div>
+            <div className="reviewsActual">{newReview.reviewsDescription}</div>
+            <div className="reviewsDate">
+              {/* slicing off the last few extra digits associated with the date */}
+              {newReview.dateCreated.slice(0, 10)}
+            </div>
+          </div>
+        </div>
+      );
+    }
+    return null;
+  };
+
   const sortedReviews = () => {
-    console.log('ive been clicked!');
     if (!document.getElementsByClassName('reviewsModal-body')[0].classList.contains('reversed')) {
       // setActiveReviews(activeReviews.sort((a, b) => b.dateCreated - a.dateCreated));
       document.getElementsByClassName('reviewsModal-body')[0].classList.add('reversed');
@@ -33,8 +53,6 @@ const ReviewsModal = ({
       document.getElementsByClassName('reviewsModal-body')[0].classList.remove('reversed');
       // setActiveReviews(activeReviews.sort((a, b) => a.dateCreated - b.dateCreated));
     }
-    // setToggle(!toggleDate);
-    // return activeReviews;
   };
 
   const closeTheModal = (e) => {
@@ -144,7 +162,7 @@ const ReviewsModal = ({
               ? (
                 <CreateReview
                   productId={product.id}
-                  setReviewData={setReviewData}
+                  setNewReview={setReviewData}
                   newReview={newReview}
                   reviewFormToggle={setReviewFormToggle}
                 />
@@ -166,19 +184,7 @@ const ReviewsModal = ({
                 </div>
               </div>
             ))}
-            {Object.keys(newReview).length !== 0 && (
-              <div key={newReview.id}>
-                <div className="reviewsOfProduct">
-                  <div className="reviewsTitle">{newReview.title}</div>
-                  <div className="reviewsRating">{BasicRating(newReview.rating)}</div>
-                  <div className="reviewsActual">{newReview.reviewsDescription}</div>
-                  <div className="reviewsDate">
-                    {/* slicing off the last few extra digits associated with the date */}
-                    {newReview.dateCreated.slice(0, 10)}
-                  </div>
-                </div>
-              </div>
-            )}
+            <UpdateReview />
             <div className="reviewsModal-footer" />
           </div>
           <div className="reviewsModal-footer" />
