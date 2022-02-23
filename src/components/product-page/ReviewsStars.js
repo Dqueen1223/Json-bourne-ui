@@ -1,37 +1,12 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
 import Rating from '@mui/material/Rating';
+import Stack from '@mui/material/Stack';
 
-export default function BasicRating(isEdit, value, setValue, currRating) {
+export default function BasicRating(reviewsRating) {
+  const [setValue] = React.useState(reviewsRating);
   return (
-    <Box
-      sx={{
-        '& > legend': { mt: 2 }
-      }}
-    >
-      {isEdit && (
-        <>
-          <Rating
-            name="simple-controlled"
-            value={value || currRating}
-            onChange={(event, newValue) => {
-              setValue(newValue);
-            }}
-          />
-          <span className="starRating">{value || currRating}</span>
-        </>
-      )}
-
-      {!isEdit && (
-        <>
-          <Rating
-            name="simple-controlled"
-            readOnly
-            value={value}
-          />
-          <span className="starRating">{value}</span>
-        </>
-      )}
-    </Box>
+    <Stack spacing={2}>
+      <Rating name="half-rating-read" defaultValue={setValue} precision={setValue} />
+    </Stack>
   );
 }

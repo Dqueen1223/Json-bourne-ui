@@ -3,8 +3,8 @@ import Constants from '../../utils/constants';
 
 /**
  *
- * @name makeProduct
- * @description sends a create product request
+ * @name makePromo
+ * @description sends a create promo request
  * @param {*}
  * @returns
  */
