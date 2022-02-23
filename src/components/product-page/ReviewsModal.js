@@ -46,7 +46,6 @@ const ReviewsModal = ({
             {reviews && reviews.filter((r) => (r.productId === product.id)).map((review) => (
               <div key={review.id}>
                 <ConfirmProvider>
-
                   <Review
                     review={review}
                     setReviews={setReviews}

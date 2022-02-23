@@ -36,11 +36,11 @@ export async function updateReview(setReviews, setApiError, review) {
   await HttpHelper(`${Constants.REVIEWS_ENDPOINT}/${review.id}`, 'PUT', review)
     .then((response) => {
       if (response.ok) {
+        toast.success('review updated successfully');
         return response.json();
       }
       throw new Error(Constants.API_ERROR);
     })
-  //    .then(setReviews)
     .catch(() => {
       setApiError(true);
     });
@@ -50,7 +50,7 @@ export async function updateReview(setReviews, setApiError, review) {
  *
  * @name deleteReview
  * @description Utilizes HttpHelper to make a delete request to an API
- * @param {*} setReviews sets state for reviews
+ * @param {*} setIsDeleted sets state for deleted review
  * @param {*} setApiError sets error if response other than 200 is returned
  * @returns sets state for reviews if 200 response, else sets state for apiError
  */

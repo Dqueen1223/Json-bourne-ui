@@ -89,7 +89,9 @@ const Review = ({ review }, setReviews) => {
 
   const preventCursorDisappearHandler = (e) => {
     const input = e.target.innerText;
-    if (input === '') e.target.innerText = ' ';
+    if (input === '') {
+      e.target.innerText = ' ';
+    }
   };
 
   const deleteHandler = () => {
