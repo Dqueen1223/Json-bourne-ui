@@ -6,3 +6,7 @@
 .price {
   justify-self: end;
 }
+
+.returnProductLink {
+  color: #FB8122;
+}
