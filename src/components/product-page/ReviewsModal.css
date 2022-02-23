@@ -32,8 +32,8 @@
     background-color: transparent;
     position: fixed;
     font-size: 1.5em;
-    right:30px;
-    top:10px;
+    right:15px;
+    top:5px;
     color: #1d2228;
     border: none;
     border-radius: 10px;
@@ -69,6 +69,9 @@
     position: relative;
     bottom: 40%;
     text-align: left;
+}
+.reviewsEmail{
+    margin: 2%;
 }
 .reviewsRating{
     margin: 2%;

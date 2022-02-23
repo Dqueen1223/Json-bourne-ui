@@ -148,6 +148,7 @@ const ReviewsModal = ({
               <div key={review.id}>
                 <div className="reviewsOfProduct">
                   <div className="reviewsTitle">{review.title}</div>
+                  <div className="reviewsEmail">{review.email}</div>
                   <div className="reviewsRating">{BasicRating(review.rating)}</div>
                   <div className="reviewsActual">{review.reviewsDescription}</div>
                   <div className="reviewsDate">
