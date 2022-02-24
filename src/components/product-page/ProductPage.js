@@ -23,7 +23,7 @@ const ProductPage = () => {
   const [apiError, setApiError] = useState(false);
   const [isActive, setIsActive] = useState(true);
   const [filter, setFilter] = useState('');
-  const [reviews, setReviews] = useState(true);
+  const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
     fetchProducts(setProducts, setApiError, filter, (`&range=${(currentPage * 20) - 20}`));
@@ -35,7 +35,7 @@ const ProductPage = () => {
 
   useEffect(() => {
     fetchReviews(setReviews, setApiError);
-  }, [reviews, setReviews]);
+  }, [reviews]);
   useEffect(() => {
     setCurrentPage(1);
   }, [filter]);

@@ -206,11 +206,12 @@ input[type=number] {
 }
 
 .addReviewsProductCardButton{
+    color: white;
     background-color: #fb8122;
     /* color: #E1E2E2 */
     /* position: relative; */
     left: 5%;
-    width: 25%;
+    width: 136px;
 }
 
 .reviewsProductCardButton:hover {
@@ -227,6 +228,6 @@ input[type=number] {
     /* color: #E1E2E2 */
     /* position: relative; */
     left: 5%;
-    width: 25%;
+    width: 136px;
 }
 
