@@ -222,6 +222,10 @@ flex-direction: column;
     flex: 1 1 40%;
     margin-left: 4em;
     font-weight: 100;
+    font-size: 100%;
+    border: none;
+    width: 100%;
+    text-align: left;
 }
 
 .productQuantity{
