@@ -21,7 +21,6 @@ const BillingDetails = ({
     <div className={styles.deliveryAddress}>
       {!useShippingForBilling && (
         <>
-
           <FormItem
             placeholder="e.g. 123 Sesame Street"
             type="text"

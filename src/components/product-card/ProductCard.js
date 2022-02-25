@@ -14,14 +14,12 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import ShareIcon from '@material-ui/icons/Share';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-// import Button from '@material-ui/core/button';
 import { toast } from 'react-toastify';
 import { useCart } from '../checkout-page/CartContext';
 import ProductCardModal from '../product-page/ProductCardModal';
 import getQtyInCart, { inventoryAvailable } from './ProductCardService';
 import ReviewsModal from '../product-page/ReviewsModal';
 import '../product-page/ReviewsModal.css';
-import BasicRating from '../product-page/ReviewsStars';
 
 /**
  * @name useStyles
@@ -63,14 +61,7 @@ const ProductCard = ({ product, reviews }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [reviewsModal, setReviewsModal] = useState(false);
   const [showCreateReview, setReviewFormToggle] = useState(false);
-  // const [reviews, setReviews] = useState([]);
-  // const [setApiError] = useState(false);
-  // const reviews = [];
-
-  // const showReviewButton = { reviewsModal };
-  // make fetch call for reviews
-  // useEffect - whenever reviews get changed if filter returns true
-
+  // const { activeReviews } = React.useState(reviews.filter((r) => (r.productId === product.id)));
   const {
     state: { products }
   } = useCart();
@@ -121,21 +112,17 @@ const ProductCard = ({ product, reviews }) => {
   const onReview = (e) => {
     e.stopPropagation();
     setReviewsModal(true);
-    if (reviews.length === 0) {
-      setReviewFormToggle(true);
-    }
   };
+
   const addReview = (e) => {
     e.stopPropagation();
     setReviewsModal(true);
     setReviewFormToggle(true);
+    if (reviews.length === 0) {
+      setReviewFormToggle(true);
+    }
   };
-  // eslint-disable-next-line max-len
-  // const reviewAvg = () => reviews.reduce((a, b) => a.review.rating + b.review.rating, 0) / reviews.length;
 
-  // useEffect(() => {
-  //   fetchReviews(setReviews, setApiError);
-  // }, [reviews, setApiError]);
   return (
     <Card className={classes.root}>
       {modalIsOpen && reactDom.createPortal(
@@ -160,12 +147,12 @@ const ProductCard = ({ product, reviews }) => {
           <Avatar aria-label="demographics" className={classes.avatar}>
             {product.demographic.charAt(0)}
           </Avatar>
-        )}
+          )}
         action={(
           <IconButton aria-label="settings">
             <MoreVertIcon />
           </IconButton>
-        )}
+          )}
         title={product.name}
         subheader={`${product.demographic} ${product.category} ${product.type}`}
       />
@@ -208,41 +195,29 @@ const ProductCard = ({ product, reviews }) => {
         </IconButton>
         <div>
           {ReviewsModal !== false && (
-            <>
-              <button
-                className="reviewsProductCardButton"
-                type="button"
-                variant="contained"
-                onClick={onReview}
-              >
-                Reviews
-              </button>
-              <button
-                className="addReviewsProductCardButton"
-                type="button"
-                label="Add Review"
-                variant="contained"
-                onClick={addReview}
-              >
-                +
-              </button>
-              <button
-                type="button"
-              >
-                <BasicRating
-                  variant="contained"
-                  className="reviewsProductCardButton"
-                  onClick={() => {
-                    onReview(setReviewsModal(false));
-                  }}
-                />
-              </button>
-            </>
+          <>
+            <button
+              className="reviewsProductCardButton"
+              type="button"
+              variant="contained"
+              onClick={onReview}
+            >
+              Reviews
+            </button>
+            <button
+              className="addReviewsProductCardButton"
+              type="button"
+              label="Add Review"
+              variant="contained"
+              onClick={addReview}
+            >
+              Add Review
+            </button>
+          </>
           )}
         </div>
       </CardActions>
     </Card>
   );
 };
-
 export default ProductCard;

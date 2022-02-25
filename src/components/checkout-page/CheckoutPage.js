@@ -8,7 +8,10 @@ import DeliveryAddress from './forms/DeliveryAddress';
 import BillingDetails from './forms/BillingDetails';
 import makePurchase from './CheckoutService';
 import validateForm from '../form/FormValidate';
+<<<<<<< HEAD
 // import { useProfile } from '../Profile/ProfileContext';
+=======
+>>>>>>> a5a3bd33b0769e65fd05f0be0511591feea0a844
 import { getSubtotal } from './ReviewOrderWidgetService';
 import getBillingRate from './BillingRateService';
 /**
@@ -39,7 +42,7 @@ const CheckoutPage = () => {
     if (Number(getSubtotal(products).substring(1)) > 0.00) {
       getBillingRate(deliveryData.state, setShippingFeeState);
     }
-  }, [deliveryData, products]);
+  }, [deliveryData.state, products]);
   React.useEffect(() => {
     let productsPriceAdd = 0.00;
     const subTotal = getSubtotal(products);
@@ -67,7 +70,9 @@ const CheckoutPage = () => {
   const [errors, setErrors] = React.useState({});
 
   const handlePay = () => {
-    if (Object.keys(validateForm(deliveryData, billingData, checked)).length === 0) {
+    if (products.length === 0) {
+      toast.error('Purchase could not be completed. You currently have no items in your cart.');
+    } else if (Object.keys(validateForm(deliveryData, billingData, checked)).length === 0) {
       const productData = products.map(({ id, quantity }) => ({ id, quantity }));
       const productDataSend = [];
       for (let i = 0; i < productData.length; i += 1) {
@@ -128,8 +133,12 @@ const CheckoutPage = () => {
     <div className={styles.checkoutContainer}>
       <div className={`${styles.step} ${styles.order}`}>
         <h3 className={styles.title}>1. Review Order</h3>
+<<<<<<< HEAD
         <ReviewOrderWidget shippingFee={shippingFee} />
         <ReviewOrderWidget setTotal={setTotalPrice} />
+=======
+        <ReviewOrderWidget shippingFee={shippingFee} setTotal={setTotalPrice} />
+>>>>>>> a5a3bd33b0769e65fd05f0be0511591feea0a844
       </div>
       <div className={`${styles.step} ${styles.delivery}`}>
         <h3 className={styles.title}>2. Delivery Address</h3>

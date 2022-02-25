@@ -7,31 +7,21 @@ import styles from '../CreateReview.module.css';
  * @return component
  */
 const FormItemTextArea = ({
-  onChange, value, id, label, placeholder, type, className, reviewLength
+  onChange, value, id, label, placeholder, type, className, reviewLength, error
 }) => {
-  let error;
   let count = 0;
   if (reviewLength > 0) {
     count = reviewLength;
-  }
-  if (reviewLength > 300) {
-    error = 'Must be 300 characters or less';
   }
 
   return (
     <div className={className}>
       <label className={styles.label} htmlFor={id}>
-        {label}
+        <div className={styles.labelContents}>
+          {label}
+        </div>
         <div>
-          <textarea
-            className={styles.inputTextArea}
-            id={id}
-            onChange={onChange}
-            placeholder={placeholder}
-            type={type}
-            value={value}
-          />
-          {/* {error && (
+          {!error && (
             <textarea
               className={styles.inputTextArea}
               id={id}
@@ -40,11 +30,19 @@ const FormItemTextArea = ({
               type={type}
               value={value}
             />
-          )} */}
+          )}
+          {error && (
+            <textarea
+              className={styles.inputErrorTA}
+              id={id}
+              onChange={onChange}
+              placeholder={placeholder}
+              type={type}
+              value={value}
+            />
+          )}
           {!error && (
-            <p className={styles.paragraph}>
-              {`${300 - count} characters remaining`}
-            </p>
+            <p className={styles.paragraph} />
           )}
           {error && (
             <p className={styles.error_item}>
