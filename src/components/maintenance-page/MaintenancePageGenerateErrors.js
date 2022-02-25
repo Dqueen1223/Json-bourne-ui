@@ -1,7 +1,4 @@
 const GenerateErrorMessages = (errors) => {
-  const edit = document.getElementById('editable');
-  const edittd = document.createElement('td');
-  const idtd = document.createElement('td');
   const skutd = document.createElement('td');
   const descriptiontd = document.createElement('td');
   const demographictd = document.createElement('td');
@@ -10,7 +7,6 @@ const GenerateErrorMessages = (errors) => {
   const releaseDatetd = document.createElement('td');
   const primaryColorCodetd = document.createElement('td');
   const secondaryColorCodetd = document.createElement('td');
-  const styleNumbertd = document.createElement('td');
   const globalProductCodetd = document.createElement('td');
   const activetd = document.createElement('td');
   const brandtd = document.createElement('td');
@@ -19,8 +15,6 @@ const GenerateErrorMessages = (errors) => {
   const pricetd = document.createElement('td');
   const quantitytd = document.createElement('td');
   const nametd = document.createElement('td');
-  const tableBody = document.getElementById('tableBody');
-  const tr = document.createElement('tr');
 
   if (errors.name !== undefined || errors.name != null) {
     nametd.textContent = `${errors.name}`;
@@ -76,27 +70,5 @@ const GenerateErrorMessages = (errors) => {
   if (errors.releaseDate !== undefined || errors.releaseDate != null) {
     releaseDatetd.textContent = `${errors.releaseDate}`;
   }
-
-  tr.setAttribute('id', 'errors');
-  tr.appendChild(edittd);
-  tr.appendChild(idtd);
-  tr.appendChild(nametd);
-  tr.appendChild(skutd);
-  tr.appendChild(descriptiontd);
-  tr.appendChild(demographictd);
-  tr.appendChild(categorytd);
-  tr.appendChild(typetd);
-  tr.appendChild(releaseDatetd);
-  tr.appendChild(primaryColorCodetd);
-  tr.appendChild(secondaryColorCodetd);
-  tr.appendChild(styleNumbertd);
-  tr.appendChild(globalProductCodetd);
-  tr.appendChild(activetd);
-  tr.appendChild(brandtd);
-  tr.appendChild(imageSrctd);
-  tr.appendChild(materialtd);
-  tr.appendChild(pricetd);
-  tr.appendChild(quantitytd);
-  tableBody.insertBefore(tr, edit.nextSibling);
 };
 export default GenerateErrorMessages;

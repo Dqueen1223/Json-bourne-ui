@@ -10,7 +10,6 @@ import styles from '../product-page/ProductPage.module.css';
 import Constants from '../../utils/constants';
 import validateCreateProductForm from '../create-product/forms/FormValidation';
 import UpdateProducts from './MaintenancePageUpdateService';
-import GenerateErrorMessages from './MaintenancePageGenerateErrors';
 /**
  * @name useStyles
  * @description Material-ui styling for ProductCard component
@@ -49,13 +48,14 @@ const MaintenancePage = () => {
   const [releaseEditable, setReleaseEdtiable] = useState('false');
   const [errors, setErrors] = useState({});
   const [previousProduct, setPreviousProduct] = useState({});
+  const [displayErrors, setDisplayErrors] = useState(null);
 
   useEffect(() => {
     fetchProducts(setProducts, setApiError);
   }, []);
   const resetToDefaultTableData = (product) => {
     if (document.getElementById('errors')) {
-      document.getElementById('errors').remove();
+      setDisplayErrors(null);
     }
     document.getElementById('name').innerHTML = product.name;
     document.getElementById('sku').innerHTML = product.sku;
@@ -75,6 +75,7 @@ const MaintenancePage = () => {
     document.getElementById('material').innerHTML = product.material;
     document.getElementById('quantity').innerHTML = product.quantity;
   };
+
   const clickEditMaitenance = (e, product) => {
     e.preventDefault();
     if (editable != null) {
@@ -101,8 +102,9 @@ const MaintenancePage = () => {
   const submitEdit = (e, product) => {
     e.preventDefault();
     if (document.getElementById('errors')) {
-      document.getElementById('errors').remove();
+      setDisplayErrors(null);
     }
+    setErrors({});
     const name = document.getElementById('name');
     const sku = document.getElementById('sku');
     const description = document.getElementById('description');
@@ -191,9 +193,13 @@ const MaintenancePage = () => {
       UpdateProducts(newProduct, setApiError);
       setEditable(null);
       setErrors(errors);
-    } else GenerateErrorMessages(errors);
-    setErrors({});
+    } else {
+      // GenerateErrorMessages(errors);
+      setDisplayErrors(product.id);
+      console.log(errors);
+    }
   };
+
   const editRow = (product) => (
     <>
       <tr key={product.id} className="ProductCells" id="editable">
@@ -291,6 +297,30 @@ const MaintenancePage = () => {
       </tr>
     </>
   );
+
+  const errorRow = () => (
+    <tr id="errors">
+      <td />
+      <td />
+      <td>{errors.name}</td>
+      <td>{errors.sku}</td>
+      <td>{errors.description}</td>
+      <td>{errors.demographic}</td>
+      <td>{errors.category}</td>
+      <td>{errors.type}</td>
+      <td>{errors.releaseDate}</td>
+      <td>{errors.primaryColorCode}</td>
+      <td>{errors.secondaryColorCode}</td>
+      <td>{errors.styleNumber}</td>
+      <td>{errors.globalProductCode}</td>
+      <td>{errors.active}</td>
+      <td>{errors.brand}</td>
+      <td>{errors.imageSrc}</td>
+      <td>{errors.material}</td>
+      <td>{errors.price}</td>
+      <td>{errors.quantity}</td>
+    </tr>
+  );
   const viewRow = (product) => (
     <tr key={product.id} className="ProductCells">
       <td className="ProductCells">
@@ -324,6 +354,15 @@ const MaintenancePage = () => {
       <td className="ProductCells">{product.quantity}</td>
     </tr>
   );
+  const bothRows = (product) => (
+    <>
+      { editRow(product) }
+      {Object.entries(errors).length > 0
+        ? errorRow()
+        : null}
+    </>
+  );
+
   return (
     <div className="Maintenance">
       {apiError && (
@@ -382,8 +421,8 @@ const MaintenancePage = () => {
           <tbody id="tableBody">
             {products.map((product) => (
               <>
-                {editable === product.id
-                  ? editRow(product)
+                {editable === product.id || displayErrors === true
+                  ? bothRows(product)
                   : viewRow(product)}
               </>
             ))}
