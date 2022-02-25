@@ -8,10 +8,6 @@ import DeliveryAddress from './forms/DeliveryAddress';
 import BillingDetails from './forms/BillingDetails';
 import makePurchase from './CheckoutService';
 import validateForm from '../form/FormValidate';
-<<<<<<< HEAD
-// import { useProfile } from '../Profile/ProfileContext';
-=======
->>>>>>> a5a3bd33b0769e65fd05f0be0511591feea0a844
 import { getSubtotal } from './ReviewOrderWidgetService';
 import getBillingRate from './BillingRateService';
 /**
@@ -133,12 +129,9 @@ const CheckoutPage = () => {
     <div className={styles.checkoutContainer}>
       <div className={`${styles.step} ${styles.order}`}>
         <h3 className={styles.title}>1. Review Order</h3>
-<<<<<<< HEAD
         <ReviewOrderWidget shippingFee={shippingFee} />
         <ReviewOrderWidget setTotal={setTotalPrice} />
-=======
         <ReviewOrderWidget shippingFee={shippingFee} setTotal={setTotalPrice} />
->>>>>>> a5a3bd33b0769e65fd05f0be0511591feea0a844
       </div>
       <div className={`${styles.step} ${styles.delivery}`}>
         <h3 className={styles.title}>2. Delivery Address</h3>
