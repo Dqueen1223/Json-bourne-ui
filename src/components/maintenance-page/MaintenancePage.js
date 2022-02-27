@@ -186,7 +186,7 @@ const MaintenancePage = () => {
       setEditable(null);
       fetchProducts(setProducts);
     } else {
-      setDisplayErrors(product.id);
+      setDisplayErrors(product);
     }
   };
 
@@ -217,29 +217,35 @@ const MaintenancePage = () => {
           </button>
         </td>
         <td className="ProductCells">{product.id}</td>
-        <td className="ProductCells" contentEditable="true" id="name">
+        <td className="ProductCells editable" contentEditable="true" id="name">
           {product.name}
         </td>
-        <td className="ProductCells" contentEditable="true" id="sku">
+        <td className="ProductCells editable" contentEditable="true" id="sku">
           {product.sku}
         </td>
-        <td className="ProductCells" contentEditable="true" id="description">
+        <td
+          className="ProductCells editable"
+          contentEditable="true"
+          id="description"
+        >
           {product.description}
         </td>
-        <td className="ProductCells" contentEditable="true">
+        <td className="ProductCells editable" contentEditable="true">
           <select id="demographic">
-            <option value={product.active.toString()}>
-              {product.demographic}
-            </option>
+            <option value={product.demographic}>{product.demographic}</option>
             <option value="Men">Men</option>
             <option value="Women">Women</option>
             <option value="Kids">Kids</option>
           </select>
         </td>
-        <td className="ProductCells" contentEditable="true" id="category">
+        <td
+          className="ProductCells editable"
+          contentEditable="true"
+          id="category"
+        >
           {product.category}
         </td>
-        <td className="ProductCells" contentEditable="true" id="type">
+        <td className="ProductCells editable" contentEditable="true" id="type">
           {product.type}
         </td>
         <td
@@ -404,7 +410,7 @@ const MaintenancePage = () => {
           <tbody id="tableBody">
             {products.map((product) => (
               <>
-                {editable === product.id || displayErrors === true
+                {editable === product.id || displayErrors === product
                   ? bothRows(product)
                   : viewRow(product)}
               </>
