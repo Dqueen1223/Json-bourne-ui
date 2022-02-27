@@ -45,59 +45,33 @@ const MaintenancePage = () => {
   const [products, setProducts] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [editable, setEditable] = useState(null);
-  const [releaseEditable, setReleaseEdtiable] = useState('false');
+  const [releaseEditable, setReleaseEditiable] = useState('false');
   const [errors, setErrors] = useState({});
-  const [previousProduct, setPreviousProduct] = useState({});
   const [displayErrors, setDisplayErrors] = useState(null);
-  // const [activity, setActivity] = useState('');
 
   useEffect(() => {
     fetchProducts(setProducts, setApiError);
   }, []);
 
-  const resetToDefaultTableData = (product) => {
-    if (document.getElementById('errors')) {
-      setDisplayErrors(null);
-    }
-    document.getElementById('name').innerHTML = product.name;
-    document.getElementById('sku').innerHTML = product.sku;
-    document.getElementById('description').innerHTML = product.description;
-    document.getElementById('demographic').innerHTML = product.demographic;
-    document.getElementById('category').innerHTML = product.category;
-    document.getElementById('type').innerHTML = product.type;
-    document.getElementById('releaseDate').innerHTML = product.releaseDate;
-    document.getElementById('primaryColorCode').innerHTML = product.primaryColorCode;
-    document.getElementById('secondaryColorCode').innerHTML = product.secondaryColorCode;
-    document.getElementById('styleNumber').innerHTML = product.styleNumber;
-    document.getElementById('globalProductCode').innerHTML = product.globalProductCode;
-    document.getElementById('active').value = product.active;
-    document.getElementById('brand').innerHTML = product.brand;
-    document.getElementById('imageSrc').innerHTML = product.imageSrc;
-    document.getElementById('price').innerHTML = product.price;
-    document.getElementById('material').innerHTML = product.material;
-    document.getElementById('quantity').innerHTML = product.quantity;
-  };
-
   const clickEditMaitenance = (e, product) => {
     e.preventDefault();
     if (editable != null) {
-      resetToDefaultTableData(previousProduct);
+      fetchProducts(setProducts, setApiError);
     }
-    setReleaseEdtiable('false');
-    setPreviousProduct(product);
+    setReleaseEditiable('false');
     setEditable(product.id);
     const today = new Date();
     const releaseDate = new Date(
       product.releaseDate
     );
     if (releaseDate.getTime() > today.getTime()) {
-      setReleaseEdtiable(null);
-      setReleaseEdtiable('true');
+      setReleaseEditiable(null);
+      setReleaseEditiable('true');
     }
   };
-  const cancelEditing = (e, product) => {
+  const cancelEditing = (e) => {
     e.preventDefault();
-    resetToDefaultTableData(product);
+    fetchProducts(setProducts, setApiError);
     setEditable(null);
     setErrors({});
   };
@@ -125,10 +99,10 @@ const MaintenancePage = () => {
       <td>{errors.quantity}</td>
     </tr>
   );
+
   const submitEdit = (e, product) => {
     e.preventDefault();
     setDisplayErrors(null);
-    console.log(errors);
     const name = document.getElementById('name');
     const sku = document.getElementById('sku');
     const description = document.getElementById('description');
@@ -140,13 +114,12 @@ const MaintenancePage = () => {
     const secondaryColorCode = document.getElementById('secondaryColorCode');
     const styleNumber = document.getElementById('styleNumber');
     const globalProductCode = document.getElementById('globalProductCode');
-    let active = document.getElementById('active');
+    let active = document.getElementById('activity');
     const brand = document.getElementById('brand');
     const imageSrc = document.getElementById('imageSrc');
     const price = document.getElementById('price');
     const material = document.getElementById('material');
     const quantity = document.getElementById('quantity');
-
     const submitedProduct = {
       id: product.id,
       name: name.innerHTML,
@@ -211,6 +184,7 @@ const MaintenancePage = () => {
     if (Object.keys(errors).length === 0) {
       UpdateProducts(newProduct, setApiError);
       setEditable(null);
+      fetchProducts(setProducts);
     } else {
       setDisplayErrors(product.id);
     }
@@ -293,7 +267,7 @@ const MaintenancePage = () => {
           {product.globalProductCode}
         </td>
         <td className="ProductCells" contentEditable="true" id="active">
-          <select id="Activity">
+          <select id="activity">
             <option value="true">true</option>
             <option value="false">false</option>
             {/* {product.active.toString()} */}
