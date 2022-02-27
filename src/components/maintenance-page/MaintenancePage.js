@@ -49,10 +49,12 @@ const MaintenancePage = () => {
   const [errors, setErrors] = useState({});
   const [previousProduct, setPreviousProduct] = useState({});
   const [displayErrors, setDisplayErrors] = useState(null);
+  // const [activity, setActivity] = useState('');
 
   useEffect(() => {
     fetchProducts(setProducts, setApiError);
   }, []);
+
   const resetToDefaultTableData = (product) => {
     if (document.getElementById('errors')) {
       setDisplayErrors(null);
@@ -68,7 +70,7 @@ const MaintenancePage = () => {
     document.getElementById('secondaryColorCode').innerHTML = product.secondaryColorCode;
     document.getElementById('styleNumber').innerHTML = product.styleNumber;
     document.getElementById('globalProductCode').innerHTML = product.globalProductCode;
-    document.getElementById('active').innerHTML = product.active;
+    document.getElementById('active').value = product.active;
     document.getElementById('brand').innerHTML = product.brand;
     document.getElementById('imageSrc').innerHTML = product.imageSrc;
     document.getElementById('price').innerHTML = product.price;
@@ -97,14 +99,36 @@ const MaintenancePage = () => {
     e.preventDefault();
     resetToDefaultTableData(product);
     setEditable(null);
+    setErrors({});
   };
 
+  const errorRow = () => (
+    <tr id="errors">
+      <td />
+      <td />
+      <td>{errors.name}</td>
+      <td>{errors.sku}</td>
+      <td>{errors.description}</td>
+      <td>{errors.demographic}</td>
+      <td>{errors.category}</td>
+      <td>{errors.type}</td>
+      <td>{errors.releaseDate}</td>
+      <td>{errors.primaryColorCode}</td>
+      <td>{errors.secondaryColorCode}</td>
+      <td>{errors.styleNumber}</td>
+      <td>{errors.globalProductCode}</td>
+      <td>{errors.active}</td>
+      <td>{errors.brand}</td>
+      <td>{errors.imageSrc}</td>
+      <td>{errors.material}</td>
+      <td>{errors.price}</td>
+      <td>{errors.quantity}</td>
+    </tr>
+  );
   const submitEdit = (e, product) => {
     e.preventDefault();
-    if (document.getElementById('errors')) {
-      setDisplayErrors(null);
-    }
-    setErrors({});
+    setDisplayErrors(null);
+    console.log(errors);
     const name = document.getElementById('name');
     const sku = document.getElementById('sku');
     const description = document.getElementById('description');
@@ -136,7 +160,7 @@ const MaintenancePage = () => {
       secondaryColorCode: secondaryColorCode.innerHTML,
       styleNumber: styleNumber.innerHTML,
       globalProductCode: globalProductCode.innerHTML,
-      active: active.innerHTML,
+      active: active.value,
       brand: brand.innerHTML,
       imageSrc: imageSrc.innerHTML,
       material: material.innerHTML,
@@ -152,21 +176,16 @@ const MaintenancePage = () => {
     ) {
       errorList.releaseDate = 'Release Date must match the format of YYYY-MM-DDT00:00:00';
     }
-    if (active.innerHTML === 'true' || active.innerHTML === 'false');
-    else {
-      errorList.active = 'Activity must be true of false';
-    }
     for (let i = 0; i < idList.length; i += 1) {
       const id = idList[i];
       if (errorList[id]) {
         errors[id] = errorList[id];
       }
     }
-
     setErrors(errors);
-    if (active.innerHTML === 'true') {
+    if (active.value === 'true') {
       active = true;
-    } if (active.innerHTML === 'false') {
+    } if (active.value === 'false') {
       active = false;
     }
     const newProduct = {
@@ -192,11 +211,8 @@ const MaintenancePage = () => {
     if (Object.keys(errors).length === 0) {
       UpdateProducts(newProduct, setApiError);
       setEditable(null);
-      setErrors(errors);
     } else {
-      // GenerateErrorMessages(errors);
       setDisplayErrors(product.id);
-      console.log(errors);
     }
   };
 
@@ -206,7 +222,12 @@ const MaintenancePage = () => {
         <td className="ProductCells">
           <button
             type="submit"
-            onClick={(e) => submitEdit(e, product)}
+            onClick={(e) => {
+              if (Object.entries(errors).length > 0) {
+                Object.keys(errors).forEach((key) => delete errors[key]);
+              }
+              submitEdit(e, product);
+            }}
             className="Confirm"
             id="checkButton"
           >
@@ -272,7 +293,11 @@ const MaintenancePage = () => {
           {product.globalProductCode}
         </td>
         <td className="ProductCells" contentEditable="true" id="active">
-          {product.active.toString()}
+          <select id="Activity">
+            <option value="true">true</option>
+            <option value="false">false</option>
+            {/* {product.active.toString()} */}
+          </select>
         </td>
         <td className="ProductCells" contentEditable="true" id="brand">
           {product.brand}
@@ -298,29 +323,6 @@ const MaintenancePage = () => {
     </>
   );
 
-  const errorRow = () => (
-    <tr id="errors">
-      <td />
-      <td />
-      <td>{errors.name}</td>
-      <td>{errors.sku}</td>
-      <td>{errors.description}</td>
-      <td>{errors.demographic}</td>
-      <td>{errors.category}</td>
-      <td>{errors.type}</td>
-      <td>{errors.releaseDate}</td>
-      <td>{errors.primaryColorCode}</td>
-      <td>{errors.secondaryColorCode}</td>
-      <td>{errors.styleNumber}</td>
-      <td>{errors.globalProductCode}</td>
-      <td>{errors.active}</td>
-      <td>{errors.brand}</td>
-      <td>{errors.imageSrc}</td>
-      <td>{errors.material}</td>
-      <td>{errors.price}</td>
-      <td>{errors.quantity}</td>
-    </tr>
-  );
   const viewRow = (product) => (
     <tr key={product.id} className="ProductCells">
       <td className="ProductCells">
@@ -356,10 +358,8 @@ const MaintenancePage = () => {
   );
   const bothRows = (product) => (
     <>
-      { editRow(product) }
-      {Object.entries(errors).length > 0
-        ? errorRow()
-        : null}
+      {editRow(product)}
+      {Object.entries(errors).length > 0 ? errorRow() : null}
     </>
   );
 
