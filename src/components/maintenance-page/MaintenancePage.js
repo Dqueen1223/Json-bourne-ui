@@ -125,7 +125,7 @@ const MaintenancePage = () => {
       name: name.innerHTML,
       sku: sku.innerHTML,
       description: description.innerHTML,
-      demographic: demographic.innerHTML,
+      demographic: demographic.value,
       category: category.innerHTML,
       type: type.innerHTML,
       releaseDate: releaseDate.innerHTML,
@@ -166,7 +166,7 @@ const MaintenancePage = () => {
       name: name.innerHTML,
       sku: sku.innerHTML,
       description: description.innerHTML,
-      demographic: demographic.innerHTML,
+      demographic: demographic.value,
       category: category.innerHTML,
       type: type.innerHTML,
       releaseDate: releaseDate.innerHTML,
@@ -226,8 +226,15 @@ const MaintenancePage = () => {
         <td className="ProductCells" contentEditable="true" id="description">
           {product.description}
         </td>
-        <td className="ProductCells" contentEditable="true" id="demographic">
-          {product.demographic}
+        <td className="ProductCells" contentEditable="true">
+          <select id="demographic">
+            <option value={product.active.toString()}>
+              {product.demographic}
+            </option>
+            <option value="Men">Men</option>
+            <option value="Women">Women</option>
+            <option value="Kids">Kids</option>
+          </select>
         </td>
         <td className="ProductCells" contentEditable="true" id="category">
           {product.category}
@@ -268,9 +275,11 @@ const MaintenancePage = () => {
         </td>
         <td className="ProductCells" contentEditable="true" id="active">
           <select id="activity">
+            <option value={product.active.toString()}>
+              {product.active.toString()}
+            </option>
             <option value="true">true</option>
             <option value="false">false</option>
-            {/* {product.active.toString()} */}
           </select>
         </td>
         <td className="ProductCells" contentEditable="true" id="brand">
