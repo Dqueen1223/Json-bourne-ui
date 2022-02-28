@@ -19,7 +19,7 @@ import { useCart } from '../checkout-page/CartContext';
 import ProductCardModal from '../product-page/ProductCardModal';
 import getQtyInCart, { inventoryAvailable } from './ProductCardService';
 import ReviewsModal from '../product-page/ReviewsModal';
-import Review from '../product-page/Review';
+// import Review from '../product-page/Review';
 import '../product-page/ReviewsModal.css';
 
 /**
@@ -131,7 +131,7 @@ const ProductCard = ({ product, reviews, setReviews }) => {
         document.getElementById('root')
       )}
       {reviewsModal && reactDom.createPortal(
-        <Review
+        <ReviewsModal
           product={product}
           reviews={reviews}
           setReviews={setReviews}
