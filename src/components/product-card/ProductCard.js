@@ -15,6 +15,8 @@ import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import ShareIcon from '@material-ui/icons/Share';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { toast } from 'react-toastify';
+import Rating from '@mui/material/Rating';
+// import Stack from '@mui/material/Stack';
 import { useCart } from '../checkout-page/CartContext';
 import ProductCardModal from '../product-page/ProductCardModal';
 import getQtyInCart, { inventoryAvailable } from './ProductCardService';
@@ -115,14 +117,14 @@ const ProductCard = ({ product, reviews, setReviews }) => {
     setReviewsModal(true);
   };
 
-  const addReview = (e) => {
-    e.stopPropagation();
-    setReviewsModal(true);
-    setReviewFormToggle(true);
-    if (reviews.length === 0) {
-      setReviewFormToggle(true);
-    }
-  };
+  // const addReview = (e) => {
+  //   e.stopPropagation();
+  //   setReviewsModal(true);
+  //   setReviewFormToggle(true);
+  //   if (reviews.length === 0) {
+  //     setReviewFormToggle(true);
+  //   }
+  // };
 
   return (
     <Card className={classes.root}>
@@ -195,29 +197,28 @@ const ProductCard = ({ product, reviews, setReviews }) => {
         <IconButton aria-label="add to shopping cart" onClick={onAdd}>
           <AddShoppingCartIcon />
         </IconButton>
-        <div>
-          {ReviewsModal !== false && (
+        {ReviewsModal !== false && (
           <>
-            <button
+            {/* <button
               className="reviewsProductCardButton"
               type="button"
               variant="contained"
               onClick={onReview}
             >
               Reviews
-            </button>
-            <button
-              className="addReviewsProductCardButton"
+            </button> */}
+            <Rating
+              onClick={onReview}
               type="button"
-              label="Add Review"
               variant="contained"
-              onClick={addReview}
-            >
-              Add Review
-            </button>
+              className="reviewsProductCardButton"
+              name="half-rating-read"
+              defaultValue={2.5}
+              precision={0.5}
+
+            />
           </>
-          )}
-        </div>
+        )}
       </CardActions>
     </Card>
   );

@@ -1,21 +1,27 @@
 import React, { useState } from 'react';
+import reactDom from 'react-dom';
 import IconButton from '@material-ui/core/IconButton';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import './ProductCardModal.css';
+import Rating from '@mui/material/Rating';
 import { useCart } from '../checkout-page/CartContext';
 import getQtyInCart, { displayToast, isInventoryAvailable } from './ProductCardModalService';
+import ReviewsModal from './ReviewsModal';
 
 /**
  * @name ProductCardModal
  * @description material-ui styling for product card modal
  * @return component
  */
-const ProductCardModal = ({ product, closeModal }) => {
+const ProductCardModal = ({
+  product, closeModal, reviews, setReviews
+}) => {
   const { dispatch } = useCart();
   const [quantityPicker, setQuantityPicker] = useState(1);
   const [higherValue, setHigherValue] = useState(true);
   const [lowerValue, setLowerValue] = useState(false);
-
+  const [reviewsModal, setReviewsModal] = useState(false);
+  const [showCreateReview, setReviewFormToggle] = useState(false);
   const {
     state: { products }
   } = useCart();
@@ -110,6 +116,10 @@ const ProductCardModal = ({ product, closeModal }) => {
       e.preventDefault();
     }
   };
+  const onReview = (e) => {
+    e.stopPropagation();
+    setReviewsModal(true);
+  };
 
   const closeTheModal = (e) => {
     if (e.target.className === 'productCardModalBackground' || e.target.className === 'closeButton') {
@@ -179,6 +189,26 @@ const ProductCardModal = ({ product, closeModal }) => {
               <IconButton aria-label="add to shopping cart" onClick={onAdd}>
                 <AddShoppingCartIcon />
               </IconButton>
+              {reviewsModal && reactDom.createPortal(
+                <ReviewsModal
+                  product={product}
+                  reviews={reviews}
+                  setReviews={setReviews}
+                  closeModal={setReviewsModal}
+                  showCreateReview={showCreateReview}
+                  setReviewFormToggle={setReviewFormToggle}
+                />,
+                document.getElementById('root')
+              )}
+              <Rating
+                onClick={onReview}
+                type="button"
+                variant="contained"
+                className="reviewsProductCardButton"
+                name="half-rating-read"
+                defaultValue={2.5}
+                precision={0.5}
+              />
             </div>
           </div>
         </div>
