@@ -153,7 +153,7 @@ describe('getQuantityInCart', () => {
   });
   test('Invalid Date Format', () => {
     const invalidBillingDate = { ...validBillingData };
-    invalidBillingDate.expiration = '12/012';
+    invalidBillingDate.expiration = '12//02';
     expect(validateForm(validDeliveryData, invalidBillingDate, false)).toStrictEqual(
       {
         expiration: 'Dates must match format "MM/YY"'
@@ -171,7 +171,7 @@ describe('getQuantityInCart', () => {
   });
   test('Invalid Date card is expired 20xx', () => {
     const invalidBillingDate = { ...validBillingData };
-    invalidBillingDate.expiration = '12/01';
+    invalidBillingDate.expiration = '02/01';
     expect(validateForm(validDeliveryData, invalidBillingDate, false)).toStrictEqual(
       {
         expiration: 'This card is expired'
