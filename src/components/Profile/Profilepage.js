@@ -68,7 +68,8 @@ const ProfilePage = () => {
         state: profile.state,
         zip: profile.zip,
         phone: profile.phone,
-        role: profile.role
+        role: profile.role,
+        dateCreated: profile.dateCreated
       };
       fetchUpdateUser(user, setProfile);
       setIsEditing(false);
