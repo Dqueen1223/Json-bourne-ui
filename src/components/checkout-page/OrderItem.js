@@ -17,7 +17,12 @@ const OrderItem = ({
     <div className={styles.item}>
       <p className={styles.itemTitle}>{title}</p>
       <p>{description}</p>
-      <p>{`Qty: ${quantity}`}</p>
+      <p>
+        <button type="button" className={styles.lowerQtyBtn}> &minus; </button>
+        Qty:&nbsp;
+        {quantity}
+        {/* <button type="button" className={styles.raiseQtyBtn}> + </button> */}
+      </p>
     </div>
     <div className={styles.price}>
       <p>{toPrice(quantity * price)}</p>

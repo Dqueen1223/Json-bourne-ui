@@ -30,3 +30,27 @@ p {
   align-self: end;
   justify-self: end;
 }
+.quantity {
+  width: 20px;
+  right: 0;
+}
+.lowerQtyBtn{
+  font-size: 1.5em;
+  vertical-align: sub;
+  border-radius: 10px;
+  margin-right: 0.5em;
+  background-color: transparent;
+  border:none;
+}
+.lowerQtyBtn:hover{
+  background-color: rgba(0,0,0,0.1);
+}
+.raiseQtyBtn{
+  font-weight: bold;
+  border-radius: 10px;
+  background-color: transparent;
+  border:none;
+}
+.raiseQtyBtn:hover{
+  background-color: rgba(0,0,0,0.1);
+}
