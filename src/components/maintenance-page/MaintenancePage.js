@@ -48,6 +48,7 @@ const MaintenancePage = () => {
   const [releaseEditable, setReleaseEditiable] = useState('false');
   const [errors, setErrors] = useState({});
   const [displayErrors, setDisplayErrors] = useState(null);
+  const [updatedProduct, setUpdatedProduct] = useState({});
 
   useEffect(() => {
     fetchProducts(setProducts, setApiError);
@@ -144,7 +145,7 @@ const MaintenancePage = () => {
     const errorList = validateCreateProductForm(submitedProduct, idList);
     if (
       !releaseDate.innerHTML.match(
-        /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])T\d{2}:\d{2}:\d{2}(\.\d{3})?$/
+        /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])T\d{2}:\d{2}:\d{2}$/
       )
     ) {
       errorList.releaseDate = 'Release Date must match the format of YYYY-MM-DDT00:00:00';
@@ -186,7 +187,7 @@ const MaintenancePage = () => {
       setEditable(null);
       fetchProducts(setProducts);
     } else {
-      setDisplayErrors(product);
+      setDisplayErrors([product.id]);
     }
   };
 
@@ -199,6 +200,7 @@ const MaintenancePage = () => {
             onClick={(e) => {
               if (Object.entries(errors).length > 0) {
                 Object.keys(errors).forEach((key) => delete errors[key]);
+                displayErrors.shift();
               }
               submitEdit(e, product);
             }}
@@ -256,30 +258,39 @@ const MaintenancePage = () => {
           {product.releaseDate}
         </td>
         <td
-          className="ProductCells"
+          className="ProductCells editable"
           contentEditable="true"
           id="primaryColorCode"
         >
           {product.primaryColorCode}
         </td>
         <td
-          className="ProductCells"
+          className="ProductCells editable"
           contentEditable="true"
           id="secondaryColorCode"
         >
           {product.secondaryColorCode}
         </td>
-        <td className="ProductCells" contentEditable="true" id="styleNumber">
+        <td
+          className="ProductCells editable"
+          contentEditable="true"
+          id="styleNumber"
+        >
+          {onclick}
           {product.styleNumber}
         </td>
         <td
-          className="ProductCells"
+          className="ProductCells editable"
           contentEditable="true"
           id="globalProductCode"
         >
           {product.globalProductCode}
         </td>
-        <td className="ProductCells" contentEditable="true" id="active">
+        <td
+          className="ProductCells editable"
+          contentEditable="true"
+          id="active"
+        >
           <select id="activity">
             <option value={product.active.toString()}>
               {product.active.toString()}
@@ -288,20 +299,28 @@ const MaintenancePage = () => {
             <option value="false">false</option>
           </select>
         </td>
-        <td className="ProductCells" contentEditable="true" id="brand">
+        <td className="ProductCells editable" contentEditable="true" id="brand">
           {product.brand}
         </td>
-        <td className="ProductCells" contentEditable="true" id="imageSrc">
+        <td
+          className="ProductCells editable"
+          contentEditable="true"
+          id="imageSrc"
+        >
           {product.imageSrc}
         </td>
-        <td className="ProductCells" contentEditable="true" id="material">
+        <td
+          className="ProductCells editable"
+          contentEditable="true"
+          id="material"
+        >
           {product.material}
         </td>
-        <td className="ProductCells" contentEditable="true" id="price">
+        <td className="ProductCells editable" contentEditable="true" id="price">
           {product.price.toFixed(2)}
         </td>
         <td
-          className="ProductCells"
+          className="ProductCells editable"
           contentEditable="true"
           id="quantity"
           value={product.quantity}
@@ -332,7 +351,7 @@ const MaintenancePage = () => {
       <td className="ProductCells">{product.demographic}</td>
       <td className="ProductCells">{product.category}</td>
       <td className="ProductCells">{product.type}</td>
-      <td className="ProductCells">{product.releaseDate}</td>
+      <td className="ProductCells">{product.releaseDate.slice(0, 10)}</td>
       <td className="ProductCells">{product.primaryColorCode}</td>
       <td className="ProductCells">{product.secondaryColorCode}</td>
       <td className="ProductCells">{product.styleNumber}</td>
@@ -410,7 +429,7 @@ const MaintenancePage = () => {
           <tbody id="tableBody">
             {products.map((product) => (
               <>
-                {editable === product.id || displayErrors === product
+                {editable === product.id || displayErrors === product.id
                   ? bothRows(product)
                   : viewRow(product)}
               </>
