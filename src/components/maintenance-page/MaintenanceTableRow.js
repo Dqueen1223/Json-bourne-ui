@@ -1,26 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import reactDom from 'react-dom';
 import { FaPencilAlt, FaCheck } from 'react-icons/fa';
 import Delete from '@material-ui/icons/Delete';
 import validateCreateProductForm from '../create-product/forms/FormValidation';
 import UpdateProducts from './MaintenancePageUpdateService';
 import GenerateErrorMessages from './MaintenancePageGenerateErrors';
-import { checkForReviews } from './MaintenancePageDeleteService';
 import MaintenanceDeleteModal, { MaintenanceDeleteConfirmModal } from './MaintenanceDeleteModal';
 
-const MaintenanceTableRow = ({ product, setDeletedProduct }) => {
+const MaintenanceTableRow = ({ product, setDeletedProduct, deleteButton }) => {
   const [editable, setEditable] = useState(null);
   const [previousProduct, setPreviousProduct] = useState({});
   const [releaseEditable, setReleaseEdtiable] = useState('false');
   const [errors, setErrors] = useState({});
   const [setApiError] = useState(false);
-  const [deleteButton, setDeleteButton] = useState([]);
   const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(null);
   const [confirmModal, setConfirmModal] = useState(null);
-
-  useEffect(() => {
-    checkForReviews(setDeleteButton, setApiError);
-  }, [setApiError]);
 
   const resetToDefaultTableData = () => {
     if (document.getElementById('errors')) {

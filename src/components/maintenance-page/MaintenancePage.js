@@ -8,6 +8,7 @@ import './MaintenancePage.css';
 import styles from '../product-page/ProductPage.module.css';
 import Constants from '../../utils/constants';
 import MaintenanceTableRow from './MaintenanceTableRow';
+import { checkForReviews } from './MaintenancePageDeleteService';
 
 /**
  * @name useStyles
@@ -44,10 +45,15 @@ const MaintenancePage = () => {
   const [products, setProducts] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [deletedProduct, setDeletedProduct] = useState(products);
+  const [deleteButton, setDeleteButton] = useState([]);
 
   useEffect(() => {
     fetchProducts(setProducts, setApiError);
   }, [deletedProduct]);
+
+  useEffect(() => {
+    checkForReviews(setDeleteButton, setApiError);
+  }, []);
 
   return (
     <div className="Maintenance">
@@ -109,7 +115,11 @@ const MaintenancePage = () => {
           </thead>
           <tbody id="tableBody">
             {products.map((product) => (
-              <MaintenanceTableRow product={product} setDeletedProduct={setDeletedProduct} />
+              <MaintenanceTableRow
+                product={product}
+                setDeletedProduct={setDeletedProduct}
+                deleteButton={deleteButton}
+              />
             ))}
           </tbody>
         </table>
