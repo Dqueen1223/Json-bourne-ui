@@ -40,7 +40,7 @@ export default function MaintenanceDeleteModal({ product, closeModal }) {
 
 export function MaintenanceDeleteConfirmModal({ product, closeModal }) {
   const closeTheModal = (e) => {
-    if (e.target.className === 'maintenanceModalBackground' || e.target.className === 'maintenanceCloseButton' || e.target.className === 'maintenanceNoButton') {
+    if (e.target.className === 'maintenanceModalBackground' || e.target.className === 'maintenanceCloseButton' || e.target.className === 'maintenanceNoButton' || e.target.className === 'maintenanceConfirmButton') {
       closeModal(false);
     }
   };
@@ -55,7 +55,7 @@ export function MaintenanceDeleteConfirmModal({ product, closeModal }) {
           <div className="maintenanceModal-body">
             Are you sure you would like to delete this item? It can not be undone.
             <div className="maintenanceModalButtons">
-              <button type="button" className="maintenanceConfirmButton" onClick={deleteProducts(product)}>Yes</button>
+              <button type="button" className="maintenanceConfirmButton" onClick={(e) => { deleteProducts(product); closeTheModal(e); }}>Yes</button>
               <button type="button" className="maintenanceNoButton" onClick={closeTheModal}>No</button>
             </div>
           </div>

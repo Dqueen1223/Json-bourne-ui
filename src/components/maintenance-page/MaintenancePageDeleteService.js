@@ -14,14 +14,14 @@ export default async function deleteProducts(product, setApiError, setDeleteModa
   await HttpHelper(`${Constants.PRODUCTS_ENDPOINT}/${product.id}`, 'DELETE')
     .then((response) => {
       if (response.ok) {
-        setConfirmModal(true);
+        setConfirmModal(product);
         toast.success('Product successfully deleted.');
       }
       return response.json();
     })
     .then((resObj) => {
-      if (resObj.errorMessage === `Product with id: ${product.id} has purchases associated with it. In ProductProvider`) {
-        setDeleteModalIsOpen(true);
+      if (resObj.errorMessage === `Product with id: ${product.id} has purchases associated with it.`) {
+        setDeleteModalIsOpen(product);
         return product.name;
       }
       return resObj;
