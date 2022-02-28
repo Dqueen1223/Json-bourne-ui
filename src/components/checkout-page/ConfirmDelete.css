@@ -1,0 +1,48 @@
+.deleteModalBackground{
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0,0,0,0.4);
+    z-index: 2;
+}
+.deleteModalContent{
+    display: flex;
+    height:500px;
+    width: 500px;
+    border-radius: 0.5em;
+    background-color:white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    flex-direction: column;
+    max-height: 100%;
+    margin:10px;
+    color: #1d2228;
+}
+.deleteModalTitle{
+    flex:1 1 50%;
+    height: 50%;
+    text-align: center;
+    display: flex;
+}
+.closeDeleteModalButton{
+    background-color: transparent;
+    position: absolute;
+    font-size: 1.5em;
+    right:10px;
+    top:10px;
+    color: #1d2228;
+    border: none;
+    border-radius: 10px;
+    
+}
+.deleteModalButtons{
+
+}
+.deleteModalConfirm{
+
+}
+.deleteModalCancel{
+
+}

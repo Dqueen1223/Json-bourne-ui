@@ -22,7 +22,6 @@ const CheckoutPage = () => {
   const {
     state: { products }
   } = useCart();
-
   const [billingData, setBillingData] = React.useState({});
 
   const [deliveryData, setDeliveryData] = React.useState({});
