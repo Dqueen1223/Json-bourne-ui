@@ -105,10 +105,16 @@ const MaintenancePage = () => {
   const updateProduct = (e) => {
     setUpdatedProduct({ ...updatedProduct, [e.target.id]: e.target.innerHTML });
   };
+  const updatedProductDropdown = (e) => {
+    setUpdatedProduct({ ...updatedProduct, [e.target.id]: e.target.value });
+  };
 
   const submitEdit = (e, product) => {
     e.preventDefault();
     setDisplayErrors(null);
+    if (updatedProduct.active === 'true') {
+      updatedProduct.active = true;
+    } else { updatedProduct.active = false; }
     const idList = Object.keys(updatedProduct);
     const errorList = validateCreateProductForm(updatedProduct, idList);
     if (
@@ -133,6 +139,7 @@ const MaintenancePage = () => {
     } else {
       setDisplayErrors([product.id]);
     }
+    console.log(updatedProduct);
   };
 
   const editRow = (product) => (
@@ -164,7 +171,7 @@ const MaintenancePage = () => {
         </td>
         <td className="ProductCells">{product.id}</td>
         <td
-          className="ProductCells editable"
+          className={`ProductCells ${errors.name ? 'error' : 'editable'}`}
           contentEditable="true"
           id="name"
           onInput={(e) => updateProduct(e)}
@@ -172,7 +179,7 @@ const MaintenancePage = () => {
           {product.name}
         </td>
         <td
-          className="ProductCells editable"
+          className={`ProductCells ${errors.sku ? 'error' : 'editable'}`}
           contentEditable="true"
           id="sku"
           onInput={(e) => updateProduct(e)}
@@ -180,7 +187,9 @@ const MaintenancePage = () => {
           {product.sku}
         </td>
         <td
-          className="ProductCells editable"
+          className={`ProductCells ${
+            errors.description ? 'error' : 'editable'
+          }`}
           contentEditable="true"
           id="description"
           onInput={(e) => updateProduct(e)}
@@ -188,7 +197,7 @@ const MaintenancePage = () => {
           {product.description}
         </td>
         <td className="ProductCells editable" contentEditable="true">
-          <select id="demographic" onSelect={(e) => updateProduct(e)}>
+          <select id="demographic" onChange={(e) => updatedProductDropdown(e)}>
             <option value={product.demographic}>{product.demographic}</option>
             <option value="Men">Men</option>
             <option value="Women">Women</option>
@@ -196,7 +205,7 @@ const MaintenancePage = () => {
           </select>
         </td>
         <td
-          className="ProductCells editable"
+          className={`ProductCells ${errors.category ? 'error' : 'editable'}`}
           contentEditable="true"
           id="category"
           onInput={(e) => updateProduct(e)}
@@ -204,7 +213,7 @@ const MaintenancePage = () => {
           {product.category}
         </td>
         <td
-          className="ProductCells editable"
+          className={`ProductCells ${errors.type ? 'error' : 'editable'}`}
           contentEditable="true"
           id="type"
           onInput={(e) => updateProduct(e)}
@@ -220,7 +229,9 @@ const MaintenancePage = () => {
           {product.releaseDate.slice(0, 10)}
         </td>
         <td
-          className="ProductCells editable"
+          className={`ProductCells ${
+            errors.primaryColorCode ? 'error' : 'editable'
+          }`}
           contentEditable="true"
           id="primaryColorCode"
           onInput={(e) => updateProduct(e)}
@@ -228,7 +239,9 @@ const MaintenancePage = () => {
           {product.primaryColorCode}
         </td>
         <td
-          className="ProductCells editable"
+          className={`ProductCells ${
+            errors.secondaryColorCode ? 'error' : 'editable'
+          }`}
           contentEditable="true"
           id="secondaryColorCode"
           onInput={(e) => updateProduct(e)}
@@ -236,7 +249,9 @@ const MaintenancePage = () => {
           {product.secondaryColorCode}
         </td>
         <td
-          className="ProductCells editable"
+          className={`ProductCells ${
+            errors.styleNumber ? 'error' : 'editable'
+          }`}
           contentEditable="true"
           id="styleNumber"
           onInput={(e) => updateProduct(e)}
@@ -244,7 +259,9 @@ const MaintenancePage = () => {
           {product.styleNumber}
         </td>
         <td
-          className="ProductCells editable"
+          className={`ProductCells ${
+            errors.globalProductCode ? 'error' : 'editable'
+          }`}
           contentEditable="true"
           id="globalProductCode"
           onInput={(e) => updateProduct(e)}
@@ -252,11 +269,10 @@ const MaintenancePage = () => {
           {product.globalProductCode}
         </td>
         <td
-          className="ProductCells editable"
+          className={`ProductCells ${errors.active ? 'error' : 'editable'}`}
           contentEditable="true"
-          id="active"
         >
-          <select id="activity">
+          <select id="active" onChange={(e) => updatedProductDropdown(e)}>
             <option value={product.active.toString()}>
               {product.active.toString()}
             </option>
@@ -265,7 +281,7 @@ const MaintenancePage = () => {
           </select>
         </td>
         <td
-          className="ProductCells editable"
+          className={`ProductCells ${errors.brand ? 'error' : 'editable'}`}
           contentEditable="true"
           id="brand"
           onInput={(e) => updateProduct(e)}
@@ -273,7 +289,7 @@ const MaintenancePage = () => {
           {product.brand}
         </td>
         <td
-          className="ProductCells editable"
+          className={`ProductCells ${errors.imageSrc ? 'error' : 'editable'}`}
           contentEditable="true"
           id="imageSrc"
           onInput={(e) => updateProduct(e)}
@@ -281,7 +297,7 @@ const MaintenancePage = () => {
           {product.imageSrc}
         </td>
         <td
-          className="ProductCells editable"
+          className={`ProductCells ${errors.material ? 'error' : 'editable'}`}
           contentEditable="true"
           id="material"
           onInput={(e) => updateProduct(e)}
@@ -289,7 +305,7 @@ const MaintenancePage = () => {
           {product.material}
         </td>
         <td
-          className="ProductCells editable"
+          className={`ProductCells ${errors.price ? 'error' : 'editable'}`}
           contentEditable="true"
           id="price"
           onInput={(e) => updateProduct(e)}
@@ -297,7 +313,7 @@ const MaintenancePage = () => {
           {product.price.toFixed(2)}
         </td>
         <td
-          className="ProductCells editable"
+          className={`ProductCells ${errors.quantity ? 'error' : 'editable'}`}
           contentEditable="true"
           id="quantity"
           onInput={(e) => updateProduct(e)}

@@ -114,6 +114,11 @@ height:100%;
     width: 10em;
     position: static;
 }
+.error{
+    border-width: 1.5px;
+    height: 34.3px;
+    border-color: red ;
+}
 .editable {
     border-width: 1.5px;
     height: 34.3px;
