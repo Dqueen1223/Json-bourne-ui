@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
 import reactDom from 'react-dom';
+import { toast } from 'react-toastify';
 import ConfirmModal from './ConfirmModal';
 import styles from './OrderItem.module.css';
 import { toPrice } from './ReviewOrderWidgetService';
@@ -20,6 +21,7 @@ const OrderItem = ({
     if (confirmDeleteItem) {
       for (let i = 0; i < products.length; i += 1) {
         if (products[i].name === name) {
+          toast.info(`${name} has been removed from your cart.`);
           dispatch(
             {
               type: 'delete',
@@ -82,11 +84,12 @@ const OrderItem = ({
   };
   return (
     <div className={styles.orderItem}>
+      <DeleteIcon onClick={deleteItem} className={styles.trashIcon} />
       {deleteConfirmationModal && reactDom.createPortal(
         <ConfirmModal
           setConfirm={setConfirmDelete}
           setDeleteConfirmationModal={setDeleteConfirmationModal}
-          confirmMessage="Are you sure you want to remove this item from your cart?"
+          confirmMessage={`Are you sure you want to remove ${name} from your cart?`}
         />,
         document.getElementById('root')
       )}
@@ -94,10 +97,9 @@ const OrderItem = ({
         <img src={image} alt="product" className={styles.imageSrc} />
       </div>
       <div className={styles.item}>
-        { /* <p className={styles.itemTitle}>{name}</p> */}
+        <p className={styles.itemTitle}>{name}</p>
         <p>{description}</p>
         <p>
-          <DeleteIcon onClick={deleteItem} />
           <button type="button" onClick={lowerQuantity} className={styles.lowerQtyBtn}> &minus; </button>
           Qty:&nbsp;
           {quantity}

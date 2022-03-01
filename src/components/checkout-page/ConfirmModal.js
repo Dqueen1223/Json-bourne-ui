@@ -25,8 +25,9 @@ const ConfirmModal = ({
           </span>
         </div>
         <div className="confirmModalButtons">
-          <button onClick={onConfirm} className="confirmModalConfirm" type="button">Confirm</button>
           <button onClick={closeModal} className="confirmModalCancel" type="button">Cancel</button>
+          <button onClick={onConfirm} className="confirmModalConfirm" type="button">Confirm</button>
+
         </div>
       </div>
 
