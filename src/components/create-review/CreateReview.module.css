@@ -1,0 +1,62 @@
+.createReview {
+    /* width: 100%; */
+    width: 460px;
+    max-width: 460px;
+    height: fit-content;
+}
+
+.input {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New";
+    margin-top: .5em;
+    width: 95%;
+    height: 30px;
+    padding: .5em;
+    box-sizing: border-box;
+}
+.inputTextArea{
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New";
+    margin-top: .5em;
+    width: 95%;
+    height: 90px;
+    padding: .5em;
+    box-sizing: border-box;
+}
+
+.labelContents {
+    display:inline-flex;
+}
+.count {
+    margin-left: 18em;
+}
+.titleCount {
+    margin-left: 19em;
+}
+
+/******************************
+Errors
+*/
+.error_item {
+    color:red;
+    /* margin:3px 0px 0px 0px; */
+    /* width: 120%; */
+}
+
+.inputError {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New";
+    margin-top: .5em;
+    width: 95%;
+    height: 30px;
+    padding: .5em;
+    box-sizing: border-box;
+    border: 1px solid red;
+}
+
+.inputErrorTA {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New";
+    margin-top: .5em;
+    width: 95%;
+    height: 90px;
+    padding: .5em;
+    box-sizing: border-box;
+    border: 1px solid red;
+}

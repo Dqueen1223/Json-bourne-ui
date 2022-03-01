@@ -9,6 +9,7 @@ import fetchProductsCount from './productCountPageService';
 import fetchProducts from './ProductPageService';
 import FilterMenu from './filter-menu/FilterMenu';
 import Pagination from './Pagination';
+import fetchReviews from './ReviewService';
 
 /**
  * @name ProductPage
@@ -22,6 +23,7 @@ const ProductPage = () => {
   const [apiError, setApiError] = useState(false);
   const [isActive, setIsActive] = useState(true);
   const [filter, setFilter] = useState('');
+  const [reviews, setReviews] = useState(true);
 
   useEffect(() => {
     fetchProducts(setProducts, setApiError, filter, (`&range=${(currentPage * 20) - 20}`));
@@ -31,6 +33,9 @@ const ProductPage = () => {
     fetchProductsCount(setProductsCount, setApiError, filter);
   }, [filter]);
 
+  useEffect(() => {
+    fetchReviews(setReviews, setApiError);
+  }, [reviews]);
   useEffect(() => {
     setCurrentPage(1);
   }, [filter]);
@@ -66,7 +71,9 @@ const ProductPage = () => {
         <div className={isActive ? styles.addLeftMargin : styles.app}>
           {products.map((product) => (
             <div key={product.id}>
-              <ProductCard product={product} />
+              {/* check for reviews here...if reviews are present then produce a review button.
+               */}
+              <ProductCard product={product} reviews={reviews} />
             </div>
           ))}
         </div>

@@ -1,71 +1,80 @@
-/* eslint-disable react/destructuring-assignment */
 import React, { useState, useEffect } from 'react';
 import './ProfilePage.css';
+import { toast } from 'react-toastify';
+import SettingsIcon from '@mui/icons-material/Settings';
+import CheckIcon from '@mui/icons-material/Check';
+import { IconButton } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
 import { useProfile } from './ProfileContext';
-import fetchPurchases from './ProfilePageService';
 import ProfilePurchase from './ProfilePurchase';
+import loginUser from '../header/HeaderService';
+import fetchPurchases from './ProfilePageService';
+import ProfileName from './Profile_Forms/ProfileName';
+import ProfileShipping from './Profile_Forms/ProfileShipping';
+import profileValidation from './Validation';
+import fetchUpdateUser from './ProfileUpdateService';
 
 const ProfilePage = () => {
   const {
     state: { userProfile }
   } = useProfile();
-  const [purchases, setPurchases] = useState([]);
-  const [profileInfo, setProfileInfo] = useState(true);
+
+  const [profile, setProfile] = useState({});
+
   // const [apiError, setApiError] = useState(false);
+  const [purchases, setPurchases] = useState([]);
   const [purchaseInfo, setPurchaseInfo] = useState(false);
-  useEffect(() => {
-    fetchPurchases(`?email=${userProfile[0].email}`, setPurchases);
-  }, [userProfile]);
-  const renderName = () => {
-    const { firstName, lastName } = userProfile[0];
-    return (
-      <div className="userInfo">
-        <ul className="headerName">Name</ul>
-        <li>
-          First Name:
-          {' '}
-          {firstName}
-        </li>
-        <li>
-          Last Name:
-          {' '}
-          {lastName}
-        </li>
-      </div>
-    );
+  const [isEditing, setIsEditing] = useState(false);
+  const [tempProfile, setTempProfile] = useState(null);
+  const [errors, setErrors] = useState({});
+
+  const onProfileChange = (e) => {
+    setProfile({ ...profile, [e.target.id]: e.target.value });
   };
 
-  const renderShipping = () => {
-    const {
-      street, street2, city, state, zip
-    } = userProfile[userProfile.length - 1];
-    return (
-      <div className="userInfo">
-        <ul className="headerShipping">Shipping Address</ul>
-        <li>
-          Street:
-          {' '}
-          {street}
-          {' '}
-          {street2}
-        </li>
-        <li>
-          City:
-          {' '}
-          {city}
-        </li>
-        <li>
-          State:
-          {' '}
-          {state}
-        </li>
-        <li>
-          Zip:
-          {' '}
-          {zip}
-        </li>
-      </div>
-    );
+  const [apiError, setApiError] = useState('');
+  useEffect(() => {
+    loginUser(userProfile[1], setProfile, setApiError);
+  }, [userProfile]);
+  useEffect(() => {
+    fetchPurchases(`?email=${profile.email}`, setPurchases);
+  }, [profile.email]);
+  const startEditing = () => {
+    if (isEditing === false) {
+      setIsEditing(true);
+      setTempProfile(profile);
+    } else {
+      const transfer = tempProfile;
+      setProfile(transfer);
+      setIsEditing(false);
+      setErrors({});
+    }
+  };
+  const trySubmit = () => {
+    const currentErrors = profileValidation(profile);
+    if (Object.keys(currentErrors).length > 0) {
+      setErrors(currentErrors);
+      toast.error('There was errors in the inputs. The changes have not been submitted');
+    } else {
+      const user = {
+        id: profile.id,
+        dateModified: new Date().toISOString(),
+        email: profile.email,
+        firstName: profile.firstName,
+        lastName: profile.lastName,
+        street: profile.street,
+        street2: profile.street2,
+        city: profile.city,
+        state: profile.state,
+        zip: profile.zip,
+        phone: profile.phone,
+        role: profile.role,
+        dateCreated: profile.dateCreated
+      };
+      fetchUpdateUser(user, setProfile);
+      setIsEditing(false);
+      setErrors(currentErrors);
+    }
   };
   /* const renderPurchase = () => {
     <div className="test">
@@ -74,52 +83,75 @@ const ProfilePage = () => {
     </div>;
   }; */
   const changeStatePurchase = () => {
-    setProfileInfo(false);
-    setPurchaseInfo(true);
-    document.getElementById('purchase').classList.add('active');
-    document.getElementById('profile').classList.remove('active');
+    if (purchases.length !== 0) {
+      setPurchaseInfo(true);
+      document.getElementById('purchase').classList.add('active');
+      document.getElementById('profile').classList.remove('active');
+    } else {
+      toast.error('You have no purchases to view.');
+    }
   };
   const changeStateProfileInfo = () => {
-    setProfileInfo(true);
     setPurchaseInfo(false);
     document.getElementById('profile').classList.add('active');
     document.getElementById('purchase').classList.remove('active');
   };
-  try {
-    return (
-      <div className="profile">
-        <div className="ui">
-          <div className="buttons">
-            <button className="profileButton active" id="profile" type="button" onClick={changeStateProfileInfo}> User Info</button>
-            {purchases.length !== 0 && <button className="profileButton purchaseHistory" id="purchase" type="button" onClick={changeStatePurchase}> Purchase History </button>}
+  if (!apiError) {
+    try {
+      return (
+        <div className="profile">
+          <div className="ui">
+            <div className="buttons">
+              <button className="profileButton active" id="profile" type="button" onClick={changeStateProfileInfo}> User Info</button>
+              <button className="profileButton purchaseHistory" id="purchase" type="button" onClick={changeStatePurchase}> Purchase History </button>
+            </div>
           </div>
-        </div>
-        <div className="content">
-          <div className="userInfodiv">
-            {profileInfo && renderName()}
-            {profileInfo && renderShipping()}
-          </div>
-          {purchaseInfo && (
-          <div className="purchases">
-            {purchases.map((purchase) => (
-              <div key={purchase.id} className="purchase">
-                <ProfilePurchase
-                  purchases={purchase}
+          <div className="content">
+            {!purchaseInfo && (
+              <div className="userInfodiv">
+                <IconButton className="edit" size="large" onClick={startEditing}><SettingsIcon /></IconButton>
+                <ProfileName
+                  onChange={onProfileChange}
+                  isEditing={isEditing}
+                  data={profile}
+                  errors={errors}
                 />
+                <ProfileShipping
+                  onChange={onProfileChange}
+                  isEditing={isEditing}
+                  data={profile}
+                  errors={errors}
+                />
+                  {isEditing && <Button className="submit" size="large" startIcon={<CheckIcon />} onClick={trySubmit} />}
               </div>
-            ))}
+            )}
+            {purchaseInfo && (
+              <div className="purchases">
+                {purchases.map((purchase) => (
+                  <div key={purchase.id} className="purchase">
+                    <ProfilePurchase
+                      purchases={purchase}
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
+            <div className="stopOverflow" />
           </div>
-          )}
-          <div className="stopOverflow" />
         </div>
-      </div>
-    );
-  } catch {
-    return (
-      <div>
-        <p>You must be logged in to view the profile page</p>
-      </div>
-    );
+      );
+    } catch {
+      return (
+        <div>
+          <p>You must be logged in to view the profile page</p>
+        </div>
+      );
+    }
   }
+  return (
+    <div>
+      <p> There was a problem logging into your profile</p>
+    </div>
+  );
 };
 export default ProfilePage;

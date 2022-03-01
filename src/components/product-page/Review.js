@@ -29,7 +29,7 @@ const Review = ({ review }, setReviews) => {
 
   useEffect(() => {
     if (userProfile.length > 0) {
-      setEmail(userProfile[0].email);
+      setEmail(userProfile[1].email);
     }
   }, [userProfile, setEmail]);
 
@@ -148,6 +148,8 @@ const Review = ({ review }, setReviews) => {
           {desc || review.reviewsDescription}
         </div>
         <div className="reviewsDate">
+          created on:
+          {' '}
           {review.dateCreated.slice(0, 10)}
         </div>
         <button type="button" className="btnDummy">Submit</button>
@@ -173,8 +175,9 @@ const Review = ({ review }, setReviews) => {
           <div className="reviewsDescription" contentEditable suppressContentEditableWarning onInput={preventCursorDisappearHandler}>
             {desc || review.reviewsDescription}
           </div>
-
           <div className="reviewsDate">
+            created on:
+            {' '}
             {review.dateCreated.slice(0, 10)}
           </div>
           <button type="button" className="btnSubmitEditReview" onClick={(e) => (submitEditHandler(e))}>Submit</button>
@@ -193,6 +196,8 @@ const Review = ({ review }, setReviews) => {
           {review.reviewsDescription}
         </div>
         <div className="reviewsDate">
+          created on:
+          {' '}
           {review.dateCreated.slice(0, 10)}
         </div>
         <button type="button" className="btnDummy" onClick={(e) => (submitEditHandler(e))}>Submit</button>
