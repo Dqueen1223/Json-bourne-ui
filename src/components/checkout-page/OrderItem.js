@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
 import reactDom from 'react-dom';
-import ConfirmDelete from './ConfirmDelete';
+import ConfirmModal from './ConfirmModal';
 import styles from './OrderItem.module.css';
 import { toPrice } from './ReviewOrderWidgetService';
 import { useCart } from './CartContext';
@@ -83,9 +83,10 @@ const OrderItem = ({
   return (
     <div className={styles.orderItem}>
       {deleteConfirmationModal && reactDom.createPortal(
-        <ConfirmDelete
-          setConfirmDelete={setConfirmDelete}
+        <ConfirmModal
+          setConfirm={setConfirmDelete}
           setDeleteConfirmationModal={setDeleteConfirmationModal}
+          confirmMessage="Are you sure you want to remove this item from your cart?"
         />,
         document.getElementById('root')
       )}
