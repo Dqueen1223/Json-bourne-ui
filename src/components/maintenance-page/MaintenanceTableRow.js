@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import reactDom from 'react-dom';
 import { FaPencilAlt, FaCheck } from 'react-icons/fa';
 import Delete from '@material-ui/icons/Delete';
@@ -6,6 +6,7 @@ import validateCreateProductForm from '../create-product/forms/FormValidation';
 import UpdateProducts from './MaintenancePageUpdateService';
 import GenerateErrorMessages from './MaintenancePageGenerateErrors';
 import MaintenanceDeleteModal, { MaintenanceDeleteConfirmModal } from './MaintenanceDeleteModal';
+import { checkForPurchases } from './MaintenancePageDeleteService';
 
 const MaintenanceTableRow = ({ product, setDeletedProduct, deleteButton }) => {
   const [editable, setEditable] = useState(null);
@@ -15,6 +16,27 @@ const MaintenanceTableRow = ({ product, setDeletedProduct, deleteButton }) => {
   const [setApiError] = useState(false);
   const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(null);
   const [confirmModal, setConfirmModal] = useState(null);
+  const [displayModal, setDisplayModal] = useState(false);
+  const [hasPurchases, setHasPurchases] = useState(null);
+
+  useEffect(() => {
+    if (displayModal) {
+      checkForPurchases(product, setHasPurchases, setApiError);
+
+      setDisplayModal(false);
+    }
+  }, [displayModal, product, setApiError]);
+
+  useEffect(() => {
+    if (hasPurchases !== null) {
+      if (hasPurchases) {
+        setDeleteModalIsOpen(true);
+      } else {
+        setConfirmModal(true);
+      }
+      setHasPurchases(null);
+    }
+  }, [hasPurchases]);
 
   const resetToDefaultTableData = () => {
     if (document.getElementById('errors')) {
@@ -261,7 +283,7 @@ const MaintenanceTableRow = ({ product, setDeletedProduct, deleteButton }) => {
         {deleteModalIsOpen && reactDom.createPortal(
           <MaintenanceDeleteModal
             product={product}
-            closeModal={setDeleteModalIsOpen(product)}
+            closeModal={setDeleteModalIsOpen}
           />,
           document.getElementById('root')
         )}
@@ -269,6 +291,7 @@ const MaintenanceTableRow = ({ product, setDeletedProduct, deleteButton }) => {
           <MaintenanceDeleteConfirmModal
             product={product}
             closeModal={setConfirmModal}
+            setDeletedProduct={setDeletedProduct}
           />,
           document.getElementById('root')
         )}
@@ -278,8 +301,8 @@ const MaintenanceTableRow = ({ product, setDeletedProduct, deleteButton }) => {
         <button
           type="button"
           onClick={() => {
-            setConfirmModal(product);
-            setDeletedProduct(product);
+            setDisplayModal(true);
+          //  setDeletedProduct(product);
           }}
           className="deleteButton"
         >

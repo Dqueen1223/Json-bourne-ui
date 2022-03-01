@@ -22,7 +22,7 @@ export default async function deleteProducts(product, setApiError, setDeleteModa
     .then((resObj) => {
       if (resObj.errorMessage === `Product with id: ${product.id} has purchases associated with it.`) {
         setDeleteModalIsOpen(product);
-        return product.name;
+        toast.error(resObj.errorMessage);
       }
       return resObj;
     })
@@ -47,6 +47,20 @@ export async function checkForReviews(setDeleteButton, setApiError) {
       throw new Error(Constants.API_ERROR);
     })
     .then(setDeleteButton)
+    .catch(() => {
+      setApiError(true);
+    });
+}
+
+export async function checkForPurchases(product, setHasPurchases, setApiError) {
+  await HttpHelper(`/products/purchased/${product.id}`, 'GET')
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      }
+      throw new Error(Constants.API_ERROR);
+    })
+    .then(setHasPurchases)
     .catch(() => {
       setApiError(true);
     });
