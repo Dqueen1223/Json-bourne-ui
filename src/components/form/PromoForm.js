@@ -1,32 +1,24 @@
 import React from 'react';
-import { styles } from './DeliveryAddress.module.css';
+import { styles } from './FormItem.module.css';
+import decideClassName from './PromoFormHelper';
 
 const PromoItem = ({
-  onChange, value, id, label, placeholder, type, error, success
+  onChange, onBlur, value, id, label, placeholder, type, error, success
 }) => (
   <div>
     <label className={styles.label} htmlFor={id}>
       {label}
       <div>
         <input
-          className={error ? styles.inputError : styles.input}
+          className={decideClassName(error, success)}
           id={id}
+          onBlur={onBlur}
           onChange={onChange}
           placeholder={placeholder}
           type={type}
           value={value}
         />
         )
-        {success && !error && (
-          <input
-            className={styles.success}
-            id={id}
-            onChange={onChange}
-            placeholder={placeholder}
-            type={type}
-            value={value}
-          />
-        )}
         {!error && (<p className={styles.paragraph} />)}
         {error && (
         <p className={styles.error_item}>

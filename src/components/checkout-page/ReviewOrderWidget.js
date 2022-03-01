@@ -1,10 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { useCart } from './CartContext';
 import OrderItem from './OrderItem';
 import { getSubtotal } from './ReviewOrderWidgetService';
 import styles from './ReviewOrderWidget.module.css';
 import cartLogic from './cartLogic';
+import PromoItem from '../form/PromoForm';
+import getPromoDiscount from './PromoFormService';
 
 /**
  * @name ReviewOrderWidget
@@ -21,6 +24,17 @@ const ReviewOrderWidget = ({ setTotal, shippingFee }) => {
       + Number(shippingFee)).toFixed(2);
     setTotal(Number(totalVal));
     return totalVal;
+  };
+  const [promoValue, setPromoValue] = React.useState('');
+  const [error, setError] = React.useState('');
+  const [success, setSuccess] = React.useState('');
+  const [discountObject, setDiscountObject] = React.useState({});
+  const onPromoChange = (e) => {
+    setPromoValue(e.target.value);
+  };
+  const onPromoBlur = () => {
+    setDiscountObject(getPromoDiscount(promoValue, setError, setSuccess));
+    toast.error('There was a problem accessing the database');
   };
   return (
     <>
@@ -52,6 +66,19 @@ const ReviewOrderWidget = ({ setTotal, shippingFee }) => {
         </div>
         <div className={styles.price}>
           <p>{getSubtotal(products) }</p>
+        </div>
+        <div>
+          <PromoItem
+            onChange={onPromoChange}
+            onBlur={onPromoBlur}
+            value={promoValue}
+            id="promo"
+            label="Promo code"
+            placeholder="Put promo code here!"
+            type="text"
+            error={error}
+            success={success}
+          />
         </div>
         <div>
           <p>
