@@ -54,6 +54,14 @@ const MaintenancePage = () => {
     fetchProducts(setProducts, setApiError);
   }, []);
 
+  const checkReleaseDate = (product) => {
+    const today = new Date();
+    const releaseDate = new Date(product.releaseDate);
+    if (releaseDate.getTime() > today.getTime()) {
+      setReleaseEditiable(null);
+      setReleaseEditiable('true');
+    }
+  };
   const clickEditMaitenance = (e, product) => {
     e.preventDefault();
     if (editable != null) {
@@ -61,17 +69,10 @@ const MaintenancePage = () => {
     }
     setReleaseEditiable('false');
     setEditable(product.id);
-    const today = new Date();
-    const releaseDate = new Date(
-      product.releaseDate
-    );
-    if (releaseDate.getTime() > today.getTime()) {
-      setReleaseEditiable(null);
-      setReleaseEditiable('true');
-    }
+    checkReleaseDate(product);
+    setUpdatedProduct(product);
   };
-  const cancelEditing = (e) => {
-    e.preventDefault();
+  const cancelEditing = () => {
     fetchProducts(setProducts, setApiError);
     setEditable(null);
     setErrors({});
@@ -101,54 +102,21 @@ const MaintenancePage = () => {
     </tr>
   );
 
+  const updateProduct = (e) => {
+    setUpdatedProduct({ ...updatedProduct, [e.target.id]: e.target.innerHTML });
+  };
+
   const submitEdit = (e, product) => {
     e.preventDefault();
     setDisplayErrors(null);
-    const name = document.getElementById('name');
-    const sku = document.getElementById('sku');
-    const description = document.getElementById('description');
-    const demographic = document.getElementById('demographic');
-    const category = document.getElementById('category');
-    const type = document.getElementById('type');
-    const releaseDate = document.getElementById('releaseDate');
-    const primaryColorCode = document.getElementById('primaryColorCode');
-    const secondaryColorCode = document.getElementById('secondaryColorCode');
-    const styleNumber = document.getElementById('styleNumber');
-    const globalProductCode = document.getElementById('globalProductCode');
-    let active = document.getElementById('activity');
-    const brand = document.getElementById('brand');
-    const imageSrc = document.getElementById('imageSrc');
-    const price = document.getElementById('price');
-    const material = document.getElementById('material');
-    const quantity = document.getElementById('quantity');
-    const submitedProduct = {
-      id: product.id,
-      name: name.innerHTML,
-      sku: sku.innerHTML,
-      description: description.innerHTML,
-      demographic: demographic.value,
-      category: category.innerHTML,
-      type: type.innerHTML,
-      releaseDate: releaseDate.innerHTML,
-      primaryColorCode: primaryColorCode.innerHTML,
-      secondaryColorCode: secondaryColorCode.innerHTML,
-      styleNumber: styleNumber.innerHTML,
-      globalProductCode: globalProductCode.innerHTML,
-      active: active.value,
-      brand: brand.innerHTML,
-      imageSrc: imageSrc.innerHTML,
-      material: material.innerHTML,
-      price: price.innerHTML,
-      quantity: quantity.innerHTML
-    };
-    const idList = Object.keys(submitedProduct);
-    const errorList = validateCreateProductForm(submitedProduct, idList);
+    const idList = Object.keys(updatedProduct);
+    const errorList = validateCreateProductForm(updatedProduct, idList);
     if (
-      !releaseDate.innerHTML.match(
+      !updatedProduct.releaseDate.match(
         /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])T\d{2}:\d{2}:\d{2}$/
       )
     ) {
-      errorList.releaseDate = 'Release Date must match the format of YYYY-MM-DDT00:00:00';
+      errorList.releaseDate = 'Release Date must match the format of YYYY-MM-DD';
     }
     for (let i = 0; i < idList.length; i += 1) {
       const id = idList[i];
@@ -157,33 +125,9 @@ const MaintenancePage = () => {
       }
     }
     setErrors(errors);
-    if (active.value === 'true') {
-      active = true;
-    } if (active.value === 'false') {
-      active = false;
-    }
-    const newProduct = {
-      id: product.id,
-      name: name.innerHTML,
-      sku: sku.innerHTML,
-      description: description.innerHTML,
-      demographic: demographic.value,
-      category: category.innerHTML,
-      type: type.innerHTML,
-      releaseDate: releaseDate.innerHTML,
-      primaryColorCode: primaryColorCode.innerHTML,
-      secondaryColorCode: secondaryColorCode.innerHTML,
-      styleNumber: styleNumber.innerHTML,
-      globalProductCode: globalProductCode.innerHTML,
-      active,
-      brand: brand.innerHTML,
-      imageSrc: imageSrc.innerHTML,
-      material: material.innerHTML,
-      price: Number(price.innerHTML),
-      quantity: Number(quantity.innerHTML)
-    };
+
     if (Object.keys(errors).length === 0) {
-      UpdateProducts(newProduct, setApiError);
+      UpdateProducts(updatedProduct, setApiError);
       setEditable(null);
       fetchProducts(setProducts);
     } else {
@@ -211,7 +155,7 @@ const MaintenancePage = () => {
           </button>
           <button
             type="button"
-            onClick={(e) => cancelEditing(e, product)}
+            onClick={() => cancelEditing(product)}
             className="Cancel"
             id="X"
           >
@@ -219,21 +163,32 @@ const MaintenancePage = () => {
           </button>
         </td>
         <td className="ProductCells">{product.id}</td>
-        <td className="ProductCells editable" contentEditable="true" id="name">
+        <td
+          className="ProductCells editable"
+          contentEditable="true"
+          id="name"
+          onInput={(e) => updateProduct(e)}
+        >
           {product.name}
         </td>
-        <td className="ProductCells editable" contentEditable="true" id="sku">
+        <td
+          className="ProductCells editable"
+          contentEditable="true"
+          id="sku"
+          onInput={(e) => updateProduct(e)}
+        >
           {product.sku}
         </td>
         <td
           className="ProductCells editable"
           contentEditable="true"
           id="description"
+          onInput={(e) => updateProduct(e)}
         >
           {product.description}
         </td>
         <td className="ProductCells editable" contentEditable="true">
-          <select id="demographic">
+          <select id="demographic" onSelect={(e) => updateProduct(e)}>
             <option value={product.demographic}>{product.demographic}</option>
             <option value="Men">Men</option>
             <option value="Women">Women</option>
@@ -244,23 +199,31 @@ const MaintenancePage = () => {
           className="ProductCells editable"
           contentEditable="true"
           id="category"
+          onInput={(e) => updateProduct(e)}
         >
           {product.category}
         </td>
-        <td className="ProductCells editable" contentEditable="true" id="type">
+        <td
+          className="ProductCells editable"
+          contentEditable="true"
+          id="type"
+          onInput={(e) => updateProduct(e)}
+        >
           {product.type}
         </td>
         <td
           className="ProductCells"
           contentEditable={releaseEditable}
           id="releaseDate"
+          onInput={(e) => updateProduct(e)}
         >
-          {product.releaseDate}
+          {product.releaseDate.slice(0, 10)}
         </td>
         <td
           className="ProductCells editable"
           contentEditable="true"
           id="primaryColorCode"
+          onInput={(e) => updateProduct(e)}
         >
           {product.primaryColorCode}
         </td>
@@ -268,6 +231,7 @@ const MaintenancePage = () => {
           className="ProductCells editable"
           contentEditable="true"
           id="secondaryColorCode"
+          onInput={(e) => updateProduct(e)}
         >
           {product.secondaryColorCode}
         </td>
@@ -275,14 +239,15 @@ const MaintenancePage = () => {
           className="ProductCells editable"
           contentEditable="true"
           id="styleNumber"
+          onInput={(e) => updateProduct(e)}
         >
-          {onclick}
           {product.styleNumber}
         </td>
         <td
           className="ProductCells editable"
           contentEditable="true"
           id="globalProductCode"
+          onInput={(e) => updateProduct(e)}
         >
           {product.globalProductCode}
         </td>
@@ -299,13 +264,19 @@ const MaintenancePage = () => {
             <option value="false">false</option>
           </select>
         </td>
-        <td className="ProductCells editable" contentEditable="true" id="brand">
+        <td
+          className="ProductCells editable"
+          contentEditable="true"
+          id="brand"
+          onInput={(e) => updateProduct(e)}
+        >
           {product.brand}
         </td>
         <td
           className="ProductCells editable"
           contentEditable="true"
           id="imageSrc"
+          onInput={(e) => updateProduct(e)}
         >
           {product.imageSrc}
         </td>
@@ -313,16 +284,23 @@ const MaintenancePage = () => {
           className="ProductCells editable"
           contentEditable="true"
           id="material"
+          onInput={(e) => updateProduct(e)}
         >
           {product.material}
         </td>
-        <td className="ProductCells editable" contentEditable="true" id="price">
+        <td
+          className="ProductCells editable"
+          contentEditable="true"
+          id="price"
+          onInput={(e) => updateProduct(e)}
+        >
           {product.price.toFixed(2)}
         </td>
         <td
           className="ProductCells editable"
           contentEditable="true"
           id="quantity"
+          onInput={(e) => updateProduct(e)}
           value={product.quantity}
         >
           {product.quantity}
