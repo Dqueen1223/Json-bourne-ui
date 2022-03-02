@@ -173,6 +173,7 @@ const ProductCard = ({ product, reviews, setReviews }) => {
         />,
         document.getElementById('root')
       )}
+
       <CardHeader
         onClick={() => {
           setModalIsOpen(true);

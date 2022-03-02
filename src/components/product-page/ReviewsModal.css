@@ -71,6 +71,9 @@
 .reviewModalButtons{
     text-align: left;
 }
+.btnSubmitDeleteReview{
+    margin:0 2%;
+}
 .btnSubmitEditReview{
     margin:0 2%;
 }
@@ -101,7 +104,7 @@
     width: 20%;
     margin: 1% 2%;
 }
-.reviewsTitle{
+.reviewsTitle, .reviewsProductName{
     font-size: 140%;
     margin: 2%;
     padding:5px;
