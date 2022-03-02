@@ -27,7 +27,7 @@ td {
 }  
 
 tbody {
-    width: 80vw;
+    width: 79vw;
     height: 35vh;
     overflow: scroll;
     padding: 10vh, 10vw;
@@ -38,7 +38,7 @@ tbody {
     text-align: center;
 }
 .ProductTable{
-    max-width: 95vw;
+    max-width: 89vw;
     max-height: 40vw;
     overflow: scroll;
     align-items: center;
@@ -63,7 +63,7 @@ height:100%;
     cursor:pointer;
 }
 #checkButton{
-    padding: 2px 24px 2px 8px;
+    padding: 2.15px 24px 2.15px 8px;
     position: relative;
     width: 25px;
     top: 3.5px;
@@ -75,7 +75,7 @@ height:100%;
     cursor:pointer;
 }
 #X{
-    padding: 2px 8px 2px 8px;
+    padding: 1.6px 8px 1.6px 8px;
     font-weight: bold;
     font-size: 25px;
     height: 100%;
@@ -115,9 +115,9 @@ height:100%;
     position: static;
 }
 .error{
-    border-width: 1.5px;
+    border-width: 2px;
     height: 34.3px;
-    border-color: red ;
+    border-color: red !important;
 }
 .editable {
     border-width: 1.5px;

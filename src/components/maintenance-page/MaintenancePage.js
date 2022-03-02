@@ -63,7 +63,6 @@ const MaintenancePage = () => {
     }
   };
   const clickEditMaitenance = (e, product) => {
-    e.preventDefault();
     if (editable != null) {
       fetchProducts(setProducts, setApiError);
     }
@@ -103,14 +102,13 @@ const MaintenancePage = () => {
   );
 
   const updateProduct = (e) => {
-    setUpdatedProduct({ ...updatedProduct, [e.target.id]: e.target.innerHTML });
+    setUpdatedProduct({ ...updatedProduct, [e.target.id]: e.target.innerText });
   };
   const updatedProductDropdown = (e) => {
     setUpdatedProduct({ ...updatedProduct, [e.target.id]: e.target.value });
   };
 
-  const submitEdit = (e, product) => {
-    e.preventDefault();
+  const submitEdit = async (e, product) => {
     setDisplayErrors(null);
     if (updatedProduct.active === 'true') {
       updatedProduct.active = true;
@@ -118,8 +116,8 @@ const MaintenancePage = () => {
     const idList = Object.keys(updatedProduct);
     const errorList = validateCreateProductForm(updatedProduct, idList);
     if (
-      !updatedProduct.releaseDate.match(
-        /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])T\d{2}:\d{2}:\d{2}$/
+      !updatedProduct.releaseDate.slice(0, 10).match(
+        /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
       )
     ) {
       errorList.releaseDate = 'Release Date must match the format of YYYY-MM-DD';
@@ -133,13 +131,12 @@ const MaintenancePage = () => {
     setErrors(errors);
 
     if (Object.keys(errors).length === 0) {
-      UpdateProducts(updatedProduct, setApiError);
+      await UpdateProducts(updatedProduct, setApiError);
       setEditable(null);
-      fetchProducts(setProducts);
+      fetchProducts(setProducts, setApiError);
     } else {
       setDisplayErrors([product.id]);
     }
-    console.log(updatedProduct);
   };
 
   const editRow = (product) => (
@@ -174,7 +171,8 @@ const MaintenancePage = () => {
           className={`ProductCells ${errors.name ? 'error' : 'editable'}`}
           contentEditable="true"
           id="name"
-          onInput={(e) => updateProduct(e)}
+          onMouseOut={(e) => updateProduct(e)}
+          onBlur={(e) => updateProduct(e)}
         >
           {product.name}
         </td>
@@ -182,7 +180,8 @@ const MaintenancePage = () => {
           className={`ProductCells ${errors.sku ? 'error' : 'editable'}`}
           contentEditable="true"
           id="sku"
-          onInput={(e) => updateProduct(e)}
+          onMouseOut={(e) => updateProduct(e)}
+          onBlur={(e) => updateProduct(e)}
         >
           {product.sku}
         </td>
@@ -192,11 +191,12 @@ const MaintenancePage = () => {
           }`}
           contentEditable="true"
           id="description"
-          onInput={(e) => updateProduct(e)}
+          onMouseOut={(e) => updateProduct(e)}
+          onBlur={(e) => updateProduct(e)}
         >
           {product.description}
         </td>
-        <td className="ProductCells editable" contentEditable="true">
+        <td className="ProductCells editable">
           <select id="demographic" onChange={(e) => updatedProductDropdown(e)}>
             <option value={product.demographic}>{product.demographic}</option>
             <option value="Men">Men</option>
@@ -208,7 +208,8 @@ const MaintenancePage = () => {
           className={`ProductCells ${errors.category ? 'error' : 'editable'}`}
           contentEditable="true"
           id="category"
-          onInput={(e) => updateProduct(e)}
+          onMouseOut={(e) => updateProduct(e)}
+          onBlur={(e) => updateProduct(e)}
         >
           {product.category}
         </td>
@@ -216,7 +217,8 @@ const MaintenancePage = () => {
           className={`ProductCells ${errors.type ? 'error' : 'editable'}`}
           contentEditable="true"
           id="type"
-          onInput={(e) => updateProduct(e)}
+          onMouseOut={(e) => updateProduct(e)}
+          onBlur={(e) => updateProduct(e)}
         >
           {product.type}
         </td>
@@ -224,7 +226,8 @@ const MaintenancePage = () => {
           className="ProductCells"
           contentEditable={releaseEditable}
           id="releaseDate"
-          onInput={(e) => updateProduct(e)}
+          onMouseOut={(e) => updateProduct(e)}
+          onBlur={(e) => updateProduct(e)}
         >
           {product.releaseDate.slice(0, 10)}
         </td>
@@ -234,7 +237,8 @@ const MaintenancePage = () => {
           }`}
           contentEditable="true"
           id="primaryColorCode"
-          onInput={(e) => updateProduct(e)}
+          onMouseOut={(e) => updateProduct(e)}
+          onBlur={(e) => updateProduct(e)}
         >
           {product.primaryColorCode}
         </td>
@@ -244,7 +248,8 @@ const MaintenancePage = () => {
           }`}
           contentEditable="true"
           id="secondaryColorCode"
-          onInput={(e) => updateProduct(e)}
+          onMouseOut={(e) => updateProduct(e)}
+          onBlur={(e) => updateProduct(e)}
         >
           {product.secondaryColorCode}
         </td>
@@ -254,7 +259,8 @@ const MaintenancePage = () => {
           }`}
           contentEditable="true"
           id="styleNumber"
-          onInput={(e) => updateProduct(e)}
+          onMouseOut={(e) => updateProduct(e)}
+          onBlur={(e) => updateProduct(e)}
         >
           {product.styleNumber}
         </td>
@@ -264,14 +270,12 @@ const MaintenancePage = () => {
           }`}
           contentEditable="true"
           id="globalProductCode"
-          onInput={(e) => updateProduct(e)}
+          onMouseOut={(e) => updateProduct(e)}
+          onBlur={(e) => updateProduct(e)}
         >
           {product.globalProductCode}
         </td>
-        <td
-          className={`ProductCells ${errors.active ? 'error' : 'editable'}`}
-          contentEditable="true"
-        >
+        <td className={`ProductCells ${errors.active ? 'error' : 'editable'}`}>
           <select id="active" onChange={(e) => updatedProductDropdown(e)}>
             <option value={product.active.toString()}>
               {product.active.toString()}
@@ -284,7 +288,8 @@ const MaintenancePage = () => {
           className={`ProductCells ${errors.brand ? 'error' : 'editable'}`}
           contentEditable="true"
           id="brand"
-          onInput={(e) => updateProduct(e)}
+          onMouseOut={(e) => updateProduct(e)}
+          onBlur={(e) => updateProduct(e)}
         >
           {product.brand}
         </td>
@@ -292,7 +297,8 @@ const MaintenancePage = () => {
           className={`ProductCells ${errors.imageSrc ? 'error' : 'editable'}`}
           contentEditable="true"
           id="imageSrc"
-          onInput={(e) => updateProduct(e)}
+          onMouseOut={(e) => updateProduct(e)}
+          onBlur={(e) => updateProduct(e)}
         >
           {product.imageSrc}
         </td>
@@ -300,7 +306,8 @@ const MaintenancePage = () => {
           className={`ProductCells ${errors.material ? 'error' : 'editable'}`}
           contentEditable="true"
           id="material"
-          onInput={(e) => updateProduct(e)}
+          onMouseOut={(e) => updateProduct(e)}
+          onBlur={(e) => updateProduct(e)}
         >
           {product.material}
         </td>
@@ -308,7 +315,8 @@ const MaintenancePage = () => {
           className={`ProductCells ${errors.price ? 'error' : 'editable'}`}
           contentEditable="true"
           id="price"
-          onInput={(e) => updateProduct(e)}
+          onMouseOut={(e) => updateProduct(e)}
+          onBlur={(e) => updateProduct(e)}
         >
           {product.price.toFixed(2)}
         </td>
@@ -316,7 +324,8 @@ const MaintenancePage = () => {
           className={`ProductCells ${errors.quantity ? 'error' : 'editable'}`}
           contentEditable="true"
           id="quantity"
-          onInput={(e) => updateProduct(e)}
+          onMouseOut={(e) => updateProduct(e)}
+          onBlur={(e) => updateProduct(e)}
           value={product.quantity}
         >
           {product.quantity}
