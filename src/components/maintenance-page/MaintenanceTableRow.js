@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import reactDom from 'react-dom';
-import { FaPencilAlt } from 'react-icons/fa';
-import Delete from '@material-ui/icons/Delete';
 import validateCreateProductForm from '../create-product/forms/FormValidation';
 import UpdateProducts from './MaintenancePageUpdateService';
-import MaintenanceDeleteModal, { MaintenanceDeleteConfirmModal } from './MaintenanceDeleteModal';
 import { checkForPurchases } from './MaintenancePageDeleteService';
 import './MaintenancePage.css';
 import fetchProducts from './MaintenancePageService';
 import EditRow from './MaintenanceEditTableRow';
+import ViewRow from './MaintenanceViewTableRow';
 
 const MaintenanceTableRow = (
   {
@@ -128,70 +125,70 @@ const MaintenanceTableRow = (
     }
   };
 
-  const viewRow = () => (
-    <tr key={product.id} className="ProductCells">
-      <td className="ProductCells">
-        {deleteModalIsOpen && reactDom.createPortal(
-          <MaintenanceDeleteModal
-            product={product}
-            closeModal={setDeleteModalIsOpen}
-          />,
-          document.getElementById('root')
-        )}
-        {confirmModal && reactDom.createPortal(
-          <MaintenanceDeleteConfirmModal
-            product={product}
-            closeModal={setConfirmModal}
-            setDeletedProduct={setDeletedProduct}
-          />,
-          document.getElementById('root')
-        )}
-        {!deleteButton.includes(product.id)
+  // const viewRow = () => (
+  //   <tr key={product.id} className="ProductCells">
+  //     <td className="ProductCells">
+  //       {deleteModalIsOpen && reactDom.createPortal(
+  //         <MaintenanceDeleteModal
+  //           product={product}
+  //           closeModal={setDeleteModalIsOpen}
+  //         />,
+  //         document.getElementById('root')
+  //       )}
+  //       {confirmModal && reactDom.createPortal(
+  //         <MaintenanceDeleteConfirmModal
+  //           product={product}
+  //           closeModal={setConfirmModal}
+  //           setDeletedProduct={setDeletedProduct}
+  //         />,
+  //         document.getElementById('root')
+  //       )}
+  //       {!deleteButton.includes(product.id)
 
-        && (
-        <button
-          type="button"
-          onClick={() => {
-            setDisplayModal(true);
-          }}
-          className="deleteButton"
-        >
-          <Delete />
+  //       && (
+  //       <button
+  //         type="button"
+  //         onClick={() => {
+  //           setDisplayModal(true);
+  //         }}
+  //         className="deleteButton"
+  //       >
+  //         <Delete />
 
-        </button>
-        )}
-      </td>
-      <td className="ProductCells">
-        <span>
-          <button
-            type="button"
-            onClick={(e) => clickEditMaitenance(e, product)}
-            className="editbutton"
-          >
-            <FaPencilAlt className="editIcon" alt="editIcon" />
-          </button>
-        </span>
-      </td>
-      <td className="ProductCells">{product.id}</td>
-      <td className="ProductCells">{product.name}</td>
-      <td className="ProductCells">{product.sku}</td>
-      <td className="ProductCells">{product.description}</td>
-      <td className="ProductCells">{product.demographic}</td>
-      <td className="ProductCells">{product.category}</td>
-      <td className="ProductCells">{product.type}</td>
-      <td className="ProductCells">{product.releaseDate.slice(0, 10)}</td>
-      <td className="ProductCells">{product.primaryColorCode}</td>
-      <td className="ProductCells">{product.secondaryColorCode}</td>
-      <td className="ProductCells">{product.styleNumber}</td>
-      <td className="ProductCells">{product.globalProductCode}</td>
-      <td className="ProductCells">{String(product.active)}</td>
-      <td className="ProductCells">{product.brand}</td>
-      <td className="ProductCells">{product.imageSrc}</td>
-      <td className="ProductCells">{product.material}</td>
-      <td className="ProductCells">{product.price.toFixed(2)}</td>
-      <td className="ProductCells">{product.quantity}</td>
-    </tr>
-  );
+  //       </button>
+  //       )}
+  //     </td>
+  //     <td className="ProductCells">
+  //       <span>
+  //         <button
+  //           type="button"
+  //           onClick={(e) => clickEditMaitenance(e, product)}
+  //           className="editbutton"
+  //         >
+  //           <FaPencilAlt className="editIcon" alt="editIcon" />
+  //         </button>
+  //       </span>
+  //     </td>
+  //     <td className="ProductCells">{product.id}</td>
+  //     <td className="ProductCells">{product.name}</td>
+  //     <td className="ProductCells">{product.sku}</td>
+  //     <td className="ProductCells">{product.description}</td>
+  //     <td className="ProductCells">{product.demographic}</td>
+  //     <td className="ProductCells">{product.category}</td>
+  //     <td className="ProductCells">{product.type}</td>
+  //     <td className="ProductCells">{product.releaseDate.slice(0, 10)}</td>
+  //     <td className="ProductCells">{product.primaryColorCode}</td>
+  //     <td className="ProductCells">{product.secondaryColorCode}</td>
+  //     <td className="ProductCells">{product.styleNumber}</td>
+  //     <td className="ProductCells">{product.globalProductCode}</td>
+  //     <td className="ProductCells">{String(product.active)}</td>
+  //     <td className="ProductCells">{product.brand}</td>
+  //     <td className="ProductCells">{product.imageSrc}</td>
+  //     <td className="ProductCells">{product.material}</td>
+  //     <td className="ProductCells">{product.price.toFixed(2)}</td>
+  //     <td className="ProductCells">{product.quantity}</td>
+  //   </tr>
+  // );
 
   const bothRows = () => (
     <>
@@ -223,7 +220,19 @@ const MaintenanceTableRow = (
       <>
         {editable === product.id || displayErrors === product.id
           ? bothRows(product)
-          : viewRow(product)}
+          : (
+            <ViewRow
+              product={product}
+              setDeletedProduct={setDeletedProduct}
+              deleteButton={deleteButton}
+              setDeleteModalIsOpen={setDeleteModalIsOpen}
+              deleteModalIsOpen={deleteModalIsOpen}
+              setConfirmModal={setConfirmModal}
+              confirmModal={confirmModal}
+              setDisplayModal={setDisplayModal}
+              clickEditMaitenance={clickEditMaitenance}
+            />
+          )}
       </>
     </>
   );
