@@ -83,15 +83,6 @@ const CreateProductPage = () => {
         />
       </form>
       <div className={styles.buttons}>
-        <button
-          className={styles.submitButton}
-          onClick={handleSubmit}
-          type="button"
-          data-testid="submit"
-          label="submit"
-        >
-          Submit
-        </button>
         <Link to="/maintenance">
           <button
             className={styles.cancelButton}
@@ -102,6 +93,15 @@ const CreateProductPage = () => {
             Cancel
           </button>
         </Link>
+        <button
+          className={styles.submitButton}
+          onClick={handleSubmit}
+          type="button"
+          data-testid="submit"
+          label="submit"
+        >
+          Submit
+        </button>
       </div>
     </>
   );

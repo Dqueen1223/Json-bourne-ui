@@ -22,7 +22,6 @@ const CheckoutPage = () => {
   const {
     state: { products }
   } = useCart();
-
   const [billingData, setBillingData] = React.useState({});
 
   const [deliveryData, setDeliveryData] = React.useState({});
@@ -37,6 +36,8 @@ const CheckoutPage = () => {
   React.useEffect(() => {
     if (Number(getSubtotal(products).substring(1)) > 0.00) {
       getBillingRate(deliveryData.state, setShippingFeeState);
+    } else {
+      setShippingFeeState(0.00);
     }
   }, [deliveryData.state, products]);
   React.useEffect(() => {
