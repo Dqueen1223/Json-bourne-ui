@@ -23,7 +23,7 @@ const Review = ({ review, email } /* , setReviews */) => {
   const [apiError, setApiError] = React.useState(false);
   const [currentRating] = React.useState(<Rating name="half-rating-read" defaultValue={review.rating} precision={review.rating} readOnly />);
   const confirm = useConfirm();
-  console.log(`review id ${review.id} product id ${review.productId}`);
+  // console.log(`review id ${review.id} product id ${review.productId}`);
   /* const {
     state: { userProfile }
   } = useProfile(); */

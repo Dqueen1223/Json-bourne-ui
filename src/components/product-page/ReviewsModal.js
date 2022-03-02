@@ -154,6 +154,7 @@ const ReviewsModal = ({
           <div className="reviewsModal-body">
             {/*  mapping the reviews to each product based off of the product id. */}
             {reviews && activeReviews.map((review) => (
+              // console.log(review.id, product.id),
               <div key={review.id}>
                 <Review
                   review={review}
