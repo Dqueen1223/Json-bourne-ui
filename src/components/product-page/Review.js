@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import Delete from '@material-ui/icons/Delete';
 import { useConfirm } from 'material-ui-confirm';
 import Rating from '@mui/material/Rating';
-import { updateReview, deleteReview } from './ReviewService';
+import { /* updateReview, */ deleteReview } from './ReviewService';
 // import { useProfile } from '../Profile/ProfileContext';
 // import BasicRating from './ReviewsStars';
 
@@ -13,26 +13,19 @@ import { updateReview, deleteReview } from './ReviewService';
  * @description Displays the review
  * @return component
  */
-const Review = ({ review, email, setUpdateReviews }) => {
+const Review = ({ review, email } /* , setReviews */) => {
   const [isEdit, setIsEdit] = React.useState(false);
   const [isDeleted, setIsDeleted] = React.useState(false);
   // const [value, setValue] = React.useState();
   const [desc, setDesc] = React.useState();
-  const [title, setTitle] = React.useState(review.title);
+  const [title, setTitle] = React.useState();
   const [stars, setStars] = React.useState(review.rating);
   const [apiError, setApiError] = React.useState(false);
-  const [currentRating, setCurrentRating] = React.useState(<Rating name="half-rating-read" defaultValue={stars} precision={stars} readOnly />);
+  const [currentRating] = React.useState(<Rating name="half-rating-read" defaultValue={review.rating} precision={review.rating} readOnly />);
   const confirm = useConfirm();
   console.log(`review id ${review.id} product id ${review.productId}`);
   /* const {
     state: { userProfile }
-  } = useProfile();
-
-  useEffect(() => {
-    if (userProfile.length > 1) {
-      setEmail(userProfile[1].email);
-    }
-  }, [userProfile, setEmail]);
   } = useProfile(); */
 
   useEffect(() => {
@@ -49,17 +42,17 @@ const Review = ({ review, email, setUpdateReviews }) => {
     const reviewElement = e.target.closest('.reviewsOfProduct');
     const reviewTitle = reviewElement.querySelector('.reviewsTitle').innerText.trim();
     const description = reviewElement.querySelector('.reviewsDescription').innerText.trim();
-    // const starRating = Number(reviewElement.querySelector('.starRating').innerText.trim());
-    const updatedReview = {
+    const starRating = Number(reviewElement.querySelector('.starRating').innerText.trim());
+    /* const updatedReview = {
       id: review.id,
-      rating: stars,
+      rating: starRating,
       title: reviewTitle,
       reviewsDescription: description,
       email: review.email,
       productId: review.productId,
       uerId: review.userId,
       dateCreated: review.dateCreated
-    };
+    }; */
     if (reviewTitle === '') {
       toast.info('title cannot be empty');
       reviewElement.querySelector('.reviewsTitle').focus();
@@ -82,33 +75,20 @@ const Review = ({ review, email, setUpdateReviews }) => {
     }
     setTitle(reviewTitle);
     setDesc(description);
-    setCurrentRating(<Rating name="half-rating-read" defaultValue={stars} precision={stars} readOnly />);
-    updateReview(setUpdateReviews, setApiError, updatedReview);
-    setUpdateReviews(true);
+    setStars(starRating);
+    // updateReview(setReviews, setApiError, updatedReview);
     const btnSubmit = reviewElement.querySelector('.btnSubmitEditReview');
     btnSubmit.style.visibility = 'hidden';
     setIsEdit(false);
   };
 
   const preventCursorDisappearHandler = (e) => {
-    console.log(e.target.innerText.length);
-    setTitle(e.target.innerText);
     const input = e.target.innerText;
     if (input === '') {
       e.target.innerText = ' ';
     }
   };
-  const showTitleErrors = (e) => {
-    if (Number(50 - e.target.innerText.length) < 0) {
-      e.target.parentNode.children[1].classList.remove('hidden');
-      e.target.parentNode.children[0].classList.add('hidden');
-    } else if (Number(50 - e.target.innerText.length) < 8) {
-      e.target.parentNode.children[0].classList.remove('hidden');
-    } else {
-      e.target.parentNode.children[0].classList.add('hidden');
-      e.target.parentNode.children[1].classList.add('hidden');
-    }
-  };
+
   /* const deleteHandler = () => {
     setIsDeleted(!isDeleted);
   }; */
@@ -177,18 +157,8 @@ const Review = ({ review, email, setUpdateReviews }) => {
       {(review.email === email) && isEdit && !isDeleted && (
         <div className="reviewsOfProduct">
           <div className="titleContainer">
-            <div className="titleErrorContainer hidden">
-              Remaining Characters:&nbsp;
-              {Number(50 - title.length)}
-            </div>
-            <div className="titleErrorContainer red hidden">
-              Character limit exeeded:&nbsp;
-              { title.length }
-              {' '}
-              of 50 used
-            </div>
-            <div className="reviewsTitle" contentEditable suppressContentEditableWarning onInput={(e) => { preventCursorDisappearHandler(e); showTitleErrors(e); }}>
-              { review.title }
+            <div className="reviewsTitle" contentEditable suppressContentEditableWarning onInput={preventCursorDisappearHandler}>
+              { title || review.title }
             </div>
             <div>
               <span>
@@ -214,7 +184,7 @@ const Review = ({ review, email, setUpdateReviews }) => {
             {' '}
             {review.dateCreated.slice(0, 10)}
           </div>
-          <button type="button" className="btnSubmitEditReview" onClick={submitEditHandler}>Submit</button>
+          <button type="button" className="btnSubmitEditReview" onClick={(e) => (submitEditHandler(e))}>Submit</button>
         </div>
       )}
       {(review.email === email) && isDeleted && (

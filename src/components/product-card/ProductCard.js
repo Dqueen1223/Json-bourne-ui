@@ -64,10 +64,15 @@ const ProductCard = ({ product, reviews, setUpdateReviews }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [reviewsModal, setReviewsModal] = useState(false);
   const [showCreateReview, setReviewFormToggle] = useState(false);
-  const [activeReviews] = React.useState(reviews.filter((r) => (r.productId === product.id)));
+  let activeReviews = [];
+  if (reviews !== true) {
+    activeReviews = reviews.filter((r) => (r.productId === product.id));
+  }
+  // const [activeReviews] = React.useState(reviews.filter((r) => (r.productId === product.id)));
   const {
     state: { products }
   } = useCart();
+
   let activeReviewsLength = 0;
   let currentCount = 0;
   if (!activeReviews === false) {
@@ -160,11 +165,12 @@ const ProductCard = ({ product, reviews, setUpdateReviews }) => {
   //   const avg = sum / activeReviews;
   //   console.log(avg, reviews);
   // };
-  const reviewAvg = () => reviews.reduce((a, b) => a + b, 0) / reviews.length;
+  // const reviewAvg = () => reviews.reduce((a, b) => a + b, 0) / reviews.length;
+  // // eslint-disable-next-line max-len
   // eslint-disable-next-line max-len
-  const getAvgRating = reviews.length > 0 ? reviewAvg(reviews.map((review) => review.attributes.rating)) : 5;
-  const avgRating = parseInt(getAvgRating, 10);
-  console.log(avgRating);
+  // const getAvgRating = reviews.length > 0 ? reviewAvg(reviews.map((review) => review.attributes.rating)) : 5;
+  // const avgRating = parseInt(getAvgRating, 10);
+  // console.log(avgRating);
 
   return (
     <Card className={classes.root}>
