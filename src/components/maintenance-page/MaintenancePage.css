@@ -10,7 +10,7 @@ table {
 
 thead, th {
 background-color: #fb8122;
-max-width: 80vw;
+max-width: 90vw;
 max-height: 40vh;
 position: sticky;
 top: 0;
@@ -35,7 +35,7 @@ tbody {
 
 .ProductTable{
     max-width: 95vw;
-    max-height: 40vw;
+    max-height: 62vh;
     overflow: scroll;
     align-items: center;
     margin-left: auto;
@@ -45,7 +45,7 @@ tbody {
     
 }
 .Buttons{
-    margin-left: 2vw;
+    margin-left: 2.5vw;
 }
 .Confirm{
 height: 100%;
@@ -111,4 +111,7 @@ width: 100%;
 #errors{
     color: red;
     font-size: 14px;
+}
+.deleteButton{
+    border-style: none;
 }

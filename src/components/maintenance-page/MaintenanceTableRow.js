@@ -183,6 +183,38 @@ const MaintenanceTableRow = ({ product, setDeletedProduct, deleteButton }) => {
     <>
       <tr key={product.id} className="ProductCells" id="editable">
         <td className="ProductCells">
+          {deleteModalIsOpen && reactDom.createPortal(
+            <MaintenanceDeleteModal
+              product={product}
+              closeModal={setDeleteModalIsOpen}
+            />,
+            document.getElementById('root')
+          )}
+          {confirmModal && reactDom.createPortal(
+            <MaintenanceDeleteConfirmModal
+              product={product}
+              closeModal={setConfirmModal}
+              setDeletedProduct={setDeletedProduct}
+            />,
+            document.getElementById('root')
+          )}
+          {!deleteButton.includes(product.id)
+
+        && (
+        <button
+          type="button"
+          onClick={() => {
+            setDisplayModal(true);
+          //  setDeletedProduct(product);
+          }}
+          className="deleteButton"
+        >
+          <Delete />
+
+        </button>
+        )}
+        </td>
+        <td className="ProductCells">
           <button
             type="submit"
             onClick={(e) => submitEdit(e, product)}
