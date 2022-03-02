@@ -71,6 +71,7 @@ const ProductCard = ({ product, reviews, setReviews }) => {
 
   const onAdd = (e) => {
     e.stopPropagation();
+
     const qtyInCart = getQtyInCart(products, product);
     if (!inventoryAvailable(qtyInCart, product)) return;
     products.forEach((element) => {
@@ -125,6 +126,35 @@ const ProductCard = ({ product, reviews, setReviews }) => {
   //     setReviewFormToggle(true);
   //   }
   // };
+
+  // let ratingSum = 0;
+  // let reviewsFound = 0;
+  // let item = null;
+  // // eslint-disable-next-line no-plusplus
+  // for (let i = 0; i < reviews.length; i++) {
+  //   item = reviews[Rating];
+  //   if (item > 0) {
+  //     ratingSum = item + ratingSum;
+  //     reviewsFound += 1;
+  //   }
+  // }
+  // const averageRating = ratingSum / reviewsFound;
+  // console.log('Average review:', averageRating);
+
+  // const averageRating = (review) => {
+  //   let sum = 0;
+
+  //   for (let i = 0; i < activeReviews; i += 1) {
+  //     sum += (activeReviews[i], 10);
+  //   }
+  //   const avg = sum / activeReviews;
+  //   console.log(avg, reviews);
+  // };
+  const reviewAvg = () => reviews.reduce((a, b) => a + b, 0) / reviews.length;
+  // eslint-disable-next-line max-len
+  const getAvgRating = reviews.length > 0 ? reviewAvg(reviews.map((review) => review.attributes.rating)) : 5;
+  const avgRating = parseInt(getAvgRating, 10);
+  console.log(avgRating);
 
   return (
     <Card className={classes.root}>
@@ -208,13 +238,14 @@ const ProductCard = ({ product, reviews, setReviews }) => {
               Reviews
             </button> */}
             <Rating
+              reviews={reviews}
               onClick={onReview}
               type="button"
               variant="contained"
               className="reviewsProductCardButton"
               name="half-rating-read"
-              defaultValue={2.5}
-              precision={0.5}
+              defaultValue={3}
+              precision={1}
 
             />
           </>

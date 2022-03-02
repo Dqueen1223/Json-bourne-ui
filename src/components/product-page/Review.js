@@ -23,7 +23,7 @@ const Review = ({ review }, setReviews) => {
   } = useProfile();
 
   useEffect(() => {
-    if (userProfile.length > 0) {
+    if (userProfile.length > 1) {
       setEmail(userProfile[1].email);
     }
   }, [userProfile, setEmail]);
