@@ -74,6 +74,10 @@ height:100%;
     outline: none;
     cursor:pointer;
 }
+#errors{
+    color: red;
+    font-size: 14px;
+}
 #X{
     padding: 1.6px 8px 1.6px 8px;
     font-weight: bold;
@@ -120,16 +124,12 @@ height:100%;
     border-color: red !important;
 }
 .editable {
-    border-width: 1.5px;
+    border-width: 2px;
     height: 34.3px;
     border-color: #fb8122 !important;
 }
 .Maintenance{
     margin-top: 100px;
-}
-#errors{
-    color: red;
-    font-size: 14px;
 }
 .deleteButton{
     border-style: none;

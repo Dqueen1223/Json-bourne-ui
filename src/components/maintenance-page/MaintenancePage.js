@@ -41,6 +41,7 @@ const useStyles = makeStyles((theme) => ({
  */
 const MaintenancePage = () => {
   const classes = useStyles();
+  const [editable, setEditable] = useState(null);
   const [apiError, setApiError] = useState(false);
   const [products, setProducts] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -116,6 +117,10 @@ const MaintenancePage = () => {
           <tbody id="tableBody">
             {products.map((product) => (
               <MaintenanceTableRow
+                setEditable={setEditable}
+                editable={editable}
+                setProducts={setProducts}
+                products={products}
                 product={product}
                 setDeletedProduct={setDeletedProduct}
                 deleteButton={deleteButton}
