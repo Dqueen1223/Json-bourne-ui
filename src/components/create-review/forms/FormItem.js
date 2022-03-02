@@ -18,13 +18,22 @@ const FormItem = ({
       <label className={styles.label} htmlFor={id}>
         <div className={styles.labelContents}>
           {label}
+          {(titleCount > 42 && titleCount <= 50) && (
+            <div className={styles.count}>
+              {`Remaining Characters: ${50 - titleCount}`}
+            </div>
+          )}
+          {titleCount > 50 && (
+            <div className={styles.countErrorTitle}>
+              {`Character limit exeeded: ${titleCount} of 50 used`}
+            </div>
+          )}
         </div>
         <div>
           {!error && (
             <input
               className={styles.input}
               id={id}
-              // onBlur={handleErrors}
               onChange={onChange}
               placeholder={placeholder}
               type={type}
@@ -43,9 +52,7 @@ const FormItem = ({
           )}
           {!error && (<p className={styles.paragraph} />)}
           {error && (
-            <p className={styles.error_item}>
-              {`${error}: count ${titleCount}`}
-            </p>
+            <p className={styles.error_item} />
           )}
         </div>
       </label>
