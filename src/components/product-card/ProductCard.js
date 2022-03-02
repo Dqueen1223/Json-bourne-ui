@@ -55,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
  * @param {*} props product
  * @return component
  */
-const ProductCard = ({ product, reviews }) => {
+const ProductCard = ({ product, reviews, setUpdateReviews }) => {
   const classes = useStyles();
   const { dispatch } = useCart();
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -136,6 +136,7 @@ const ProductCard = ({ product, reviews }) => {
           closeModal={setReviewsModal}
           showCreateReview={showCreateReview}
           setReviewFormToggle={setReviewFormToggle}
+          setUpdateReviews={setUpdateReviews}
         />,
         document.getElementById('root')
       )}

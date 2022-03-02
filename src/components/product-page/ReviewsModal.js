@@ -15,7 +15,7 @@ import './ReviewsModal.css';
  */
 
 const ReviewsModal = ({
-  product, closeModal, reviews, showCreateReview, setReviewFormToggle
+  product, closeModal, reviews, showCreateReview, setReviewFormToggle, setUpdateReviews
 }) => {
   // eslint-disable-next-line max-len
   const [newReview, setReviewData] = React.useState('empty');
@@ -157,7 +157,7 @@ const ReviewsModal = ({
               <div key={review.id}>
                 <Review
                   review={review}
-                  // setReviews={setReviews}
+                  setUpdateReviews={setUpdateReviews}
                   email={email}
                 />
               </div>
