@@ -109,6 +109,7 @@
     margin: 2%;
     padding:5px;
     min-width:80px;
+    max-width: 12em;
 }
 .reviewsProductName{
     font-size: 170%;
@@ -217,4 +218,12 @@ input[type=number] {
     left: 5%;
     width: 136px;
 }
-
+.titleErrorContainer{
+    max-width: 5em;
+}
+.hidden{
+    display: none;
+}
+.red{
+    color:red;
+}

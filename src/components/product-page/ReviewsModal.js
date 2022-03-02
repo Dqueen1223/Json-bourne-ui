@@ -5,6 +5,7 @@ import Menu from '@mui/material/Menu';
 import BasicRating from './ReviewsStars';
 import CreateReview from '../create-review/CreateReview';
 import './ReviewsModal.css';
+import Review from './Review';
 
 /**
  * @name ReviewModal
@@ -13,7 +14,7 @@ import './ReviewsModal.css';
  */
 
 const ReviewsModal = ({
-  product, closeModal, reviews, showCreateReview, setReviewFormToggle
+  product, closeModal, reviews, showCreateReview, setReviewFormToggle, setUpdateReviews
 }) => {
   const [newReview, setReviewData] = React.useState('empty');
   const [activeReviews] = React.useState(reviews.filter((r) => (r.productId === product.id)));
@@ -156,6 +157,11 @@ const ReviewsModal = ({
                     {review.dateCreated.slice(0, 10)}
                   </div>
                 </div>
+                <Review
+                  review={review}
+                  setUpdateReviews={setUpdateReviews}
+                  // email={email}
+                />
               </div>
             ))}
             <div className="reviewsModal-footer" />

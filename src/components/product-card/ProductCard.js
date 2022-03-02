@@ -58,16 +58,26 @@ const useStyles = makeStyles((theme) => ({
  * @param {*} props product
  * @return component
  */
-const ProductCard = ({ product, reviews, setReviews }) => {
+const ProductCard = ({ product, reviews, setUpdateReviews }) => {
   const classes = useStyles();
   const { dispatch } = useCart();
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [reviewsModal, setReviewsModal] = useState(false);
   const [showCreateReview, setReviewFormToggle] = useState(false);
-  // const { activeReviews } = React.useState(reviews.filter((r) => (r.productId === product.id)));
+  const [activeReviews] = React.useState(reviews.filter((r) => (r.productId === product.id)));
   const {
     state: { products }
   } = useCart();
+  let activeReviewsLength = 0;
+  let currentCount = 0;
+  if (!activeReviews === false) {
+    activeReviews.map((e) => {
+      activeReviewsLength += 1;
+      currentCount += e.rating;
+      return currentCount;
+    });
+  }
+  const averageRating = currentCount / activeReviewsLength;
 
   const onAdd = (e) => {
     e.stopPropagation();
@@ -166,10 +176,11 @@ const ProductCard = ({ product, reviews, setReviews }) => {
         <ReviewsModal
           product={product}
           reviews={reviews}
-          setReviews={setReviews}
+          // setReviews={setReviews}
           closeModal={setReviewsModal}
           showCreateReview={showCreateReview}
           setReviewFormToggle={setReviewFormToggle}
+          setUpdateReviews={setUpdateReviews}
         />,
         document.getElementById('root')
       )}
@@ -245,7 +256,7 @@ const ProductCard = ({ product, reviews, setReviews }) => {
               variant="contained"
               className="reviewsProductCardButton"
               name="half-rating-read"
-              defaultValue={3}
+              defaultValue={averageRating}
               precision={1}
 
             />

@@ -25,9 +25,17 @@
 .labelContents {
     display:inline-flex;
 }
+
 .count {
+    font-size: 14px;
     margin-left: 18em;
 }
+
+.commentCount {
+    font-size: 14px;
+    margin-left: 15em;
+}
+
 .titleCount {
     margin-left: 19em;
 }
@@ -35,6 +43,18 @@
 /******************************
 Errors
 */
+.countErrorTitle {
+    font-size: smaller;
+    margin-left: 13em;
+    color:red;
+}
+
+.countErrorComment {
+    font-size: smaller;
+    margin-left: 9em;
+    color:red;
+}
+
 .error_item {
     color:red;
     /* margin:3px 0px 0px 0px; */
