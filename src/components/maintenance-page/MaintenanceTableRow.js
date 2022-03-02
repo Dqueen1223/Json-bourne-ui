@@ -1,60 +1,31 @@
-import React, { useState, useEffect, Fragment } from 'react';
-import { Link } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core/styles';
+import React, { useState, useEffect } from 'react';
 import reactDom from 'react-dom';
 import { FaPencilAlt, FaCheck } from 'react-icons/fa';
-import CreatePromo from '../create-promo/CreatePromoModal';
-import fetchProducts from './MaintenancePageService';
-import './MaintenancePage.css';
-import styles from '../product-page/ProductPage.module.css';
-import Constants from '../../utils/constants';
+import Delete from '@material-ui/icons/Delete';
 import validateCreateProductForm from '../create-product/forms/FormValidation';
 import UpdateProducts from './MaintenancePageUpdateService';
-/**
- * @name useStyles
- * @description Material-ui styling for ProductCard component
- * @return styling
- */
-const useStyles = makeStyles((theme) => ({
-  root: {
-    maxWidth: 345
-  },
-  media: {
-    height: 0,
-    paddingTop: '56.25%'
-  },
-  expand: {
-    transform: 'rotate(0deg)',
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest
-    })
-  },
-  expandOpen: {
-    transform: 'rotate(180deg)'
-  }
-}));
-/**
- * @name MaintenancePage
- * @description  basic maintenance page with table of products from database
- * @returns component
- */
-const MaintenancePage = () => {
-  const classes = useStyles();
-  const [apiError, setApiError] = useState(false);
-  const [products, setProducts] = useState([]);
-  const [modalIsOpen, setModalIsOpen] = useState(false);
+import MaintenanceDeleteModal, { MaintenanceDeleteConfirmModal } from './MaintenanceDeleteModal';
+import { checkForPurchases } from './MaintenancePageDeleteService';
+import fetchProducts from './MaintenancePageService';
+import './MaintenancePage.css';
+
+const MaintenanceTableRow = ({ product, setDeletedProduct, deleteButton }) => {
   const [editable, setEditable] = useState(null);
   const [releaseEditable, setReleaseEditiable] = useState('false');
   const [errors, setErrors] = useState({});
   const [displayErrors, setDisplayErrors] = useState(null);
   const [updatedProduct, setUpdatedProduct] = useState({});
+  const [setApiError] = useState(false);
+  const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(null);
+  const [confirmModal, setConfirmModal] = useState(null);
+  const [displayModal, setDisplayModal] = useState(false);
+  const [hasPurchases, setHasPurchases] = useState(null);
 
   useEffect(() => {
-    fetchProducts(setProducts, setApiError);
-  }, []);
+    fetchProducts(product);
+  }, [product]);
 
-  const checkReleaseDate = (product) => {
+  const checkReleaseDate = () => {
     const today = new Date();
     const releaseDate = new Date(product.releaseDate);
     if (releaseDate.getTime() > today.getTime()) {
@@ -62,18 +33,46 @@ const MaintenancePage = () => {
       setReleaseEditiable('true');
     }
   };
-  const clickEditMaitenance = (e, product) => {
+  const updateProduct = (e) => {
+    setUpdatedProduct({ ...updatedProduct, [e.target.id]: e.target.innerText });
+  };
+  const updatedProductDropdown = (e) => {
+    setUpdatedProduct({ ...updatedProduct, [e.target.id]: e.target.value });
+  };
+
+  useEffect(() => {
+    if (displayModal) {
+      checkForPurchases(product, setHasPurchases, setApiError);
+
+      setDisplayModal(false);
+    }
+  }, [displayModal, product, setApiError]);
+
+  useEffect(() => {
+    if (hasPurchases !== null) {
+      if (hasPurchases) {
+        setDeleteModalIsOpen(true);
+      } else {
+        setConfirmModal(true);
+      }
+      setHasPurchases(null);
+    }
+  }, [hasPurchases]);
+
+  const clickEditMaitenance = () => {
     if (editable != null) {
-      fetchProducts(setProducts, setApiError);
+      fetchProducts(product);
     }
     setErrors({});
+    checkReleaseDate();
     setReleaseEditiable('false');
     setEditable(product.id);
     checkReleaseDate(product);
     setUpdatedProduct(product);
   };
+
   const cancelEditing = () => {
-    fetchProducts(setProducts, setApiError);
+    fetchProducts(product);
     setEditable(null);
     setErrors({});
   };
@@ -101,15 +100,7 @@ const MaintenancePage = () => {
       <td>{errors.quantity}</td>
     </tr>
   );
-
-  const updateProduct = (e) => {
-    setUpdatedProduct({ ...updatedProduct, [e.target.id]: e.target.innerText });
-  };
-  const updatedProductDropdown = (e) => {
-    setUpdatedProduct({ ...updatedProduct, [e.target.id]: e.target.value });
-  };
-
-  const submitEdit = async (e, product) => {
+  const submitEdit = async () => {
     setDisplayErrors(null);
     if (updatedProduct.active === 'true') {
       updatedProduct.active = true;
@@ -132,17 +123,47 @@ const MaintenancePage = () => {
     setErrors(errors);
 
     if (Object.keys(errors).length === 0) {
-      await UpdateProducts(updatedProduct, setApiError);
+      await UpdateProducts(updatedProduct);
       setEditable(null);
-      fetchProducts(setProducts, setApiError);
+      fetchProducts(product);
     } else {
       setDisplayErrors([product.id]);
     }
   };
-
-  const editRow = (product) => (
+  const editRow = () => (
     <>
       <tr key={product.id} className="ProductCells" id="editable">
+        <td className="ProductCells">
+          {deleteModalIsOpen && reactDom.createPortal(
+            <MaintenanceDeleteModal
+              product={product}
+              closeModal={setDeleteModalIsOpen}
+            />,
+            document.getElementById('root')
+          )}
+          {confirmModal && reactDom.createPortal(
+            <MaintenanceDeleteConfirmModal
+              product={product}
+              closeModal={setConfirmModal}
+              setDeletedProduct={setDeletedProduct}
+            />,
+            document.getElementById('root')
+          )}
+          {!deleteButton.includes(product.id)
+
+        && (
+        <button
+          type="button"
+          onClick={() => {
+            setDisplayModal(true);
+          }}
+          className="deleteButton"
+        >
+          <Delete />
+
+        </button>
+        )}
+        </td>
         <td className="ProductCells">
           <button
             type="submit"
@@ -335,8 +356,39 @@ const MaintenancePage = () => {
     </>
   );
 
-  const viewRow = (product) => (
+  const viewRow = () => (
     <tr key={product.id} className="ProductCells">
+      <td className="ProductCells">
+        {deleteModalIsOpen && reactDom.createPortal(
+          <MaintenanceDeleteModal
+            product={product}
+            closeModal={setDeleteModalIsOpen}
+          />,
+          document.getElementById('root')
+        )}
+        {confirmModal && reactDom.createPortal(
+          <MaintenanceDeleteConfirmModal
+            product={product}
+            closeModal={setConfirmModal}
+            setDeletedProduct={setDeletedProduct}
+          />,
+          document.getElementById('root')
+        )}
+        {!deleteButton.includes(product.id)
+
+        && (
+        <button
+          type="button"
+          onClick={() => {
+            setDisplayModal(true);
+          }}
+          className="deleteButton"
+        >
+          <Delete />
+
+        </button>
+        )}
+      </td>
       <td className="ProductCells">
         <span>
           <button
@@ -368,7 +420,8 @@ const MaintenancePage = () => {
       <td className="ProductCells">{product.quantity}</td>
     </tr>
   );
-  const bothRows = (product) => (
+
+  const bothRows = () => (
     <>
       {editRow(product)}
       {Object.entries(errors).length > 0 ? errorRow() : null}
@@ -376,72 +429,14 @@ const MaintenancePage = () => {
   );
 
   return (
-    <div className="Maintenance">
-      {apiError && (
-        <p className={styles.errMsg} data-testid="errMsg">
-          {Constants.API_ERROR}
-        </p>
-      )}
-
-      <div className="Buttons">
-        <Link to="/maintenance/create">
-          <button type="button" className="createButton">
-            Create Product
-          </button>
-        </Link>
-        {modalIsOpen
-          && reactDom.createPortal(
-            <CreatePromo
-              className={classes.root}
-              closeModal={setModalIsOpen}
-            />,
-            document.getElementById('root')
-          )}
-        <button
-          type="button"
-          className="promoButton"
-          onClick={() => {
-            setModalIsOpen(true);
-          }}
-        >
-          Create Promotion
-        </button>
-      </div>
-      <div className="ProductTable">
-        <table className="Product">
-          <thead>
-            <th>Edit</th>
-            <th>Id</th>
-            <th>Name</th>
-            <th>SKU</th>
-            <th>Description</th>
-            <th>Demographic</th>
-            <th>Category</th>
-            <th>Type</th>
-            <th>Release Date</th>
-            <th>Primary Color</th>
-            <th>Secondary Color</th>
-            <th>Style Number</th>
-            <th>Global Product Code</th>
-            <th>Active</th>
-            <th>Brand</th>
-            <th>Image Source</th>
-            <th>Material</th>
-            <th>Price</th>
-            <th>Quantity</th>
-          </thead>
-          <tbody id="tableBody">
-            {products.map((product) => (
-              <>
-                {editable === product.id || displayErrors === product.id
-                  ? bothRows(product)
-                  : viewRow(product)}
-              </>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
+    <>
+      <>
+        {editable === product.id || displayErrors === product.id
+          ? bothRows(product)
+          : viewRow(product)}
+      </>
+    </>
   );
 };
-export default MaintenancePage;
+
+export default MaintenanceTableRow;
