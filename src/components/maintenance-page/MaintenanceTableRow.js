@@ -66,6 +66,7 @@ const MaintenancePage = () => {
     if (editable != null) {
       fetchProducts(setProducts, setApiError);
     }
+    setErrors({});
     setReleaseEditiable('false');
     setEditable(product.id);
     checkReleaseDate(product);

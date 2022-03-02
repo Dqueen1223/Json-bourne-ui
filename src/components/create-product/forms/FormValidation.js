@@ -12,9 +12,6 @@ const validateCreateProductForm = (form, idList) => {
   const nonNumeric = [];
   const errors = {};
 
-  form.price.toString();
-  form.active.toString();
-  form.quantity.toString();
   for (let i = 0; i < idList.length; i += 1) {
     const id = idList[i];
     const value = form[id];
