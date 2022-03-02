@@ -10,7 +10,7 @@ import UpdateProducts from './MaintenancePageUpdateService';
  */
 export default function MaintenanceDeleteModal({ product, closeModal, setDeletedProduct }) {
   const closeTheModal = (e) => {
-    if (e.target.className === 'maintenanceModalBackground' || e.target.className === 'maintenanceCloseButton' || e.target.className === 'maintenanceNoButton') {
+    if (e.target.className === 'maintenanceModalBackground' || e.target.className === 'maintenanceCloseButton' || e.target.className === 'maintenanceNoButton' || e.target.className === 'maintenanceConfirmButton') {
       closeModal(false);
     }
   };

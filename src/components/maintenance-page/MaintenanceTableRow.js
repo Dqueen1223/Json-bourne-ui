@@ -334,7 +334,6 @@ const MaintenanceTableRow = ({ product, setDeletedProduct, deleteButton }) => {
           type="button"
           onClick={() => {
             setDisplayModal(true);
-          //  setDeletedProduct(product);
           }}
           className="deleteButton"
         >
