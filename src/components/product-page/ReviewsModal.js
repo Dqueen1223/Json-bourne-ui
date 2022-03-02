@@ -1,10 +1,11 @@
-import { ConfirmProvider } from 'material-ui-confirm';
-import React from 'react';
+import React, { useEffect } from 'react';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import BasicRating from './ReviewsStars';
 import CreateReview from '../create-review/CreateReview';
+import { useProfile } from '../Profile/ProfileContext';
+import Review from './Review';
 import './ReviewsModal.css';
 
 /**
@@ -18,8 +19,19 @@ const ReviewsModal = ({
 }) => {
   // eslint-disable-next-line max-len
   const [newReview, setReviewData] = React.useState('empty');
+  const [email, setEmail] = React.useState('');
   const [activeReviews] = React.useState(reviews.filter((r) => (r.productId === product.id)));
+  const {
+    state: { userProfile }
+  } = useProfile();
 
+  useEffect(() => {
+    if (userProfile.length > 1) {
+      if (typeof userProfile[1].email !== 'undefined') {
+        setEmail(userProfile[1].email);
+      }
+    }
+  }, [userProfile, setEmail]);
   const UpdateReview = () => {
     if (newReview !== 'empty') {
       return (
@@ -143,18 +155,14 @@ const ReviewsModal = ({
             {/*  mapping the reviews to each product based off of the product id. */}
             {reviews && activeReviews.map((review) => (
               <div key={review.id}>
-                <div className="reviewsOfProduct">
-                  <div className="reviewsTitle">{review.title}</div>
-                  <div className="reviewsEmail">{review.email}</div>
-                  <div className="reviewsRating">{BasicRating(review.rating)}</div>
-                  <div className="reviewsActual">{review.reviewsDescription}</div>
-                  <div className="reviewsDate">
-                    {/* slicing off the last few extra digits associated with the date */}
-                    {review.dateCreated.slice(0, 10)}
-                  </div>
-                </div>
+                <Review
+                  review={review}
+                  // setReviews={setReviews}
+                  email={email}
+                />
               </div>
             ))}
+
             <UpdateReview />
             <div className="reviewsModal-footer" />
           </div>
