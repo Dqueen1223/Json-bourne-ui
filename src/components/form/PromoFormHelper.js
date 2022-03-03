@@ -1,4 +1,4 @@
-import { styles } from './FormItem.module.css';
+import styles from './FormItem.module.css';
 
 const decideClassName = (error, success) => {
   if (error) {

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import { useCart } from './CartContext';
 import OrderItem from './OrderItem';
 import { getSubtotal } from './ReviewOrderWidgetService';
@@ -27,15 +26,25 @@ const ReviewOrderWidget = ({ setTotal, shippingFee }) => {
   };
   const [promoValue, setPromoValue] = React.useState('');
   const [error, setError] = React.useState('');
-  const [success, setSuccess] = React.useState('');
+  const [success, setSuccess] = React.useState(false);
   const [discountObject, setDiscountObject] = React.useState({});
   const onPromoChange = (e) => {
     setPromoValue(e.target.value);
   };
   const onPromoBlur = () => {
-    setDiscountObject(getPromoDiscount(promoValue, setError, setSuccess));
-    toast.error('There was a problem accessing the database');
+    if (promoValue !== '') {
+      getPromoDiscount(promoValue, setDiscountObject, setError);
+    }
   };
+  React.useEffect(() => {
+    if (Object.keys(discountObject).length !== 0
+      && (discountObject.code === null || discountObject.code === undefined)) {
+      setError('Invalid code');
+    } else {
+      setError('');
+      setSuccess(true);
+    }
+  }, [discountObject]);
   return (
     <>
       {products.length === 0

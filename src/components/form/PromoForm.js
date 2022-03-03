@@ -1,5 +1,5 @@
 import React from 'react';
-import { styles } from './FormItem.module.css';
+import styles from './FormItem.module.css';
 import decideClassName from './PromoFormHelper';
 
 const PromoItem = ({
@@ -19,8 +19,9 @@ const PromoItem = ({
           value={value}
         />
         )
-        {!error && (<p className={styles.paragraph} />)}
-        {error && (
+        {!error && <p className={styles.paragraph} />}
+        {error
+        && (
         <p className={styles.error_item}>
           {error}
         </p>
