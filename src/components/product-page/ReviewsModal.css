@@ -231,3 +231,6 @@ input[type=number] {
     width: 136px;
 }
 
+.review-menu {
+    display: flexbox;
+}

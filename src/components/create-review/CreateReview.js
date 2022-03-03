@@ -7,7 +7,7 @@ import makeReview from './CreateReviewService';
 import generateErrors from './forms/FormValidation';
 
 const CreateReview = ({
-  productId, reviewFormToggle, setNewReview
+  productId, reviewFormToggle, activeReviews, setActiveReviews
 }) => {
   const [rating, setRating] = useState(2);
   const [errors, setErrors] = useState({});
@@ -63,7 +63,7 @@ const CreateReview = ({
     handleCreate();
 
     if (Object.keys(errors).length === 0) {
-      setNewReview(newReview);
+      setActiveReviews(...activeReviews, newReview);
       await makeReview(newReview);
       reviewFormToggle(false);
     } else {

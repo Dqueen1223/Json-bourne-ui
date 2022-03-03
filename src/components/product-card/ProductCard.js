@@ -114,15 +114,6 @@ const ProductCard = ({ product, reviews }) => {
     setReviewsModal(true);
   };
 
-  const addReview = (e) => {
-    e.stopPropagation();
-    setReviewsModal(true);
-    setReviewFormToggle(true);
-    if (reviews.length === 0) {
-      setReviewFormToggle(true);
-    }
-  };
-
   return (
     <Card className={classes.root}>
       {modalIsOpen && reactDom.createPortal(
@@ -203,15 +194,6 @@ const ProductCard = ({ product, reviews }) => {
               onClick={onReview}
             >
               Reviews
-            </button>
-            <button
-              className="addReviewsProductCardButton"
-              type="button"
-              label="Add Review"
-              variant="contained"
-              onClick={addReview}
-            >
-              Add Review
             </button>
           </>
           )}

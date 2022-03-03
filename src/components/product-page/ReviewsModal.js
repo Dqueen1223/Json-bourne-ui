@@ -17,26 +17,26 @@ const ReviewsModal = ({
 }) => {
   // eslint-disable-next-line max-len
   const [newReview, setReviewData] = React.useState('empty');
-  const [activeReviews] = React.useState(reviews.filter((r) => (r.productId === product.id)));
+  const [activeReviews, setActiveReviews] = React.useState(reviews.filter((r) => (r.productId === product.id)));
 
-  const UpdateReview = () => {
-    if (newReview !== 'empty') {
-      return (
-        <div key={newReview.id}>
-          <div className="reviewsOfProduct">
-            <div className="reviewsTitle">{newReview.title}</div>
-            <div className="reviewsRating">{BasicRating(newReview.rating)}</div>
-            <div className="reviewsActual">{newReview.reviewsDescription}</div>
-            <div className="reviewsDate">
-              {/* slicing off the last few extra digits associated with the date */}
-              {newReview.dateCreated.slice(0, 10)}
-            </div>
-          </div>
-        </div>
-      );
-    }
-    return null;
-  };
+  // const UpdateReview = () => {
+  //   if (newReview !== 'empty') {
+  //     return (
+  //       <div key={newReview.id}>
+  //         <div className="reviewsOfProduct">
+  //           <div className="reviewsTitle">{newReview.title}</div>
+  //           <div className="reviewsRating">{BasicRating(newReview.rating)}</div>
+  //           <div className="reviewsActual">{newReview.reviewsDescription}</div>
+  //           <div className="reviewsDate">
+  //             {/* slicing off the last few extra digits associated with the date */}
+  //             {newReview.dateCreated.slice(0, 10)}
+  //           </div>
+  //         </div>
+  //       </div>
+  //     );
+  //   }
+  //   return null;
+  // };
 
   const sortedReviews = () => {
     if (!document.getElementsByClassName('reviewsModal-body')[0].classList.contains('reversed')) {
@@ -90,13 +90,13 @@ const ReviewsModal = ({
           >
             Order by Date
           </MenuItem>
-          <MenuItem
+          {/* <MenuItem
             // type="button"
             onClick={() => setReviewFormToggle(!showCreateReview)}
             className="createReview"
           >
             Add Review
-          </MenuItem>
+          </MenuItem> */}
         </Menu>
       </div>
     );
@@ -122,8 +122,15 @@ const ReviewsModal = ({
             <div className="productNameReviewModal">
               {product.name}
             </div>
-            <div className="dropdown-menu">
+            <div className="review-menu">
               {DropDownButton()}
+              <Button
+                // type="button"
+                onClick={() => setReviewFormToggle(!showCreateReview)}
+                className="createReview"
+              >
+                Add Review
+              </Button>
             </div>
           </div>
           <div className="createReview">
@@ -132,6 +139,8 @@ const ReviewsModal = ({
                 <CreateReview
                   productId={product.id}
                   setNewReview={setReviewData}
+                  setActiveReviews={setActiveReviews}
+                  activeReviews={activeReviews}
                   newReview={newReview}
                   reviewFormToggle={setReviewFormToggle}
                 />
@@ -154,7 +163,7 @@ const ReviewsModal = ({
                 </div>
               </div>
             ))}
-            <UpdateReview />
+            {/* <UpdateReview /> */}
             <div className="reviewsModal-footer" />
           </div>
           <div className="reviewsModal-footer" />
