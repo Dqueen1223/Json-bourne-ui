@@ -25,22 +25,22 @@ const EditRow = ({
     <tr key={product.id} className="ProductCells" id="editable">
       <td className="ProductCells">
         {deleteModalIsOpen
-            && reactDom.createPortal(
-              <MaintenanceDeleteModal
-                product={product}
-                closeModal={setDeleteModalIsOpen}
-              />,
-              document.getElementById('root')
-            )}
+          && reactDom.createPortal(
+            <MaintenanceDeleteModal
+              product={product}
+              closeModal={setDeleteModalIsOpen}
+            />,
+            document.getElementById('root')
+          )}
         {confirmModal
-            && reactDom.createPortal(
-              <MaintenanceDeleteConfirmModal
-                product={product}
-                closeModal={setConfirmModal}
-                setDeletedProduct={setDeletedProduct}
-              />,
-              document.getElementById('root')
-            )}
+          && reactDom.createPortal(
+            <MaintenanceDeleteConfirmModal
+              product={product}
+              closeModal={setConfirmModal}
+              setDeletedProduct={setDeletedProduct}
+            />,
+            document.getElementById('root')
+          )}
         {!deleteButton.includes(product.id) && (
           <button
             type="button"
@@ -94,9 +94,7 @@ const EditRow = ({
         {product.sku}
       </td>
       <td
-        className={`ProductCells ${
-          errors.description ? 'error' : 'editable'
-        }`}
+        className={`ProductCells ${errors.description ? 'error' : 'editable'}`}
         contentEditable="true"
         id="description"
         onMouseOut={(e) => updateProduct(e)}
@@ -131,7 +129,9 @@ const EditRow = ({
         {product.type}
       </td>
       <td
-        className="ProductCells"
+        className={`ProductCells ${
+          errors.releaseDate ? 'error' : 'editable'
+        }`}
         contentEditable={releaseEditable}
         id="releaseDate"
         onMouseOut={(e) => updateProduct(e)}
@@ -162,9 +162,7 @@ const EditRow = ({
         {product.secondaryColorCode}
       </td>
       <td
-        className={`ProductCells ${
-          errors.styleNumber ? 'error' : 'editable'
-        }`}
+        className={`ProductCells ${errors.styleNumber ? 'error' : 'editable'}`}
         contentEditable="true"
         id="styleNumber"
         onMouseOut={(e) => updateProduct(e)}

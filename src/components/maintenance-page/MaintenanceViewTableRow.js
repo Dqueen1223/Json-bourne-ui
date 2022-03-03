@@ -54,6 +54,7 @@ const ViewRow = ({
             type="button"
             onClick={(e) => clickEditMaitenance(e, product)}
             className="editbutton"
+            name="edit"
           >
             <FaPencilAlt className="editIcon" alt="editIcon" />
           </button>
