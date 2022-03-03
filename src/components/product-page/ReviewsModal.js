@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 // import BasicRating from './ReviewsStars';
 import CreateReview from '../create-review/CreateReview';
+import { useProfile } from '../Profile/ProfileContext';
 import './ReviewsModal.css';
 import Review from './Review';
 
@@ -15,29 +16,28 @@ import Review from './Review';
 
 const ReviewsModal = ({
   product, closeModal, reviews, showCreateReview, setReviewFormToggle, setUpdateReviews, setReviews,
-  setApiError, fetchReviews
+  setApiError, fetchReviews, updateReviews
 }) => {
   const [newReview, setReviewData] = React.useState('empty');
-  const [activeReviews] = React.useState(reviews.filter((r) => (r.productId === product.id)));
+  const [editing, setEditing] = React.useState(false);
+  const [email, setEmail] = React.useState('');
+  const [activeReviews, setActiveReviews] = React.useState(
+    reviews.filter((r) => (r.productId === product.id))
+  );
+  useEffect(() => {
+    setActiveReviews(reviews.filter((r) => (r.productId === product.id)));
+  }, [updateReviews, product.id, reviews]);
+  const {
+    state: { userProfile }
+  } = useProfile();
 
-  // const UpdateReview = () => {
-  //   if (newReview !== 'empty') {
-  //     return (
-  //       <div key={newReview.id}>
-  //         <div className="reviewsOfProduct">
-  //           <div className="reviewsTitle">{newReview.title}</div>
-  //           <div className="reviewsRating">{BasicRating(newReview.rating)}</div>
-  //           <div className="reviewsActual">{newReview.reviewsDescription}</div>
-  //           <div className="reviewsDate">
-  //             {/* slicing off the last few extra digits associated with the date */}
-  //             {newReview.dateCreated.slice(0, 10)}
-  //           </div>
-  //         </div>
-  //       </div>
-  //     );
-  //   }
-  //   return null;
-  // };
+  useEffect(() => {
+    if (userProfile.length > 1) {
+      if (typeof userProfile[1].email !== 'undefined') {
+        setEmail(userProfile[1].email);
+      }
+    }
+  }, [userProfile, setEmail]);
 
   const sortedReviews = () => {
     if (!document.getElementsByClassName('reviewsModal-body')[0].classList.contains('reversed')) {
@@ -90,13 +90,13 @@ const ReviewsModal = ({
           >
             Order by Date
           </MenuItem>
-          <MenuItem
+          {/* <MenuItem
             // type="button"
             onClick={() => setReviewFormToggle(!showCreateReview)}
             className="createReview"
           >
             Add Review
-          </MenuItem>
+          </MenuItem> */}
         </Menu>
       </div>
     );
@@ -108,6 +108,7 @@ const ReviewsModal = ({
       onClick={closeTheModal}
       aria-hidden="true"
     >
+      {editing && <div className="reviewsModalBackgroundBlocker" />}
       <div className="reviewsModal">
         <div className="reviewsModal-content">
 
@@ -122,8 +123,29 @@ const ReviewsModal = ({
             <div className="productNameReviewModal">
               {product.name}
             </div>
-            <div className="dropdown-menu">
+            <div className="review-menu">
               {DropDownButton()}
+              {email !== '' && (
+                <Button
+                  // type="button"
+                  onClick={() => setReviewFormToggle(!showCreateReview)}
+                  className="createReview"
+                >
+                  Add Review
+                </Button>
+              )}
+              {email === '' && (
+                <Button
+                  sx={{
+                    width: 300,
+                    color: 'gray'
+                  }}
+                  title="Must be logged in!"
+                  className="createReview grey"
+                >
+                  Add Review
+                </Button>
+              )}
             </div>
           </div>
           <div className="createReview">
@@ -132,8 +154,11 @@ const ReviewsModal = ({
                 <CreateReview
                   productId={product.id}
                   setNewReview={setReviewData}
+                  setActiveReviews={setActiveReviews}
+                  activeReviews={activeReviews}
                   newReview={newReview}
                   reviewFormToggle={setReviewFormToggle}
+                  setUpdateReviews={setUpdateReviews}
                 />
               )
               : null}
@@ -143,15 +168,18 @@ const ReviewsModal = ({
             {reviews && activeReviews.map((review) => (
               <div key={review.id}>
                 <Review
+                  setEditing={setEditing}
+                  editing={editing}
                   review={review}
                   setUpdateReviews={setUpdateReviews}
-                  // email={email}
+                  email={email}
                   setReviews={setReviews}
                   setApiError={setApiError}
                   fetchReviews={fetchReviews}
                 />
               </div>
             ))}
+            {/* <UpdateReview /> */}
             <div className="reviewsModal-footer" />
           </div>
           <div className="reviewsModal-footer" />

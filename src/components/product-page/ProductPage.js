@@ -38,6 +38,7 @@ const ProductPage = () => {
     if (updateReviews) {
       fetchReviews(setReviews, setApiError);
       setUpdateReviews(false);
+      console.log(reviews);
     }
   }, [reviews, updateReviews]);
   useEffect(() => {

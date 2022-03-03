@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
  */
 const ProductCard = ({
   product, reviews, setUpdateReviews, updateReviews
-} = {}) => {
+}) => {
   const classes = useStyles();
   const { dispatch } = useCart();
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -85,26 +85,26 @@ const ProductCard = ({
   }, [updateReviews, product.id, reviews]);
 
   React.useEffect(() => {
-    if (updateReviews && activeReviews) {
+    if (activeReviews) {
       let currentCount = 0;
-      if (updateReviews) {
-        if (!activeReviews === false) {
-          activeReviews.forEach((e) => {
-            currentCount += e.rating;
+      if (!activeReviews === false) {
+        activeReviews.forEach((e) => {
+          currentCount += e.rating;
 
-            // currentCount;
-          });
-        }
-        setAverageRating(Math.floor(currentCount / activeReviews.length));
-        const remainder = currentCount % activeReviews.length;
-        if (remainder / activeReviews.length > 0.33 && remainder / activeReviews.length < 0.66) {
-          setAverageRating(averageRating + 0.5);
-        } else if (remainder / activeReviews.length >= 0.66) {
-          setAverageRating(averageRating + 1);
-        }
+          // currentCount;
+        });
+      }
+      const tempRating = Math.floor(currentCount / activeReviews.length);
+      const remainder = currentCount % activeReviews.length;
+      if (remainder / activeReviews.length > 0.33 && remainder / activeReviews.length < 0.66) {
+        setAverageRating(tempRating + 0.5);
+      } else if (remainder / activeReviews.length >= 0.66) {
+        setAverageRating(tempRating + 1);
+      } else {
+        setAverageRating(tempRating);
       }
     }
-  }, [activeReviews, averageRating, reviews, updateReviews]);
+  }, [activeReviews, reviews, updateReviews]);
 
   const onAdd = (e) => {
     e.stopPropagation();
@@ -155,45 +155,6 @@ const ProductCard = ({
     setReviewsModal(true);
   };
 
-  // const addReview = (e) => {
-  //   e.stopPropagation();
-  //   setReviewsModal(true);
-  //   setReviewFormToggle(true);
-  //   if (reviews.length === 0) {
-  //     setReviewFormToggle(true);
-  //   }
-  // };
-
-  // let ratingSum = 0;
-  // let reviewsFound = 0;
-  // let item = null;
-  // // eslint-disable-next-line no-plusplus
-  // for (let i = 0; i < reviews.length; i++) {
-  //   item = reviews[Rating];
-  //   if (item > 0) {
-  //     ratingSum = item + ratingSum;
-  //     reviewsFound += 1;
-  //   }
-  // }
-  // const averageRating = ratingSum / reviewsFound;
-  // console.log('Average review:', averageRating);
-
-  // const averageRating = (review) => {
-  //   let sum = 0;
-
-  //   for (let i = 0; i < activeReviews; i += 1) {
-  //     sum += (activeReviews[i], 10);
-  //   }
-  //   const avg = sum / activeReviews;
-  //   console.log(avg, reviews);
-  // };
-  // const reviewAvg = () => reviews.reduce((a, b) => a + b, 0) / reviews.length;
-  // // eslint-disable-next-line max-len
-  // eslint-disable-next-line max-len
-  // const getAvgRating = reviews.length > 0 ? reviewAvg(reviews.map((review) => review.attributes.rating)) : 5;
-  // const avgRating = parseInt(getAvgRating, 10);
-  // console.log(avgRating);
-
   return (
     <Card className={classes.root}>
       {modalIsOpen && reactDom.createPortal(
@@ -209,6 +170,7 @@ const ProductCard = ({
           showCreateReview={showCreateReview}
           setReviewFormToggle={setReviewFormToggle}
           setUpdateReviews={setUpdateReviews}
+          updateReviews={updateReviews}
         />,
         document.getElementById('root')
       )}
@@ -285,10 +247,9 @@ const ProductCard = ({
                 reviews={reviews}
                 // onClick={onReview}
                 type="button"
-                variant="contained"
                 className="reviewsProductCardButton"
                 name="half-rating-read"
-                defaultValue={averageRating}
+                value={averageRating}
                 precision={0.5}
                 readOnly
               />
