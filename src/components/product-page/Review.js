@@ -56,35 +56,38 @@ const Review = ({
       uerId: review.userId,
       dateCreated: review.dateCreated
     };
+    e.target.parentNode.children[0].children[0].classList.remove('redBorder');
+    e.target.parentNode.children[4].classList.remove('redBorder');
+    let hasError = false;
     if (reviewTitle === '') {
-      toast.info('title cannot be empty');
-      reviewElement.querySelector('.reviewsTitle').focus();
-      return;
+      e.target.parentNode.children[0].children[0].classList.add('redBorder');
+      hasError = true;
     }
     if (reviewTitle.length > 50) {
-      toast.info('title must be 50 characters or less');
-      reviewElement.querySelector('.reviewsTitle').focus();
-      return;
+      e.target.parentNode.children[0].children[0].classList.add('redBorder');
+      hasError = true;
     }
     if (description === '') {
-      toast.info('description cannot be empty');
-      reviewElement.querySelector('.reviewsDescription').focus();
-      return;
+      e.target.parentNode.children[4].classList.add('redBorder');
+      hasError = true;
     }
     if (description.length > 500) {
-      toast.info('description must be 500 characters or less');
-      reviewElement.querySelector('.reviewsDescription').focus();
-      return;
+      e.target.parentNode.children[4].classList.add('redBorder');
+      hasError = true;
     }
-    setTitle(reviewTitle);
-    setDesc(description);
-    setCurrentRating(<Rating name="half-rating-read" defaultValue={stars} precision={stars} readOnly />);
-    updateReview(setUpdateReviews, setApiError, updatedReview);
-    setUpdateReviews(true);
-    const btnSubmit = reviewElement.querySelector('.btnSubmitEditReview');
-    btnSubmit.style.visibility = 'hidden';
-    setIsEdit(false);
-    setEditing(false);
+    if (!hasError) {
+      setTitle(reviewTitle);
+      setDesc(description);
+      setCurrentRating(<Rating name="half-rating-read" defaultValue={stars} precision={stars} readOnly />);
+      updateReview(setUpdateReviews, setApiError, updatedReview);
+      setUpdateReviews(true);
+      const btnSubmit = reviewElement.querySelector('.btnSubmitEditReview');
+      btnSubmit.style.visibility = 'hidden';
+      setIsEdit(false);
+      setEditing(false);
+    } else {
+      toast.error('Some fields contain invalid inputs.');
+    }
   };
 
   const preventCursorDisappearHandler = (e) => {

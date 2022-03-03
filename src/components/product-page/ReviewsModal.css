@@ -250,6 +250,9 @@ input[type=number] {
 .editable{
     border: 2px solid gray;
 }
+.redBorder{
+    border: 2px solid red;
+}
 .titleErrorContainer{
 }
 .hidden{
