@@ -81,6 +81,7 @@ const ProductPage = () => {
                 product={product}
                 reviews={reviews}
                 setUpdateReviews={setUpdateReviews}
+                updateReviews={updateReviews}
               />
             </div>
           ))}

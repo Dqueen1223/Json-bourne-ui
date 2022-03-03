@@ -58,31 +58,53 @@ const useStyles = makeStyles((theme) => ({
  * @param {*} props product
  * @return component
  */
-const ProductCard = ({ product, reviews, setUpdateReviews }) => {
+const ProductCard = ({
+  product, reviews, setUpdateReviews, updateReviews
+} = {}) => {
   const classes = useStyles();
   const { dispatch } = useCart();
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [reviewsModal, setReviewsModal] = useState(false);
   const [showCreateReview, setReviewFormToggle] = useState(false);
-  let activeReviews = [];
-  if (reviews !== true) {
-    activeReviews = reviews.filter((r) => (r.productId === product.id));
-  }
+  const [averageRating, setAverageRating] = useState(0);
   // const [activeReviews] = React.useState(reviews.filter((r) => (r.productId === product.id)));
+  // const [activeReviews] = React.useState(reviews.filter((r) => (r.productId === product.id)));
+
   const {
     state: { products }
   } = useCart();
 
-  let activeReviewsLength = 0;
-  let currentCount = 0;
-  if (!activeReviews === false) {
-    activeReviews.map((e) => {
-      activeReviewsLength += 1;
-      currentCount += e.rating;
-      return currentCount;
-    });
-  }
-  const averageRating = currentCount / activeReviewsLength;
+  const [activeReviews, setActiveReviews] = React.useState(
+    false
+  );
+  React.useEffect(() => {
+    if (reviews !== true) {
+      setActiveReviews(reviews.filter((r) => (r.productId === product.id)));
+    }
+    // setActiveReviews(reviews.filter((r) => (r.productId === product.id)));
+  }, [updateReviews, product.id, reviews]);
+
+  React.useEffect(() => {
+    if (updateReviews && activeReviews) {
+      let currentCount = 0;
+      if (updateReviews) {
+        if (!activeReviews === false) {
+          activeReviews.forEach((e) => {
+            currentCount += e.rating;
+
+            // currentCount;
+          });
+        }
+        setAverageRating(Math.floor(currentCount / activeReviews.length));
+        const remainder = currentCount % activeReviews.length;
+        if (remainder / activeReviews.length > 0.33 && remainder / activeReviews.length < 0.66) {
+          setAverageRating(averageRating + 0.5);
+        } else if (remainder / activeReviews.length >= 0.66) {
+          setAverageRating(averageRating + 1);
+        }
+      }
+    }
+  }, [activeReviews, averageRating, reviews, updateReviews]);
 
   const onAdd = (e) => {
     e.stopPropagation();
@@ -255,17 +277,22 @@ const ProductCard = ({ product, reviews, setUpdateReviews }) => {
             >
               Reviews
             </button> */}
-            <Rating
-              reviews={reviews}
+            <div
               onClick={onReview}
-              type="button"
-              variant="contained"
-              className="reviewsProductCardButton"
-              name="half-rating-read"
-              defaultValue={averageRating}
-              precision={1}
-
-            />
+              aria-hidden="true"
+            >
+              <Rating
+                reviews={reviews}
+                // onClick={onReview}
+                type="button"
+                variant="contained"
+                className="reviewsProductCardButton"
+                name="half-rating-read"
+                defaultValue={averageRating}
+                precision={0.5}
+                readOnly
+              />
+            </div>
           </>
         )}
       </CardActions>

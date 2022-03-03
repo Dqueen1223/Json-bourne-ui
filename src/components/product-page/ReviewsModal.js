@@ -2,7 +2,7 @@ import React from 'react';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
-import BasicRating from './ReviewsStars';
+// import BasicRating from './ReviewsStars';
 import CreateReview from '../create-review/CreateReview';
 import './ReviewsModal.css';
 import Review from './Review';
@@ -20,24 +20,24 @@ const ReviewsModal = ({
   const [newReview, setReviewData] = React.useState('empty');
   const [activeReviews] = React.useState(reviews.filter((r) => (r.productId === product.id)));
 
-  const UpdateReview = () => {
-    if (newReview !== 'empty') {
-      return (
-        <div key={newReview.id}>
-          <div className="reviewsOfProduct">
-            <div className="reviewsTitle">{newReview.title}</div>
-            <div className="reviewsRating">{BasicRating(newReview.rating)}</div>
-            <div className="reviewsActual">{newReview.reviewsDescription}</div>
-            <div className="reviewsDate">
-              {/* slicing off the last few extra digits associated with the date */}
-              {newReview.dateCreated.slice(0, 10)}
-            </div>
-          </div>
-        </div>
-      );
-    }
-    return null;
-  };
+  // const UpdateReview = () => {
+  //   if (newReview !== 'empty') {
+  //     return (
+  //       <div key={newReview.id}>
+  //         <div className="reviewsOfProduct">
+  //           <div className="reviewsTitle">{newReview.title}</div>
+  //           <div className="reviewsRating">{BasicRating(newReview.rating)}</div>
+  //           <div className="reviewsActual">{newReview.reviewsDescription}</div>
+  //           <div className="reviewsDate">
+  //             {/* slicing off the last few extra digits associated with the date */}
+  //             {newReview.dateCreated.slice(0, 10)}
+  //           </div>
+  //         </div>
+  //       </div>
+  //     );
+  //   }
+  //   return null;
+  // };
 
   const sortedReviews = () => {
     if (!document.getElementsByClassName('reviewsModal-body')[0].classList.contains('reversed')) {
@@ -142,22 +142,6 @@ const ReviewsModal = ({
             {/*  mapping the reviews to each product based off of the product id. */}
             {reviews && activeReviews.map((review) => (
               <div key={review.id}>
-                <div className="reviewsOfProduct">
-                  <div className="reviewsTitle">{review.title}</div>
-                  <button
-                    type="button"
-                    onClick={UpdateReview}
-                  >
-                    click me to update
-                  </button>
-                  <div className="reviewsEmail">{review.email}</div>
-                  <div className="reviewsRating">{BasicRating(review.rating)}</div>
-                  <div className="reviewsActual">{review.reviewsDescription}</div>
-                  <div className="reviewsDate">
-                    {/* slicing off the last few extra digits associated with the date */}
-                    {review.dateCreated.slice(0, 10)}
-                  </div>
-                </div>
                 <Review
                   review={review}
                   setUpdateReviews={setUpdateReviews}
