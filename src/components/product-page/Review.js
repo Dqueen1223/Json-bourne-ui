@@ -21,6 +21,8 @@ const Review = ({
   // const [value, setValue] = React.useState();
   const [desc, setDesc] = React.useState(review.reviewsDescription);
   const [title, setTitle] = React.useState(review.title);
+  const [tempTitle, setTempTitle] = React.useState(null);
+  const [tempDesc, setTempDesc] = React.useState(null);
   const [stars, setStars] = React.useState(review.rating);
   const [apiError, setApiError] = React.useState(false);
   const [currentRating, setCurrentRating] = React.useState(<Rating name="half-rating-read" defaultValue={stars} precision={stars} readOnly />);
@@ -36,10 +38,17 @@ const Review = ({
   }, [apiError]);
 
   const editHandler = () => {
+    setTempTitle(title);
+    setTempDesc(desc);
     setIsEdit(!isEdit);
     setEditing(!editing);
   };
-
+  const cancelEditHandler = () => {
+    setTitle(tempTitle);
+    setDesc(tempDesc);
+    setIsEdit(!isEdit);
+    setEditing(!editing);
+  };
   const submitEditHandler = (e) => {
     const reviewElement = e.target.closest('.reviewsOfProduct');
     const reviewTitle = reviewElement.querySelector('.reviewsTitle').innerText.trim();
@@ -89,7 +98,7 @@ const Review = ({
     }
   };
 
-  const preventCursorDisappearHandler = (e) => {
+  /* const preventCursorDisappearHandler = (e) => {
     setTitle(e.target.innerText);
     const input = e.target.innerText;
     if (input === '') {
@@ -102,7 +111,7 @@ const Review = ({
     if (input === '') {
       e.target.innerText = ' ';
     }
-  };
+  }; */
   const showTitleErrors = (e) => {
     if (Number(50 - e.target.innerText.length) < 0) {
       e.target.parentNode.parentNode.children[2].classList.remove('hidden');
@@ -195,12 +204,12 @@ const Review = ({
       {(review.email === email) && isEdit && !isDeleted && (
         <div className="reviewsOfProduct">
           <div className="titleContainer">
-            <div className="reviewsTitle editable" contentEditable suppressContentEditableWarning onInput={(e) => { preventCursorDisappearHandler(e); showTitleErrors(e); }}>
-              { review.title }
+            <div className="reviewsTitle editable" contentEditable suppressContentEditableWarning onInput={(e) => { /* preventCursorDisappearHandler(e); */ showTitleErrors(e); }}>
+              { title || review.title }
             </div>
             <div>
               <span>
-                <FaPencilAlt className="pencilIcon" alt="pencilIcon" onClick={editHandler} />
+                <FaPencilAlt className="pencilIcon" alt="pencilIcon" onClick={cancelEditHandler} />
                 <Delete className="trashIcon" alt="pencilIcon" onClick={submitDeleteHandler} />
               </span>
             </div>
@@ -225,7 +234,7 @@ const Review = ({
               }}
             />
           </div>
-          <div className="reviewsDescription editable" contentEditable suppressContentEditableWarning onInput={(e) => { preventCursorDisappearHandlerDescription(e); showDescriptionErrors(e); }}>
+          <div className="reviewsDescription editable" contentEditable suppressContentEditableWarning onInput={(e) => { /* preventCursorDisappearHandlerDescription(e); */ showDescriptionErrors(e); }}>
             {review.reviewsDescription}
           </div>
           <div className="descriptionErrorContainer hidden">
