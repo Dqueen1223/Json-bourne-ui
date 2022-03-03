@@ -1,9 +1,11 @@
 import React, { useEffect } from 'react';
+import reactDom from 'react-dom';
 import { FaPencilAlt } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import Delete from '@material-ui/icons/Delete';
 // import { useConfirm } from 'material-ui-confirm';
 import Rating from '@mui/material/Rating';
+import ConfirmModal from '../checkout-page/ConfirmModal';
 import { updateReview, deleteReview } from './ReviewService';
 // import { useProfile } from '../Profile/ProfileContext';
 // import BasicRating from './ReviewsStars';
@@ -23,6 +25,8 @@ const Review = ({
   const [title, setTitle] = React.useState(review.title);
   const [stars, setStars] = React.useState(review.rating);
   const [apiError, setApiError] = React.useState(false);
+  const [confirmationOpen, setConfirmationOpen] = React.useState(false);
+  const [goAhead, setGoAhead] = React.useState(false);
   // eslint-disable-next-line max-len
   // const [currentRating] = React.useState(<Rating name="half-rating-read" defaultValue={review.rating} precision={review.rating} readOnly />);
   const [currentRating, setCurrentRating] = React.useState(<Rating name="half-rating-read" defaultValue={stars} precision={stars} readOnly />);
@@ -31,7 +35,28 @@ const Review = ({
   /* const {
     state: { userProfile }
   } = useProfile(); */
-
+  useEffect(() => {
+    if (goAhead) {
+      // const reviewElement = e.target.closest('.reviewsOfProduct');
+      // const reviewTitle = reviewElement.querySelector('.reviewsTitle').innerText.trim();
+      // const description = reviewElement.querySelector('.reviewsDescription').innerText.trim();
+      // const starRating = Number(reviewElement.querySelector('.starRating').innerText.trim());
+      const deletedReview = {
+        id: review.id,
+        rating: stars,
+        title,
+        reviewsDescription: desc,
+        email: review.email,
+        productId: review.productId,
+        uerId: review.userId,
+        dateCreated: review.dateCreated
+      };
+      deleteReview(setIsDeleted, setApiError, deletedReview);
+      console.log(isDeleted);
+      setUpdateReviews(true);
+      setGoAhead(false);
+    }
+  }, [goAhead, review, desc, isDeleted, setUpdateReviews, stars, title]);
   useEffect(() => {
     if (apiError) {
       toast.error('Cannot connect to the database');
@@ -134,29 +159,26 @@ const Review = ({
     setIsDeleted(!isDeleted);
   }; */
 
-  const submitDeleteHandler = (e) => {
-    const reviewElement = e.target.closest('.reviewsOfProduct');
-    const reviewTitle = reviewElement.querySelector('.reviewsTitle').innerText.trim();
-    const description = reviewElement.querySelector('.reviewsDescription').innerText.trim();
-    // const starRating = Number(reviewElement.querySelector('.starRating').innerText.trim());
-    const deletedReview = {
-      id: review.id,
-      rating: stars,
-      title: reviewTitle,
-      reviewsDescription: description,
-      email: review.email,
-      productId: review.productId,
-      uerId: review.userId,
-      dateCreated: review.dateCreated
-    };
-    deleteReview(setIsDeleted, setApiError, deletedReview);
-    setIsDeleted(true);
+  // const submitDeleteHandler = (e) => {
+
+  // };
+
+  const openModal = () => {
+    setConfirmationOpen(true);
   };
 
   return (
     <>
+      {confirmationOpen && reactDom.createPortal(
+        <ConfirmModal
+          setConfirm={setGoAhead}
+          setDeleteConfirmationModal={setConfirmationOpen}
+          confirmMessage="Are you sure you want to delete this review?"
+        />,
+        document.getElementById('root')
+      )}
       { /* if the current review is not being edited, and is associated with the signed in user */ }
-      {(review.email === email) && !isEdit && !isDeleted && (
+      {(review.email === email) && !isEdit && (
       <div className="reviewsOfProduct">
         <div className="titleContainer">
           <div className="reviewsTitle">
@@ -165,7 +187,7 @@ const Review = ({
           <div className="icons">
             <span>
               <FaPencilAlt className="pencilIcon" alt="pencilIcon" onClick={editHandler} />
-              <Delete className="trashIcon" alt="pencilIcon" onClick={submitDeleteHandler} />
+              <Delete className="trashIcon" alt="pencilIcon" onClick={openModal} />
             </span>
           </div>
         </div>
@@ -187,7 +209,7 @@ const Review = ({
       </div>
       )}
       { /* If the current review is being edited by the signed in user */}
-      {(review.email === email) && isEdit && !isDeleted && (
+      {(review.email === email) && isEdit && (
         <div className="reviewsOfProduct">
           <div className="titleContainer">
             <div className="reviewsTitle editable" contentEditable suppressContentEditableWarning onInput={(e) => { preventCursorDisappearHandler(e); showTitleErrors(e); }}>
@@ -196,7 +218,7 @@ const Review = ({
             <div>
               <span>
                 <FaPencilAlt className="pencilIcon" alt="pencilIcon" onClick={editHandler} />
-                <Delete className="trashIcon" alt="pencilIcon" onClick={submitDeleteHandler} />
+                <Delete className="trashIcon" alt="pencilIcon" onClick={openModal} />
               </span>
             </div>
           </div>
@@ -242,11 +264,7 @@ const Review = ({
           <button type="button" className="btnSubmitEditReview" onClick={(e) => (submitEditHandler(e))}>Submit</button>
         </div>
       )}
-      {(review.email === email) && isDeleted && (
-        <div className="reviewsOfProduct">
 
-        </div>
-      )}
       { /* if the current review is not a review by the current user */}
       {(review.email !== email) && (
       <div className="reviewsOfProduct">
