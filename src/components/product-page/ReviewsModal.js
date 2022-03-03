@@ -19,6 +19,7 @@ const ReviewsModal = ({
 }) => {
   // eslint-disable-next-line max-len
   const [newReview, setReviewData] = React.useState('empty');
+  const [editing, setEditing] = React.useState(false);
   const [email, setEmail] = React.useState('');
   const [activeReviews] = React.useState(reviews.filter((r) => (r.productId === product.id)));
   const {
@@ -121,6 +122,7 @@ const ReviewsModal = ({
       onClick={closeTheModal}
       aria-hidden="true"
     >
+      {editing && <div className="reviewsModalBackgroundBlocker" />}
       <div className="reviewsModal">
         <div className="reviewsModal-content">
 
@@ -156,6 +158,8 @@ const ReviewsModal = ({
             {reviews && activeReviews.map((review) => (
               <div key={review.id}>
                 <Review
+                  setEditing={setEditing}
+                  editing={editing}
                   review={review}
                   setUpdateReviews={setUpdateReviews}
                   email={email}

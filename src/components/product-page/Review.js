@@ -13,11 +13,13 @@ import { updateReview, deleteReview } from './ReviewService';
  * @description Displays the review
  * @return component
  */
-const Review = ({ review, email, setUpdateReviews }) => {
+const Review = ({
+  review, email, setUpdateReviews, setEditing, editing
+}) => {
   const [isEdit, setIsEdit] = React.useState(false);
   const [isDeleted, setIsDeleted] = React.useState(false);
   // const [value, setValue] = React.useState();
-  const [desc, setDesc] = React.useState();
+  const [desc, setDesc] = React.useState(review.reviewsDescription);
   const [title, setTitle] = React.useState(review.title);
   const [stars, setStars] = React.useState(review.rating);
   const [apiError, setApiError] = React.useState(false);
@@ -36,6 +38,7 @@ const Review = ({ review, email, setUpdateReviews }) => {
 
   const editHandler = () => {
     setIsEdit(!isEdit);
+    setEditing(!editing);
   };
 
   const submitEditHandler = (e) => {
@@ -81,6 +84,7 @@ const Review = ({ review, email, setUpdateReviews }) => {
     const btnSubmit = reviewElement.querySelector('.btnSubmitEditReview');
     btnSubmit.style.visibility = 'hidden';
     setIsEdit(false);
+    setEditing(false);
   };
 
   const preventCursorDisappearHandler = (e) => {
@@ -91,15 +95,36 @@ const Review = ({ review, email, setUpdateReviews }) => {
       e.target.innerText = ' ';
     }
   };
+  const preventCursorDisappearHandlerDescription = (e) => {
+    console.log(e.target.innerText.length);
+    setDesc(e.target.innerText);
+    const input = e.target.innerText;
+    if (input === '') {
+      e.target.innerText = ' ';
+    }
+  };
   const showTitleErrors = (e) => {
     if (Number(50 - e.target.innerText.length) < 0) {
-      e.target.parentNode.children[1].classList.remove('hidden');
-      e.target.parentNode.children[0].classList.add('hidden');
+      e.target.parentNode.parentNode.children[2].classList.remove('hidden');
+      e.target.parentNode.parentNode.children[1].classList.add('hidden');
     } else if (Number(50 - e.target.innerText.length) < 8) {
-      e.target.parentNode.children[0].classList.remove('hidden');
+      e.target.parentNode.parentNode.children[1].classList.remove('hidden');
+      e.target.parentNode.parentNode.children[2].classList.add('hidden');
     } else {
-      e.target.parentNode.children[0].classList.add('hidden');
-      e.target.parentNode.children[1].classList.add('hidden');
+      e.target.parentNode.parentNode.children[2].classList.add('hidden');
+      e.target.parentNode.parentNode.children[1].classList.add('hidden');
+    }
+  };
+  const showDescriptionErrors = (e) => {
+    if (Number(300 - e.target.innerText.length) < 0) {
+      e.target.parentNode.children[6].classList.remove('hidden');
+      e.target.parentNode.children[5].classList.add('hidden');
+    } else if (Number(300 - e.target.innerText.length) < 45) {
+      e.target.parentNode.children[5].classList.remove('hidden');
+      e.target.parentNode.children[6].classList.add('hidden');
+    } else {
+      e.target.parentNode.children[5].classList.add('hidden');
+      e.target.parentNode.children[6].classList.add('hidden');
     }
   };
   /* const deleteHandler = () => {
@@ -142,10 +167,10 @@ const Review = ({ review, email, setUpdateReviews }) => {
           <div className="reviewsTitle">
             { title || review.title }
           </div>
-          <div>
+          <div className="icons">
             <span>
               <FaPencilAlt className="pencilIcon" alt="pencilIcon" onClick={editHandler} />
-              <Delete className="pencilIcon" alt="pencilIcon" onClick={submitDeleteHandler} />
+              <Delete className="trashIcon" alt="pencilIcon" onClick={submitDeleteHandler} />
             </span>
           </div>
         </div>
@@ -170,25 +195,26 @@ const Review = ({ review, email, setUpdateReviews }) => {
       {(review.email === email) && isEdit && !isDeleted && (
         <div className="reviewsOfProduct">
           <div className="titleContainer">
-            <div className="titleErrorContainer hidden">
-              Remaining Characters:&nbsp;
-              {Number(50 - title.length)}
-            </div>
-            <div className="titleErrorContainer red hidden">
-              Character limit exeeded:&nbsp;
-              { title.length }
-              {' '}
-              of 50 used
-            </div>
-            <div className="reviewsTitle" contentEditable suppressContentEditableWarning onInput={(e) => { preventCursorDisappearHandler(e); showTitleErrors(e); }}>
+            <div className="reviewsTitle editable" contentEditable suppressContentEditableWarning onInput={(e) => { preventCursorDisappearHandler(e); showTitleErrors(e); }}>
               { review.title }
             </div>
             <div>
               <span>
                 <FaPencilAlt className="pencilIcon" alt="pencilIcon" onClick={editHandler} />
-                <Delete className="pencilIcon" alt="pencilIcon" />
+                <Delete className="trashIcon" alt="pencilIcon" onClick={submitDeleteHandler} />
               </span>
             </div>
+          </div>
+          <div className="titleErrorContainer hidden">
+            Remaining Characters:&nbsp;
+            {Number(50 - title.length)}
+          </div>
+          <div className="titleErrorContainer red hidden">
+            Character limit exceeded:
+            {'    '}
+            { title.length }
+            {' '}
+            of 50 used
           </div>
           <div className="reviewsRating">
             <Rating
@@ -199,8 +225,19 @@ const Review = ({ review, email, setUpdateReviews }) => {
               }}
             />
           </div>
-          <div className="reviewsDescription" contentEditable suppressContentEditableWarning onInput={preventCursorDisappearHandler}>
-            {desc || review.reviewsDescription}
+          <div className="reviewsDescription editable" contentEditable suppressContentEditableWarning onInput={(e) => { preventCursorDisappearHandlerDescription(e); showDescriptionErrors(e); }}>
+            {review.reviewsDescription}
+          </div>
+          <div className="descriptionErrorContainer hidden">
+            Remaining Characters:&nbsp;
+            {Number(300 - desc.length)}
+          </div>
+          <div className="descriptionErrorContainer red hidden">
+            Character limit exceeded:
+            {'    '}
+            { desc.length }
+            {' '}
+            of 300 used
           </div>
           <div className="reviewsDate">
             created on:

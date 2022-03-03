@@ -93,6 +93,16 @@
   .pencilIcon:hover, .deleteIcon:hover{
     color: rgb(65, 65, 65);
   }
+  .trashIcon{
+    width:20px;
+    height:20px;
+    margin-left:1em;
+    position: relative;
+    top: 2px;
+  }
+  .trashIcon:hover{
+    color: rgb(65, 65, 65);
+  }
 .productName{
     font-size: 200%;
     border: none;
@@ -107,7 +117,7 @@
     font-size: 140%;
     margin: 2%;
     padding:5px;
-    min-width:80px;
+    min-width:12em;
     max-width: 12em;
 }
 .reviewsProductName{
@@ -139,6 +149,8 @@
 .reviewsDescription{
     margin: 2%;
     padding:5px;
+    max-width: 27em;
+    overflow-wrap: anywhere;
 }
 .reviewsModal-body{
     /* flex: 1 1 60%; */
@@ -188,6 +200,7 @@
     display:flex;
     flex-direction: row;
     align-items:center;
+    gap:5px;
 }
 
 
@@ -234,12 +247,19 @@ input[type=number] {
     left: 5%;
     width: 136px;
 }
+.editable{
+    border: 2px solid gray;
+}
 .titleErrorContainer{
-    max-width: 5em;
 }
 .hidden{
     display: none;
 }
 .red{
     color:red;
+}
+.reviewsModalBackgroundBlocker{
+    position: fixed;
+    height: 100%;
+    width: 100%;
 }
