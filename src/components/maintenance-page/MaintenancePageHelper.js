@@ -149,6 +149,9 @@ const MaintenancePageHelper = (
         submitEdit={submitEdit}
         cancelEditing={cancelEditing}
         updateProduct={updateProduct}
+        releaseDate={product.releaseDate.slice(0, 10)}
+        price={product.price.toFixed(2)}
+        active={product.active.toString()}
         updatedProduct={updatedProduct}
         updatedProductDropdown={updatedProductDropdown}
         releaseEditable={releaseEditable}
@@ -162,21 +165,23 @@ const MaintenancePageHelper = (
   return (
     <>
       <>
-        {editable === product.id || displayErrors === product.id
-          ? bothRows(product)
-          : (
-            <ViewRow
-              product={product}
-              setDeletedProduct={setDeletedProduct}
-              deleteButton={deleteButton}
-              setDeleteModalIsOpen={setDeleteModalIsOpen}
-              deleteModalIsOpen={deleteModalIsOpen}
-              setConfirmModal={setConfirmModal}
-              confirmModal={confirmModal}
-              setDisplayModal={setDisplayModal}
-              clickEditMaitenance={clickEditMaitenance}
-            />
-          )}
+        {editable === product.id || displayErrors === product.id ? (
+          bothRows(product)
+        ) : (
+          <ViewRow
+            product={product}
+            setDeletedProduct={setDeletedProduct}
+            deleteButton={deleteButton}
+            setDeleteModalIsOpen={setDeleteModalIsOpen}
+            deleteModalIsOpen={deleteModalIsOpen}
+            setConfirmModal={setConfirmModal}
+            confirmModal={confirmModal}
+            setDisplayModal={setDisplayModal}
+            clickEditMaitenance={clickEditMaitenance}
+            releaseDate={product.releaseDate.slice(0, 10)}
+            price={product.price.toFixed(2)}
+          />
+        )}
       </>
     </>
   );

@@ -10,6 +10,9 @@ const EditRow = ({
   deleteButton,
   deleteErrors,
   errors,
+  price,
+  releaseDate,
+  active,
   setDeleteModalIsOpen,
   deleteModalIsOpen,
   setConfirmModal,
@@ -137,7 +140,7 @@ const EditRow = ({
         onMouseOut={(e) => updateProduct(e)}
         onBlur={(e) => updateProduct(e)}
       >
-        {product.releaseDate.slice(0, 10)}
+        {releaseDate}
       </td>
       <td
         className={`ProductCells ${
@@ -183,8 +186,8 @@ const EditRow = ({
       </td>
       <td className={`ProductCells ${errors.active ? 'error' : 'editable'}`}>
         <select id="active" onChange={(e) => updatedProductDropdown(e)}>
-          <option value={product.active.toString()}>
-            {product.active.toString()}
+          <option value={active}>
+            {active}
           </option>
           <option value="true">true</option>
           <option value="false">false</option>
@@ -224,7 +227,7 @@ const EditRow = ({
         onMouseOut={(e) => updateProduct(e)}
         onBlur={(e) => updateProduct(e)}
       >
-        { product.price.toFixed(2) }
+        { price }
       </td>
       <td
         className={`ProductCells ${errors.quantity ? 'error' : 'editable'}`}

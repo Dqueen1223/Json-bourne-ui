@@ -14,7 +14,9 @@ const ViewRow = ({
   setConfirmModal,
   confirmModal,
   setDisplayModal,
-  clickEditMaitenance
+  clickEditMaitenance,
+  releaseDate,
+  price
 }) => (
   <>
     <tr key={product.id} className="ProductCells">
@@ -67,7 +69,7 @@ const ViewRow = ({
       <td id="demographicView">{product.demographic}</td>
       <td className="ProductCells">{product.category}</td>
       <td className="ProductCells">{product.type}</td>
-      <td className="ProductCells">{product.releaseDate.slice(0, 10)}</td>
+      <td className="ProductCells">{releaseDate}</td>
       <td className="ProductCells">{product.primaryColorCode}</td>
       <td className="ProductCells">{product.secondaryColorCode}</td>
       <td className="ProductCells">{product.styleNumber}</td>
@@ -76,7 +78,7 @@ const ViewRow = ({
       <td className="ProductCells">{product.brand}</td>
       <td className="ProductCells">{product.imageSrc}</td>
       <td className="ProductCells">{product.material}</td>
-      <td className="ProductCells">{product.price.toFixed(2)}</td>
+      <td className="ProductCells">{price}</td>
       <td className="ProductCells">{product.quantity}</td>
     </tr>
   </>
