@@ -1,7 +1,7 @@
 import React from 'react';
-import './ConfirmModal.css';
+import './DeleteConfirmModal.css';
 
-const ConfirmModal = ({
+const DeleteConfirmModal = ({
   setConfirm, setDeleteConfirmationModal, confirmMessage
 }) => {
   const onConfirm = () => {
@@ -26,7 +26,7 @@ const ConfirmModal = ({
         </div>
         <div className="confirmModalButtons">
           <button onClick={closeModal} className="confirmModalCancel" type="button">Cancel</button>
-          <button onClick={onConfirm} className="confirmModalConfirm" type="button">Confirm</button>
+          <button onClick={onConfirm} className="confirmModalConfirm" type="button">Delete</button>
 
         </div>
       </div>
@@ -35,4 +35,4 @@ const ConfirmModal = ({
 
   );
 };
-export default ConfirmModal;
+export default DeleteConfirmModal;

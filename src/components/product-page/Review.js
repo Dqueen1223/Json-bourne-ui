@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { FaPencilAlt } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import Delete from '@material-ui/icons/Delete';
-import { useConfirm } from 'material-ui-confirm';
+// import { useConfirm } from 'material-ui-confirm';
 import Rating from '@mui/material/Rating';
 import { updateReview, deleteReview } from './ReviewService';
 // import { useProfile } from '../Profile/ProfileContext';
@@ -22,8 +22,8 @@ const Review = ({ review, email, setUpdateReviews }) => {
   const [stars, setStars] = React.useState(review.rating);
   const [apiError, setApiError] = React.useState(false);
   const [currentRating, setCurrentRating] = React.useState(<Rating name="half-rating-read" defaultValue={stars} precision={stars} readOnly />);
-  const confirm = useConfirm();
-  // console.log(`review id ${review.id} product id ${review.productId}`);
+  // const confirm = useConfirm();
+  console.log(`review id ${review.id} product id ${review.productId}`);
   /* const {
     state: { userProfile }
   } = useProfile(); */
@@ -110,10 +110,10 @@ const Review = ({ review, email, setUpdateReviews }) => {
     const reviewElement = e.target.closest('.reviewsOfProduct');
     const reviewTitle = reviewElement.querySelector('.reviewsTitle').innerText.trim();
     const description = reviewElement.querySelector('.reviewsDescription').innerText.trim();
-    const starRating = Number(reviewElement.querySelector('.starRating').innerText.trim());
+    // const starRating = Number(reviewElement.querySelector('.starRating').innerText.trim());
     const deletedReview = {
       id: review.id,
-      rating: starRating,
+      rating: stars,
       title: reviewTitle,
       reviewsDescription: description,
       email: review.email,
@@ -121,16 +121,8 @@ const Review = ({ review, email, setUpdateReviews }) => {
       uerId: review.userId,
       dateCreated: review.dateCreated
     };
-    confirm({
-      title: 'Are you sure you would like to delete this review?',
-      description: 'This action cannot be undone.',
-      confirmationText: 'Delete'
-    })
-      .then(() => deleteReview(setIsDeleted, setApiError, deletedReview))
-      .catch(() => console.log('Deletion cancelled.'));
-    // setIsDeleted(true);
-    // const btnSubmit = reviewElement.querySelector('.btnSubmitDeleteReview');
-    // btnSubmit.style.visibility = 'hidden';
+    deleteReview(setIsDeleted, setApiError, deletedReview);
+    setIsDeleted(true);
   };
 
   return (
@@ -212,7 +204,7 @@ const Review = ({ review, email, setUpdateReviews }) => {
       )}
       {(review.email === email) && isDeleted && (
         <div className="reviewsOfProduct">
-          test
+
         </div>
       )}
       { /* if the current review is not a review by the current user */}
