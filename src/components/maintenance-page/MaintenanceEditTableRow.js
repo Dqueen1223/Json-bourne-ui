@@ -8,7 +8,7 @@ const EditRow = ({
   product,
   setDeletedProduct,
   deleteButton,
-  displayErrors,
+  deleteErrors,
   errors,
   setDeleteModalIsOpen,
   deleteModalIsOpen,
@@ -42,25 +42,22 @@ const EditRow = ({
               document.getElementById('root')
             )}
         {!deleteButton.includes(product.id) && (
-        <button
-          type="button"
-          onClick={() => {
-            setDisplayModal(true);
-          }}
-          className="deleteButton"
-        >
-          <Delete />
-        </button>
+          <button
+            type="button"
+            onClick={() => {
+              setDisplayModal(true);
+            }}
+            className="deleteButton"
+          >
+            <Delete />
+          </button>
         )}
       </td>
       <td className="ProductCells">
         <button
           type="submit"
           onClick={(e) => {
-            if (Object.entries(errors).length > 0) {
-              Object.keys(errors).forEach((key) => delete errors[key]);
-              displayErrors.shift();
-            }
+            deleteErrors();
             submitEdit(e, product);
           }}
           className="Confirm"
@@ -229,7 +226,7 @@ const EditRow = ({
         onMouseOut={(e) => updateProduct(e)}
         onBlur={(e) => updateProduct(e)}
       >
-        {product.price.toFixed(2)}
+        { product.price.toFixed(2) }
       </td>
       <td
         className={`ProductCells ${errors.quantity ? 'error' : 'editable'}`}

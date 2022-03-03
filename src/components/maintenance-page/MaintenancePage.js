@@ -7,7 +7,7 @@ import fetchProducts from './MaintenancePageService';
 import './MaintenancePage.css';
 import styles from '../product-page/ProductPage.module.css';
 import Constants from '../../utils/constants';
-import MaintenanceTableRow from './MaintenanceTableRow';
+import MaintenanceTableRow from './MaintenancePageHelper';
 import { checkForReviews } from './MaintenancePageDeleteService';
 
 /**
