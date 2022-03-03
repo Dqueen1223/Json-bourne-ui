@@ -39,10 +39,15 @@ const ReviewsModal = ({
     }
   }, [userProfile, setEmail]);
 
-  const sortedReviews = () => {
+  const sortByNewest = () => {
     if (!document.getElementsByClassName('reviewsModal-body')[0].classList.contains('reversed')) {
       document.getElementsByClassName('reviewsModal-body')[0].classList.add('reversed');
-    } else {
+    // } else {
+    //   document.getElementsByClassName('reviewsModal-body')[0].classList.remove('reversed');
+    }
+  };
+  const sortByOldest = () => {
+    if (document.getElementsByClassName('reviewsModal-body')[0].classList.contains('reversed')) {
       document.getElementsByClassName('reviewsModal-body')[0].classList.remove('reversed');
     }
   };
@@ -72,7 +77,7 @@ const ReviewsModal = ({
           aria-expanded={open ? 'true' : undefined}
           onClick={handleClick}
         >
-          Review Dashboard
+          Sort By Date
         </Button>
         <Menu
           id="basic-menu"
@@ -86,17 +91,16 @@ const ReviewsModal = ({
           <MenuItem
             // type="button"
             className="reviewsOrderButton"
-            onClick={sortedReviews}
+            onClick={sortByNewest}
           >
-            Order by Date
+            Newest to Oldest
           </MenuItem>
-          {/* <MenuItem
+          <MenuItem
             // type="button"
-            onClick={() => setReviewFormToggle(!showCreateReview)}
-            className="createReview"
+            onClick={sortByOldest}
           >
-            Add Review
-          </MenuItem> */}
+            Oldest to Newest
+          </MenuItem>
         </Menu>
       </div>
     );
