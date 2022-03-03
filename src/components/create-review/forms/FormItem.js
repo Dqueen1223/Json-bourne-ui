@@ -52,7 +52,9 @@ const FormItem = ({
           )}
           {!error && (<p className={styles.paragraph} />)}
           {error && (
-            <p className={styles.error_item} />
+            <p className={styles.error_item}>
+              {error}
+            </p>
           )}
         </div>
       </label>
