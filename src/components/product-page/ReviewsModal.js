@@ -14,7 +14,8 @@ import Review from './Review';
  */
 
 const ReviewsModal = ({
-  product, closeModal, reviews, showCreateReview, setReviewFormToggle, setUpdateReviews
+  product, closeModal, reviews, showCreateReview, setReviewFormToggle, setUpdateReviews, setReviews,
+  setApiError, fetchReviews
 }) => {
   const [newReview, setReviewData] = React.useState('empty');
   const [activeReviews] = React.useState(reviews.filter((r) => (r.productId === product.id)));
@@ -161,6 +162,9 @@ const ReviewsModal = ({
                   review={review}
                   setUpdateReviews={setUpdateReviews}
                   // email={email}
+                  setReviews={setReviews}
+                  setApiError={setApiError}
+                  fetchReviews={fetchReviews}
                 />
               </div>
             ))}
