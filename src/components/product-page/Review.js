@@ -25,7 +25,6 @@ const Review = ({
   const [apiError, setApiError] = React.useState(false);
   const [currentRating, setCurrentRating] = React.useState(<Rating name="half-rating-read" defaultValue={stars} precision={stars} readOnly />);
   const confirm = useConfirm();
-  console.log(`review id ${review.id} product id ${review.productId}`);
   /* const {
     state: { userProfile }
   } = useProfile(); */
@@ -91,7 +90,6 @@ const Review = ({
   };
 
   const preventCursorDisappearHandler = (e) => {
-    console.log(e.target.innerText.length);
     setTitle(e.target.innerText);
     const input = e.target.innerText;
     if (input === '') {
@@ -99,7 +97,6 @@ const Review = ({
     }
   };
   const preventCursorDisappearHandlerDescription = (e) => {
-    console.log(e.target.innerText.length);
     setDesc(e.target.innerText);
     const input = e.target.innerText;
     if (input === '') {

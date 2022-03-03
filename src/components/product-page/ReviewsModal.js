@@ -119,7 +119,7 @@ const ReviewsModal = ({
   return (
     <div
       className="reviewsModalBackground"
-      onClick={closeTheModal}
+      onMouseUp={closeTheModal}
       aria-hidden="true"
     >
       {editing && <div className="reviewsModalBackgroundBlocker" />}
