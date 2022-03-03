@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
-import BasicRating from './ReviewsStars';
+// import BasicRating from './ReviewsStars';
 import CreateReview from '../create-review/CreateReview';
 import { useProfile } from '../Profile/ProfileContext';
 import Review from './Review';
@@ -15,13 +15,19 @@ import './ReviewsModal.css';
  */
 
 const ReviewsModal = ({
-  product, closeModal, reviews, showCreateReview, setReviewFormToggle, setUpdateReviews
+  product, closeModal, reviews, showCreateReview,
+  setReviewFormToggle, setUpdateReviews, updateReviews
 }) => {
   // eslint-disable-next-line max-len
   const [newReview, setReviewData] = React.useState('empty');
   const [editing, setEditing] = React.useState(false);
   const [email, setEmail] = React.useState('');
-  const [activeReviews] = React.useState(reviews.filter((r) => (r.productId === product.id)));
+  const [activeReviews, setActiveReviews] = React.useState(
+    reviews.filter((r) => (r.productId === product.id))
+  );
+  useEffect(() => {
+    setActiveReviews(reviews.filter((r) => (r.productId === product.id)));
+  }, [updateReviews, product.id, reviews]);
   const {
     state: { userProfile }
   } = useProfile();
@@ -33,24 +39,6 @@ const ReviewsModal = ({
       }
     }
   }, [userProfile, setEmail]);
-  // const UpdateReview = () => {
-  //   if (newReview !== 'empty') {
-  //     return (
-  //       <div key={newReview.id}>
-  //         <div className="reviewsOfProduct">
-  //           <div className="reviewsTitle">{newReview.title}</div>
-  //           <div className="reviewsRating">{BasicRating(newReview.rating)}</div>
-  //           <div className="reviewsActual">{newReview.reviewsDescription}</div>
-  //           <div className="reviewsDate">
-  //             {/* slicing off the last few extra digits associated with the date */}
-  //             {newReview.dateCreated.slice(0, 10)}
-  //           </div>
-  //         </div>
-  //       </div>
-  //     );
-  //   }
-  //   return null;
-  // };
 
   const sortedReviews = () => {
     if (!document.getElementsByClassName('reviewsModal-body')[0].classList.contains('reversed')) {
@@ -139,13 +127,27 @@ const ReviewsModal = ({
             </div>
             <div className="review-menu">
               {DropDownButton()}
-              <Button
-                // type="button"
-                onClick={() => setReviewFormToggle(!showCreateReview)}
-                className="createReview"
-              >
-                Add Review
-              </Button>
+              {email !== '' && (
+                <Button
+                  // type="button"
+                  onClick={() => setReviewFormToggle(!showCreateReview)}
+                  className="createReview"
+                >
+                  Add Review
+                </Button>
+              )}
+              {email === '' && (
+                <Button
+                  sx={{
+                    width: 300,
+                    color: 'gray'
+                  }}
+                  title="Must be logged in!"
+                  className="createReview grey"
+                >
+                  Add Review
+                </Button>
+              )}
             </div>
           </div>
           <div className="createReview">
@@ -158,6 +160,7 @@ const ReviewsModal = ({
                   activeReviews={activeReviews}
                   newReview={newReview}
                   reviewFormToggle={setReviewFormToggle}
+                  setUpdateReviews={setUpdateReviews}
                 />
               )
               : null}
