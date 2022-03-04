@@ -38,11 +38,16 @@
     "express": "^4.17.2",
     "jest-canvas-mock": "^2.3.1",
     "jwt-decode": "^3.1.2",
+<<<<<<< HEAD
     "legacy": "^0.0.3",
     "peer": "^0.6.1",
+=======
+    "material-ui-confirm": "^3.0.3",
+>>>>>>> 19dd637f93a958a4848c548cc692e9bf29b70674
     "react": "^17.0.1",
     "react-app": "^1.1.2",
     "react-bootstrap": "^2.1.1",
+    "react-confirm-alert": "^2.8.0",
     "react-datepicker": "^4.6.0",
     "react-datetime-picker": "^3.5.0",
     "react-dom": "^17.0.1",
