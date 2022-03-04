@@ -79,7 +79,7 @@ const Review = ({
       e.target.parentNode.children[4].classList.add('redBorder');
       hasError = true;
     }
-    if (description.length > 500) {
+    if (description.length > 300) {
       e.target.parentNode.children[4].classList.add('redBorder');
       hasError = true;
     }
