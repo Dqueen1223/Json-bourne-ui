@@ -106,7 +106,12 @@ const MaintenancePageHelper = (
       updatedProduct.active = true;
     } else { updatedProduct.active = false; }
     const idList = Object.keys(updatedProduct);
-    updatedProduct.price = updatedProduct.price.toFixed(2);
+    if (
+      updatedProduct.price.toString().includes('.')
+      && updatedProduct.price.toString().length === 4
+    ) {
+      updatedProduct.price = updatedProduct.price.toFixed(2);
+    }
     const errorList = validateCreateProductForm(updatedProduct, idList);
     if (
       !updatedProduct.releaseDate.slice(0, 10).match(
