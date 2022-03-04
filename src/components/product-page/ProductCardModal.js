@@ -119,6 +119,7 @@ const ProductCardModal = ({
   const onReview = (e) => {
     e.stopPropagation();
     setReviewsModal(true);
+    closeModal(false);
   };
 
   const closeTheModal = (e) => {
@@ -189,6 +190,24 @@ const ProductCardModal = ({
               <IconButton aria-label="add to shopping cart" onClick={onAdd}>
                 <AddShoppingCartIcon />
               </IconButton>
+              {ReviewsModal !== false && (
+                <>
+                  <div
+                    onClick={onReview}
+                    aria-hidden="true"
+                  >
+                    <Rating
+                      reviews={reviews}
+                      type="button"
+                      className="productModalReviews"
+                      name="half-rating-read"
+                    // value={averageRating}
+                      precision={0.5}
+                      readOnly
+                    />
+                  </div>
+                </>
+              )}
               {reviewsModal && reactDom.createPortal(
                 <ReviewsModal
                   product={product}
@@ -199,24 +218,6 @@ const ProductCardModal = ({
                   setReviewFormToggle={setReviewFormToggle}
                 />,
                 document.getElementById('root')
-              )}
-              {ReviewsModal !== false && (
-              <>
-                <div
-                  onClick={onReview}
-                  aria-hidden="true"
-                >
-                  <Rating
-                    reviews={reviews}
-                    type="button"
-                    className="productModalReviews"
-                    name="half-rating-read"
-                    // value={averageRating}
-                    precision={0.5}
-                    readOnly
-                  />
-                </div>
-              </>
               )}
             </div>
           </div>
