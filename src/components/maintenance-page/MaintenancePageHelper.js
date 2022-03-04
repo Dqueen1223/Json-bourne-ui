@@ -12,7 +12,7 @@ const MaintenancePageHelper = (
     product, setDeletedProduct, deleteButton, editable, setEditable, setProducts
   }
 ) => {
-  const [releaseEditable, setReleaseEditiable] = useState('false');
+  const [releaseEditable, setReleaseEditable] = useState('false');
   const [errors, setErrors] = useState({});
   const [displayErrors, setDisplayErrors] = useState(null);
   const [updatedProduct, setUpdatedProduct] = useState({});
@@ -26,8 +26,8 @@ const MaintenancePageHelper = (
     const today = new Date();
     const releaseDate = new Date(product.releaseDate);
     if (releaseDate.getTime() > today.getTime()) {
-      setReleaseEditiable(null);
-      setReleaseEditiable('true');
+      setReleaseEditable(null);
+      setReleaseEditable('true');
     }
   };
   const updateProduct = (e) => {
@@ -58,10 +58,9 @@ const MaintenancePageHelper = (
 
   const clickEditMaitenance = () => {
     setErrors({});
+    setReleaseEditable('false');
     checkReleaseDate();
-    setReleaseEditiable('false');
     setEditable(product.id);
-    checkReleaseDate(product);
     setUpdatedProduct(product);
   };
 
