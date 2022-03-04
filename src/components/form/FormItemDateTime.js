@@ -8,7 +8,13 @@ import styles from './FormItem.module.css';
  * @return component
  */
 const FormItemDateTime = ({
-  onChange, value, id, label, placeholder, type
+  onChange,
+  value,
+  id,
+  label,
+  placeholder,
+  type,
+  onClick
 }) => (
   <div>
     <label className={styles.label} htmlFor={id}>
@@ -21,6 +27,7 @@ const FormItemDateTime = ({
         clearIcon={null}
         id={id}
         onChange={onChange}
+        onClick={onClick}
         placeholder={placeholder}
         type={type}
         value={value}
