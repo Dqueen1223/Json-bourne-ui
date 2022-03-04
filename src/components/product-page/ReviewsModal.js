@@ -141,7 +141,7 @@ const ReviewsModal = ({
               {email === '' && (
                 <Button
                   sx={{
-                    width: 300,
+                    width: '50%',
                     color: 'gray'
                   }}
                   title="Must be logged in!"

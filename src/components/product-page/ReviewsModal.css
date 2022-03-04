@@ -213,27 +213,15 @@ input::-webkit-inner-spin-button {
 input[type=number] {
     -moz-appearance: textfield;
 }
-
-
-.addReviewsProductCardButton{
-    color: white;
-    /* color: #E1E2E2 */
-    /* position: relative; */
-    left: 5%;
-    width: 136px;
+.createReview {
+    width: 50%;
 }
-
-.addReviewsProductCardButton:hover {
-    color: white;
-    background-color: #1D2228;
-    /* color: #E1E2E2 */
-    /* position: relative; */
-    left: 5%;
-    width: 136px;
-}
-
 .review-menu {
-    display: flexbox;
+    display: flex;
+    flex-direction: row;
+    width: 60%;
+    justify-content: end;
+    margin-left: auto;
 }
 .editable{
     border: 2px solid gray;
