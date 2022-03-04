@@ -114,4 +114,5 @@ width: 100%;
 }
 .deleteButton{
     border-style: none;
+    cursor: pointer;
 }
