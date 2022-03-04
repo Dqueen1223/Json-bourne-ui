@@ -103,12 +103,12 @@ export default function validateForm(deliveryData, billingData, checked) {
       errors.expiration = 'Dates must match format "MM/YY"';
     } else if (billingData.expiration.includes(' ')) {
       errors.expiration = 'No spaces allowed before or after expiration date';
+    } else if (expiryMonth > 12 || expiryMonth === '00') {
+      errors.expiration = 'This month does not exist';
     } else if (expiryYear < todayYY || (expiryYear === todayYY && expiryMonth <= todayMM)) {
       errors.expiration = 'This card is expired';
     } else if ((todayYY + 50) < expiryYear) {
       errors.expiration = 'This card is expired';
-    } else if (expiryMonth > 12 || expiryMonth === '00') {
-      errors.expiration = 'This month does not exist';
     }
   }
   return errors;
