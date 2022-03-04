@@ -130,8 +130,6 @@ const CheckoutPage = () => {
     <div className={styles.checkoutContainer}>
       <div className={`${styles.step} ${styles.order}`}>
         <h3 className={styles.title}>1. Review Order</h3>
-        <ReviewOrderWidget shippingFee={shippingFee} />
-        <ReviewOrderWidget setTotal={setTotalPrice} />
         <ReviewOrderWidget shippingFee={shippingFee} setTotal={setTotalPrice} />
       </div>
       <div className={`${styles.step} ${styles.delivery}`}>
