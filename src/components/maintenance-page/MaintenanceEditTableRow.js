@@ -108,9 +108,11 @@ const EditRow = ({
       <td className="ProductCells editable">
         <select id="demographic" onChange={(e) => updatedProductDropdown(e)}>
           <option value={product.demographic}>{product.demographic}</option>
-          <option value="Men">Men</option>
-          <option value="Women">Women</option>
-          <option value="Kids">Kids</option>
+          {product.demographic !== 'Men' && <option value="Men">Men</option>}
+          {product.demographic !== 'Women' && (
+            <option value="Women">Women</option>
+          )}
+          {product.demographic !== 'Kids' && <option value="Kids">Kids</option>}
         </select>
       </td>
       <td
@@ -132,9 +134,7 @@ const EditRow = ({
         {product.type}
       </td>
       <td
-        className={`ProductCells ${
-          errors.releaseDate ? 'error' : 'editable'
-        }`}
+        className={`ProductCells ${errors.releaseDate ? 'error' : 'editable'}`}
         contentEditable={releaseEditable}
         id="releaseDate"
         onMouseOut={(e) => updateProduct(e)}
@@ -186,11 +186,9 @@ const EditRow = ({
       </td>
       <td className={`ProductCells ${errors.active ? 'error' : 'editable'}`}>
         <select id="active" onChange={(e) => updatedProductDropdown(e)}>
-          <option value={active}>
-            {active}
-          </option>
-          <option value="true">true</option>
-          <option value="false">false</option>
+          <option value={active}>{active}</option>
+          {product.active !== 'true' && <option value="true">true</option>}
+          {product.active !== 'false' && <option value="false">false</option>}
         </select>
       </td>
       <td
@@ -227,7 +225,7 @@ const EditRow = ({
         onMouseOut={(e) => updateProduct(e)}
         onBlur={(e) => updateProduct(e)}
       >
-        { price }
+        {price}
       </td>
       <td
         className={`ProductCells ${errors.quantity ? 'error' : 'editable'}`}

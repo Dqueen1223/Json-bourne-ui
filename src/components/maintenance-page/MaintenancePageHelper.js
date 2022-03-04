@@ -130,7 +130,7 @@ const MaintenancePageHelper = (
     if (Object.keys(errors).length === 0) {
       await UpdateProducts(updatedProduct);
       setEditable(null);
-      fetchProducts(setProducts, setApiError);
+      fetchProducts(setProducts);
     } else {
       setDisplayErrors([product.id]);
     }
