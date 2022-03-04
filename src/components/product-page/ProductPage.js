@@ -26,6 +26,7 @@ const ProductPage = () => {
   const [isActive, setIsActive] = useState(true);
   const [filter, setFilter] = useState('');
   const [reviews, setReviews] = useState(true);
+  const [wishList, setWishList] = useState([]);
   const [profile, setProfile] = useState({});
   const {
     state: { userProfile }
@@ -34,6 +35,11 @@ const ProductPage = () => {
   useEffect(() => {
     loginUser(userProfile[1], setProfile, setApiError);
   }, [userProfile]);
+  useEffect(() => {
+    if (profile.wishlist) {
+      setWishList(profile.wishlist);
+    }
+  }, [profile]);
   useEffect(() => {
     fetchProducts(setProducts, setApiError, filter, (`&range=${(currentPage * 20) - 20}`));
   }, [filter, currentPage]);
@@ -82,7 +88,13 @@ const ProductPage = () => {
             <div key={product.id}>
               {/* check for reviews here...if reviews are present then produce a review button.
                */}
-              <ProductCard product={product} reviews={reviews} />
+              <ProductCard
+                product={product}
+                reviews={reviews}
+                wishlist={wishList}
+                profile={profile}
+                setProfile={setProfile}
+              />
             </div>
           ))}
         </div>

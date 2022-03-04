@@ -230,4 +230,6 @@ input[type=number] {
     left: 5%;
     width: 136px;
 }
-
+.InWishList{
+    color: orange;
+}

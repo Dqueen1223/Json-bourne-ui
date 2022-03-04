@@ -9,7 +9,7 @@ import CardActions from '@material-ui/core/CardActions';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import { red } from '@material-ui/core/colors';
+import { orange, red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import ShareIcon from '@material-ui/icons/Share';
@@ -20,6 +20,7 @@ import ProductCardModal from '../product-page/ProductCardModal';
 import getQtyInCart, { inventoryAvailable } from './ProductCardService';
 import ReviewsModal from '../product-page/ReviewsModal';
 import '../product-page/ReviewsModal.css';
+import fetchUpdateUser from '../Profile/ProfileUpdateService';
 
 /**
  * @name useStyles
@@ -46,6 +47,9 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     backgroundColor: red[500]
+  },
+  colorInWishList: {
+    color: '#fc46aa'
   }
 }));
 
@@ -55,18 +59,26 @@ const useStyles = makeStyles((theme) => ({
  * @param {*} props product
  * @return component
  */
-const ProductCard = ({ product, reviews }) => {
+const ProductCard = ({
+  product, reviews, wishlist, profile, setProfile
+}) => {
   const classes = useStyles();
   const { dispatch } = useCart();
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [reviewsModal, setReviewsModal] = useState(false);
   const [showCreateReview, setReviewFormToggle] = useState(false);
+  const [inWishList, setInWishList] = useState(wishlist.includes(product.id));
   // const { activeReviews } = React.useState(reviews.filter((r) => (r.productId === product.id)));
   const {
     state: { products }
   } = useCart();
-
+  React.useEffect(() => {
+    if (wishlist.length > 0) {
+      setInWishList(wishlist.includes(product.id));
+    }
+  }, [product.id, wishlist]);
   const onAdd = (e) => {
+    console.log(inWishList);
     e.stopPropagation();
     const qtyInCart = getQtyInCart(products, product);
     if (!inventoryAvailable(qtyInCart, product)) return;
@@ -104,6 +116,35 @@ const ProductCard = ({ product, reviews }) => {
     toast.success('Product successfully added to cart.');
   };
   const favoriteAdd = (e) => {
+    if (Object.keys(profile).length !== 0) {
+      if (!inWishList) {
+        // remove from wishlist
+        console.log('add');
+        const newWishList = [];
+        newWishList.push(...wishlist);
+        newWishList.push(product.id);
+        const user = {
+          id: profile.id,
+          dateModified: new Date().toISOString(),
+          email: profile.email,
+          firstName: profile.firstName,
+          lastName: profile.lastName,
+          street: profile.street,
+          street2: profile.street2,
+          city: profile.city,
+          state: profile.state,
+          zip: profile.zip,
+          phone: profile.phone,
+          role: profile.role,
+          wishlist: newWishList
+        };
+        fetchUpdateUser(user, setProfile);
+      } else {
+        console.log('remove');
+        // add to wishlist
+      }
+      setInWishList(!inWishList);
+    }
     e.stopPropagation();
   };
   const share = (e) => {
@@ -184,9 +225,36 @@ const ProductCard = ({ product, reviews }) => {
           setModalIsOpen(true);
         }}
       >
-        <IconButton aria-label="add to favorites" onClick={favoriteAdd}>
+        {inWishList && (
+          <IconButton
+            aria-label="add to favorites"
+            className={classes.colorInWishList}
+            onClick={favoriteAdd}
+            sx={{
+              color: orange
+            }}
+          >
+            <FavoriteIcon />
+          </IconButton>
+        )}
+        {!inWishList && Object.keys(profile).length !== 0 && (
+        <IconButton
+          aria-label="add to favorites"
+          onClick={favoriteAdd}
+        >
           <FavoriteIcon />
         </IconButton>
+        )}
+        {!inWishList && Object.keys(profile).length === 0 && (
+        <IconButton
+          title="Must be signed in to add a product to your wish list."
+          aria-label="add to favorites"
+          className="test"
+          onClick={favoriteAdd}
+        >
+          <FavoriteIcon />
+        </IconButton>
+        )}
         <IconButton aria-label="share" onClick={share}>
           <ShareIcon />
         </IconButton>
