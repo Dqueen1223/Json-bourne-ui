@@ -120,6 +120,7 @@
     padding:5px;
     min-width:12em;
     max-width: 12em;
+    overflow-wrap: break-word;
 }
 .reviewsProductName{
     font-size: 170%;

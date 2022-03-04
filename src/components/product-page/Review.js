@@ -57,8 +57,6 @@ const Review = ({
     setEditing(!editing);
   };
   const cancelEditHandler = () => {
-    setTitle(tempTitle);
-    setDesc(tempDesc);
     setIsEdit(!isEdit);
     setEditing(!editing);
   };
@@ -111,6 +109,7 @@ const Review = ({
     }
   };
   const showTitleErrors = (e) => {
+    setTempTitle(e.target.innerText);
     if (Number(50 - e.target.innerText.length) < 0) {
       e.target.parentNode.parentNode.children[2].classList.remove('hidden');
       e.target.parentNode.parentNode.children[1].classList.add('hidden');
@@ -123,6 +122,7 @@ const Review = ({
     }
   };
   const showDescriptionErrors = (e) => {
+    setTempDesc(e.target.innerText);
     if (Number(300 - e.target.innerText.length) < 0) {
       e.target.parentNode.children[6].classList.remove('hidden');
       e.target.parentNode.children[5].classList.add('hidden');
@@ -203,12 +203,12 @@ const Review = ({
           </div>
           <div className="titleErrorContainer hidden">
             Remaining Characters:&nbsp;
-            {Number(50 - title.length)}
+            {Number(50 - tempTitle.length)}
           </div>
           <div className="titleErrorContainer red hidden">
             Character limit exceeded:
             {'    '}
-            { title.length }
+            { tempTitle.length }
             {' '}
             of 50 used
           </div>
@@ -226,12 +226,12 @@ const Review = ({
           </div>
           <div className="descriptionErrorContainer hidden">
             Remaining Characters:&nbsp;
-            {Number(300 - desc.length)}
+            {Number(300 - tempDesc.length)}
           </div>
           <div className="descriptionErrorContainer red hidden">
             Character limit exceeded:
             {'    '}
-            { desc.length }
+            { tempDesc.length }
             {' '}
             of 300 used
           </div>
