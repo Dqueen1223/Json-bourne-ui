@@ -6,10 +6,12 @@ import ProductCard from '../product-card/ProductCard';
 import styles from './ProductPage.module.css';
 import Constants from '../../utils/constants';
 import fetchProductsCount from './productCountPageService';
+import { useProfile } from '../Profile/ProfileContext';
 import fetchProducts from './ProductPageService';
 import FilterMenu from './filter-menu/FilterMenu';
 import Pagination from './Pagination';
 import fetchReviews from './ReviewService';
+import loginUser from '../header/HeaderService';
 
 /**
  * @name ProductPage
@@ -24,7 +26,14 @@ const ProductPage = () => {
   const [isActive, setIsActive] = useState(true);
   const [filter, setFilter] = useState('');
   const [reviews, setReviews] = useState(true);
+  const [profile, setProfile] = useState({});
+  const {
+    state: { userProfile }
+  } = useProfile();
 
+  useEffect(() => {
+    loginUser(userProfile[1], setProfile, setApiError);
+  }, [userProfile]);
   useEffect(() => {
     fetchProducts(setProducts, setApiError, filter, (`&range=${(currentPage * 20) - 20}`));
   }, [filter, currentPage]);
