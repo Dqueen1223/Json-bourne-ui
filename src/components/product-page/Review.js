@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react';
+import reactDom from 'react-dom';
 import { FaPencilAlt } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import Delete from '@material-ui/icons/Delete';
-import { useConfirm } from 'material-ui-confirm';
 import Rating from '@mui/material/Rating';
+import ConfirmModal from '../checkout-page/ConfirmModal';
 import { updateReview, deleteReview } from './ReviewService';
-// import { useProfile } from '../Profile/ProfileContext';
-// import BasicRating from './ReviewsStars';
 
 /**
  * @name Review
@@ -18,19 +17,33 @@ const Review = ({
 }) => {
   const [isEdit, setIsEdit] = React.useState(false);
   const [isDeleted, setIsDeleted] = React.useState(false);
-  // const [value, setValue] = React.useState();
   const [desc, setDesc] = React.useState(review.reviewsDescription);
   const [title, setTitle] = React.useState(review.title);
   const [tempTitle, setTempTitle] = React.useState(null);
   const [tempDesc, setTempDesc] = React.useState(null);
   const [stars, setStars] = React.useState(review.rating);
   const [apiError, setApiError] = React.useState(false);
+  const [confirmationOpen, setConfirmationOpen] = React.useState(false);
+  const [goAhead, setGoAhead] = React.useState(false);
   const [currentRating, setCurrentRating] = React.useState(<Rating name="half-rating-read" defaultValue={stars} precision={stars} readOnly />);
-  const confirm = useConfirm();
-  /* const {
-    state: { userProfile }
-  } = useProfile(); */
-
+  useEffect(() => {
+    if (goAhead) {
+      const deletedReview = {
+        id: review.id,
+        rating: stars,
+        title,
+        reviewsDescription: desc,
+        email: review.email,
+        productId: review.productId,
+        uerId: review.userId,
+        dateCreated: review.dateCreated
+      };
+      deleteReview(setIsDeleted, setApiError, deletedReview);
+      console.log(isDeleted);
+      setUpdateReviews(true);
+      setGoAhead(false);
+    }
+  }, [goAhead, review, desc, isDeleted, setUpdateReviews, stars, title]);
   useEffect(() => {
     if (apiError) {
       toast.error('Cannot connect to the database');
@@ -53,7 +66,7 @@ const Review = ({
     const reviewElement = e.target.closest('.reviewsOfProduct');
     const reviewTitle = reviewElement.querySelector('.reviewsTitle').innerText.trim();
     const description = reviewElement.querySelector('.reviewsDescription').innerText.trim();
-    // const starRating = Number(reviewElement.querySelector('.starRating').innerText.trim());
+    // cont starRating = Number(reviewElement.querySelector('.starRating').innerText.trim());
     const updatedReview = {
       id: review.id,
       rating: stars,
@@ -97,21 +110,6 @@ const Review = ({
       toast.error('Some fields contain invalid inputs.');
     }
   };
-
-  /* const preventCursorDisappearHandler = (e) => {
-    setTitle(e.target.innerText);
-    const input = e.target.innerText;
-    if (input === '') {
-      e.target.innerText = ' ';
-    }
-  };
-  const preventCursorDisappearHandlerDescription = (e) => {
-    setDesc(e.target.innerText);
-    const input = e.target.innerText;
-    if (input === '') {
-      e.target.innerText = ' ';
-    }
-  }; */
   const showTitleErrors = (e) => {
     if (Number(50 - e.target.innerText.length) < 0) {
       e.target.parentNode.parentNode.children[2].classList.remove('hidden');
@@ -140,37 +138,26 @@ const Review = ({
     setIsDeleted(!isDeleted);
   }; */
 
-  const submitDeleteHandler = (e) => {
-    const reviewElement = e.target.closest('.reviewsOfProduct');
-    const reviewTitle = reviewElement.querySelector('.reviewsTitle').innerText.trim();
-    const description = reviewElement.querySelector('.reviewsDescription').innerText.trim();
-    const starRating = Number(reviewElement.querySelector('.starRating').innerText.trim());
-    const deletedReview = {
-      id: review.id,
-      rating: starRating,
-      title: reviewTitle,
-      reviewsDescription: description,
-      email: review.email,
-      productId: review.productId,
-      uerId: review.userId,
-      dateCreated: review.dateCreated
-    };
-    confirm({
-      title: 'Are you sure you would like to delete this review?',
-      description: 'This action cannot be undone.',
-      confirmationText: 'Delete'
-    })
-      .then(() => deleteReview(setIsDeleted, setApiError, deletedReview))
-      .catch(() => console.log('Deletion cancelled.'));
-    // setIsDeleted(true);
-    // const btnSubmit = reviewElement.querySelector('.btnSubmitDeleteReview');
-    // btnSubmit.style.visibility = 'hidden';
+  // const submitDeleteHandler = (e) => {
+
+  // };
+
+  const openModal = () => {
+    setConfirmationOpen(true);
   };
 
   return (
     <>
+      {confirmationOpen && reactDom.createPortal(
+        <ConfirmModal
+          setConfirm={setGoAhead}
+          setDeleteConfirmationModal={setConfirmationOpen}
+          confirmMessage="Are you sure you want to delete this review?"
+        />,
+        document.getElementById('root')
+      )}
       { /* if the current review is not being edited, and is associated with the signed in user */ }
-      {(review.email === email) && !isEdit && !isDeleted && (
+      {(review.email === email) && !isEdit && (
       <div className="reviewsOfProduct">
         <div className="titleContainer">
           <div className="reviewsTitle">
@@ -179,7 +166,7 @@ const Review = ({
           <div className="icons">
             <span>
               <FaPencilAlt className="pencilIcon" alt="pencilIcon" onClick={editHandler} />
-              <Delete className="trashIcon" alt="pencilIcon" onClick={submitDeleteHandler} />
+              <Delete className="trashIcon" alt="pencilIcon" onClick={openModal} />
             </span>
           </div>
         </div>
@@ -201,16 +188,16 @@ const Review = ({
       </div>
       )}
       { /* If the current review is being edited by the signed in user */}
-      {(review.email === email) && isEdit && !isDeleted && (
+      {(review.email === email) && isEdit && (
         <div className="reviewsOfProduct">
           <div className="titleContainer">
-            <div className="reviewsTitle editable" contentEditable suppressContentEditableWarning onInput={(e) => { /* preventCursorDisappearHandler(e); */ showTitleErrors(e); }}>
+            <div className="reviewsTitle editable" contentEditable suppressContentEditableWarning onInput={(e) => { showTitleErrors(e); }}>
               { title || review.title }
             </div>
             <div>
               <span>
                 <FaPencilAlt className="pencilIcon" alt="pencilIcon" onClick={cancelEditHandler} />
-                <Delete className="trashIcon" alt="pencilIcon" onClick={submitDeleteHandler} />
+                <Delete className="trashIcon" alt="pencilIcon" onClick={openModal} />
               </span>
             </div>
           </div>
@@ -234,7 +221,7 @@ const Review = ({
               }}
             />
           </div>
-          <div className="reviewsDescription editable" contentEditable suppressContentEditableWarning onInput={(e) => { /* preventCursorDisappearHandlerDescription(e); */ showDescriptionErrors(e); }}>
+          <div className="reviewsDescription editable" contentEditable suppressContentEditableWarning onInput={(e) => { showDescriptionErrors(e); }}>
             {review.reviewsDescription}
           </div>
           <div className="descriptionErrorContainer hidden">
@@ -253,14 +240,10 @@ const Review = ({
             {' '}
             {review.dateCreated.slice(0, 10)}
           </div>
-          <button type="button" className="btnSubmitEditReview" onClick={submitEditHandler}>Submit</button>
+          <button type="button" className="btnSubmitEditReview" onClick={(e) => (submitEditHandler(e))}>Submit</button>
         </div>
       )}
-      {(review.email === email) && isDeleted && (
-        <div className="reviewsOfProduct">
-          test
-        </div>
-      )}
+
       { /* if the current review is not a review by the current user */}
       {(review.email !== email) && (
       <div className="reviewsOfProduct">

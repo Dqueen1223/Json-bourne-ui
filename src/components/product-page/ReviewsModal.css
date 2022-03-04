@@ -3,11 +3,12 @@
     font-size: 1.5em;
 }
 .reviewsProductCardButton{
-    background-color: #fb8122;
+    /* background-color: #fb8122; */
     color: #E1E2E2;
     position: relative;
     left: 5%;
     width: 40%;
+    z-index: 1;
 }
 .reviewsModalBackground{
     position: fixed;
@@ -213,32 +214,15 @@ input[type=number] {
     -moz-appearance: textfield;
 }
 
-.reviewsProductCardButton{
-    background-color: #fb8122;
-    /* color: #E1E2E2 */
-    position: relative;
-    left: 5%;
-    width: 75%;
-    /* visibility: hidden; */
-}
 
 .addReviewsProductCardButton{
     color: white;
-    background-color: #fb8122;
     /* color: #E1E2E2 */
     /* position: relative; */
     left: 5%;
     width: 136px;
 }
 
-.reviewsProductCardButton:hover {
-    color: white;
-    background-color: #1D2228;
-    /* color: #E1E2E2 */
-    position: relative;
-    left: 5%;
-    width: 75%;
-}
 .addReviewsProductCardButton:hover {
     color: white;
     background-color: #1D2228;
@@ -247,13 +231,15 @@ input[type=number] {
     left: 5%;
     width: 136px;
 }
+
+.review-menu {
+    display: flexbox;
+}
 .editable{
     border: 2px solid gray;
 }
 .redBorder{
     border: 2px solid red;
-}
-.titleErrorContainer{
 }
 .hidden{
     display: none;
@@ -265,4 +251,7 @@ input[type=number] {
     position: fixed;
     height: 100%;
     width: 100%;
+}
+.gray {
+    color: gray;
 }
