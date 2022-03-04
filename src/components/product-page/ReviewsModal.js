@@ -128,7 +128,7 @@ const ReviewsModal = ({
               {email !== '' && (
                 <Button
                   // type="button"
-                  onClick={() => setReviewFormToggle(!showCreateReview)}
+                  onClick={() => { setReviewFormToggle(!showCreateReview); setEditing(!editing); }}
                   className="createReview"
                 >
                   Add Review
@@ -159,6 +159,7 @@ const ReviewsModal = ({
                   newReview={newReview}
                   reviewFormToggle={setReviewFormToggle}
                   setUpdateReviews={setUpdateReviews}
+                  setEditing={setEditing}
                 />
               )
               : null}

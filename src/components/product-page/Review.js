@@ -104,6 +104,7 @@ const Review = ({
       btnSubmit.style.visibility = 'hidden';
       setIsEdit(false);
       setEditing(false);
+      toast.confirm('Review successfully edited');
     } else {
       toast.error('Some fields contain invalid inputs.');
     }
@@ -194,7 +195,7 @@ const Review = ({
             <div className="reviewsTitle editable" contentEditable suppressContentEditableWarning onInput={(e) => { showTitleErrors(e); }}>
               { title || review.title }
             </div>
-            <div>
+            <div className="icons">
               <span>
                 <FaPencilAlt className="pencilIcon" alt="pencilIcon" onClick={cancelEditHandler} />
                 <Delete className="trashIcon" alt="pencilIcon" onClick={openModal} />

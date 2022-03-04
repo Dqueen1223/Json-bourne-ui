@@ -35,7 +35,7 @@ export async function updateReview(setReviews, setApiError, review) {
   await HttpHelper(`${Constants.REVIEWS_ENDPOINT}/${review.id}`, 'PUT', review)
     .then((response) => {
       if (response.ok) {
-        toast.success('review updated successfully');
+        toast.success('Review updated successfully');
         return response.json();
       }
       throw new Error(Constants.API_ERROR);

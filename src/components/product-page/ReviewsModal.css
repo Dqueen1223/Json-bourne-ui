@@ -81,6 +81,10 @@
     margin:0 2%;
     visibility: hidden;
 }
+.icons{
+    margin-left: auto;
+    margin-right: 10px;
+}
 .deleteIcon{
     width:1em;
     height:1em;
