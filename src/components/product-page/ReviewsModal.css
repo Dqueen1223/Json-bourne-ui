@@ -5,10 +5,11 @@
 .reviewsProductCardButton{
     /* background-color: #fb8122; */
     color: #E1E2E2;
-    position: relative;
+    /* position: relative; */
     left: 5%;
     width: 40%;
-    z-index: 1;
+    /* z-index: 1; */
+    cursor: pointer;
 }
 .reviewsModalBackground{
     position: fixed;
