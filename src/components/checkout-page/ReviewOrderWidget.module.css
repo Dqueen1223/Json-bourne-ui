@@ -10,3 +10,41 @@
 .returnProductLink {
   color: #FB8122;
 }
+
+.promoDiscount {
+justify-self: end;
+}
+
+.success {
+  flex: auto;
+  margin-left: .5em;
+  border:1px solid green
+}
+
+.orderDiv {
+  display: flex;
+  align-items:center;
+  flex-wrap:nowrap;
+}
+
+.input {
+  flex: auto;
+  margin-left: .5em;
+  box-sizing:border-box
+}
+
+.inputError {
+  margin-left: .5em;
+  border:1px solid red
+}
+.error_item {
+  color: red
+}
+
+.label {
+  min-width: 5.5em;
+
+}
+
+
+

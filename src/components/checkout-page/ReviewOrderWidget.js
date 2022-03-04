@@ -5,7 +5,7 @@ import OrderItem from './OrderItem';
 import { getSubtotal } from './ReviewOrderWidgetService';
 import styles from './ReviewOrderWidget.module.css';
 import cartLogic from './cartLogic';
-import PromoItem from '../form/PromoForm';
+import PromoItem from './forms/PromoForm';
 import getPromoDiscount from './PromoFormService';
 
 /**
@@ -18,16 +18,27 @@ const ReviewOrderWidget = ({ setTotal, shippingFee }) => {
     state: { products }
   } = useCart();
   cartLogic();
-  const calculateTotal = () => {
-    const totalVal = (Number(getSubtotal(products).substring(1))
-      + Number(shippingFee)).toFixed(2);
-    setTotal(Number(totalVal));
-    return totalVal;
-  };
   const [promoValue, setPromoValue] = React.useState('');
   const [error, setError] = React.useState('');
   const [success, setSuccess] = React.useState(false);
   const [discountObject, setDiscountObject] = React.useState({});
+  const promoDiscount = () => {
+    if (discountObject.discount) {
+      if (discountObject.type === '%') {
+        const subtotal = Number(getSubtotal(products).substring(1));
+        return ((subtotal * (discountObject.discount / 100)).toFixed(2));
+      }
+      return Number(discountObject.discount.toFixed(2));
+    }
+    return '0.00';
+  };
+  const calculateTotal = () => {
+    const totalVal = (Number(getSubtotal(products).substring(1))
+      - promoDiscount()
+      + Number(shippingFee)).toFixed(2);
+    setTotal(Number(totalVal));
+    return totalVal;
+  };
   const onPromoChange = (e) => {
     setPromoValue(e.target.value);
   };
@@ -40,9 +51,12 @@ const ReviewOrderWidget = ({ setTotal, shippingFee }) => {
     if (Object.keys(discountObject).length !== 0
       && (discountObject.code === null || discountObject.code === undefined)) {
       setError('Invalid code');
+      setSuccess(false);
     } else {
       setError('');
-      setSuccess(true);
+      if (discountObject.code) {
+        setSuccess(true);
+      }
     }
   }, [discountObject]);
   return (
@@ -76,18 +90,22 @@ const ReviewOrderWidget = ({ setTotal, shippingFee }) => {
         <div className={styles.price}>
           <p>{getSubtotal(products) }</p>
         </div>
-        <div>
-          <PromoItem
-            onChange={onPromoChange}
-            onBlur={onPromoBlur}
-            value={promoValue}
-            id="promo"
-            label="Promo code"
-            placeholder="Put promo code here!"
-            type="text"
-            error={error}
-            success={success}
-          />
+        <PromoItem
+          onChange={onPromoChange}
+          onBlur={onPromoBlur}
+          value={promoValue}
+          id="promo"
+          label="Promo code"
+          placeholder="Put promo code here!"
+          type="text"
+          error={error}
+          success={success}
+        />
+        <div className={styles.promoDiscount}>
+          <p>
+            -$
+            { promoDiscount() }
+          </p>
         </div>
         <div>
           <p>
@@ -114,4 +132,5 @@ const ReviewOrderWidget = ({ setTotal, shippingFee }) => {
     </>
   );
 };
+
 export default ReviewOrderWidget;
