@@ -56,10 +56,10 @@ const Review = ({
     setIsEdit(!isEdit);
     setEditing(!editing);
   };
-  const cancelEditHandler = () => {
+  /* const cancelEditHandler = () => {
     setIsEdit(!isEdit);
     setEditing(!editing);
-  };
+  }; */
   const submitEditHandler = (e) => {
     const reviewElement = e.target.closest('.reviewsOfProduct');
     const reviewTitle = reviewElement.querySelector('.reviewsTitle').innerText.trim();
@@ -195,12 +195,18 @@ const Review = ({
             <div className="reviewsTitle editable" contentEditable suppressContentEditableWarning onInput={(e) => { showTitleErrors(e); }}>
               { title || review.title }
             </div>
-            <div className="icons">
-              <span>
-                <FaPencilAlt className="pencilIcon" alt="pencilIcon" onClick={cancelEditHandler} />
-                <Delete className="trashIcon" alt="pencilIcon" onClick={openModal} />
-              </span>
-            </div>
+            { /*
+              <div className="icons">
+                <span>
+                  <FaPencilAlt
+                    className="pencilIcon"
+                    alt="pencilIcon"
+                    onClick={cancelEditHandler}
+                  />
+                  <Delete className="trashIcon" alt="pencilIcon" onClick={openModal} />
+                </span>
+              </div>
+            */ }
           </div>
           <div className="titleErrorContainer hidden">
             Remaining Characters:&nbsp;
