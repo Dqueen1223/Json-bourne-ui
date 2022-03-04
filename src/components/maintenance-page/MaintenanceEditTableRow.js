@@ -187,8 +187,8 @@ const EditRow = ({
       <td className={`ProductCells ${errors.active ? 'error' : 'editable'}`}>
         <select id="active" onChange={(e) => updatedProductDropdown(e)}>
           <option value={active}>{active}</option>
-          {product.active !== 'true' && <option value="true">true</option>}
-          {product.active !== 'false' && <option value="false">false</option>}
+          {active !== 'true' && <option value="true">true</option>}
+          {active !== 'false' && <option value="false">false</option>}
         </select>
       </td>
       <td
