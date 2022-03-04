@@ -67,8 +67,7 @@ const ProductCard = ({
   const [reviewsModal, setReviewsModal] = useState(false);
   const [showCreateReview, setReviewFormToggle] = useState(false);
   const [averageRating, setAverageRating] = useState(0);
-  // const [activeReviews] = React.useState(reviews.filter((r) => (r.productId === product.id)));
-  // const [activeReviews] = React.useState(reviews.filter((r) => (r.productId === product.id)));
+  // const [reviewCount, setReviewCount] = useState(0);
 
   const {
     state: { products }
@@ -81,7 +80,6 @@ const ProductCard = ({
     if (reviews !== true) {
       setActiveReviews(reviews.filter((r) => (r.productId === product.id)));
     }
-    // setActiveReviews(reviews.filter((r) => (r.productId === product.id)));
   }, [updateReviews, product.id, reviews]);
 
   React.useEffect(() => {
@@ -105,6 +103,19 @@ const ProductCard = ({
       }
     }
   }, [activeReviews, reviews, updateReviews]);
+
+  //   React.useEffect(() => {
+  //     if (activeReviews) {
+  //       let displayCount = 0;
+  //       if (!activeReviews === false) {
+  //         activeReviews.forEach((e) =>
+  //           displayCount += e.reviewsDescription);
+  //       });
+  // }
+
+  //   }, [activeReviews, reviews]);
+
+  const displayCount = Object.keys(activeReviews).length;
 
   const onAdd = (e) => {
     e.stopPropagation();
@@ -229,23 +240,17 @@ const ProductCard = ({
         <IconButton aria-label="add to shopping cart" onClick={onAdd}>
           <AddShoppingCartIcon />
         </IconButton>
+        <div className="reviewCounter">
+          {displayCount}
+        </div>
         {ReviewsModal !== false && (
           <>
-            {/* <button
-              className="reviewsProductCardButton"
-              type="button"
-              variant="contained"
-              onClick={onReview}
-            >
-              Reviews
-            </button> */}
             <div
               onClick={onReview}
               aria-hidden="true"
             >
               <Rating
                 reviews={reviews}
-                // onClick={onReview}
                 type="button"
                 className="reviewsProductCardButton"
                 name="half-rating-read"

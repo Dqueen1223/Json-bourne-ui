@@ -200,15 +200,24 @@ const ProductCardModal = ({
                 />,
                 document.getElementById('root')
               )}
-              <Rating
-                onClick={onReview}
-                type="button"
-                variant="contained"
-                className="reviewsProductCardButton"
-                name="half-rating-read"
-                defaultValue={2.5}
-                precision={0.5}
-              />
+              {ReviewsModal !== false && (
+              <>
+                <div
+                  onClick={onReview}
+                  aria-hidden="true"
+                >
+                  <Rating
+                    reviews={reviews}
+                    type="button"
+                    className="productModalReviews"
+                    name="half-rating-read"
+                    // value={averageRating}
+                    precision={0.5}
+                    readOnly
+                  />
+                </div>
+              </>
+              )}
             </div>
           </div>
         </div>
