@@ -3,12 +3,9 @@ import reactDom from 'react-dom';
 import { FaPencilAlt } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import Delete from '@material-ui/icons/Delete';
-// import { useConfirm } from 'material-ui-confirm';
 import Rating from '@mui/material/Rating';
 import ConfirmModal from '../checkout-page/ConfirmModal';
 import { updateReview, deleteReview } from './ReviewService';
-// import { useProfile } from '../Profile/ProfileContext';
-// import BasicRating from './ReviewsStars';
 
 /**
  * @name Review
@@ -28,19 +25,11 @@ const Review = ({
   const [confirmationOpen, setConfirmationOpen] = React.useState(false);
   const [goAhead, setGoAhead] = React.useState(false);
   // eslint-disable-next-line max-len
-  // const [currentRating] = React.useState(<Rating name="half-rating-read" defaultValue={review.rating} precision={review.rating} readOnly />);
   const [currentRating, setCurrentRating] = React.useState(<Rating name="half-rating-read" defaultValue={stars} precision={stars} readOnly />);
-  // const confirm = useConfirm();
   console.log(`review id ${review.id} product id ${review.productId}`);
-  /* const {
-    state: { userProfile }
-  } = useProfile(); */
+  // The following useEffect is for DELETING a review
   useEffect(() => {
     if (goAhead) {
-      // const reviewElement = e.target.closest('.reviewsOfProduct');
-      // const reviewTitle = reviewElement.querySelector('.reviewsTitle').innerText.trim();
-      // const description = reviewElement.querySelector('.reviewsDescription').innerText.trim();
-      // const starRating = Number(reviewElement.querySelector('.starRating').innerText.trim());
       const deletedReview = {
         id: review.id,
         rating: stars,
@@ -52,7 +41,6 @@ const Review = ({
         dateCreated: review.dateCreated
       };
       deleteReview(setIsDeleted, setApiError, deletedReview);
-      console.log(isDeleted);
       setUpdateReviews(true);
       setGoAhead(false);
     }
@@ -72,7 +60,6 @@ const Review = ({
     const reviewElement = e.target.closest('.reviewsOfProduct');
     const reviewTitle = reviewElement.querySelector('.reviewsTitle').innerText.trim();
     const description = reviewElement.querySelector('.reviewsDescription').innerText.trim();
-    // cont starRating = Number(reviewElement.querySelector('.starRating').innerText.trim());
     const updatedReview = {
       id: review.id,
       rating: stars,
@@ -106,7 +93,6 @@ const Review = ({
     setTitle(reviewTitle);
     setDesc(description);
     setCurrentRating(<Rating name="half-rating-read" defaultValue={stars} precision={stars} readOnly />);
-    // setStars(starRating);
     updateReview(setUpdateReviews, setApiError, updatedReview);
     setUpdateReviews(true);
     const btnSubmit = reviewElement.querySelector('.btnSubmitEditReview');
@@ -118,13 +104,11 @@ const Review = ({
   const preventCursorDisappearHandler = (e) => {
     const input = e.target.innerText;
     setTitle(e.target.innerText);
-    // const input = e.target.innerText;
     if (input === '') {
       e.target.innerText = ' ';
     }
   };
   const preventCursorDisappearHandlerDescription = (e) => {
-    console.log(e.target.innerText.length);
     setDesc(e.target.innerText);
     const input = e.target.innerText;
     if (input === '') {
@@ -155,13 +139,6 @@ const Review = ({
       e.target.parentNode.children[6].classList.add('hidden');
     }
   };
-  /* const deleteHandler = () => {
-    setIsDeleted(!isDeleted);
-  }; */
-
-  // const submitDeleteHandler = (e) => {
-
-  // };
 
   const openModal = () => {
     setConfirmationOpen(true);
@@ -173,7 +150,7 @@ const Review = ({
         <ConfirmModal
           setConfirm={setGoAhead}
           setDeleteConfirmationModal={setConfirmationOpen}
-          confirmMessage="Are you sure you want to delete this review?"
+          confirmMessage="Are you sure you would like to delete this review? This action can not be undone."
         />,
         document.getElementById('root')
       )}
