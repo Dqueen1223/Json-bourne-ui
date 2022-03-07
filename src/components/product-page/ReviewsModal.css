@@ -6,14 +6,13 @@
     /* background-color: #fb8122; */
     color: #E1E2E2;
     position: relative;
-    right: 15%;
+    right: 4%;
     width: 100%;
     
 }
 .reviewCounter {
     position: relative;
     left: 42%;
-    
 }
 .reviewsModalBackground{
     position: fixed;
@@ -223,14 +222,8 @@ input::-webkit-inner-spin-button {
 input[type=number] {
     -moz-appearance: textfield;
 }
-
-
-.addReviewsProductCardButton{
-    color: white;
-    /* color: #E1E2E2 */
-    /* position: relative; */
-    left: 5%;
-    width: 136px;
+.createReview {
+    width: 50%;
 }
 
 .addReviewsProductCardButton:hover {
