@@ -25,7 +25,10 @@ const Review = ({
   const [apiError, setApiError] = React.useState(false);
   const [confirmationOpen, setConfirmationOpen] = React.useState(false);
   const [goAhead, setGoAhead] = React.useState(false);
+  // eslint-disable-next-line max-len
   const [currentRating, setCurrentRating] = React.useState(<Rating name="half-rating-read" defaultValue={stars} precision={stars} readOnly />);
+  console.log(`review id ${review.id} product id ${review.productId}`);
+  // The following useEffect is for DELETING a review
   useEffect(() => {
     if (goAhead) {
       const deletedReview = {
@@ -39,7 +42,6 @@ const Review = ({
         dateCreated: review.dateCreated
       };
       deleteReview(setIsDeleted, setApiError, deletedReview);
-      console.log(isDeleted);
       setUpdateReviews(true);
       setGoAhead(false);
     }
@@ -64,7 +66,6 @@ const Review = ({
     const reviewElement = e.target.closest('.reviewsOfProduct');
     const reviewTitle = reviewElement.querySelector('.reviewsTitle').innerText.trim();
     const description = reviewElement.querySelector('.reviewsDescription').innerText.trim();
-    // cont starRating = Number(reviewElement.querySelector('.starRating').innerText.trim());
     const updatedReview = {
       id: review.id,
       rating: stars,
@@ -135,13 +136,6 @@ const Review = ({
       e.target.parentNode.children[6].classList.add('hidden');
     }
   };
-  /* const deleteHandler = () => {
-    setIsDeleted(!isDeleted);
-  }; */
-
-  // const submitDeleteHandler = (e) => {
-
-  // };
 
   const openModal = () => {
     setConfirmationOpen(true);
@@ -153,7 +147,7 @@ const Review = ({
         <ConfirmModal
           setConfirm={setGoAhead}
           setDeleteConfirmationModal={setConfirmationOpen}
-          confirmMessage="Are you sure you want to delete this review?"
+          confirmMessage="Are you sure you would like to delete this review? This action can not be undone."
         />,
         document.getElementById('root')
       )}
