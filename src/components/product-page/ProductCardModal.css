@@ -168,7 +168,12 @@
 }
 .productModalReviews {
     position: relative;
-    left: 10%;
+    left: 5%;
+    top: 25%;
+}
+.productReviewCounter{
+    position: relative;
+    left: 90%;
     top: 30%;
 }
 .lowerQuantityBtn:hover{

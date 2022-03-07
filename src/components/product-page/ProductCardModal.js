@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import reactDom from 'react-dom';
+// import reactDom from 'react-dom';
 import IconButton from '@material-ui/core/IconButton';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import './ProductCardModal.css';
@@ -14,18 +14,47 @@ import ReviewsModal from './ReviewsModal';
  * @return component
  */
 const ProductCardModal = ({
-  product, closeModal, reviews, setReviews
+  product, closeModal, reviews, setReviewsModal, average, displayCount
 }) => {
   const { dispatch } = useCart();
   const [quantityPicker, setQuantityPicker] = useState(1);
   const [higherValue, setHigherValue] = useState(true);
   const [lowerValue, setLowerValue] = useState(false);
-  const [reviewsModal, setReviewsModal] = useState(false);
-  const [showCreateReview, setReviewFormToggle] = useState(false);
+
   const {
     state: { products }
   } = useCart();
 
+  // const [activeReviews] = React.useState(
+  //   false
+  // );
+  // React.useEffect(() => {
+  //   if (reviews !== true) {
+  //     setActiveReviews(reviews.filter((r) => (r.productId === product.id)));
+  //   }
+  // }, [product.id, reviews]);
+
+  // React.useEffect(() => {
+  //   if (activeReviews) {
+  //     let currentCount = 0;
+  //     if (!activeReviews === false) {
+  //       activeReviews.forEach((e) => {
+  //         currentCount += e.rating;
+
+  //         // currentCount;
+  //       });
+  //     }
+  //     const tempRating = Math.floor(currentCount / activeReviews.length);
+  //     const remainder = currentCount % activeReviews.length;
+  //     if (remainder / activeReviews.length > 0.33 && remainder / activeReviews.length < 0.66) {
+  //       setAverageRating(tempRating + 0.5);
+  //     } else if (remainder / activeReviews.length >= 0.66) {
+  //       setAverageRating(tempRating + 1);
+  //     } else {
+  //       setAverageRating(tempRating);
+  //     }
+  //   }
+  // }, [activeReviews, reviews]);
   const onAdd = () => {
     const qtyInCart = getQtyInCart(products, product);
     if (!isInventoryAvailable(quantityPicker, qtyInCart, product)) return;
@@ -117,9 +146,9 @@ const ProductCardModal = ({
     }
   };
   const onReview = (e) => {
+    closeModal(false);
     e.stopPropagation();
     setReviewsModal(true);
-    closeModal(false);
   };
 
   const closeTheModal = (e) => {
@@ -127,6 +156,8 @@ const ProductCardModal = ({
       closeModal(false);
     }
   };
+
+  // const displayCount = Object.keys(activeReviews).length;
   return (
     <div
       className="productCardModalBackground"
@@ -190,6 +221,20 @@ const ProductCardModal = ({
               <IconButton aria-label="add to shopping cart" onClick={onAdd}>
                 <AddShoppingCartIcon />
               </IconButton>
+              <div className="productReviewCounter">
+                {displayCount}
+              </div>
+              {/* {reviewsModal && reactDom.createPortal(
+                <ReviewsModal
+                  product={product}
+                  reviews={reviews}
+                  setReviews={setReviews}
+                  closeModal={setReviewsModal}
+                  showCreateReview={showCreateReview}
+                  setReviewFormToggle={setReviewFormToggle}
+                />,
+                document.getElementById('root')
+              )} */}
               {ReviewsModal !== false && (
                 <>
                   <div
@@ -201,23 +246,12 @@ const ProductCardModal = ({
                       type="button"
                       className="productModalReviews"
                       name="half-rating-read"
-                    // value={averageRating}
+                      value={average}
                       precision={0.5}
                       readOnly
                     />
                   </div>
                 </>
-              )}
-              {reviewsModal && reactDom.createPortal(
-                <ReviewsModal
-                  product={product}
-                  reviews={reviews}
-                  setReviews={setReviews}
-                  closeModal={setReviewsModal}
-                  showCreateReview={showCreateReview}
-                  setReviewFormToggle={setReviewFormToggle}
-                />,
-                document.getElementById('root')
               )}
             </div>
           </div>

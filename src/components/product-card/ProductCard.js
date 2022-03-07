@@ -169,7 +169,13 @@ const ProductCard = ({
   return (
     <Card className={classes.root}>
       {modalIsOpen && reactDom.createPortal(
-        <ProductCardModal product={product} closeModal={setModalIsOpen} />,
+        <ProductCardModal
+          product={product}
+          average={averageRating}
+          displayCount={displayCount}
+          setReviewsModal={setReviewsModal}
+          closeModal={setModalIsOpen}
+        />,
         document.getElementById('root')
       )}
       {reviewsModal && reactDom.createPortal(

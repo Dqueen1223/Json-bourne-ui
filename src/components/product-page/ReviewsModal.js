@@ -93,13 +93,13 @@ const ReviewsModal = ({
             className="reviewsOrderButton"
             onClick={sortByNewest}
           >
-            Newest to Oldest
+            By Newest First
           </MenuItem>
           <MenuItem
             // type="button"
             onClick={sortByOldest}
           >
-            Oldest to Newest
+            By Oldest First
           </MenuItem>
         </Menu>
       </div>
