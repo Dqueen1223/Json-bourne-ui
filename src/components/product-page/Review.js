@@ -186,7 +186,7 @@ const Review = ({
       {(review.email === email) && isEdit && (
         <div className="reviewsOfProduct">
           <div className="titleContainer">
-            <div className="reviewsTitle editable" contentEditable suppressContentEditableWarning onInput={(e) => { showTitleErrors(e); }}>
+            <div className="reviewsTitle editableField" contentEditable suppressContentEditableWarning onInput={(e) => { showTitleErrors(e); }}>
               { title || review.title }
             </div>
             { /*
@@ -222,7 +222,7 @@ const Review = ({
               }}
             />
           </div>
-          <div className="reviewsDescription editable" contentEditable suppressContentEditableWarning onInput={(e) => { showDescriptionErrors(e); }}>
+          <div className="reviewsDescription editableField" contentEditable suppressContentEditableWarning onInput={(e) => { showDescriptionErrors(e); }}>
             {review.reviewsDescription}
           </div>
           <div className="descriptionErrorContainer hidden">
