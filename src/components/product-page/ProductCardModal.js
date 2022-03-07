@@ -1,21 +1,37 @@
 import React, { useState } from 'react';
 import reactDom from 'react-dom';
 import IconButton from '@material-ui/core/IconButton';
+import { makeStyles } from '@material-ui/core/styles';
+import { orange } from '@material-ui/core/colors';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import './ProductCardModal.css';
 import Rating from '@mui/material/Rating';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import { toast } from 'react-toastify';
 import { useCart } from '../checkout-page/CartContext';
 import getQtyInCart, { displayToast, isInventoryAvailable } from './ProductCardModalService';
 import ReviewsModal from './ReviewsModal';
+import fetchUpdateUser from '../Profile/ProfileUpdateService';
 
+/**
+ * @name useStyles
+ * @description Material-ui styling for ProductCardModal component
+ * @return styling
+ */
+const useStyles = makeStyles(() => ({
+  colorInWishList: {
+    color: '#fc46aa'
+  }
+}));
 /**
  * @name ProductCardModal
  * @description material-ui styling for product card modal
  * @return component
  */
 const ProductCardModal = ({
-  product, closeModal, reviews, setReviews
+  product, closeModal, reviews, setReviews, inWishList, profile, wishlist, setInWishList, setProfile
 }) => {
+  const classes = useStyles();
   const { dispatch } = useCart();
   const [quantityPicker, setQuantityPicker] = useState(1);
   const [higherValue, setHigherValue] = useState(true);
@@ -107,7 +123,39 @@ const ProductCardModal = ({
     higherValueCheck(e.target.value);
     lowerValueCheck(e.target.value);
   };
-
+  const favoriteAdd = (e) => {
+    e.stopPropagation();
+    if (Object.keys(profile).length !== 0) {
+      if (!inWishList) {
+        // remove from wishlist
+        toast.success(`${product.name} has been added to your wishlist.`);
+        const newWishList = [];
+        newWishList.push(...wishlist);
+        newWishList.push(product.id);
+        const user = {
+          id: profile.id,
+          dateModified: new Date().toISOString(),
+          email: profile.email,
+          firstName: profile.firstName,
+          lastName: profile.lastName,
+          street: profile.street,
+          street2: profile.street2,
+          city: profile.city,
+          state: profile.state,
+          zip: profile.zip,
+          phone: profile.phone,
+          role: profile.role,
+          wishlist: newWishList,
+          dateCreated: profile.dateCreated
+        };
+        setInWishList(!inWishList);
+        fetchUpdateUser(user, setProfile);
+      } else {
+        console.log('remove');
+        // add to wishlist
+      }
+    }
+  };
   const preventCertainCharacters = (e) => {
     if (!(e.key === '0' || e.key === '1' || e.key === '2' || e.key === '3' || e.key === '4'
       || e.key === '5' || e.key === '6' || e.key === '7' || e.key === '8' || e.key === '9' || e.key === 'Backspace'
@@ -174,6 +222,36 @@ const ProductCardModal = ({
             </div>
           </div>
           <div className="productCardModal-footer">
+            {inWishList && (
+            <IconButton
+              aria-label="add to favorites"
+              className={classes.colorInWishList}
+              onClick={favoriteAdd}
+              sx={{
+                color: orange
+              }}
+            >
+              <FavoriteIcon />
+            </IconButton>
+            )}
+            {!inWishList && Object.keys(profile).length !== 0 && (
+            <IconButton
+              aria-label="add to favorites"
+              onClick={favoriteAdd}
+            >
+              <FavoriteIcon />
+            </IconButton>
+            )}
+            {!inWishList && Object.keys(profile).length === 0 && (
+            <IconButton
+              title="Must be signed in to add a product to your wish list."
+              aria-label="add to favorites"
+              className="test"
+              onClick={favoriteAdd}
+            >
+              <FavoriteIcon />
+            </IconButton>
+            )}
             <div className="quantityPicker">
               <div className="lowerQuantity">
                 {lowerValue && <button onClick={lowerQuantity} type="button" className="lowerQuantityBtn"> &minus; </button>}

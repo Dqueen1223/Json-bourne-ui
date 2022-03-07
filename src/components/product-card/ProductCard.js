@@ -77,6 +77,7 @@ const ProductCard = ({
   const {
     state: { products }
   } = useCart();
+
   React.useEffect(() => {
     if (wishlist.length > 0) {
       setInWishList(wishlist.includes(product.id));
@@ -195,7 +196,15 @@ const ProductCard = ({
   return (
     <Card className={classes.root}>
       {modalIsOpen && reactDom.createPortal(
-        <ProductCardModal product={product} closeModal={setModalIsOpen} />,
+        <ProductCardModal
+          product={product}
+          closeModal={setModalIsOpen}
+          inWishList={inWishList}
+          setInWishList={setInWishList}
+          profile={profile}
+          setProfile={setProfile}
+          wishlist={wishlist}
+        />,
         document.getElementById('root')
       )}
       {reviewsModal && reactDom.createPortal(
