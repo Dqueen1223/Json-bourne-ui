@@ -17,9 +17,10 @@ const Review = ({
 }) => {
   const [isEdit, setIsEdit] = React.useState(false);
   const [isDeleted, setIsDeleted] = React.useState(false);
-  // const [value, setValue] = React.useState();
   const [desc, setDesc] = React.useState(review.reviewsDescription);
   const [title, setTitle] = React.useState(review.title);
+  const [tempTitle, setTempTitle] = React.useState(null);
+  const [tempDesc, setTempDesc] = React.useState(null);
   const [stars, setStars] = React.useState(review.rating);
   const [apiError, setApiError] = React.useState(false);
   const [confirmationOpen, setConfirmationOpen] = React.useState(false);
@@ -52,10 +53,15 @@ const Review = ({
   }, [apiError]);
 
   const editHandler = () => {
+    setTempTitle(title);
+    setTempDesc(desc);
     setIsEdit(!isEdit);
     setEditing(!editing);
   };
-
+  /* const cancelEditHandler = () => {
+    setIsEdit(!isEdit);
+    setEditing(!editing);
+  }; */
   const submitEditHandler = (e) => {
     const reviewElement = e.target.closest('.reviewsOfProduct');
     const reviewTitle = reviewElement.querySelector('.reviewsTitle').innerText.trim();
@@ -70,52 +76,42 @@ const Review = ({
       uerId: review.userId,
       dateCreated: review.dateCreated
     };
+    e.target.parentNode.children[0].children[0].classList.remove('redBorder');
+    e.target.parentNode.children[4].classList.remove('redBorder');
+    let hasError = false;
     if (reviewTitle === '') {
-      toast.info('title cannot be empty');
-      reviewElement.querySelector('.reviewsTitle').focus();
-      return;
+      e.target.parentNode.children[0].children[0].classList.add('redBorder');
+      hasError = true;
     }
     if (reviewTitle.length > 50) {
-      toast.info('title must be 50 characters or less');
-      reviewElement.querySelector('.reviewsTitle').focus();
-      return;
+      e.target.parentNode.children[0].children[0].classList.add('redBorder');
+      hasError = true;
     }
     if (description === '') {
-      toast.info('description cannot be empty');
-      reviewElement.querySelector('.reviewsDescription').focus();
-      return;
+      e.target.parentNode.children[4].classList.add('redBorder');
+      hasError = true;
     }
-    if (description.length > 500) {
-      toast.info('description must be 500 characters or less');
-      reviewElement.querySelector('.reviewsDescription').focus();
-      return;
+    if (description.length > 300) {
+      e.target.parentNode.children[4].classList.add('redBorder');
+      hasError = true;
     }
-    setTitle(reviewTitle);
-    setDesc(description);
-    setCurrentRating(<Rating name="half-rating-read" defaultValue={stars} precision={stars} readOnly />);
-    updateReview(setUpdateReviews, setApiError, updatedReview);
-    setUpdateReviews(true);
-    const btnSubmit = reviewElement.querySelector('.btnSubmitEditReview');
-    btnSubmit.style.visibility = 'hidden';
-    setIsEdit(false);
-    setEditing(false);
-  };
-
-  const preventCursorDisappearHandler = (e) => {
-    const input = e.target.innerText;
-    setTitle(e.target.innerText);
-    if (input === '') {
-      e.target.innerText = ' ';
-    }
-  };
-  const preventCursorDisappearHandlerDescription = (e) => {
-    setDesc(e.target.innerText);
-    const input = e.target.innerText;
-    if (input === '') {
-      e.target.innerText = ' ';
+    if (!hasError) {
+      setTitle(reviewTitle);
+      setDesc(description);
+      setCurrentRating(<Rating name="half-rating-read" defaultValue={stars} precision={stars} readOnly />);
+      updateReview(setUpdateReviews, setApiError, updatedReview);
+      setUpdateReviews(true);
+      const btnSubmit = reviewElement.querySelector('.btnSubmitEditReview');
+      btnSubmit.style.visibility = 'hidden';
+      setIsEdit(false);
+      setEditing(false);
+      toast.confirm('Review successfully edited');
+    } else {
+      toast.error('Some fields contain invalid inputs.');
     }
   };
   const showTitleErrors = (e) => {
+    setTempTitle(e.target.innerText);
     if (Number(50 - e.target.innerText.length) < 0) {
       e.target.parentNode.parentNode.children[2].classList.remove('hidden');
       e.target.parentNode.parentNode.children[1].classList.add('hidden');
@@ -128,6 +124,7 @@ const Review = ({
     }
   };
   const showDescriptionErrors = (e) => {
+    setTempDesc(e.target.innerText);
     if (Number(300 - e.target.innerText.length) < 0) {
       e.target.parentNode.children[6].classList.remove('hidden');
       e.target.parentNode.children[5].classList.add('hidden');
@@ -189,24 +186,30 @@ const Review = ({
       {(review.email === email) && isEdit && (
         <div className="reviewsOfProduct">
           <div className="titleContainer">
-            <div className="reviewsTitle editable" contentEditable suppressContentEditableWarning onInput={(e) => { preventCursorDisappearHandler(e); showTitleErrors(e); }}>
-              { review.title }
+            <div className="reviewsTitle editable" contentEditable suppressContentEditableWarning onInput={(e) => { showTitleErrors(e); }}>
+              { title || review.title }
             </div>
-            <div>
-              <span>
-                <FaPencilAlt className="pencilIcon" alt="pencilIcon" onClick={editHandler} />
-                <Delete className="trashIcon" alt="pencilIcon" onClick={openModal} />
-              </span>
-            </div>
+            { /*
+              <div className="icons">
+                <span>
+                  <FaPencilAlt
+                    className="pencilIcon"
+                    alt="pencilIcon"
+                    onClick={cancelEditHandler}
+                  />
+                  <Delete className="trashIcon" alt="pencilIcon" onClick={openModal} />
+                </span>
+              </div>
+            */ }
           </div>
           <div className="titleErrorContainer hidden">
             Remaining Characters:&nbsp;
-            {Number(50 - title.length)}
+            {Number(50 - tempTitle.length)}
           </div>
           <div className="titleErrorContainer red hidden">
             Character limit exceeded:
             {'    '}
-            { title.length }
+            { tempTitle.length }
             {' '}
             of 50 used
           </div>
@@ -219,17 +222,17 @@ const Review = ({
               }}
             />
           </div>
-          <div className="reviewsDescription editable" contentEditable suppressContentEditableWarning onInput={(e) => { preventCursorDisappearHandlerDescription(e); showDescriptionErrors(e); }}>
+          <div className="reviewsDescription editable" contentEditable suppressContentEditableWarning onInput={(e) => { showDescriptionErrors(e); }}>
             {review.reviewsDescription}
           </div>
           <div className="descriptionErrorContainer hidden">
             Remaining Characters:&nbsp;
-            {Number(300 - desc.length)}
+            {Number(300 - tempDesc.length)}
           </div>
           <div className="descriptionErrorContainer red hidden">
             Character limit exceeded:
             {'    '}
-            { desc.length }
+            { tempDesc.length }
             {' '}
             of 300 used
           </div>

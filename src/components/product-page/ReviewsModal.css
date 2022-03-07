@@ -81,6 +81,10 @@
     margin:0 2%;
     visibility: hidden;
 }
+.icons{
+    margin-left: auto;
+    margin-right: 15px;
+}
 .deleteIcon{
     width:1em;
     height:1em;
@@ -120,6 +124,7 @@
     padding:5px;
     min-width:12em;
     max-width: 12em;
+    overflow-wrap: break-word;
 }
 .reviewsProductName{
     font-size: 170%;
@@ -238,8 +243,9 @@ input[type=number] {
 .editable{
     border: 2px solid gray;
 }
-/* .titleErrorContainer{
-} */
+.redBorder{
+    border: 2px solid red;
+}
 .hidden{
     display: none;
 }
