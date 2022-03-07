@@ -40,12 +40,12 @@ const generateErrors = (form, idList) => {
   }
   if (exceedMax300.length) {
     exceedMax300.forEach((i) => {
-      errors[i] = 'Cannot exceed 300 characters';
+      errors[i] = ' ';
     });
   }
   if (exceedMax50.length) {
     exceedMax50.forEach((i) => {
-      errors[i] = 'Cannot exceed 50 characters';
+      errors[i] = ' ';
     });
   }
   if (signIn.length) {

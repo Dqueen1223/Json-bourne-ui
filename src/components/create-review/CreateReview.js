@@ -7,7 +7,7 @@ import makeReview from './CreateReviewService';
 import generateErrors from './forms/FormValidation';
 
 const CreateReview = ({
-  productId, reviewFormToggle, setNewReview
+  productId, reviewFormToggle, setUpdateReviews, setEditing
 }) => {
   const [rating, setRating] = useState(2);
   const [errors, setErrors] = useState({});
@@ -63,9 +63,11 @@ const CreateReview = ({
     handleCreate();
 
     if (Object.keys(errors).length === 0) {
-      setNewReview(newReview);
+      // setActiveReviews(...activeReviews, newReview);
       await makeReview(newReview);
+      setUpdateReviews(true);
       reviewFormToggle(false);
+      setEditing(false);
     } else {
       toast.error('Some fields contain invalid inputs.');
     }

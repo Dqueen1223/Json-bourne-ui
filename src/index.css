@@ -75,6 +75,7 @@ float: right;
    filter: invert(20%) sepia(56%) saturate(303%) hue-rotate(1deg) brightness(170%) contrast(90%);
   float: left;
 }
+
 .profileicon{
   height: 60px;
   width: 100px;
@@ -117,4 +118,3 @@ float: right;
   text-align: center;
   width:100px;
 }
-
