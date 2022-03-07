@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import HttpHelper from '../../utils/HttpHelper';
 import Constants from '../../utils/constants';
 
@@ -13,7 +14,7 @@ export default async function fetchUpdateUser(profile, setProfile) {
     .then(setProfile)
     .catch(() => {
       /* eslint-disable no-console */
-      console.log('Failed to load');
+      toast.error('Unable to connect to database');
       /* eslint-enable no-console */
     });
 }

@@ -116,10 +116,11 @@ const ProductCard = ({
     toast.success('Product successfully added to cart.');
   };
   const favoriteAdd = (e) => {
+    e.stopPropagation();
     if (Object.keys(profile).length !== 0) {
       if (!inWishList) {
         // remove from wishlist
-        console.log('add');
+        toast.success(`${product.name} has been added to your wishlist.`);
         const newWishList = [];
         newWishList.push(...wishlist);
         newWishList.push(product.id);
@@ -138,14 +139,13 @@ const ProductCard = ({
           role: profile.role,
           wishlist: newWishList
         };
+        setInWishList(!inWishList);
         fetchUpdateUser(user, setProfile);
       } else {
         console.log('remove');
         // add to wishlist
       }
-      setInWishList(!inWishList);
     }
-    e.stopPropagation();
   };
   const share = (e) => {
     e.stopPropagation();
