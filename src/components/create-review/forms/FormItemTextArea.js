@@ -19,6 +19,16 @@ const FormItemTextArea = ({
       <label className={styles.label} htmlFor={id}>
         <div className={styles.labelContents}>
           {label}
+          {(count > 255 && count <= 300) && (
+            <div className={styles.commentCount}>
+              {`Remaining Characters: ${300 - count}`}
+            </div>
+          )}
+          {count > 300 && (
+            <div className={styles.countErrorComment}>
+              {`Character limit exeeded: ${count} of 300 used`}
+            </div>
+          )}
         </div>
         <div>
           {!error && (
@@ -46,7 +56,7 @@ const FormItemTextArea = ({
           )}
           {error && (
             <p className={styles.error_item}>
-              {`${error}: count ${count}`}
+              {error}
             </p>
           )}
         </div>

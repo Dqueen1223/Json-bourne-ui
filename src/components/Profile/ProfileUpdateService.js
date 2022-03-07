@@ -4,7 +4,7 @@ import Constants from '../../utils/constants';
 
 export default async function fetchUpdateUser(profile, setProfile) {
   // eslint-disable-next-line prefer-template
-  await HttpHelper(Constants.USER_ENDPOINT + '/' + profile.id, 'PUT', profile)
+  await HttpHelper(Constants.USERS_ENDPOINT + '/' + profile.id, 'PUT', profile)
     .then((response) => {
       if (response.ok) {
         return response.json();

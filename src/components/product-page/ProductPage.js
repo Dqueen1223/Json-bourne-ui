@@ -31,6 +31,7 @@ const ProductPage = () => {
   const {
     state: { userProfile }
   } = useProfile();
+  const [updateReviews, setUpdateReviews] = useState(true);
 
   useEffect(() => {
     loginUser(userProfile[1], setProfile, setApiError);
@@ -49,8 +50,12 @@ const ProductPage = () => {
   }, [filter]);
 
   useEffect(() => {
-    fetchReviews(setReviews, setApiError);
-  }, [reviews]);
+    if (updateReviews) {
+      fetchReviews(setReviews, setApiError);
+      setUpdateReviews(false);
+      console.log(reviews);
+    }
+  }, [reviews, updateReviews]);
   useEffect(() => {
     setCurrentPage(1);
   }, [filter]);
@@ -94,6 +99,8 @@ const ProductPage = () => {
                 wishlist={wishList}
                 profile={profile}
                 setProfile={setProfile}
+                setUpdateReviews={setUpdateReviews}
+                updateReviews={updateReviews}
               />
             </div>
           ))}

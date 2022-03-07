@@ -99,15 +99,15 @@ export default function validateForm(deliveryData, billingData, checked) {
     const expiryMonth = billingData.expiration.trim().substring(0, 2);
     const conector = billingData.expiration.trim().substring(2, 3);
     const expiryYear = billingData.expiration.trim().substring(3);
-    if (/[^0-9]/.test(expiryMonth) || /[^0-9]/.test(expiryYear) || conector.trim() !== '/') {
+    if (!/^\d{2}$/.test(expiryMonth) || !/^\d{2}$/.test(expiryYear) || conector.trim() !== '/') {
       errors.expiration = 'Dates must match format "MM/YY"';
+    } else if (billingData.expiration.includes(' ')) {
+      errors.expiration = 'No spaces allowed before or after expiration date';
+    } else if (expiryMonth > 12 || expiryMonth === '00') {
+      errors.expiration = 'This month does not exist';
     } else if (expiryYear < todayYY || (expiryYear === todayYY && expiryMonth <= todayMM)) {
       errors.expiration = 'This card is expired';
-    }
-    if (expiryMonth > 12) {
-      errors.expiration = 'This month does not exist';
-    }
-    if ((todayYY + 50) < expiryYear) {
+    } else if ((todayYY + 50) < expiryYear) {
       errors.expiration = 'This card is expired';
     }
   }

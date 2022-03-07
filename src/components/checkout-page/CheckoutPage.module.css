@@ -18,6 +18,7 @@
 
 .order {
   grid-area: order;
+  min-width: 300px;
 }
 
 .payment {

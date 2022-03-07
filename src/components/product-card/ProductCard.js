@@ -15,10 +15,13 @@ import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import ShareIcon from '@material-ui/icons/Share';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { toast } from 'react-toastify';
+import Rating from '@mui/material/Rating';
+// import Stack from '@mui/material/Stack';
 import { useCart } from '../checkout-page/CartContext';
 import ProductCardModal from '../product-page/ProductCardModal';
 import getQtyInCart, { inventoryAvailable } from './ProductCardService';
 import ReviewsModal from '../product-page/ReviewsModal';
+// import Review from '../product-page/Review';
 import '../product-page/ReviewsModal.css';
 import fetchUpdateUser from '../Profile/ProfileUpdateService';
 
@@ -60,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
  * @return component
  */
 const ProductCard = ({
-  product, reviews, wishlist, profile, setProfile
+  product, reviews, wishlist, profile, setProfile, setUpdateReviews, updateReviews
 }) => {
   const classes = useStyles();
   const { dispatch } = useCart();
@@ -68,7 +71,9 @@ const ProductCard = ({
   const [reviewsModal, setReviewsModal] = useState(false);
   const [showCreateReview, setReviewFormToggle] = useState(false);
   const [inWishList, setInWishList] = useState(wishlist.includes(product.id));
-  // const { activeReviews } = React.useState(reviews.filter((r) => (r.productId === product.id)));
+  const [activeReviews, setActiveReviews] = React.useState(
+    false
+  );
   const {
     state: { products }
   } = useCart();
@@ -77,9 +82,40 @@ const ProductCard = ({
       setInWishList(wishlist.includes(product.id));
     }
   }, [product.id, wishlist]);
+  const [averageRating, setAverageRating] = useState(0);
+
+  React.useEffect(() => {
+    if (reviews !== true) {
+      setActiveReviews(reviews.filter((r) => (r.productId === product.id)));
+    }
+  }, [updateReviews, product.id, reviews]);
+
+  React.useEffect(() => {
+    if (activeReviews) {
+      let currentCount = 0;
+      if (!activeReviews === false) {
+        activeReviews.forEach((e) => {
+          currentCount += e.rating;
+
+          // currentCount;
+        });
+      }
+      const tempRating = Math.floor(currentCount / activeReviews.length);
+      const remainder = currentCount % activeReviews.length;
+      if (remainder / activeReviews.length > 0.33 && remainder / activeReviews.length < 0.66) {
+        setAverageRating(tempRating + 0.5);
+      } else if (remainder / activeReviews.length >= 0.66) {
+        setAverageRating(tempRating + 1);
+      } else {
+        setAverageRating(tempRating);
+      }
+    }
+  }, [activeReviews, reviews, updateReviews]);
+
   const onAdd = (e) => {
     console.log(inWishList);
     e.stopPropagation();
+
     const qtyInCart = getQtyInCart(products, product);
     if (!inventoryAvailable(qtyInCart, product)) return;
     products.forEach((element) => {
@@ -137,7 +173,8 @@ const ProductCard = ({
           zip: profile.zip,
           phone: profile.phone,
           role: profile.role,
-          wishlist: newWishList
+          wishlist: newWishList,
+          dateCreated: profile.dateCreated
         };
         setInWishList(!inWishList);
         fetchUpdateUser(user, setProfile);
@@ -155,15 +192,6 @@ const ProductCard = ({
     setReviewsModal(true);
   };
 
-  const addReview = (e) => {
-    e.stopPropagation();
-    setReviewsModal(true);
-    setReviewFormToggle(true);
-    if (reviews.length === 0) {
-      setReviewFormToggle(true);
-    }
-  };
-
   return (
     <Card className={classes.root}>
       {modalIsOpen && reactDom.createPortal(
@@ -174,12 +202,16 @@ const ProductCard = ({
         <ReviewsModal
           product={product}
           reviews={reviews}
+          // setReviews={setReviews}
           closeModal={setReviewsModal}
           showCreateReview={showCreateReview}
           setReviewFormToggle={setReviewFormToggle}
+          setUpdateReviews={setUpdateReviews}
+          updateReviews={updateReviews}
         />,
         document.getElementById('root')
       )}
+
       <CardHeader
         onClick={() => {
           setModalIsOpen(true);
@@ -261,29 +293,33 @@ const ProductCard = ({
         <IconButton aria-label="add to shopping cart" onClick={onAdd}>
           <AddShoppingCartIcon />
         </IconButton>
-        <div>
-          {ReviewsModal !== false && (
+        {ReviewsModal !== false && (
           <>
-            <button
+            {/* <button
               className="reviewsProductCardButton"
               type="button"
               variant="contained"
               onClick={onReview}
             >
               Reviews
-            </button>
-            <button
-              className="addReviewsProductCardButton"
-              type="button"
-              label="Add Review"
-              variant="contained"
-              onClick={addReview}
+            </button> */}
+            <div
+              onClick={onReview}
+              aria-hidden="true"
             >
-              Add Review
-            </button>
+              <Rating
+                reviews={reviews}
+                // onClick={onReview}
+                type="button"
+                className="reviewsProductCardButton"
+                name="half-rating-read"
+                value={averageRating}
+                precision={0.5}
+                readOnly
+              />
+            </div>
           </>
-          )}
-        </div>
+        )}
       </CardActions>
     </Card>
   );
