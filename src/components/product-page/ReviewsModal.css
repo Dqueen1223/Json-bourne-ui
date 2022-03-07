@@ -6,9 +6,14 @@
     /* background-color: #fb8122; */
     color: #E1E2E2;
     position: relative;
-    left: 5%;
-    width: 40%;
-    z-index: 1;
+    right: 15%;
+    width: 100%;
+    
+}
+.reviewCounter {
+    position: relative;
+    left: 42%;
+    
 }
 .reviewsModalBackground{
     position: fixed;
@@ -241,7 +246,10 @@ input[type=number] {
 }
 
 .review-menu {
-    display: flexbox;
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    left: 15%;
 }
 .editable{
     border: 2px solid gray;

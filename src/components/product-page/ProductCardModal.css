@@ -143,6 +143,7 @@
 }
 .addToCart{
     margin-left: 1em;
+    display: inline-flex;
 }
 .raiseQuantity{
     width:1.5em;
@@ -164,6 +165,16 @@
     border-radius: 10px;
     background-color: transparent;
     border:none;
+}
+.productModalReviews {
+    position: relative;
+    left: 5%;
+    top: 25%;
+}
+.productReviewCounter{
+    position: relative;
+    left: 30%;
+    top: 30%;
 }
 .lowerQuantityBtn:hover{
     background-color: rgba(0,0,0,0.1);

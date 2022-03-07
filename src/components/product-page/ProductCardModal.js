@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import reactDom from 'react-dom';
+// import reactDom from 'react-dom';
 import IconButton from '@material-ui/core/IconButton';
 import { makeStyles } from '@material-ui/core/styles';
 import { orange } from '@material-ui/core/colors';
@@ -29,19 +29,49 @@ const useStyles = makeStyles(() => ({
  * @return component
  */
 const ProductCardModal = ({
-  product, closeModal, reviews, setReviews, inWishList, profile, wishlist, setInWishList, setProfile
+  product, closeModal, reviews, inWishList, profile,
+  wishlist, setInWishList, setProfile, setReviewsModal, average, displayCount
 }) => {
   const classes = useStyles();
   const { dispatch } = useCart();
   const [quantityPicker, setQuantityPicker] = useState(1);
   const [higherValue, setHigherValue] = useState(true);
   const [lowerValue, setLowerValue] = useState(false);
-  const [reviewsModal, setReviewsModal] = useState(false);
-  const [showCreateReview, setReviewFormToggle] = useState(false);
+
   const {
     state: { products }
   } = useCart();
 
+  // const [activeReviews] = React.useState(
+  //   false
+  // );
+  // React.useEffect(() => {
+  //   if (reviews !== true) {
+  //     setActiveReviews(reviews.filter((r) => (r.productId === product.id)));
+  //   }
+  // }, [product.id, reviews]);
+
+  // React.useEffect(() => {
+  //   if (activeReviews) {
+  //     let currentCount = 0;
+  //     if (!activeReviews === false) {
+  //       activeReviews.forEach((e) => {
+  //         currentCount += e.rating;
+
+  //         // currentCount;
+  //       });
+  //     }
+  //     const tempRating = Math.floor(currentCount / activeReviews.length);
+  //     const remainder = currentCount % activeReviews.length;
+  //     if (remainder / activeReviews.length > 0.33 && remainder / activeReviews.length < 0.66) {
+  //       setAverageRating(tempRating + 0.5);
+  //     } else if (remainder / activeReviews.length >= 0.66) {
+  //       setAverageRating(tempRating + 1);
+  //     } else {
+  //       setAverageRating(tempRating);
+  //     }
+  //   }
+  // }, [activeReviews, reviews]);
   const onAdd = () => {
     const qtyInCart = getQtyInCart(products, product);
     if (!isInventoryAvailable(quantityPicker, qtyInCart, product)) return;
@@ -165,6 +195,7 @@ const ProductCardModal = ({
     }
   };
   const onReview = (e) => {
+    closeModal(false);
     e.stopPropagation();
     setReviewsModal(true);
   };
@@ -174,6 +205,8 @@ const ProductCardModal = ({
       closeModal(false);
     }
   };
+
+  // const displayCount = Object.keys(activeReviews).length;
   return (
     <div
       className="productCardModalBackground"
@@ -267,7 +300,11 @@ const ProductCardModal = ({
               <IconButton aria-label="add to shopping cart" onClick={onAdd}>
                 <AddShoppingCartIcon />
               </IconButton>
-              {reviewsModal && reactDom.createPortal(
+            </div>
+            <div className="productReviewCounter">
+              {displayCount}
+            </div>
+            {/* {reviewsModal && reactDom.createPortal(
                 <ReviewsModal
                   product={product}
                   reviews={reviews}
@@ -277,17 +314,25 @@ const ProductCardModal = ({
                   setReviewFormToggle={setReviewFormToggle}
                 />,
                 document.getElementById('root')
-              )}
-              <Rating
+              )} */}
+            {ReviewsModal !== false && (
+            <>
+              <div
                 onClick={onReview}
-                type="button"
-                variant="contained"
-                className="reviewsProductCardButton"
-                name="half-rating-read"
-                defaultValue={2.5}
-                precision={0.5}
-              />
-            </div>
+                aria-hidden="true"
+              >
+                <Rating
+                  reviews={reviews}
+                  type="button"
+                  className="productModalReviews"
+                  name="half-rating-read"
+                  value={average}
+                  precision={0.5}
+                  readOnly
+                />
+              </div>
+            </>
+            )}
           </div>
         </div>
       </div>

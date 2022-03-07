@@ -16,9 +16,9 @@ import ShareIcon from '@material-ui/icons/Share';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { toast } from 'react-toastify';
 import Rating from '@mui/material/Rating';
+import ProductCardModal from '../product-page/ProductCardModal';
 // import Stack from '@mui/material/Stack';
 import { useCart } from '../checkout-page/CartContext';
-import ProductCardModal from '../product-page/ProductCardModal';
 import getQtyInCart, { inventoryAvailable } from './ProductCardService';
 import ReviewsModal from '../product-page/ReviewsModal';
 // import Review from '../product-page/Review';
@@ -74,6 +74,7 @@ const ProductCard = ({
   const [activeReviews, setActiveReviews] = React.useState(
     false
   );
+  const [averageRating, setAverageRating] = useState(0);
   const {
     state: { products }
   } = useCart();
@@ -83,7 +84,6 @@ const ProductCard = ({
       setInWishList(wishlist.includes(product.id));
     }
   }, [product.id, wishlist]);
-  const [averageRating, setAverageRating] = useState(0);
 
   React.useEffect(() => {
     if (reviews !== true) {
@@ -112,6 +112,19 @@ const ProductCard = ({
       }
     }
   }, [activeReviews, reviews, updateReviews]);
+
+  //   React.useEffect(() => {
+  //     if (activeReviews) {
+  //       let displayCount = 0;
+  //       if (!activeReviews === false) {
+  //         activeReviews.forEach((e) =>
+  //           displayCount += e.reviewsDescription);
+  //       });
+  // }
+
+  //   }, [activeReviews, reviews]);
+
+  const displayCount = Object.keys(activeReviews).length;
 
   const onAdd = (e) => {
     console.log(inWishList);
@@ -204,6 +217,9 @@ const ProductCard = ({
           profile={profile}
           setProfile={setProfile}
           wishlist={wishlist}
+          average={averageRating}
+          displayCount={displayCount}
+          setReviewsModal={setReviewsModal}
         />,
         document.getElementById('root')
       )}
@@ -302,23 +318,17 @@ const ProductCard = ({
         <IconButton aria-label="add to shopping cart" onClick={onAdd}>
           <AddShoppingCartIcon />
         </IconButton>
+        <div className="reviewCounter">
+          {displayCount}
+        </div>
         {ReviewsModal !== false && (
           <>
-            {/* <button
-              className="reviewsProductCardButton"
-              type="button"
-              variant="contained"
-              onClick={onReview}
-            >
-              Reviews
-            </button> */}
             <div
               onClick={onReview}
               aria-hidden="true"
             >
               <Rating
                 reviews={reviews}
-                // onClick={onReview}
                 type="button"
                 className="reviewsProductCardButton"
                 name="half-rating-read"
