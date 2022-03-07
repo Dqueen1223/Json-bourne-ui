@@ -1,5 +1,4 @@
 import HttpHelper from '../../utils/HttpHelper';
-
 /**
  * @name getUserByEmail
  * @description Gets the user by email to see if exists
