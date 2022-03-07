@@ -3,11 +3,13 @@
     font-size: 1.5em;
 }
 .reviewsProductCardButton{
-    background-color: #fb8122;
+    /* background-color: #fb8122; */
     color: #E1E2E2;
-    position: relative;
+    /* position: relative; */
     left: 5%;
     width: 40%;
+    /* z-index: 1; */
+    cursor: pointer;
 }
 .reviewsModalBackground{
     position: fixed;
@@ -70,12 +72,19 @@
 .reviewModalButtons{
     text-align: left;
 }
+.btnSubmitDeleteReview{
+    margin:0 2%;
+}
 .btnSubmitEditReview{
     margin:0 2%;
 }
 .btnDummy{
     margin:0 2%;
     visibility: hidden;
+}
+.icons{
+    margin-left: auto;
+    margin-right: 15px;
 }
 .deleteIcon{
     width:1em;
@@ -90,6 +99,16 @@
   .pencilIcon:hover, .deleteIcon:hover{
     color: rgb(65, 65, 65);
   }
+  .trashIcon{
+    width:20px;
+    height:20px;
+    margin-left:1em;
+    position: relative;
+    top: 2px;
+  }
+  .trashIcon:hover{
+    color: rgb(65, 65, 65);
+  }
 .productName{
     font-size: 200%;
     border: none;
@@ -100,11 +119,13 @@
     width: 20%;
     margin: 1% 2%;
 }
-.reviewsTitle{
+.reviewsTitle, .reviewsProductName{
     font-size: 140%;
     margin: 2%;
     padding:5px;
-    min-width:80px;
+    min-width:12em;
+    max-width: 12em;
+    overflow-wrap: break-word;
 }
 .reviewsProductName{
     font-size: 170%;
@@ -135,6 +156,8 @@
 .reviewsDescription{
     margin: 2%;
     padding:5px;
+    max-width: 27em;
+    overflow-wrap: anywhere;
 }
 .reviewsModal-body{
     /* flex: 1 1 60%; */
@@ -184,6 +207,7 @@
     display:flex;
     flex-direction: row;
     align-items:center;
+    gap:5px;
 }
 
 
@@ -195,39 +219,33 @@ input::-webkit-inner-spin-button {
 input[type=number] {
     -moz-appearance: textfield;
 }
-
-.reviewsProductCardButton{
-    background-color: #fb8122;
-    /* color: #E1E2E2 */
-    position: relative;
-    left: 5%;
-    width: 75%;
-    /* visibility: hidden; */
+.createReview {
+    width: 50%;
 }
-
-.addReviewsProductCardButton{
-    color: white;
-    background-color: #fb8122;
-    /* color: #E1E2E2 */
-    /* position: relative; */
-    left: 5%;
-    width: 136px;
+.review-menu {
+    display: flex;
+    flex-direction: row;
+    width: 60%;
+    justify-content: end;
+    margin-left: auto;
 }
-
-.reviewsProductCardButton:hover {
-    color: white;
-    background-color: #1D2228;
-    /* color: #E1E2E2 */
-    position: relative;
-    left: 5%;
-    width: 75%;
+.editable{
+    border: 2px solid gray;
 }
-.addReviewsProductCardButton:hover {
-    color: white;
-    background-color: #1D2228;
-    /* color: #E1E2E2 */
-    /* position: relative; */
-    left: 5%;
-    width: 136px;
+.redBorder{
+    border: 2px solid red;
 }
-
+.hidden{
+    display: none;
+}
+.red{
+    color:red;
+}
+.reviewsModalBackgroundBlocker{
+    position: fixed;
+    height: 100%;
+    width: 100%;
+}
+.gray {
+    color: gray;
+}

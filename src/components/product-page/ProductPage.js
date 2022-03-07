@@ -24,6 +24,7 @@ const ProductPage = () => {
   const [isActive, setIsActive] = useState(true);
   const [filter, setFilter] = useState('');
   const [reviews, setReviews] = useState(true);
+  const [updateReviews, setUpdateReviews] = useState(true);
 
   useEffect(() => {
     fetchProducts(setProducts, setApiError, filter, (`&range=${(currentPage * 20) - 20}`));
@@ -34,8 +35,12 @@ const ProductPage = () => {
   }, [filter]);
 
   useEffect(() => {
-    fetchReviews(setReviews, setApiError);
-  }, [reviews]);
+    if (updateReviews) {
+      fetchReviews(setReviews, setApiError);
+      setUpdateReviews(false);
+      console.log(reviews);
+    }
+  }, [reviews, updateReviews]);
   useEffect(() => {
     setCurrentPage(1);
   }, [filter]);
@@ -73,7 +78,12 @@ const ProductPage = () => {
             <div key={product.id}>
               {/* check for reviews here...if reviews are present then produce a review button.
                */}
-              <ProductCard product={product} reviews={reviews} />
+              <ProductCard
+                product={product}
+                reviews={reviews}
+                setUpdateReviews={setUpdateReviews}
+                updateReviews={updateReviews}
+              />
             </div>
           ))}
         </div>

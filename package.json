@@ -2,7 +2,7 @@
   "name": "sports-apparel-ui",
   "version": "0.1.0",
   "private": true,
-  "main": "runtime.js",
+  "main": "index.js",
   "dependencies": {
     "@babel/core": "^7.16.7",
     "@babel/preset-env": "^7.16.11",
@@ -35,7 +35,6 @@
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-react-app": "^7.0.0",
     "eslint-plugin-jsx-a11y": "^6.4.1",
-    "express": "^4.17.2",
     "jest-canvas-mock": "^2.3.1",
     "jwt-decode": "^3.1.2",
     "legacy": "^0.0.3",
