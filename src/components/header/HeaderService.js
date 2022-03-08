@@ -34,7 +34,7 @@ const getUserByEmail = async (email, setUser) => {
  * @description Posts a user to the backend
  * @param {Object} user The user to create
  * @param {Function} setUser Sets the user state
- * @param {Function} setApiError Sets the API Error state
+ * @param {Function} setApi0Error Sets the API Error state
  */
 const createUser = async (user, setUser, setApiError) => {
   await HttpHelper('/users', 'POST', user)

@@ -23,6 +23,8 @@ import getQtyInCart, { inventoryAvailable } from './ProductCardService';
 import ReviewsModal from '../product-page/ReviewsModal';
 // import Review from '../product-page/Review';
 import '../product-page/ReviewsModal.css';
+import UpdateUserbyEmail from '../header/UpdateActivityService';
+import { useProfile } from '../Profile/ProfileContext';
 import fetchUpdateUser from '../Profile/ProfileUpdateService';
 
 /**
@@ -78,6 +80,10 @@ const ProductCard = ({
   const {
     state: { products }
   } = useCart();
+
+  const {
+    state: { userProfile }
+  } = useProfile();
 
   React.useEffect(() => {
     if (wishlist.length > 0) {
@@ -164,6 +170,9 @@ const ProductCard = ({
       }
     );
     toast.success('Product successfully added to cart.');
+    if (userProfile[1]) {
+      UpdateUserbyEmail(userProfile[1].email);
+    }
   };
   const favoriteAdd = (e) => {
     e.stopPropagation();
