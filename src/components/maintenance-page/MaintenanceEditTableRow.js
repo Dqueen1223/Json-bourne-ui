@@ -32,6 +32,7 @@ const EditRow = ({
             <MaintenanceDeleteModal
               product={product}
               closeModal={setDeleteModalIsOpen}
+              setDeletedProduct={setDeletedProduct}
             />,
             document.getElementById('root')
           )}
