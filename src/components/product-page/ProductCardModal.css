@@ -126,23 +126,26 @@
     flex: 1 1 50px;
     margin-top: auto;
     max-height: 50px;
-    justify-content: center;
+    margin-left:73px;
 }
 
 .quantityPicker{
     display:inline-flex;
     align-items: center;
-    margin-left: 15%;
+    margin-left: 14%;
 }
 .quantityInput{
     border: 0.5px solid black;
-    width: 40px;
+    border-right: none;
+    border-top: none;
+    border-left: none;
+    width: 35px;
     margin-left: 0.2em;
     margin-right: 0.2em;
     text-align: center;
 }
 .addToCart{
-    margin-left: 1em;
+    display: inline-flex;
 }
 .raiseQuantity{
     width:1.5em;
@@ -164,6 +167,16 @@
     border-radius: 10px;
     background-color: transparent;
     border:none;
+}
+.productModalReviews {
+    position: relative;
+    left: 5%;
+    top: 25%;
+}
+.productReviewCounter{
+    position: relative;
+    left: 35%;
+    top: 30%;
 }
 .lowerQuantityBtn:hover{
     background-color: rgba(0,0,0,0.1);

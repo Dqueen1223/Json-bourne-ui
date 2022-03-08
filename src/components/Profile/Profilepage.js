@@ -69,6 +69,7 @@ const ProfilePage = () => {
         zip: profile.zip,
         phone: profile.phone,
         role: profile.role,
+        wishlist: profile.wishlist,
         dateCreated: profile.dateCreated
       };
       fetchUpdateUser(user, setProfile);
