@@ -15,7 +15,8 @@ const UpdateUserByActivity = async (user) => {
     city: user.city,
     state: user.state,
     zip: user.zip,
-    phone: user.phone
+    phone: user.phone,
+    wishlist: user.wishlist
   }).then((response) => {
     if (response.ok) {
       return response.json();

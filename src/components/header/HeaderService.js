@@ -1,5 +1,5 @@
 import HttpHelper from '../../utils/HttpHelper';
-import UpdateUserByActivity from './UpdateActivityService';
+
 /**
  * @name getUserByEmail
  * @description Gets the user by email to see if exists
@@ -21,7 +21,6 @@ const getUserByEmail = async (email, setUser) => {
       throw new Error(response.statusText);
     })
     .then((body) => {
-      UpdateUserByActivity(body);
       setUser(body);
       document.cookie = `user=${JSON.stringify(body)}`;
     })

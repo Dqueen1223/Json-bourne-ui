@@ -21,12 +21,8 @@ import UpdateUserByEmail from '../header/UpdateActivityService';
 const CheckoutPage = () => {
   const history = useHistory();
   const [totalPrice, setTotalPrice] = React.useState(0);
-  const {
-    state: { userProfile }
-  } = useProfile();
-  const {
-    state: { products }
-  } = useCart();
+  const { state: { userProfile } } = useProfile();
+  const { state: { products } } = useCart();
   const [billingData, setBillingData] = React.useState({});
 
   const [deliveryData, setDeliveryData] = React.useState({});

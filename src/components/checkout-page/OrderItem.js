@@ -6,6 +6,8 @@ import ConfirmModal from './ConfirmModal';
 import styles from './OrderItem.module.css';
 import { toPrice } from './ReviewOrderWidgetService';
 import { useCart } from './CartContext';
+import { useProfile } from '../Profile/ProfileContext';
+import updateUserByEmail from '../header/UpdateActivityService';
 /**
  * @name OrderItem
  * @description Displays an order row
@@ -14,6 +16,7 @@ import { useCart } from './CartContext';
 const OrderItem = ({
   price, name, description, quantity, image, products
 }) => {
+  const { state: { userProfile } } = useProfile();
   const { dispatch } = useCart();
   const [confirmDeleteItem, setConfirmDelete] = useState(false);
   const [deleteConfirmationModal, setDeleteConfirmationModal] = useState(false);
@@ -35,10 +38,11 @@ const OrderItem = ({
               }
             }
           );
+          updateUserByEmail(userProfile[1].email);
         }
       }
     }
-  }, [confirmDeleteItem, dispatch, name, products]);
+  }, [confirmDeleteItem, dispatch, userProfile, name, products]);
   const deleteItem = () => {
     setConfirmDelete(true);
   };
