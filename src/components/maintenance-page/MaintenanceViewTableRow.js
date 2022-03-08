@@ -26,6 +26,7 @@ const ViewRow = ({
             <MaintenanceDeleteModal
               product={product}
               closeModal={setDeleteModalIsOpen}
+              setDeletedProduct={setDeletedProduct}
             />,
             document.getElementById('root')
           )}

@@ -251,10 +251,14 @@ const ProductCard = ({
             <div
               onClick={onReview}
               aria-hidden="true"
+              className="reviewsProductCardButton"
             >
               <Rating
                 reviews={reviews}
                 // onClick={onReview}
+                sx={{
+                  cursor: 'pointer'
+                }}
                 type="button"
                 className="reviewsProductCardButton"
                 name="half-rating-read"
