@@ -11,7 +11,7 @@ import validateForm from '../form/FormValidate';
 import { getSubtotal } from './ReviewOrderWidgetService';
 import getBillingRate from './BillingRateService';
 import { useProfile } from '../Profile/ProfileContext';
-import UpdateUserByEmail from '../header/UpdateActivityService';
+import updateUserByEmail from '../header/UpdateActivityService';
 
 /**
  * @name CheckoutPage
@@ -111,7 +111,9 @@ const CheckoutPage = () => {
         cardholder: billingData.cardholder
       };
       makePurchase(productDataSend, deliveryAddress, billingAddress, creditCard, totalPrice).then(() => history.push('/confirmation'));
-      UpdateUserByEmail(userProfile[1].email);
+      if (userProfile[1]) {
+        updateUserByEmail(userProfile[1].email);
+      }
     } else {
       toast.error('Some fields contain invalid inputs. You have not been charged');
       setErrors(validateForm(deliveryData, billingData, checked));

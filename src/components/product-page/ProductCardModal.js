@@ -12,7 +12,8 @@ import { useCart } from '../checkout-page/CartContext';
 import getQtyInCart, { displayToast, isInventoryAvailable } from './ProductCardModalService';
 import ReviewsModal from './ReviewsModal';
 import fetchUpdateUser from '../Profile/ProfileUpdateService';
-
+import updateUserByEmail from '../header/UpdateActivityService';
+import { useProfile } from '../Profile/ProfileContext';
 /**
  * @name useStyles
  * @description Material-ui styling for ProductCardModal component
@@ -37,7 +38,9 @@ const ProductCardModal = ({
   const [quantityPicker, setQuantityPicker] = useState(1);
   const [higherValue, setHigherValue] = useState(true);
   const [lowerValue, setLowerValue] = useState(false);
-
+  const {
+    state: { userProfile }
+  } = useProfile();
   const {
     state: { products }
   } = useCart();
@@ -103,6 +106,9 @@ const ProductCardModal = ({
         }
       }
     );
+    if (userProfile[1]) {
+      updateUserByEmail(userProfile[1].email);
+    }
     displayToast(quantityPicker, product);
   };
 

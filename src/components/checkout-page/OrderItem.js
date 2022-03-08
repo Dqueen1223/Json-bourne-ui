@@ -43,7 +43,9 @@ const OrderItem = ({
     }
   }, [confirmDeleteItem, dispatch, userProfile, name, products]);
   const deleteItem = () => {
-    updateUserByEmail(userProfile[1].email);
+    if (userProfile[1]) {
+      updateUserByEmail(userProfile[1].email);
+    }
     setConfirmDelete(true);
   };
   const lowerQuantity = () => {
@@ -85,7 +87,9 @@ const OrderItem = ({
         );
       }
     }
-    updateUserByEmail(userProfile[1].email);
+    if (userProfile[1]) {
+      updateUserByEmail(userProfile[1].email);
+    }
   };
   return (
     <div className={styles.orderItem}>
