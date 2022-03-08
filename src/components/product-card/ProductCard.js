@@ -9,22 +9,23 @@ import CardActions from '@material-ui/core/CardActions';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import { red } from '@material-ui/core/colors';
+import { orange, red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import ShareIcon from '@material-ui/icons/Share';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { toast } from 'react-toastify';
 import Rating from '@mui/material/Rating';
+import ProductCardModal from '../product-page/ProductCardModal';
 // import Stack from '@mui/material/Stack';
 import { useCart } from '../checkout-page/CartContext';
-import ProductCardModal from '../product-page/ProductCardModal';
 import getQtyInCart, { inventoryAvailable } from './ProductCardService';
 import ReviewsModal from '../product-page/ReviewsModal';
 // import Review from '../product-page/Review';
 import '../product-page/ReviewsModal.css';
 import UpdateUserbyEmail from '../header/UpdateActivityService';
 import { useProfile } from '../Profile/ProfileContext';
+import fetchUpdateUser from '../Profile/ProfileUpdateService';
 
 /**
  * @name useStyles
@@ -51,6 +52,9 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     backgroundColor: red[500]
+  },
+  colorInWishList: {
+    color: '#fc46aa'
   }
 }));
 
@@ -61,17 +65,18 @@ const useStyles = makeStyles((theme) => ({
  * @return component
  */
 const ProductCard = ({
-  product, reviews, setUpdateReviews, updateReviews
+  product, reviews, wishlist, profile, setProfile, setUpdateReviews, updateReviews
 }) => {
   const classes = useStyles();
   const { dispatch } = useCart();
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [reviewsModal, setReviewsModal] = useState(false);
   const [showCreateReview, setReviewFormToggle] = useState(false);
+  const [inWishList, setInWishList] = useState(wishlist.includes(product.id));
+  const [activeReviews, setActiveReviews] = React.useState(
+    false
+  );
   const [averageRating, setAverageRating] = useState(0);
-  // const [activeReviews] = React.useState(reviews.filter((r) => (r.productId === product.id)));
-  // const [activeReviews] = React.useState(reviews.filter((r) => (r.productId === product.id)));
-
   const {
     state: { products }
   } = useCart();
@@ -80,14 +85,16 @@ const ProductCard = ({
     state: { userProfile }
   } = useProfile();
 
-  const [activeReviews, setActiveReviews] = React.useState(
-    false
-  );
+  React.useEffect(() => {
+    if (wishlist.length > 0) {
+      setInWishList(wishlist.includes(product.id));
+    }
+  }, [product.id, wishlist]);
+
   React.useEffect(() => {
     if (reviews !== true) {
       setActiveReviews(reviews.filter((r) => (r.productId === product.id)));
     }
-    // setActiveReviews(reviews.filter((r) => (r.productId === product.id)));
   }, [updateReviews, product.id, reviews]);
 
   React.useEffect(() => {
@@ -112,7 +119,21 @@ const ProductCard = ({
     }
   }, [activeReviews, reviews, updateReviews]);
 
+  //   React.useEffect(() => {
+  //     if (activeReviews) {
+  //       let displayCount = 0;
+  //       if (!activeReviews === false) {
+  //         activeReviews.forEach((e) =>
+  //           displayCount += e.reviewsDescription);
+  //       });
+  // }
+
+  //   }, [activeReviews, reviews]);
+
+  const displayCount = Object.keys(activeReviews).length;
+
   const onAdd = (e) => {
+    console.log(inWishList);
     e.stopPropagation();
 
     const qtyInCart = getQtyInCart(products, product);
@@ -155,6 +176,36 @@ const ProductCard = ({
   };
   const favoriteAdd = (e) => {
     e.stopPropagation();
+    if (Object.keys(profile).length !== 0) {
+      if (!inWishList) {
+        // remove from wishlist
+        toast.success(`${product.name} has been added to your wishlist.`);
+        const newWishList = [];
+        newWishList.push(...wishlist);
+        newWishList.push(product.id);
+        const user = {
+          id: profile.id,
+          dateModified: new Date().toISOString(),
+          email: profile.email,
+          firstName: profile.firstName,
+          lastName: profile.lastName,
+          street: profile.street,
+          street2: profile.street2,
+          city: profile.city,
+          state: profile.state,
+          zip: profile.zip,
+          phone: profile.phone,
+          role: profile.role,
+          wishlist: newWishList,
+          dateCreated: profile.dateCreated
+        };
+        setInWishList(!inWishList);
+        fetchUpdateUser(user, setProfile);
+      } else {
+        console.log('remove');
+        // add to wishlist
+      }
+    }
   };
   const share = (e) => {
     e.stopPropagation();
@@ -167,7 +218,18 @@ const ProductCard = ({
   return (
     <Card className={classes.root}>
       {modalIsOpen && reactDom.createPortal(
-        <ProductCardModal product={product} closeModal={setModalIsOpen} />,
+        <ProductCardModal
+          product={product}
+          closeModal={setModalIsOpen}
+          inWishList={inWishList}
+          setInWishList={setInWishList}
+          profile={profile}
+          setProfile={setProfile}
+          wishlist={wishlist}
+          average={averageRating}
+          displayCount={displayCount}
+          setReviewsModal={setReviewsModal}
+        />,
         document.getElementById('root')
       )}
       {reviewsModal && reactDom.createPortal(
@@ -229,25 +291,47 @@ const ProductCard = ({
           setModalIsOpen(true);
         }}
       >
-        <IconButton aria-label="add to favorites" onClick={favoriteAdd}>
+        {inWishList && (
+          <IconButton
+            aria-label="add to favorites"
+            className={classes.colorInWishList}
+            onClick={favoriteAdd}
+            sx={{
+              color: orange
+            }}
+          >
+            <FavoriteIcon />
+          </IconButton>
+        )}
+        {!inWishList && Object.keys(profile).length !== 0 && (
+        <IconButton
+          aria-label="add to favorites"
+          onClick={favoriteAdd}
+        >
           <FavoriteIcon />
         </IconButton>
+        )}
+        {!inWishList && Object.keys(profile).length === 0 && (
+        <IconButton
+          title="Must be signed in to add a product to your wish list."
+          aria-label="add to favorites"
+          className="test"
+          onClick={favoriteAdd}
+        >
+          <FavoriteIcon />
+        </IconButton>
+        )}
         <IconButton aria-label="share" onClick={share}>
           <ShareIcon />
         </IconButton>
         <IconButton aria-label="add to shopping cart" onClick={onAdd}>
           <AddShoppingCartIcon />
         </IconButton>
+        <div className="reviewCounter">
+          {displayCount}
+        </div>
         {ReviewsModal !== false && (
           <>
-            {/* <button
-              className="reviewsProductCardButton"
-              type="button"
-              variant="contained"
-              onClick={onReview}
-            >
-              Reviews
-            </button> */}
             <div
               onClick={onReview}
               aria-hidden="true"

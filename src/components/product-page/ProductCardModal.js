@@ -1,31 +1,77 @@
 import React, { useState } from 'react';
-import reactDom from 'react-dom';
+// import reactDom from 'react-dom';
 import IconButton from '@material-ui/core/IconButton';
+import { makeStyles } from '@material-ui/core/styles';
+import { orange } from '@material-ui/core/colors';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import './ProductCardModal.css';
 import Rating from '@mui/material/Rating';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import { toast } from 'react-toastify';
 import { useCart } from '../checkout-page/CartContext';
 import getQtyInCart, { displayToast, isInventoryAvailable } from './ProductCardModalService';
 import ReviewsModal from './ReviewsModal';
+import fetchUpdateUser from '../Profile/ProfileUpdateService';
 
+/**
+ * @name useStyles
+ * @description Material-ui styling for ProductCardModal component
+ * @return styling
+ */
+const useStyles = makeStyles(() => ({
+  colorInWishList: {
+    color: '#fc46aa'
+  }
+}));
 /**
  * @name ProductCardModal
  * @description material-ui styling for product card modal
  * @return component
  */
 const ProductCardModal = ({
-  product, closeModal, reviews, setReviews
+  product, closeModal, reviews, inWishList, profile,
+  wishlist, setInWishList, setProfile, setReviewsModal, average, displayCount
 }) => {
+  const classes = useStyles();
   const { dispatch } = useCart();
   const [quantityPicker, setQuantityPicker] = useState(1);
   const [higherValue, setHigherValue] = useState(true);
   const [lowerValue, setLowerValue] = useState(false);
-  const [reviewsModal, setReviewsModal] = useState(false);
-  const [showCreateReview, setReviewFormToggle] = useState(false);
+
   const {
     state: { products }
   } = useCart();
 
+  // const [activeReviews] = React.useState(
+  //   false
+  // );
+  // React.useEffect(() => {
+  //   if (reviews !== true) {
+  //     setActiveReviews(reviews.filter((r) => (r.productId === product.id)));
+  //   }
+  // }, [product.id, reviews]);
+
+  // React.useEffect(() => {
+  //   if (activeReviews) {
+  //     let currentCount = 0;
+  //     if (!activeReviews === false) {
+  //       activeReviews.forEach((e) => {
+  //         currentCount += e.rating;
+
+  //         // currentCount;
+  //       });
+  //     }
+  //     const tempRating = Math.floor(currentCount / activeReviews.length);
+  //     const remainder = currentCount % activeReviews.length;
+  //     if (remainder / activeReviews.length > 0.33 && remainder / activeReviews.length < 0.66) {
+  //       setAverageRating(tempRating + 0.5);
+  //     } else if (remainder / activeReviews.length >= 0.66) {
+  //       setAverageRating(tempRating + 1);
+  //     } else {
+  //       setAverageRating(tempRating);
+  //     }
+  //   }
+  // }, [activeReviews, reviews]);
   const onAdd = () => {
     const qtyInCart = getQtyInCart(products, product);
     if (!isInventoryAvailable(quantityPicker, qtyInCart, product)) return;
@@ -107,7 +153,39 @@ const ProductCardModal = ({
     higherValueCheck(e.target.value);
     lowerValueCheck(e.target.value);
   };
-
+  const favoriteAdd = (e) => {
+    e.stopPropagation();
+    if (Object.keys(profile).length !== 0) {
+      if (!inWishList) {
+        // remove from wishlist
+        toast.success(`${product.name} has been added to your wishlist.`);
+        const newWishList = [];
+        newWishList.push(...wishlist);
+        newWishList.push(product.id);
+        const user = {
+          id: profile.id,
+          dateModified: new Date().toISOString(),
+          email: profile.email,
+          firstName: profile.firstName,
+          lastName: profile.lastName,
+          street: profile.street,
+          street2: profile.street2,
+          city: profile.city,
+          state: profile.state,
+          zip: profile.zip,
+          phone: profile.phone,
+          role: profile.role,
+          wishlist: newWishList,
+          dateCreated: profile.dateCreated
+        };
+        setInWishList(!inWishList);
+        fetchUpdateUser(user, setProfile);
+      } else {
+        console.log('remove');
+        // add to wishlist
+      }
+    }
+  };
   const preventCertainCharacters = (e) => {
     if (!(e.key === '0' || e.key === '1' || e.key === '2' || e.key === '3' || e.key === '4'
       || e.key === '5' || e.key === '6' || e.key === '7' || e.key === '8' || e.key === '9' || e.key === 'Backspace'
@@ -117,6 +195,7 @@ const ProductCardModal = ({
     }
   };
   const onReview = (e) => {
+    closeModal(false);
     e.stopPropagation();
     setReviewsModal(true);
   };
@@ -126,6 +205,8 @@ const ProductCardModal = ({
       closeModal(false);
     }
   };
+
+  // const displayCount = Object.keys(activeReviews).length;
   return (
     <div
       className="productCardModalBackground"
@@ -174,6 +255,36 @@ const ProductCardModal = ({
             </div>
           </div>
           <div className="productCardModal-footer">
+            {inWishList && (
+            <IconButton
+              aria-label="add to favorites"
+              className={classes.colorInWishList}
+              onClick={favoriteAdd}
+              sx={{
+                color: orange
+              }}
+            >
+              <FavoriteIcon />
+            </IconButton>
+            )}
+            {!inWishList && Object.keys(profile).length !== 0 && (
+            <IconButton
+              aria-label="add to favorites"
+              onClick={favoriteAdd}
+            >
+              <FavoriteIcon />
+            </IconButton>
+            )}
+            {!inWishList && Object.keys(profile).length === 0 && (
+            <IconButton
+              title="Must be signed in to add a product to your wish list."
+              aria-label="add to favorites"
+              className="test"
+              onClick={favoriteAdd}
+            >
+              <FavoriteIcon />
+            </IconButton>
+            )}
             <div className="quantityPicker">
               <div className="lowerQuantity">
                 {lowerValue && <button onClick={lowerQuantity} type="button" className="lowerQuantityBtn"> &minus; </button>}
@@ -189,7 +300,11 @@ const ProductCardModal = ({
               <IconButton aria-label="add to shopping cart" onClick={onAdd}>
                 <AddShoppingCartIcon />
               </IconButton>
-              {reviewsModal && reactDom.createPortal(
+            </div>
+            <div className="productReviewCounter">
+              {displayCount}
+            </div>
+            {/* {reviewsModal && reactDom.createPortal(
                 <ReviewsModal
                   product={product}
                   reviews={reviews}
@@ -199,17 +314,25 @@ const ProductCardModal = ({
                   setReviewFormToggle={setReviewFormToggle}
                 />,
                 document.getElementById('root')
-              )}
-              <Rating
+              )} */}
+            {ReviewsModal !== false && (
+            <>
+              <div
                 onClick={onReview}
-                type="button"
-                variant="contained"
-                className="reviewsProductCardButton"
-                name="half-rating-read"
-                defaultValue={2.5}
-                precision={0.5}
-              />
-            </div>
+                aria-hidden="true"
+              >
+                <Rating
+                  reviews={reviews}
+                  type="button"
+                  className="productModalReviews"
+                  name="half-rating-read"
+                  value={average}
+                  precision={0.5}
+                  readOnly
+                />
+              </div>
+            </>
+            )}
           </div>
         </div>
       </div>
