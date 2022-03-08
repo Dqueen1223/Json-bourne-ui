@@ -38,12 +38,12 @@ const OrderItem = ({
               }
             }
           );
-          updateUserByEmail(userProfile[1].email);
         }
       }
     }
   }, [confirmDeleteItem, dispatch, userProfile, name, products]);
   const deleteItem = () => {
+    updateUserByEmail(userProfile[1].email);
     setConfirmDelete(true);
   };
   const lowerQuantity = () => {
@@ -85,6 +85,7 @@ const OrderItem = ({
         );
       }
     }
+    updateUserByEmail(userProfile[1].email);
   };
   return (
     <div className={styles.orderItem}>
