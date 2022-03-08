@@ -126,13 +126,13 @@
     flex: 1 1 50px;
     margin-top: auto;
     max-height: 50px;
-    justify-content: center;
+    margin-left:73px;
 }
 
 .quantityPicker{
     display:inline-flex;
     align-items: center;
-    margin-left: 15%;
+    margin-left: 5%;
 }
 .quantityInput{
     border: 0.5px solid black;
@@ -173,7 +173,7 @@
 }
 .productReviewCounter{
     position: relative;
-    left: 30%;
+    left: 35%;
     top: 30%;
 }
 .lowerQuantityBtn:hover{
