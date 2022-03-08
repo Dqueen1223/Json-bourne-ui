@@ -34,7 +34,9 @@ const ProductPage = () => {
   const [updateReviews, setUpdateReviews] = useState(true);
 
   useEffect(() => {
-    loginUser(userProfile[1], setProfile, setApiError);
+    if (userProfile.length > 1) {
+      loginUser(userProfile[1], setProfile, setApiError);
+    }
   }, [userProfile]);
   useEffect(() => {
     if (profile.wishlist) {

@@ -169,7 +169,7 @@ const ProductCard = ({
     e.stopPropagation();
     if (Object.keys(profile).length !== 0) {
       if (!inWishList) {
-        // remove from wishlist
+        // add to wishlist
         toast.success(`${product.name} has been added to your wishlist.`);
         const newWishList = [];
         newWishList.push(...wishlist);
@@ -193,8 +193,7 @@ const ProductCard = ({
         setInWishList(!inWishList);
         fetchUpdateUser(user, setProfile);
       } else {
-        console.log('remove');
-        // add to wishlist
+        // remove from wishlist
       }
     }
   };
