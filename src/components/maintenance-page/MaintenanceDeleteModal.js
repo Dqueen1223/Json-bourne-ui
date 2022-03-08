@@ -33,7 +33,7 @@ export default function MaintenanceDeleteModal({ product, closeModal, setDeleted
     };
     UpdateProducts(updatedProduct);
     closeModal(false);
-    setDeletedProduct(updatedProduct);
+    setDeletedProduct(product);
   };
 
   return (
