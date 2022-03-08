@@ -6,7 +6,7 @@ import loginUser from './HeaderService';
 import constants from '../../utils/constants';
 import { useCart } from '../checkout-page/CartContext';
 import { useProfile } from '../Profile/ProfileContext';
-import UpdateUserByActivity from './UpdateActivityService';
+// import UpdateUserByActivity from './UpdateActivityService';
 
 /**
  * @name Header
@@ -49,7 +49,6 @@ const Header = () => {
       firstName: response.profileObj.givenName,
       lastName: response.profileObj.familyName
     };
-    UpdateUserByActivity(googleUser);
     loginUser(googleUser, setUser, setApiError);
     setisLoggedIn(true);
     setGoogleError('');

@@ -10,6 +10,9 @@ import makePurchase from './CheckoutService';
 import validateForm from '../form/FormValidate';
 import { getSubtotal } from './ReviewOrderWidgetService';
 import getBillingRate from './BillingRateService';
+import { useProfile } from '../Profile/ProfileContext';
+import UpdateUserByEmail from '../header/UpdateActivityService';
+
 /**
  * @name CheckoutPage
  * @description A view that contains details needed to process a transaction for items
@@ -18,7 +21,9 @@ import getBillingRate from './BillingRateService';
 const CheckoutPage = () => {
   const history = useHistory();
   const [totalPrice, setTotalPrice] = React.useState(0);
-  // const { dispatch } = useProfile();
+  const {
+    state: { userProfile }
+  } = useProfile();
   const {
     state: { products }
   } = useCart();
@@ -110,16 +115,7 @@ const CheckoutPage = () => {
         cardholder: billingData.cardholder
       };
       makePurchase(productDataSend, deliveryAddress, billingAddress, creditCard, totalPrice).then(() => history.push('/confirmation'));
-      /* dispatch({
-        type: 'login',
-        userProfile: {
-          street: deliveryData.street,
-          street2: deliveryData.street2,
-          city: deliveryData.city,
-          state: deliveryData.state,
-          zip: deliveryData.zip
-        }
-      }); */
+      UpdateUserByEmail(userProfile[1].email);
     } else {
       toast.error('Some fields contain invalid inputs. You have not been charged');
       setErrors(validateForm(deliveryData, billingData, checked));

@@ -23,6 +23,8 @@ import getQtyInCart, { inventoryAvailable } from './ProductCardService';
 import ReviewsModal from '../product-page/ReviewsModal';
 // import Review from '../product-page/Review';
 import '../product-page/ReviewsModal.css';
+import UpdateUserbyEmail from '../header/UpdateActivityService';
+import { useProfile } from '../Profile/ProfileContext';
 
 /**
  * @name useStyles
@@ -73,6 +75,10 @@ const ProductCard = ({
   const {
     state: { products }
   } = useCart();
+
+  const {
+    state: { userProfile }
+  } = useProfile();
 
   const [activeReviews, setActiveReviews] = React.useState(
     false
@@ -143,6 +149,9 @@ const ProductCard = ({
       }
     );
     toast.success('Product successfully added to cart.');
+    if (userProfile[1]) {
+      UpdateUserbyEmail(userProfile[1].email);
+    }
   };
   const favoriteAdd = (e) => {
     e.stopPropagation();

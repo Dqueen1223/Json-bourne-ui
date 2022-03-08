@@ -2,20 +2,20 @@ import HttpHelper from '../../utils/HttpHelper';
 import Constants from '../../utils/constants';
 
 const UpdateUserByActivity = async (user) => {
-  await HttpHelper(`${Constants.USERS_ENDPOINT}/${1}`, 'PUT', {
-    active: Date.now(),
-    // dateCreated: user.dateCreated,
-    // dateModified: user.dateModified,
+  await HttpHelper(`${Constants.USERS_ENDPOINT}/${user.id}`, 'PUT', {
+    LastActive: new Date().toISOString(),
+    id: user.id,
+    dateModified: user.dateModified,
     email: user.email,
-    // role: user.role,
-    firstName: 'user.firstName',
-    lastName: user.lastName
-    // street: user.street,
-    // street2: user.street2,
-    // city: user.city,
-    // state: user.state,
-    // zip: user.zip,
-    // phone: user.phone
+    role: user.role,
+    firstName: user.firstName,
+    lastName: user.lastName,
+    street: user.street,
+    street2: user.street2,
+    city: user.city,
+    state: user.state,
+    zip: user.zip,
+    phone: user.phone
   }).then((response) => {
     if (response.ok) {
       return response.json();
@@ -24,4 +24,26 @@ const UpdateUserByActivity = async (user) => {
   });
 };
 
-export default UpdateUserByActivity;
+const updateUserByEmail = async (email) => {
+  let userByEmailExists;
+  await HttpHelper(`/users/${email}`, 'GET')
+    .then((response) => {
+      if (response.status === 200) {
+        userByEmailExists = true;
+        return response.json();
+      }
+      if (response.status === 404) {
+        userByEmailExists = false;
+      }
+      throw new Error(response.statusText);
+    })
+    .then((body) => {
+      UpdateUserByActivity(body);
+      document.cookie = `user=${JSON.stringify(body)}`;
+    })
+    .catch(() => {});
+
+  return userByEmailExists;
+};
+
+export default updateUserByEmail;
